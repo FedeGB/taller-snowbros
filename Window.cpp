@@ -1,6 +1,7 @@
 #include "Window.h"
 #include <iostream>
 #include "SDL_image.h"
+#include "SDL2_rotozoom.h"
 
 Window::Window() {
 	window = NULL;
@@ -49,6 +50,9 @@ bool Window::updateWindow() {
 	 return !error;
 }
 
+// Loads a Background image.
+// If the image is not of the same size as the window it will be resized
+// to fit the window size, being proportional and avoiding blank spaces (image could be cropped).
 bool Window::loadBackground(const char* pathToBG) {
 	BGimage = IMG_Load(pathToBG);
 	if (!BGimage) {
@@ -56,8 +60,59 @@ bool Window::loadBackground(const char* pathToBG) {
 		error = true;
 		return error;
 	}
+	int bg_height, bg_width;
+	bg_height = BGimage->h;
+	bg_width = BGimage->w;
+	// Adjusting BG to window size if necessary
+	if(bg_height != SCREEN_HEIGHT && bg_width != SCREEN_WIDTH) {
+		double ratio;
+		int aux;
+		if(bg_height < bg_width) {
+			ratio = (double)SCREEN_HEIGHT/bg_height;
+			aux = (int)(ratio*bg_width);
+			BGimage = resizeSurface(BGimage, SCREEN_HEIGHT, aux);
+		}
+		else {
+			ratio = (double)SCREEN_WIDTH/bg_width;
+			aux = (int)(ratio*bg_height);
+			BGimage = resizeSurface(BGimage, aux, SCREEN_WIDTH);
+		}
+		if(!BGimage) {
+			//TODO: Error Handling
+			return false;
+		}
+	}
+
 	SDL_BlitSurface(BGimage, NULL, wSurface, NULL);
 	return !error;
+}
+
+// Resize an input surface to a target height and width.
+// Does not check if the resize distorts the surface size
+// Returns the new Surface and frees the old one
+SDL_Surface* Window::resizeSurface(SDL_Surface* surface, int t_height, int t_width) {
+	if(!surface) {
+		// TODO: Error handling
+		return NULL;
+	}
+	if(t_height <= 0 || t_width <= 0) {
+		// TODO: Error handling
+		return NULL;
+	}
+	SDL_Surface* newSurface = NULL;
+	int src_height = surface->h;
+	int src_width = surface->w;
+	double zoomx, zoomy;
+	zoomx = (double)t_width / src_width;
+	zoomy = (double)t_height / src_height;
+
+	newSurface = rotozoomSurfaceXY(surface, 0, zoomx, zoomy, SMOOTHING_ON);
+	if(!newSurface) {
+		std::cout << "No se pudo resizear" << std::endl;
+		return NULL;
+	}
+	SDL_FreeSurface(surface);
+	return newSurface;
 }
 
 Window::~Window(){

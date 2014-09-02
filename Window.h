@@ -12,6 +12,8 @@ private:
 	int SCREEN_HEIGHT;
 	bool error;
 
+	SDL_Surface* resizeSurface(SDL_Surface* surface, int t_height, int t_width);
+
 public:
 	// Constructor de la clase
 	Window();
