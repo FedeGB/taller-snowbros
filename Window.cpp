@@ -47,6 +47,17 @@ bool Window::updateWindow() {
 		 // TODO: Catch Error and handle log.
 		 error = true;
 	 }
+
+	 // EJEMPLO DE DIBUJADO DE UN RECTANGULO
+	 RectanguloDibujable rectangulo;
+	 rectangulo.posicion( 30.0, 30.0 );
+	 rectangulo.tamano(100, 50);
+	 SDL_Color c = { 255, 165, 0, 0 }; // naranjita
+	 rectangulo.color( c );
+
+	 wEscenario.dibujar(rectangulo, wSurface);
+	 // FIN EJEMPLO
+
 	 return !error;
 }
 

@@ -2,12 +2,17 @@
 #define WINDOW_H
 #include <SDL.h>
 
+#include "Escenario.h"
+#include "modelo/formas/RectanguloDibujable.h"
+
 class Window {
 
 private:
 	SDL_Window* window;
 	SDL_Surface* wSurface;
 	SDL_Surface* BGimage;
+	Escenario wEscenario;
+
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
 	bool error;
