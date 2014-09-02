@@ -36,6 +36,17 @@ bool Window::init(int width, int height) {
 		}
 		else {
 			wSurface = SDL_GetWindowSurface(window);
+
+			// inicializamos la escena
+			// CREAMOS EL OBJETO Y LO AGREGAMOS A LA LISTA DE OBJETOS.
+			// lista de objetos = escena.
+			RectanguloDibujable* rectangulo = new RectanguloDibujable();
+			rectangulo->posicion( 30.0, 30.0 );
+			rectangulo->tamano(100, 50);
+			SDL_Color c = { 255, 165, 0, 0 };
+			rectangulo->color( c );
+
+			wEscenario.agregarDibujable(rectangulo);
 		}
 	}
 	return !error;
@@ -48,15 +59,7 @@ bool Window::updateWindow() {
 		 error = true;
 	 }
 
-	 // EJEMPLO DE DIBUJADO DE UN RECTANGULO
-	 RectanguloDibujable rectangulo;
-	 rectangulo.posicion( 30.0, 30.0 );
-	 rectangulo.tamano(100, 50);
-	 SDL_Color c = { 255, 165, 0, 0 }; // naranjita
-	 rectangulo.color( c );
-
-	 wEscenario.dibujar(rectangulo, wSurface);
-	 // FIN EJEMPLO
+	 wEscenario.dibujarEscena(wSurface);
 
 	 return !error;
 }

@@ -7,12 +7,39 @@
 
 #include "Escenario.h"
 
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
+Escenario::~Escenario()
+{
+	ListaDibujables::iterator it = eLista.begin();
 
-Escenario::Escenario(){}
+	if( eLista.size() == 1 )
+	{
+		delete(*it);
+		return;
+	}
 
-Escenario::~Escenario() {}
+	for( ; it != eLista.end(); it++)
+		delete(*it);
+}
+
+void Escenario::dibujarEscena(SDL_Surface* surface)
+{
+	ListaDibujables::iterator it = eLista.begin();
+
+	if( eLista.size() == 1)
+	{
+		printf("size lista: %i\n", eLista.size());
+		(*it)->dibujar(surface);
+		return;
+	}
+
+	for( it = eLista.begin(); it != eLista.end(); it++)
+		(*it)->dibujar(surface);
+}
+
+void Escenario::agregarDibujable(IDibujable* dibujable)
+{
+	eLista.push_back(dibujable);
+}
 
 void Escenario::dibujar(IDibujable& objeto, SDL_Renderer* renderer)
 {
@@ -23,4 +50,3 @@ void Escenario::dibujar(IDibujable& objeto, SDL_Surface* surface)
 {
 	objeto.dibujar(surface);
 }
-
