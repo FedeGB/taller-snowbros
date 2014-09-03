@@ -4,12 +4,11 @@
 shapes::shapes() {
 	_shape = NULL;
 	// TODO Auto-generated constructor stub
-
 }
+
 shapes::shapes(std::string data, b2World *mundo, int num) {
 	if (!b2d_objet(data, mundo, num))
 		_shape = NULL;
-
 }
 
 shapes::~shapes() {
@@ -23,23 +22,23 @@ bool shapes::b2d_objet(std::string data, b2World *mundo, int num) {
 	b2CircleShape circle;
 	b2PolygonShape poligon;
 
-	if (get_node("estatico", "objetos", data, num).compare("false"))
+	if (get_node("estatico", "objetos", data, num,"false").compare("false"))
 		b2dObjDef.type = b2_staticBody;
 	else
 		b2dObjDef.type = b2_dynamicBody;
 
 	//posicion inicial
-	b2dObjDef.position.x = atof(get_node("x", "objetos", data, num).c_str());
-	b2dObjDef.position.y = atof(get_node("y", "objetos", data, num).c_str());
-	b2dObjDef.angle = atoi(get_node("rot", "objetos", data, num).c_str());
+	b2dObjDef.position.x = atof(get_node("x", "objetos", data, num,"1").c_str());
+	b2dObjDef.position.y = atof(get_node("y", "objetos", data, num,"1").c_str());
+	b2dObjDef.angle = atoi(get_node("rot", "objetos", data, num,"0").c_str());
 
 	//lo vinculo al mundo
 	_shape = mundo->CreateBody(&b2dObjDef);
 
 	//le doy forma
-	int lados = num_lados(get_node("tipo", "objetos", data, num));
+	int lados = num_lados(get_node("tipo", "objetos", data, num,"rect"));
 	if (lados == 3)
-		lados = atoi(get_node("lados", "objetos", data, num).c_str());
+		lados = atoi(get_node("lados", "objetos", data, num,"3").c_str());
 
 	switch (lados) {//dependiendo del numero de lados
 	case 0: //0 es error
@@ -50,18 +49,18 @@ bool shapes::b2d_objet(std::string data, b2World *mundo, int num) {
 
 		myFixtureDef.shape = &circle; //defino que es un circulo
 		myFixtureDef.density = atof(
-				get_node("masa", "objetos", data, num).c_str());//le doy masa
+				get_node("masa", "objetos", data, num,"1").c_str());//le doy masa
 
 		circle.m_radius = atof(
-				get_node("escala", "objetos", data, num).c_str());
+				get_node("escala", "objetos", data, num,"1").c_str());
 		//y el tamaño
 		_shape->CreateFixture(&myFixtureDef); //le asigno la forma
 		break;
 
 	case 4: // 4 lados caja
 		poligon.SetAsBox(
-				atof(get_node("alto", "objetos", data, num).c_str()) / 2,
-				atof(get_node("ancho", "objeto", data).c_str()) / 2); //le doy dimenciones
+				atof(get_node("alto", "objetos", data, num,"1").c_str()) / 2,
+				atof(get_node("ancho", "objeto", data,"1").c_str()) / 2); //le doy dimenciones
 		myFixtureDef.shape = &poligon; //defino que es un poligono
 		_shape->CreateFixture(&myFixtureDef); //le asigno la forma
 		break;
@@ -76,7 +75,7 @@ bool shapes::b2d_objet(std::string data, b2World *mundo, int num) {
 		poligon.Set(point, lados);
 		myFixtureDef.shape = &poligon;
 		myFixtureDef.density = atof(
-				get_node("masa", "objetos", data, num).c_str()); //le asigno la masa
+				get_node("masa", "objetos", data, num,"1").c_str()); //le asigno la masa
 		_shape->CreateFixture(&myFixtureDef); //le asigno la forma
 		break;
 
