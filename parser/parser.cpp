@@ -1,9 +1,3 @@
-/*
- * parser.cpp
- *
- *  Created on: 02/09/2014
- *      Author: coco
- */
 
 #include "parser.h"
 using namespace std;
@@ -35,5 +29,5 @@ string get_node(string data,string param,string file,int field){
 		bool parsingSucefull= reader.parse(file, root);
 				if (!parsingSucefull)
 					cout<<"no se pudo leer el archivo "<< reader.getFormattedErrorMessages()<<endl;
-		return root[param].get(data,"0").asString();
+		return root[param][field].get(data,"0").asString();
 }
