@@ -77,6 +77,8 @@ bool shapes::b2d_objet(std::string data, b2World *mundo, int num) {
 		myFixtureDef.density = atof(
 				get_node("masa", "objetos", data, num,"1").c_str()); //le asigno la masa
 		_shape->CreateFixture(&myFixtureDef); //le asigno la forma
+		delete point;
+		point=NULL;
 		break;
 
 	}
