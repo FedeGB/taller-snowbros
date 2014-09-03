@@ -89,7 +89,11 @@ bool shapes::b2d_objet(std::string data, b2World *mundo, int num) {
 
 b2Body& shapes::getShape() {
 	return *_shape;
-}// retorna un puntero al objeto de box2d
+}// retorna una referencia al objeto de box2d
+
+b2Body& shapes::getPoints() {
+	return *_point;
+}// retorna una referencia al objeto de box2d
 
 //TODO no se si estas funciones van aca o ponerlas en una clase parser
 

@@ -20,6 +20,7 @@ public:
 	shapes(std::string data,b2World* mundo, int num);
 	virtual ~shapes();
 	b2Body& getShape();
+	b2Vec2& getPoints();
 
 
 
