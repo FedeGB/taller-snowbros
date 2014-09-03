@@ -12,6 +12,10 @@ shapes::shapes(std::string data, b2World *mundo, int num) {
 }
 
 shapes::~shapes() {
+	delete _shape;
+	_shape = NULL;
+	delete _point;
+	_point = NULL;
 	// TODO Auto-generated destructor stub
 }
 
@@ -67,7 +71,7 @@ bool shapes::b2d_objet(std::string data, b2World *mundo, int num) {
 
 	default: // 3, 5 o mas lados poligonos regulares
 
-		b2Vec2 * point = new b2Vec2[lados]; //creo un vector con los vertices
+		_point = new b2Vec2[lados]; //creo un vector con los vertices
 		for (int i = 0; i < lados; i++) {
 			point[i].Set(cos(2 * i * PI / lados), sin(2 * i * PI / lados));
 		} //les asigno la posicion
@@ -77,8 +81,6 @@ bool shapes::b2d_objet(std::string data, b2World *mundo, int num) {
 		myFixtureDef.density = atof(
 				get_node("masa", "objetos", data, num,"1").c_str()); //le asigno la masa
 		_shape->CreateFixture(&myFixtureDef); //le asigno la forma
-		delete point;
-		point=NULL;
 		break;
 
 	}

@@ -27,6 +27,7 @@ private:
 	bool b2d_objet(std::string data,b2World *mundo,int num);
 	int num_lados(std::string data);
 	b2Body *_shape;
+	b2Vec2 *_point;
 	bool update_Position();//cambia la posicion de la imagen
 };
 
