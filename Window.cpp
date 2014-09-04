@@ -7,9 +7,11 @@ Window::Window() {
 	window = NULL;
 	wSurface = NULL;
 	error = false;
+	renderer = NULL;
 	SCREEN_WIDTH = 0;
 	SCREEN_HEIGHT = 0;
 	BGimage = NULL;
+	log = * Logger::Instancia();
 }
 
 bool Window::init(int width, int height) {
@@ -18,35 +20,62 @@ bool Window::init(int width, int height) {
 		SCREEN_HEIGHT = height;
 	}
 	else {
-		// TODO: Error hangling, log
+		if (!log.abrirLog("Window.log")) {
+			std::cout << "Error al abrir archivo de log" << std::endl;
+			return false;
+		}
+
+		log.escribirLog("ERROR", "Altura y/o ancho menor a 0");
+		log.cerrarLog();
 		error = true;
-		return error;
+		return !error;
 	}
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-		std::cout << "No se pudo inicializar SDL!" << std::endl;
-		// TODO: Catch Error and handle log.
+		if (!log.abrirLog("Window.log")) {
+			std::cout << "Error al abrir archivo de log" << std::endl;
+			return false;
+		}
+		log.escribirLog("ERROR", "No se pudo inicializar SDL!");
+		log.cerrarLog();
 		error = true;
+		return !error;
 	}
 	else {
 		 window = SDL_CreateWindow("Snow Bros", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if(!window) {
-			// TODO: Catch Error and handle log.
-			std::cout << "No se pudo crear la ventana." << std::endl;
+			if (!log.abrirLog("Window.log")) {
+				std::cout << "Error al abrir archivo de log" << std::endl;
+				return false;
+			}
+			log.escribirLog("ERROR", "No se pudo crear la ventana.");
+			log.cerrarLog();
 			error = true;
+			return !error;
 		}
 		else {
 			wSurface = SDL_GetWindowSurface(window);
-
-			// inicializamos la escena
-			// CREAMOS EL OBJETO Y LO AGREGAMOS A LA LISTA DE OBJETOS.
-			// lista de objetos = escena.
+			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+			if (!renderer) {
+				if (!log.abrirLog("Window.log")) {
+					std::cout << "Error al abrir archivo de log" << std::endl;
+					return false;
+				}
+				log.escribirLog("ERROR", "No se pudo crear el renderer!");
+				log.cerrarLog();
+				SDL_DestroyWindow(window);
+				error = true;
+				return !error;
+			}
+			/* inicializamos la escena
+			CREAMOS EL OBJETO Y LO AGREGAMOS A LA LISTA DE OBJETOS.
+			 lista de objetos = escena.
 			RectanguloDibujable* rectangulo = new RectanguloDibujable();
 			rectangulo->posicion( 30.0, 30.0 );
 			rectangulo->tamano(100, 50);
 			SDL_Color c = { 255, 165, 0, 0 };
 			rectangulo->color( c );
 
-			wEscenario.agregarDibujable(rectangulo);
+			wEscenario.agregarDibujable(rectangulo);*/
 		}
 	}
 	return !error;
@@ -55,11 +84,23 @@ bool Window::init(int width, int height) {
 
 bool Window::updateWindow() {
 	 if (SDL_UpdateWindowSurface(window) != 0 ) {
-		 // TODO: Catch Error and handle log.
-		 error = true;
+		if (!log.abrirLog("Window.log")) {
+			std::cout << "Error al abrir archivo de log" << std::endl;
+			return false;
+		}
+		log.escribirLog("WAR", "Window update fail!");
+		log.cerrarLog();
+		error = true;
+		return !error;
 	 }
-
+	 // El dibujar supongo que deberia ir antes del update surface
+	 // Igualmente por ahi es mejor usar un renderer para los objetos dinamicos
+	 // Y el surface para los estaticos, asi solo hace un update surface al cargar
+	 // o cambiar de escenario (es una idea).
+	 // Por deberia haber 2 update uno para renderer y otro para surface.
+	 /*SDL_RenderClear(renderer);
 	 wEscenario.dibujarEscena(wSurface);
+	 SDL_RenderPresent(renderer);*/
 
 	 return !error;
 }
@@ -70,7 +111,12 @@ bool Window::updateWindow() {
 bool Window::loadBackground(const char* pathToBG) {
 	BGimage = IMG_Load(pathToBG);
 	if (!BGimage) {
-		// TODO: Catch Error and handle log.
+		if (!log.abrirLog("Window.log")) {
+			std::cout << "Error al abrir archivo de log" << std::endl;
+			return false;
+		}
+		log.escribirLog("WAR", "No se pudo cargar el fondo!");
+		log.cerrarLog();
 		error = true;
 		return error;
 	}
@@ -92,7 +138,12 @@ bool Window::loadBackground(const char* pathToBG) {
 			BGimage = resizeSurface(BGimage, aux, SCREEN_WIDTH);
 		}
 		if(!BGimage) {
-			//TODO: Error Handling
+			if (!log.abrirLog("Window.log")) {
+				std::cout << "Error al abrir archivo de log" << std::endl;
+				return false;
+			}
+			log.escribirLog("WAR", "No se pudo resizear la imagen correctamente.");
+			log.cerrarLog();
 			return false;
 		}
 	}
@@ -106,11 +157,20 @@ bool Window::loadBackground(const char* pathToBG) {
 // Returns the new Surface and frees the old one
 SDL_Surface* Window::resizeSurface(SDL_Surface* surface, int t_height, int t_width) {
 	if(!surface) {
-		// TODO: Error handling
+		if (!log.abrirLog("Window.log")) {
+			std::cout << "Error al abrir archivo de log" << std::endl;
+			return false;
+		}
+		log.escribirLog("ERROR", "Parametro de superficie invalido.");
+		log.cerrarLog();
 		return NULL;
 	}
 	if(t_height <= 0 || t_width <= 0) {
-		// TODO: Error handling
+		if (!log.abrirLog("Window.log")) {
+			std::cout << "Error al abrir archivo de log" << std::endl;
+			return false;
+		}
+		log.escribirLog("ERROR", "Los tamaños para resize son <= 0");
 		return NULL;
 	}
 	SDL_Surface* newSurface = NULL;
@@ -122,7 +182,12 @@ SDL_Surface* Window::resizeSurface(SDL_Surface* surface, int t_height, int t_wid
 
 	newSurface = rotozoomSurfaceXY(surface, 0, zoomx, zoomy, SMOOTHING_ON);
 	if(!newSurface) {
-		std::cout << "No se pudo resizear" << std::endl;
+		if (!log.abrirLog("Window.log")) {
+			std::cout << "Error al abrir archivo de log" << std::endl;
+			return false;
+		}
+		log.escribirLog("WAR", "No se pudo resizear la superficie.");
+		log.cerrarLog();
 		return NULL;
 	}
 	SDL_FreeSurface(surface);
@@ -133,6 +198,10 @@ Window::~Window(){
 	if(BGimage) {
 		SDL_FreeSurface(BGimage);
 		BGimage = NULL;
+	}
+	if(renderer) {
+		SDL_DestroyRenderer(renderer);
+		renderer = NULL;
 	}
 	if(window) {
 		SDL_DestroyWindow(window);

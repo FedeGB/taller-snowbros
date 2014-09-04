@@ -12,6 +12,8 @@ private:
 	SDL_Surface* wSurface;
 	SDL_Surface* BGimage;
 	Escenario wEscenario;
+	SDL_Renderer* renderer;
+	Logger& log;
 
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
