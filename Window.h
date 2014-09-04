@@ -4,6 +4,7 @@
 
 #include "Escenario.h"
 #include "modelo/formas/RectanguloDibujable.h"
+#include "utiles/Logger.h"
 
 class Window {
 
