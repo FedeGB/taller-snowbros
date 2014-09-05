@@ -3,9 +3,13 @@
 #include "SDL_image.h"
 #include "SDL2_rotozoom.h"
 
+//#include <SDL2/SDL2_rotozoom.h>
+//#include <SDL2/SDL_image.h>
+
 Window::Window() {
 	window = NULL;
 	wSurface = NULL;
+	wEscenario = NULL;
 	error = false;
 	renderer = NULL;
 	SCREEN_WIDTH = 0;
@@ -76,10 +80,30 @@ bool Window::init(int width, int height) {
 			rectangulo->color( c );
 
 			wEscenario.agregarDibujable(rectangulo);*/
+
+			//EJEMPLO del handler y del patron Observador
+
+			wEscenario = new Escenario();
+
+			Personaje* personajeAObservar = new Personaje();
+			Observador<Personaje>* observador1 = new Observador<Personaje>( personajeAObservar );
+			wHandlerEventos.agregarObservador(observador1);
+
+			Escenario* escenario = wEscenario;
+			Observador<Escenario>* observador2 = new Observador<Escenario>( escenario );
+			wHandlerEventos.agregarObservador(observador2);
 		}
 	}
 	return !error;
 
+}
+
+void Window::handleEvent(SDL_Event& evento)
+{
+	 switch( evento.type )
+	 {
+	 	 case SDL_KEYDOWN: wHandlerEventos.manejarTeclaPresionada(evento.key.keysym.sym); break;
+	 }
 }
 
 bool Window::updateWindow() {
@@ -101,6 +125,9 @@ bool Window::updateWindow() {
 	 /*SDL_RenderClear(renderer);
 	 wEscenario.dibujarEscena(wSurface);
 	 SDL_RenderPresent(renderer);*/
+
+	 // DIBUJO EL ESCENARIO ACTUALIZADO
+	 wEscenario->dibujarEscena(wSurface);
 
 	 return !error;
 }
@@ -206,6 +233,10 @@ Window::~Window(){
 	if(window) {
 		SDL_DestroyWindow(window);
 		window = NULL;
+	}
+	if(wEscenario) {
+		delete(wEscenario);
+		wEscenario = NULL;
 	}
 	SDL_Quit();
 }

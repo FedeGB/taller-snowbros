@@ -13,6 +13,10 @@
 #include <stdlib.h>
 #include <vector>
 
+#include "../modelo/interfaces/IDibujable.h"
+#include "../control/interfaces/IObservador.h"
+
+typedef std::vector<IObservador*> ListaObservadores;
 typedef std::vector<IDibujable*> ListaDibujables;
 
 class Tamano {
@@ -46,6 +50,13 @@ private:
 	int tAlto, tAncho;
 };
 
-
+enum TECLAS
+{
+	ARRIBA,
+	ABAJO,
+	IZQUIERDA,
+	DERECHA,
+	RESTART, // RESTART = tecla r
+};
 
 #endif /* TIPOS_H_ */

@@ -8,8 +8,8 @@
 #include "Objeto.h"
 
 Objeto::Objeto() :
-	oAngulo(0), oEsEstatico(true), oEscala(1.0), oMasa(10.0),
-	oPosicion(0.0, 0.0), oTamano(Tamano(100, 100))
+	oPosicion(0.0, 0.0), oTamano(Tamano(100, 100)),
+	oEscala(1.0), oAngulo(0), oMasa(10.0), oEsEstatico(true)
 {
 	oColor.r = 0.0; oColor.g = 0.0; oColor.b = 0.0; oColor.a = 1.0;
 }

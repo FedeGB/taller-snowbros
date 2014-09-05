@@ -2,7 +2,12 @@
 #define WINDOW_H
 #include <SDL.h>
 
-#include "Escenario.h"
+//#include <SDL2/SDL.h>
+
+#include "control/HandlerDeEventos.h"
+#include "vista/Escenario.h"
+#include "control/Observador.h"
+#include "modelo/Personaje.h"
 #include "modelo/formas/RectanguloDibujable.h"
 #include "utiles/Logger.h"
 
@@ -12,8 +17,11 @@ private:
 	SDL_Window* window;
 	SDL_Surface* wSurface;
 	SDL_Surface* BGimage;
-	Escenario wEscenario;
 	SDL_Renderer* renderer;
+
+	Escenario* wEscenario;
+	HandlerDeEventos wHandlerEventos;
+
 	Logger& log;
 
 	int SCREEN_WIDTH;
@@ -29,6 +37,8 @@ public:
 	bool init(int width, int height);
 	// Cargar el fondo
 	bool loadBackground(const char* pathToBG);
+	// manejar evento
+	void handleEvent(SDL_Event&);
 	// Update ventana
 	bool updateWindow();
 	// Destructor de la clase
