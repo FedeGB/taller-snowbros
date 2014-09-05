@@ -12,7 +12,7 @@ string get_node(string data,string param,string file,char* defaultData){
 
 }
 
-string get_node(char* datas,string param,string file){
+string get_node(char* datas,string param,string file,char* defaultData){
 	string data(datas);
 	Json::Value root;
 	Json::Reader reader;
@@ -23,7 +23,7 @@ string get_node(char* datas,string param,string file){
 
 }
 
-string get_node(string data,string param,string file,int field){
+string get_node(string data,string param,string file,int field,char* defaultData){
 	Json::Value root;
 	Json::Reader reader;
 	bool parsingOk= reader.parse(file, root);
