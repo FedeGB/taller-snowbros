@@ -13,8 +13,8 @@
 
 using namespace std;
 
-	 string get_node(string data,string param,string file,int field);
-	 string get_node(char* datas,string param,string file);
-	 string get_node(string data,string param,string file);
+	 string get_node(string data,string param,string file,int field,char* defaultData);
+	 string get_node(char* datas,string param,string file,char* defaultData);
+	 string get_node(string data,string param,string file,char* defaultData);
 
 #endif /* PARSER_H_ */
