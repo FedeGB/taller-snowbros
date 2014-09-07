@@ -3,10 +3,13 @@
 
 shapes::shapes() {
 	_shape = NULL;
+	_point = NULL;
+	log = * Logger::Instancia();
 	// TODO Auto-generated constructor stub
 }
 
 shapes::shapes(std::string data, b2World *mundo, int num) {
+	log = * Logger::Instancia();
 	if (!b2d_objet(data, mundo, num))
 		_shape = NULL;
 }
@@ -46,7 +49,12 @@ bool shapes::b2d_objet(std::string data, b2World *mundo, int num) {
 
 	switch (lados) {//dependiendo del numero de lados
 	case 0: //0 es error
-
+		if (!log.abrirLog("shapes.log")) {
+					std::cout << "Error al abrir archivo de log" << std::endl;
+					return false;
+				}
+				log.escribirLog("ERROR", "No se definio ninguna forma");
+				log.cerrarLog();
 		return false;
 
 	case 1: //1 solo lado  = circulo

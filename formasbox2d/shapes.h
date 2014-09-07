@@ -13,6 +13,7 @@
 #include <string>
 #include <cmath>
 #include "parser.h"
+#include "utiles/Logger.h"
 
 class shapes {
 public:
@@ -29,6 +30,7 @@ private:
 	int num_lados(std::string data);
 	b2Body *_shape;
 	b2Vec2 *_point;
+	Logger& log;
 	bool update_Position();//cambia la posicion de la imagen
 };
 
