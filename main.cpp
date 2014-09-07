@@ -3,29 +3,35 @@
 
 using namespace std;
 
-Window w;
-
-void init();
+bool init();
 bool loopPrincipal();
 bool close();
 
-int main() {
+Window* w = new Window();
 
-	init();
+int main() {
+	bool statusOK = true;
+	statusOK = init();
+	if(!statusOK) {
+		return -1;
+	}
 	loopPrincipal();
 	close();
 
 	return 0;
 }
 
-void init() {
-	w.init(640, 480);
+bool init() {
+
+	bool statusOK = w->init(640, 480);
+	return statusOK;
 }
 
 bool loopPrincipal() {
 
 	SDL_Event event;
 	bool quit = false;
+	bool statusOK = true;
 
 	while( !quit )
 	{
@@ -33,12 +39,22 @@ bool loopPrincipal() {
 		{
 			if( event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE )
 				quit = true;
-			w.handleEvent(event);
+			w->handleEvent(event);
 		}
-		w.updateWindow();
+		statusOK =w->updateWindow();
+		if(!statusOK) {
+			if (w) {
+				delete w;
+			}
+			return -1;
+		}
+
 	}
 
 	return 0;
 }
 
-bool close() {}
+bool close() {
+	delete w;
+	return true;
+}

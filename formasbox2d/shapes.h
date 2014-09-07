@@ -6,8 +6,8 @@
 #include <Box2D/Box2D.h>
 #include <string>
 #include <cmath>
-#include "parser.h"
-#include "utiles/Logger.h"
+#include "../parser/parser.h"
+#include "../utiles/Logger.h"
 
 class shapes {
 public:

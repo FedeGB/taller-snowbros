@@ -15,10 +15,10 @@ Window::Window() {
 	SCREEN_WIDTH = 0;
 	SCREEN_HEIGHT = 0;
 	BGimage = NULL;
-	log = * Logger::Instancia();
 }
 
 bool Window::init(int width, int height) {
+	Logger& log = * Logger::Instancia();
 	if (height > 0 && width > 0){
 		SCREEN_WIDTH = width;
 		SCREEN_HEIGHT = height;
@@ -107,6 +107,7 @@ void Window::handleEvent(SDL_Event& evento)
 }
 
 bool Window::updateWindow() {
+	Logger& log = * Logger::Instancia();
 	 if (SDL_UpdateWindowSurface(window) != 0 ) {
 		if (!log.abrirLog("Window.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
@@ -136,6 +137,7 @@ bool Window::updateWindow() {
 // If the image is not of the same size as the window it will be resized
 // to fit the window size, being proportional and avoiding blank spaces (image could be cropped).
 bool Window::loadBackground(const char* pathToBG) {
+	Logger& log = * Logger::Instancia();
 	BGimage = IMG_Load(pathToBG);
 	if (!BGimage) {
 		if (!log.abrirLog("Window.log")) {
@@ -183,10 +185,11 @@ bool Window::loadBackground(const char* pathToBG) {
 // Does not check if the resize distorts the surface size
 // Returns the new Surface and frees the old one
 SDL_Surface* Window::resizeSurface(SDL_Surface* surface, int t_height, int t_width) {
+	Logger& log = * Logger::Instancia();
 	if(!surface) {
 		if (!log.abrirLog("Window.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return false;
+			return NULL;
 		}
 		log.escribirLog("ERROR", "Parametro de superficie invalido.");
 		log.cerrarLog();
@@ -195,7 +198,7 @@ SDL_Surface* Window::resizeSurface(SDL_Surface* surface, int t_height, int t_wid
 	if(t_height <= 0 || t_width <= 0) {
 		if (!log.abrirLog("Window.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return false;
+			return NULL;
 		}
 		log.escribirLog("ERROR", "Los tamaños para resize son <= 0");
 		return NULL;
@@ -211,7 +214,7 @@ SDL_Surface* Window::resizeSurface(SDL_Surface* surface, int t_height, int t_wid
 	if(!newSurface) {
 		if (!log.abrirLog("Window.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return false;
+			return NULL;
 		}
 		log.escribirLog("WAR", "No se pudo resizear la superficie.");
 		log.cerrarLog();

@@ -1,4 +1,5 @@
 #include "parser.h"
+#include "json.h"
 #include <sstream>
 using namespace std;
 
@@ -10,7 +11,7 @@ string get_node(string data, string param, string file, char* defaultData) {
 	if (!parsingOk) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return false;
+			return NULL;
 		}
 		string errorLectura;
 		errorLectura = "no se pudo leer el archivo "+ reader.getFormattedErrorMessages();
@@ -20,7 +21,7 @@ string get_node(string data, string param, string file, char* defaultData) {
 	if (root[param][data].empty()) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return false;
+			return NULL;
 		}
 		log.escribirLog("ERROR", "campo "+ data +" vacio");
 		log.cerrarLog();
@@ -38,7 +39,7 @@ string get_node(char* datas, string param, string file, char* defaultData) {
 	if (!parsingOk) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return false;
+			return NULL;
 		}
 		string errorLectura;
 		errorLectura = "no se pudo leer el archivo "+ reader.getFormattedErrorMessages();
@@ -48,7 +49,7 @@ string get_node(char* datas, string param, string file, char* defaultData) {
 	if (root[param][data].empty()) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return false;
+			return NULL;
 		}
 		log.escribirLog("ERROR", "campo "+ data +" vacio");
 		log.cerrarLog();
@@ -66,7 +67,7 @@ string get_node(string data, string param, string file, int field,
 	if (!parsingOk) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return false;
+			return NULL;
 		}
 		string errorLectura;
 		errorLectura = "no se pudo leer el archivo "+ reader.getFormattedErrorMessages();
@@ -76,7 +77,7 @@ string get_node(string data, string param, string file, int field,
 	if (root[param][field][data].empty()) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return false;
+			return NULL;
 		}
 		std::string s;
 		std::stringstream out;

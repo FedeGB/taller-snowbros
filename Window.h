@@ -22,8 +22,6 @@ private:
 	Escenario* wEscenario;
 	HandlerDeEventos wHandlerEventos;
 
-	Logger& log;
-
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
 	bool error;

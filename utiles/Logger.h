@@ -25,7 +25,7 @@ public:
 private:
 	Logger(){};  // Constructor privado para que no lo invoquen
 	Logger(Logger const&){};             // Copia privado
-	Logger& operator=(Logger const&){};  // Asignacion es privado
+	Logger& operator=(Logger const&);  // Asignacion es privado
 	static Logger* InstanciaActual;
 	std::ofstream logActual;
 
