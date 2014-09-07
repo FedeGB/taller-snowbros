@@ -4,26 +4,22 @@
 shapes::shapes() {
 	_shape = NULL;
 	_point = NULL;
-	log = * Logger::Instancia();
 	// TODO Auto-generated constructor stub
 }
 
 shapes::shapes(std::string data, b2World *mundo, int num) {
-	log = * Logger::Instancia();
 	if (!b2d_objet(data, mundo, num))
 		_shape = NULL;
 }
 
 shapes::~shapes() {
-	delete _shape;
-	_shape = NULL;
-	delete _point;
-	_point = NULL;
+
 	// TODO Auto-generated destructor stub
 }
 
 bool shapes::b2d_objet(std::string data, b2World *mundo, int num) {
 
+	Logger& log= *Logger::Instancia();
 	b2BodyDef b2dObjDef;
 	b2FixtureDef myFixtureDef;
 	b2CircleShape circle;
@@ -72,7 +68,7 @@ bool shapes::b2d_objet(std::string data, b2World *mundo, int num) {
 	case 4: // 4 lados caja
 		poligon.SetAsBox(
 				atof(get_node("alto", "objetos", data, num,"1").c_str()) / 2,
-				atof(get_node("ancho", "objeto", data,"1").c_str()) / 2); //le doy dimenciones
+				atof(get_node("ancho", "objetos", data, num,"1").c_str()) / 2); //le doy dimenciones
 		myFixtureDef.shape = &poligon; //defino que es un poligono
 		_shape->CreateFixture(&myFixtureDef); //le asigno la forma
 		break;
@@ -81,10 +77,10 @@ bool shapes::b2d_objet(std::string data, b2World *mundo, int num) {
 
 		_point = new b2Vec2[lados]; //creo un vector con los vertices
 		for (int i = 0; i < lados; i++) {
-			point[i].Set(cos(2 * i * PI / lados), sin(2 * i * PI / lados));
+			_point[i].Set(cos(2 * i * PI / lados), sin(2 * i * PI / lados));
 		} //les asigno la posicion
 
-		poligon.Set(point, lados);
+		poligon.Set(_point, lados);
 		myFixtureDef.shape = &poligon;
 		myFixtureDef.density = atof(
 				get_node("masa", "objetos", data, num,"1").c_str()); //le asigno la masa
@@ -99,7 +95,7 @@ b2Body& shapes::getShape() {
 	return *_shape;
 }// retorna una referencia al objeto de box2d
 
-b2Body& shapes::getPoints() {
+b2Vec2& shapes::getPoints() {
 	return *_point;
 }// retorna una referencia al objeto de box2d
 
@@ -116,4 +112,3 @@ int shapes::num_lados(std::string data) {
 		return 0;
 
 }
-

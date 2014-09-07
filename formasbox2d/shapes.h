@@ -1,9 +1,3 @@
-/*
- * shapes.h
- *
- *  Created on: 30/08/2014
- *      Author: coco
- */
 
 #ifndef SHAPES_H_
 #define SHAPES_H_
@@ -30,8 +24,10 @@ private:
 	int num_lados(std::string data);
 	b2Body *_shape;
 	b2Vec2 *_point;
-	Logger& log;
+
 	bool update_Position();//cambia la posicion de la imagen
 };
 
 #endif /* SHAPES_H_ */
+
+
