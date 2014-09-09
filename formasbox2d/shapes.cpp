@@ -116,8 +116,6 @@ b2Vec2& shapes::getPoints() {
 	return *_point;
 }// retorna una referencia a los vertices originales de los objetos
 
-//TODO no se si estas funciones van aca o ponerlas en una clase parser
-
 int shapes::num_lados(std::string data) {
 	if (!data.compare("circ"))
 		return 1;
