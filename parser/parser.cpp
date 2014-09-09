@@ -23,7 +23,7 @@ string get_node(string data, string param, string file, char* defaultData) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return NULL;
 		}
-		log.escribirLog("ERROR", "campo "+ data +" vacio");
+		log.escribirLog("ERROR", "campo "+ data +" de "+param+" vacio");
 		log.cerrarLog();
 	}
 	return root[param].get(data, defaultData).asString();
@@ -51,7 +51,7 @@ string get_node(char* datas, string param, string file, char* defaultData) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return NULL;
 		}
-		log.escribirLog("ERROR", "campo "+ data +" vacio");
+		log.escribirLog("ERROR", "campo "+ data +" de "+param+" vacio");
 		log.cerrarLog();
 	}
 	return root[param].get(data, defaultData).asString();
@@ -83,7 +83,7 @@ string get_node(string data, string param, string file, int field,
 		std::stringstream out;
 		out << field;
 		s = out.str();
-		log.escribirLog("ERROR", "campo "+ data +" vacio del objeto" + s);
+		log.escribirLog("ERROR", "campo "+ data +" de "+param+" vacio, del objeto" + s);
 		log.cerrarLog();
 	}
 	return root[param][field].get(data, defaultData).asString();
