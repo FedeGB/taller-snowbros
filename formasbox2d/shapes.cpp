@@ -73,6 +73,21 @@ bool shapes::b2d_objet(std::string data, b2World *mundo, int num) {
 		_shape->CreateFixture(&myFixtureDef); //le asigno la forma
 		break;
 
+	case 5:
+		_point = new b2Vec2[lados];
+		float base=atof(get_node("base","objetos",data,num,"1").c_str());
+		float tapa=atof(get_node("tapa","objetos",data,num,"1").c_str());
+		float alto=atof(get_node("alto","objetos",data,num,"1").c_str());
+		float desp=atof(get_node("desp","objetos",data,num,"1").c_str());//desplazamiento
+		_point[0].Set(-1.0*base/2,0.0);
+		_point[1].Set(atof(base/2,0.0);
+		_point[2].Set((-1.0*tapa/2)+(desplazamiento/2),alto);
+		_point[3].Set(atof((-1.0*tapa/2)+(desplazamiento/2),alto);
+		poligon.Set(_point, lados);
+		myFixtureDef.shape = &poligon;
+		myFixtureDef.density = atof(get_node("masa", "objetos", data, num,"1").c_str());
+		_shape->CreateFixture(&myFixtureDef);
+
 	default: // 3, 5 o mas lados poligonos regulares
 
 		_point = new b2Vec2[lados]; //creo un vector con los vertices
@@ -97,7 +112,7 @@ b2Body& shapes::getShape() {
 
 b2Vec2& shapes::getPoints() {
 	return *_point;
-}// retorna una referencia al objeto de box2d
+}// retorna una referencia a los vertices originales de los objetos
 
 //TODO no se si estas funciones van aca o ponerlas en una clase parser
 
@@ -108,6 +123,8 @@ int shapes::num_lados(std::string data) {
 		return 4;
 	if (!data.compare("poli"))
 		return 3;
+	if (!data.compare("irreg"))//trapecio o paralelogramo
+			return 5;
 	else
 		return 0;
 
