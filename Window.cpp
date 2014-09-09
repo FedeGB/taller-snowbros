@@ -2,6 +2,7 @@
 #include <iostream>
 //#include "SDL_image.h"
 //#include "SDL2_rotozoom.h"
+#include <string>
 
 #include <SDL2/SDL2_rotozoom.h>
 #include <SDL2/SDL_image.h>
@@ -39,7 +40,9 @@ bool Window::init(int width, int height) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return false;
 		}
-		log.escribirLog("ERROR", "No se pudo inicializar SDL!");
+		std::string buf ("No se pudo inicializar SDL!");
+		buf = buf + SDL_GetError();
+		log.escribirLog("ERROR", buf);
 		log.cerrarLog();
 		error = true;
 		return !error;
@@ -51,7 +54,9 @@ bool Window::init(int width, int height) {
 				std::cout << "Error al abrir archivo de log" << std::endl;
 				return false;
 			}
-			log.escribirLog("ERROR", "No se pudo crear la ventana.");
+			std::string buf("No se pudo crear la ventana.");
+			buf = buf + SDL_GetError();
+			log.escribirLog("ERROR", buf);
 			log.cerrarLog();
 			error = true;
 			return !error;
@@ -59,8 +64,9 @@ bool Window::init(int width, int height) {
 		else {
 //			wSurface = SDL_GetWindowSurface(window);
 			wRenderer = crearRenderer(window);
-			if( !wRenderer ) error = true;
-
+			if( !wRenderer ) {
+				error = true;
+			}
 			/* inicializamos la escena
 			CREAMOS EL OBJETO Y LO AGREGAMOS A LA LISTA DE OBJETOS.
 			 lista de objetos = escena.
@@ -143,7 +149,9 @@ bool Window::loadBackground(const char* pathToBG) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return false;
 		}
-		log.escribirLog("WAR", "No se pudo cargar el fondo!");
+		std::string buf("No se pudo cargar el fondo!");
+		buf = buf + SDL_GetError();
+		log.escribirLog("WAR", buf);
 		log.cerrarLog();
 		error = true;
 		return error;
@@ -152,7 +160,7 @@ bool Window::loadBackground(const char* pathToBG) {
 	bg_height = imagenCargada->h;
 	bg_width = imagenCargada->w;
 	// Adjusting BG to window size if necessary
-	if(bg_height != SCREEN_HEIGHT && bg_width != SCREEN_WIDTH) {
+	if(bg_height != SCREEN_HEIGHT || bg_width != SCREEN_WIDTH) {
 		double ratio;
 		int aux;
 		if(bg_height < bg_width) {
@@ -170,7 +178,9 @@ bool Window::loadBackground(const char* pathToBG) {
 				std::cout << "Error al abrir archivo de log" << std::endl;
 				return false;
 			}
-			log.escribirLog("WAR", "No se pudo resizear la imagen correctamente.");
+			std::string buf("No se pudo resizear la imagen correctamente.");
+			buf = buf + SDL_GetError();
+			log.escribirLog("WAR", buf);
 			log.cerrarLog();
 			return false;
 		}
@@ -218,7 +228,9 @@ SDL_Surface* Window::resizeSurface(SDL_Surface* surface, int t_height, int t_wid
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return NULL;
 		}
-		log.escribirLog("WAR", "No se pudo resizear la superficie.");
+		std::string buf ("No se pudo resizear la superficie. ");
+		buf = buf + SDL_GetError();
+		log.escribirLog("WAR", buf);
 		log.cerrarLog();
 		return NULL;
 	}
