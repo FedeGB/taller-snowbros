@@ -1,6 +1,8 @@
 #include <iostream>
 #include "Window.h"
 
+#include "parser/parser.h"
+
 using namespace std;
 
 bool init();
