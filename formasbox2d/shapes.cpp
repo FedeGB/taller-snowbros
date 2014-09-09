@@ -73,7 +73,7 @@ bool shapes::b2d_objet(std::string data, b2World *mundo, int num) {
 		_shape->CreateFixture(&myFixtureDef); //le asigno la forma
 		break;
 
-	case 5:
+	case 5:{
 		_point = new b2Vec2[lados];
 		float base, tapa, alto, desp;
 		base = atof(get_node("base","objetos",data,num,"1").c_str());
@@ -88,7 +88,7 @@ bool shapes::b2d_objet(std::string data, b2World *mundo, int num) {
 		myFixtureDef.shape = &poligon;
 		myFixtureDef.density = atof(get_node("masa", "objetos", data, num,"1").c_str());
 		_shape->CreateFixture(&myFixtureDef);
-		break;
+		break;}
 
 	default: // 3, 5 o mas lados poligonos regulares
 
