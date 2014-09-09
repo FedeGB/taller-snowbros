@@ -42,7 +42,7 @@ public:
 		SDL_Surface* surfaceCargada = IMG_Load( path.c_str() );
 		if( surfaceCargada  == NULL )
 		{
-			log.abrirLog("Dibujable.log");
+			log.abrirLog(DIBUJABLELOG);
 			log.escribirLog("ERROR", "Imposible cargar la imagen "+path+"\n");
 			log.cerrarLog();
 			return !exito;
@@ -54,7 +54,7 @@ public:
 			texturaNueva = SDL_CreateTextureFromSurface( dRenderer, surfaceCargada  );
 			if( texturaNueva == NULL )
 			{
-				log.abrirLog("Dibujable.log");
+				log.abrirLog(DIBUJABLELOG);
 				log.escribirLog("ERROR", "Imposible crear textura desde "+path+"\n");
 				log.cerrarLog();
 				return !exito;

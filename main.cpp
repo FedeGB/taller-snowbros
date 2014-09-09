@@ -45,8 +45,9 @@ bool loopPrincipal() {
 		if(!statusOK) {
 			if (w) {
 				delete w;
+				w = NULL;
 			}
-			return false;
+			return -1;
 		}
 		SDL_Delay(25);
 	}
@@ -55,6 +56,8 @@ bool loopPrincipal() {
 }
 
 bool close() {
-	delete w;
+	if(w) {
+		delete w;
+	}
 	return true;
 }

@@ -75,18 +75,20 @@ bool shapes::b2d_objet(std::string data, b2World *mundo, int num) {
 
 	case 5:
 		_point = new b2Vec2[lados];
-		float base=atof(get_node("base","objetos",data,num,"1").c_str());
-		float tapa=atof(get_node("tapa","objetos",data,num,"1").c_str());
-		float alto=atof(get_node("alto","objetos",data,num,"1").c_str());
-		float desp=atof(get_node("desp","objetos",data,num,"1").c_str());//desplazamiento
+		float base, tapa, alto, desp;
+		base = atof(get_node("base","objetos",data,num,"1").c_str());
+		tapa = atof(get_node("tapa","objetos",data,num,"1").c_str());
+		alto = atof(get_node("alto","objetos",data,num,"1").c_str());
+		desp = atof(get_node("desp","objetos",data,num,"1").c_str());//desplazamiento
 		_point[0].Set(-1.0*base/2,0.0);
-		_point[1].Set(atof(base/2,0.0);
+		_point[1].Set(base/2,0.0);
 		_point[2].Set((tapa/2)+(desp/2),alto);
-		_point[3].Set(atof((-1.0*tapa/2)+(desplazamiento/2),alto);
+		_point[3].Set((-1.0*tapa/2)+(desp/2),alto);
 		poligon.Set(_point, lados);
 		myFixtureDef.shape = &poligon;
 		myFixtureDef.density = atof(get_node("masa", "objetos", data, num,"1").c_str());
 		_shape->CreateFixture(&myFixtureDef);
+		break;
 
 	default: // 3, 5 o mas lados poligonos regulares
 

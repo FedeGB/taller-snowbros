@@ -25,7 +25,7 @@ bool Window::init(int width, int height) {
 		SCREEN_HEIGHT = height;
 	}
 	else {
-		if (!log.abrirLog("Window.log")) {
+		if (!log.abrirLog(WINDOWLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return false;
 		}
@@ -36,7 +36,7 @@ bool Window::init(int width, int height) {
 		return !error;
 	}
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-		if (!log.abrirLog("Window.log")) {
+		if (!log.abrirLog(WINDOWLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return false;
 		}
@@ -50,7 +50,7 @@ bool Window::init(int width, int height) {
 	else {
 		 window = SDL_CreateWindow("Snow Bros", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if(!window) {
-			if (!log.abrirLog("Window.log")) {
+			if (!log.abrirLog(WINDOWLOG)) {
 				std::cout << "Error al abrir archivo de log" << std::endl;
 				return false;
 			}
@@ -132,7 +132,7 @@ bool Window::loadBackground(const char* pathToBG) {
 	Logger& log = * Logger::Instancia();
 	SDL_Surface* imagenCargada = IMG_Load(pathToBG);
 	if (!imagenCargada) {
-		if (!log.abrirLog("Window.log")) {
+		if (!log.abrirLog(WINDOWLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return false;
 		}
@@ -186,16 +186,14 @@ bool Window::loadBackground(const char* pathToBG) {
 SDL_Surface* Window::resizeSurface(SDL_Surface* surface, int t_height, int t_width) {
 	Logger& log = * Logger::Instancia();
 	if(!surface) {
-		if (!log.abrirLog("Window.log")) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+		if (!log.abrirLog(WINDOWLOG)) {
+			log.escribirLog("ERROR", "Parametro de superficie invalido.");
+			log.cerrarLog();
 			return NULL;
 		}
-		log.escribirLog("ERROR", "Parametro de superficie invalido.");
-		log.cerrarLog();
-		return NULL;
 	}
 	if(t_height <= 0 || t_width <= 0) {
-		if (!log.abrirLog("Window.log")) {
+		if (!log.abrirLog(WINDOWLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return NULL;
 		}
@@ -211,7 +209,7 @@ SDL_Surface* Window::resizeSurface(SDL_Surface* surface, int t_height, int t_wid
 
 	newSurface = rotozoomSurfaceXY(surface, 0, zoomx, zoomy, SMOOTHING_ON);
 	if(!newSurface) {
-		if (!log.abrirLog("Window.log")) {
+		if (!log.abrirLog(WINDOWLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return NULL;
 		}
@@ -232,7 +230,7 @@ SDL_Renderer* Window::crearRenderer(SDL_Window* w)
 	renderer = SDL_CreateRenderer( w, -1, SDL_RENDERER_ACCELERATED );
 	if( !renderer )
 	{
-		if (!log.abrirLog("Window.log")) {
+		if (!log.abrirLog(WINDOWLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return renderer;
 		}
