@@ -29,6 +29,10 @@ private:
 	bool error;
 
 	SDL_Surface* resizeSurface(SDL_Surface* surface, int t_height, int t_width);
+
+	bool validarAnchoYAlto(int ancho, int alto);
+	bool iniciarSDL();
+	SDL_Window* crearVentana();
 	SDL_Renderer* crearRenderer(SDL_Window*);
 
 public:

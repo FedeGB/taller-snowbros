@@ -20,53 +20,28 @@ Window::Window() {
 
 bool Window::init(int width, int height) {
 	Logger& log = * Logger::Instancia();
-	if (height > 0 && width > 0){
-		SCREEN_WIDTH = width;
-		SCREEN_HEIGHT = height;
+	if( !validarAnchoYAlto( width, height ) )
+	{
+		return !error;
 	}
-	else {
-		if (!log.abrirLog(WINDOWLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
-			return false;
-		}
 
-		log.escribirLog("ERROR", "Altura y/o ancho menor a 0");
-		log.cerrarLog();
-		error = true;
+	if (!iniciarSDL())
+	{
 		return !error;
 	}
-	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-		if (!log.abrirLog(WINDOWLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
-			return false;
+	else
+	{
+		 window = crearVentana();
+		if( !window )
+		{
+			 return !error;
 		}
-		std::string buf ("No se pudo inicializar SDL!");
-		buf = buf + SDL_GetError();
-		log.escribirLog("ERROR", buf);
-		log.cerrarLog();
-		error = true;
-		return !error;
-	}
-	else {
-		 window = SDL_CreateWindow("Snow Bros", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-		if(!window) {
-			if (!log.abrirLog(WINDOWLOG)) {
-				std::cout << "Error al abrir archivo de log" << std::endl;
-				return false;
-			}
-			std::string buf("No se pudo crear la ventana.");
-			buf = buf + SDL_GetError();
-			log.escribirLog("ERROR", buf);
-			log.cerrarLog();
-			error = true;
-			return !error;
-		}
-		else {
+		else
+		{
 //			wSurface = SDL_GetWindowSurface(window);
 			wRenderer = crearRenderer(window);
-			if( !wRenderer ) {
-				error = true;
-			}
+			if( !wRenderer ) error = true;
+
 			wEscenario = new Escenario();
 
 			Fondo* fondo = new Fondo(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -221,6 +196,68 @@ SDL_Surface* Window::resizeSurface(SDL_Surface* surface, int t_height, int t_wid
 	}
 	SDL_FreeSurface(surface);
 	return newSurface;
+}
+
+bool Window::validarAnchoYAlto(int width, int height)
+{
+	Logger& log = * Logger::Instancia();
+
+	if (height > 0 && width > 0)
+	{
+		SCREEN_WIDTH = width;
+		SCREEN_HEIGHT = height;
+	}
+	else
+	{
+		if (!log.abrirLog(WINDOWLOG))
+		{
+			std::cout << "Error al abrir archivo de log" << std::endl;
+			return false;
+		}
+
+		log.escribirLog("ERROR", "Altura y/o ancho menor a 0");
+		log.cerrarLog();
+		error = true;
+		return !error;
+	}
+	return !error;
+}
+
+bool Window::iniciarSDL()
+{
+	Logger& log = * Logger::Instancia();
+
+	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	{
+		if (!log.abrirLog(WINDOWLOG)) {
+			std::cout << "Error al abrir archivo de log" << std::endl;
+			return false;
+		}
+		std::string buf ("No se pudo inicializar SDL!");
+		buf = buf + SDL_GetError();
+		log.escribirLog("ERROR", buf);
+		log.cerrarLog();
+		error = true;
+	}
+	return !error;
+}
+
+SDL_Window* Window::crearVentana()
+{
+	Logger& log = * Logger::Instancia();
+	SDL_Window* w = SDL_CreateWindow("Snow Bros", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	if(!w) {
+		if (!log.abrirLog(WINDOWLOG)) {
+			std::cout << "Error al abrir archivo de log" << std::endl;
+			return w;
+		}
+		std::string buf("No se pudo crear la ventana.");
+		buf = buf + SDL_GetError();
+		log.escribirLog("ERROR", buf);
+		log.cerrarLog();
+		error = true;
+	}
+	return w;
 }
 
 SDL_Renderer* Window::crearRenderer(SDL_Window* w)
