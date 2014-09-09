@@ -81,7 +81,7 @@ bool shapes::b2d_objet(std::string data, b2World *mundo, int num) {
 		float desp=atof(get_node("desp","objetos",data,num,"1").c_str());//desplazamiento
 		_point[0].Set(-1.0*base/2,0.0);
 		_point[1].Set(atof(base/2,0.0);
-		_point[2].Set((-1.0*tapa/2)+(desplazamiento/2),alto);
+		_point[2].Set((tapa/2)+(desplazamiento/2),alto);
 		_point[3].Set(atof((-1.0*tapa/2)+(desplazamiento/2),alto);
 		poligon.Set(_point, lados);
 		myFixtureDef.shape = &poligon;
