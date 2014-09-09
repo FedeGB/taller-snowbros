@@ -10,6 +10,7 @@
 
 #include "Objeto.h"
 #include "../control/interfaces/INotificable.h"
+#include "../modelo/interfaces/IDibujable.h"
 
 enum ESTADOS
 {
@@ -17,9 +18,10 @@ enum ESTADOS
 	ESTADO_IZQUIERDA,
 	ESTADO_DERECHA,
 	ESTADO_SALTANDO,
+	ESTADO_ABAJO,
 };
 
-class Personaje : public Objeto, public INotificable {
+class Personaje : public Objeto, public IDibujable, public INotificable {
 public:
 	Personaje();
 	virtual ~Personaje();
@@ -30,6 +32,12 @@ public:
 	virtual void eventoIzquierda();
 	virtual void eventoAbajo();
 	virtual void eventoRESTART(); // NO HACE NADA
+
+	// metodos de IDibujable
+	virtual SDL_Rect getRecuadroDeDibujo()
+	{
+		return getSDL_Rect();
+	}
 
 private:
 	int pEstado;

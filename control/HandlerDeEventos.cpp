@@ -20,7 +20,5 @@ void HandlerDeEventos::manejarTeclaPresionada(SDL_Keycode key)
 		case SDLK_LEFT: notificarObservadores(IZQUIERDA); break;
 		case SDLK_DOWN: notificarObservadores(ABAJO); break;
 		case SDLK_r: notificarObservadores(RESTART); break;
-
-		default: printf("flashaste tecla!!\n");
 	}
 }

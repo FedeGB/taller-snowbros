@@ -43,6 +43,12 @@ public:
 	bool esEstatico();
 	void esEstatico(bool);
 
+	void moverY(float32 y);
+	void moverX(float32 x);
+	void moverXY(float32 x, float32 y);
+
+	SDL_Rect getSDL_Rect();
+
 private:
 	b2Vec2 oPosicion;
 	Tamano oTamano;

@@ -78,3 +78,23 @@ uint32 Objeto::masa(){
 void Objeto::masa(uint32 m){
 	oMasa = m;
 }
+
+
+void Objeto::moverX(float32 x){
+	oPosicion.x += x;
+}
+
+void Objeto::moverY(float32 y){
+	oPosicion.y += y;
+}
+
+void Objeto::moverXY(float32 x, float32 y){
+	oPosicion.x += x;
+	oPosicion.y += y;
+}
+
+SDL_Rect Objeto::getSDL_Rect()
+{
+	SDL_Rect r = {  (int)posicion().x , (int)posicion().y ,(int)tamano().ancho() , (int)tamano().alto() };
+	return r;
+}

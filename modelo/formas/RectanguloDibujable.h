@@ -10,30 +10,38 @@
 
 #include "../Objeto.h"
 #include "../interfaces/IDibujable.h"
+#include "../../control/interfaces/INotificable.h"
 
-class RectanguloDibujable: public Objeto, public IDibujable
+class RectanguloDibujable: public Objeto, public IDibujable, public INotificable
 {
 public:
+
 	RectanguloDibujable(){};
 	virtual ~RectanguloDibujable(){};
 
-	inline void dibujar(SDL_Renderer* renderer)
+	SDL_Rect getRecuadroDeDibujo()
 	{
-		SDL_Rect rectangulo = getSDL_Rect();
-		SDL_SetRenderDrawColor( renderer, color().r, color().g, color().b, color().a);
-		SDL_RenderFillRect( renderer, &rectangulo );
+		return getSDL_Rect();
 	}
 
-	inline void dibujar(SDL_Surface* surface)
-	{
-		SDL_Rect rectangulo = getSDL_Rect();
-		SDL_FillRect(surface, &rectangulo, colorUint32());
+	virtual void eventoArriba(){
+		moverY(-10.0);
 	}
 
-	inline SDL_Rect getSDL_Rect()
-	{
-		SDL_Rect r = {  (int)posicion().x , (int)posicion().y ,(int)tamano().ancho() , (int)tamano().alto() };
-		return r;
+	virtual void eventoAbajo(){
+		moverY(10.0);
+	}
+
+	virtual void eventoDerecha(){
+		moverX(10.0);
+	}
+
+	virtual void eventoIzquierda(){
+		moverX(-10.0);
+	}
+
+	virtual void eventoRESTART(){
+		posicion( 30.0, 30.0);
 	}
 };
 

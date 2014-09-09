@@ -27,35 +27,32 @@ Escenario::~Escenario()
 	}
 }
 
-void Escenario::dibujarEscena(SDL_Surface* surface)
+void Escenario::dibujarEscena(SDL_Renderer* renderer)
 {
 	ListaDibujables::iterator it = eLista.begin();
+
+	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0x00);
+	SDL_RenderClear(renderer);
 
 	// si la lista tiene 1 solo elemento, dibujo el 1ero y listo.
 	if( eLista.size() == 1)
 	{
-		(*it)->dibujar(surface);
+		(*it)->dibujar();
 		return;
 	}
 
 	// voy recorriendo la lista y dibujando cada objeto dibujable.
 	for( it = eLista.begin(); it != eLista.end(); it++)
-		(*it)->dibujar(surface);
+	{
+		(*it)->dibujar();
+	}
+
+	SDL_RenderPresent(renderer);
 }
 
 void Escenario::agregarDibujable(IDibujable* dibujable)
 {
 	eLista.push_back(dibujable);
-}
-
-void Escenario::dibujar(IDibujable& objeto, SDL_Renderer* renderer)
-{
-	objeto.dibujar(renderer);
-}
-
-void Escenario::dibujar(IDibujable& objeto, SDL_Surface* surface)
-{
-	objeto.dibujar(surface);
 }
 
 void Escenario::eventoRESTART()

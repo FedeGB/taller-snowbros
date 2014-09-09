@@ -13,27 +13,53 @@ Personaje::~Personaje() {}
 
 void Personaje::eventoArriba()
 {
-	printf("EVENTO ARRIBA: SALTO\n");
+	if( pEstado != ESTADO_SALTANDO )
+	{
+		pEstado = ESTADO_SALTANDO;
+		printf("EVENTO ARRIBA: SALTO\n");
+	}
+	moverY(-5.0);
 }
 
 void Personaje::eventoDerecha()
 {
-	printf("EVENTO DERECHA: MOVER DERECHA\n");
+	if( pEstado != ESTADO_DERECHA )
+	{
+		pEstado = ESTADO_DERECHA;
+		cargarImagen("derecha.png");
+	}
+
+	moverX(5.0);
 }
 
 void Personaje::eventoIzquierda()
 {
-	printf("EVENTO IZQUIERDA: MOVER IZQUIERDA\n");
+	if( pEstado != ESTADO_IZQUIERDA )
+	{
+		pEstado = ESTADO_IZQUIERDA;
+		cargarImagen("izquierda.png");
+	}
+	moverX(-5.0);
 }
 
 void Personaje::eventoAbajo()
 {
-	printf("EVENTO ABAJO: MOVER ABAJO\n");
+	if( pEstado != ESTADO_ABAJO )
+	{
+		pEstado = ESTADO_ABAJO;
+		printf("EVENTO ABAJO: MOVER ABAJO\n");
+	}
+	moverY(5.0);
 }
 
 void Personaje::eventoRESTART()
 {
-	printf("EVENTO RESTART: RESTART PERSONAJE\n");
+	if( pEstado !=  ESTADO_PARADO)
+	{
+		pEstado = ESTADO_PARADO;
+		cargarImagen("parado.png");
+	}
+	posicion(100.0 ,100.0);
 }
 
 bool Personaje::saltar()

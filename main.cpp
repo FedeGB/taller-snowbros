@@ -41,14 +41,14 @@ bool loopPrincipal() {
 				quit = true;
 			w->handleEvent(event);
 		}
-		statusOK =w->updateWindow();
+		statusOK = w->updateWindow();
 		if(!statusOK) {
 			if (w) {
 				delete w;
 			}
 			return -1;
 		}
-
+		SDL_Delay(25);
 	}
 
 	return 0;

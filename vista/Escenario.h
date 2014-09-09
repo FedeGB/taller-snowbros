@@ -12,6 +12,7 @@
 #include "../modelo/interfaces/IDibujable.h"
 #include "../control/interfaces/INotificable.h"
 #include "../utiles/tipos.h"
+#include "../utiles/Logger.h"
 
 class Escenario : public INotificable {
 public:
@@ -20,11 +21,7 @@ public:
 
 	void agregarDibujable(IDibujable* dibujable);
 
-	void dibujar(IDibujable& dibujable, SDL_Renderer* renderer);
-	void dibujar(IDibujable& dibujable, SDL_Surface* surface);
-
-	void dibujarEscena(SDL_Surface*);
-	void animarEscena();
+	void dibujarEscena(SDL_Renderer*);
 
 	// metodos de INotificable
 	virtual void eventoArriba() {}; // NO HACE NADA

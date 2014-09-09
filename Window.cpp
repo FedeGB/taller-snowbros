@@ -1,17 +1,17 @@
 #include "Window.h"
 #include <iostream>
-#include "SDL_image.h"
-#include "SDL2_rotozoom.h"
+//#include "SDL_image.h"
+//#include "SDL2_rotozoom.h"
 
-//#include <SDL2/SDL2_rotozoom.h>
-//#include <SDL2/SDL_image.h>
+#include <SDL2/SDL2_rotozoom.h>
+#include <SDL2/SDL_image.h>
 
 Window::Window() {
 	window = NULL;
 	wSurface = NULL;
 	wEscenario = NULL;
 	error = false;
-	renderer = NULL;
+	wRenderer = NULL;
 	SCREEN_WIDTH = 0;
 	SCREEN_HEIGHT = 0;
 	BGimage = NULL;
@@ -57,19 +57,10 @@ bool Window::init(int width, int height) {
 			return !error;
 		}
 		else {
-			wSurface = SDL_GetWindowSurface(window);
-			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-			if (!renderer) {
-				if (!log.abrirLog("Window.log")) {
-					std::cout << "Error al abrir archivo de log" << std::endl;
-					return false;
-				}
-				log.escribirLog("ERROR", "No se pudo crear el renderer!");
-				log.cerrarLog();
-				SDL_DestroyWindow(window);
-				error = true;
-				return !error;
-			}
+//			wSurface = SDL_GetWindowSurface(window);
+			wRenderer = crearRenderer(window);
+			if( !wRenderer ) error = true;
+
 			/* inicializamos la escena
 			CREAMOS EL OBJETO Y LO AGREGAMOS A LA LISTA DE OBJETOS.
 			 lista de objetos = escena.
@@ -85,13 +76,24 @@ bool Window::init(int width, int height) {
 
 			wEscenario = new Escenario();
 
-			Personaje* personajeAObservar = new Personaje();
-			Observador<Personaje>* observador1 = new Observador<Personaje>( personajeAObservar );
-			wHandlerEventos.agregarObservador(observador1);
+			Fondo* fondo = new Fondo(SCREEN_WIDTH, SCREEN_HEIGHT);
+			fondo->setRenderer(wRenderer);
+			fondo->cargarImagen("fondo2.png");
+			wEscenario->agregarDibujable(fondo);
+
+			Personaje* personaje = new Personaje();
+			personaje->setRenderer(wRenderer);
+			personaje->cargarImagen("parado.png");
+			personaje->posicion(100.0, 100.0);
+			personaje->tamano(60, 50);
+			wEscenario->agregarDibujable(personaje);
 
 			Escenario* escenario = wEscenario;
 			Observador<Escenario>* observador2 = new Observador<Escenario>( escenario );
 			wHandlerEventos.agregarObservador(observador2);
+
+			Observador<Personaje>* obs3 = new Observador<Personaje>( personaje );
+			wHandlerEventos.agregarObservador(obs3);
 		}
 	}
 	return !error;
@@ -107,28 +109,25 @@ void Window::handleEvent(SDL_Event& evento)
 }
 
 bool Window::updateWindow() {
-	Logger& log = * Logger::Instancia();
-	 if (SDL_UpdateWindowSurface(window) != 0 ) {
-		if (!log.abrirLog("Window.log")) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
-			return false;
-		}
-		log.escribirLog("WAR", "Window update fail!");
-		log.cerrarLog();
-		error = true;
-		return !error;
-	 }
+//	Logger& log = * Logger::Instancia();
+//	 if (SDL_UpdateWindowSurface(window) != 0 ) {
+//		if (!log.abrirLog("Window.log")) {
+//			std::cout << "Error al abrir archivo de log" << std::endl;
+//			return false;
+//		}
+//		log.escribirLog("WAR", "Window update fail!");
+//		log.cerrarLog();
+//		error = true;
+//		return !error;
+//	 }
 	 // El dibujar supongo que deberia ir antes del update surface
-	 // Igualmente por ahi es mejor usar un renderer para los objetos dinamicos
+	 // Igualmente por ahi es mejor usar un wRenderer para los objetos dinamicos
 	 // Y el surface para los estaticos, asi solo hace un update surface al cargar
 	 // o cambiar de escenario (es una idea).
 	 // Por deberia haber 2 update uno para renderer y otro para surface.
-	 /*SDL_RenderClear(renderer);
-	 wEscenario.dibujarEscena(wSurface);
-	 SDL_RenderPresent(renderer);*/
 
 	 // DIBUJO EL ESCENARIO ACTUALIZADO
-	 wEscenario->dibujarEscena(wSurface);
+	 wEscenario->dibujarEscena(wRenderer);
 
 	 return !error;
 }
@@ -138,8 +137,8 @@ bool Window::updateWindow() {
 // to fit the window size, being proportional and avoiding blank spaces (image could be cropped).
 bool Window::loadBackground(const char* pathToBG) {
 	Logger& log = * Logger::Instancia();
-	BGimage = IMG_Load(pathToBG);
-	if (!BGimage) {
+	SDL_Surface* imagenCargada = IMG_Load(pathToBG);
+	if (!imagenCargada) {
 		if (!log.abrirLog("Window.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return false;
@@ -150,8 +149,8 @@ bool Window::loadBackground(const char* pathToBG) {
 		return error;
 	}
 	int bg_height, bg_width;
-	bg_height = BGimage->h;
-	bg_width = BGimage->w;
+	bg_height = imagenCargada->h;
+	bg_width = imagenCargada->w;
 	// Adjusting BG to window size if necessary
 	if(bg_height != SCREEN_HEIGHT && bg_width != SCREEN_WIDTH) {
 		double ratio;
@@ -159,14 +158,14 @@ bool Window::loadBackground(const char* pathToBG) {
 		if(bg_height < bg_width) {
 			ratio = (double)SCREEN_HEIGHT/bg_height;
 			aux = (int)(ratio*bg_width);
-			BGimage = resizeSurface(BGimage, SCREEN_HEIGHT, aux);
+			imagenCargada = resizeSurface(imagenCargada, SCREEN_HEIGHT, aux);
 		}
 		else {
 			ratio = (double)SCREEN_WIDTH/bg_width;
 			aux = (int)(ratio*bg_height);
-			BGimage = resizeSurface(BGimage, aux, SCREEN_WIDTH);
+			imagenCargada = resizeSurface(imagenCargada, aux, SCREEN_WIDTH);
 		}
-		if(!BGimage) {
+		if(!imagenCargada) {
 			if (!log.abrirLog("Window.log")) {
 				std::cout << "Error al abrir archivo de log" << std::endl;
 				return false;
@@ -177,7 +176,10 @@ bool Window::loadBackground(const char* pathToBG) {
 		}
 	}
 
-	SDL_BlitSurface(BGimage, NULL, wSurface, NULL);
+	//SDL_BlitSurface(BGimage, NULL, wSurface, NULL);
+	BGimage = SDL_CreateTextureFromSurface( wRenderer, imagenCargada );
+	SDL_FreeSurface(imagenCargada);
+
 	return !error;
 }
 
@@ -224,14 +226,40 @@ SDL_Surface* Window::resizeSurface(SDL_Surface* surface, int t_height, int t_wid
 	return newSurface;
 }
 
+SDL_Renderer* Window::crearRenderer(SDL_Window* w)
+{
+	Logger& log = * Logger::Instancia();
+	SDL_Renderer* renderer = NULL;
+	renderer = SDL_CreateRenderer( w, -1, SDL_RENDERER_ACCELERATED );
+	if( !renderer )
+	{
+		if (!log.abrirLog("Window.log")) {
+			std::cout << "Error al abrir archivo de log" << std::endl;
+			return renderer;
+		}
+		log.escribirLog("ERROR", "No se pudo crear el renderer!");
+		log.cerrarLog();
+		SDL_DestroyWindow(window);
+		return renderer;
+	}
+	else
+		SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+
+	return renderer;
+}
+
 Window::~Window(){
 	if(BGimage) {
-		SDL_FreeSurface(BGimage);
+		SDL_DestroyTexture(BGimage);
 		BGimage = NULL;
 	}
-	if(renderer) {
-		SDL_DestroyRenderer(renderer);
-		renderer = NULL;
+	if(wSurface) {
+		SDL_FreeSurface(wSurface);
+		wSurface = NULL;
+	}
+	if(wRenderer) {
+		SDL_DestroyRenderer(wRenderer);
+		wRenderer = NULL;
 	}
 	if(window) {
 		SDL_DestroyWindow(window);

@@ -1,14 +1,15 @@
 #ifndef WINDOW_H
 #define WINDOW_H
-#include <SDL.h>
+//#include <SDL.h>
 
-//#include <SDL2/SDL.h>
+#include <SDL2/SDL.h>
 
 #include "control/HandlerDeEventos.h"
 #include "vista/Escenario.h"
 #include "control/Observador.h"
 #include "modelo/Personaje.h"
 #include "modelo/formas/RectanguloDibujable.h"
+#include "vista/Fondo.h"
 #include "utiles/Logger.h"
 
 class Window {
@@ -16,8 +17,9 @@ class Window {
 private:
 	SDL_Window* window;
 	SDL_Surface* wSurface;
-	SDL_Surface* BGimage;
-	SDL_Renderer* renderer;
+	//SDL_Surface* BGimage;
+	SDL_Texture* BGimage;
+	SDL_Renderer* wRenderer;
 
 	Escenario* wEscenario;
 	HandlerDeEventos wHandlerEventos;
@@ -27,6 +29,7 @@ private:
 	bool error;
 
 	SDL_Surface* resizeSurface(SDL_Surface* surface, int t_height, int t_width);
+	SDL_Renderer* crearRenderer(SDL_Window*);
 
 public:
 	// Constructor de la clase
