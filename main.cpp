@@ -10,6 +10,14 @@ bool close();
 Window* w = new Window();
 
 int main() {
+
+	fstream fConfig;
+	fConfig.open("config.json",ios_base::in);
+	string sConfig((std::istreambuf_iterator<char>(fConfig)), std::istreambuf_iterator<char>());;
+	fConfig.close();
+	int altoPx=atoi(get_node("alto-px","escenario",sConfig,"200").c_str());
+	int anchoPx=atoi(get_node("ancho-px","escenario",sConfig,"200").c_str());
+
 	bool statusOK = true;
 	statusOK = init();
 	if(!statusOK) {
