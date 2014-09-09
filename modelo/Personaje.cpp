@@ -26,7 +26,7 @@ void Personaje::eventoDerecha()
 	if( pEstado != ESTADO_DERECHA )
 	{
 		pEstado = ESTADO_DERECHA;
-		cargarImagen("derecha.png");
+		cargarImagen("imagenes/derecha.png");
 	}
 
 	moverX(5.0);
@@ -37,7 +37,7 @@ void Personaje::eventoIzquierda()
 	if( pEstado != ESTADO_IZQUIERDA )
 	{
 		pEstado = ESTADO_IZQUIERDA;
-		cargarImagen("izquierda.png");
+		cargarImagen("imagenes/izquierda.png");
 	}
 	moverX(-5.0);
 }
@@ -57,7 +57,7 @@ void Personaje::eventoRESTART()
 	if( pEstado !=  ESTADO_PARADO)
 	{
 		pEstado = ESTADO_PARADO;
-		cargarImagen("parado.png");
+		cargarImagen("imagenes/parado.png");
 	}
 	posicion(100.0 ,100.0);
 }

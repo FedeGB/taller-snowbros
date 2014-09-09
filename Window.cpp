@@ -67,39 +67,26 @@ bool Window::init(int width, int height) {
 			if( !wRenderer ) {
 				error = true;
 			}
-			/* inicializamos la escena
-			CREAMOS EL OBJETO Y LO AGREGAMOS A LA LISTA DE OBJETOS.
-			 lista de objetos = escena.
-			RectanguloDibujable* rectangulo = new RectanguloDibujable();
-			rectangulo->posicion( 30.0, 30.0 );
-			rectangulo->tamano(100, 50);
-			SDL_Color c = { 255, 165, 0, 0 };
-			rectangulo->color( c );
-
-			wEscenario.agregarDibujable(rectangulo);*/
-
-			//EJEMPLO del handler y del patron Observador
-
 			wEscenario = new Escenario();
 
 			Fondo* fondo = new Fondo(SCREEN_WIDTH, SCREEN_HEIGHT);
 			fondo->setRenderer(wRenderer);
-			fondo->cargarImagen("fondo2.png");
+			fondo->cargarImagen("imagenes/fondo2.png");
 			wEscenario->agregarDibujable(fondo);
 
 			Personaje* personaje = new Personaje();
 			personaje->setRenderer(wRenderer);
-			personaje->cargarImagen("parado.png");
+			personaje->cargarImagen("imagenes/parado.png");
 			personaje->posicion(100.0, 100.0);
 			personaje->tamano(60, 50);
 			wEscenario->agregarDibujable(personaje);
 
 			Escenario* escenario = wEscenario;
-			Observador<Escenario>* observador2 = new Observador<Escenario>( escenario );
-			wHandlerEventos.agregarObservador(observador2);
+			Observador<Escenario>* observadorEscenario = new Observador<Escenario>( escenario );
+			wHandlerEventos.agregarObservador(observadorEscenario);
 
-			Observador<Personaje>* obs3 = new Observador<Personaje>( personaje );
-			wHandlerEventos.agregarObservador(obs3);
+			Observador<Personaje>* observadorPersonaje = new Observador<Personaje>( personaje );
+			wHandlerEventos.agregarObservador(observadorPersonaje);
 		}
 	}
 	return !error;

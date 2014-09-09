@@ -95,6 +95,6 @@ void Objeto::moverXY(float32 x, float32 y){
 
 SDL_Rect Objeto::getSDL_Rect()
 {
-	SDL_Rect r = {  (int)posicion().x , (int)posicion().y ,(int)tamano().ancho() , (int)tamano().alto() };
+	SDL_Rect r = {  (int)posicion().x , (int)posicion().y ,(int)(tamano().ancho())*escala() , (int)(tamano().alto())*escala() };
 	return r;
 }
