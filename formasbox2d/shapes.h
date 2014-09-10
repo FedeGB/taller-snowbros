@@ -16,6 +16,7 @@ public:
 	virtual ~shapes();
 	b2Body& getShape();
 	b2Vec2& getPoints();
+	int getLados();
 
 
 
@@ -24,6 +25,7 @@ private:
 	int num_lados(std::string data);
 	b2Body *_shape;
 	b2Vec2 *_point;
+	int nLados;
 
 	bool update_Position();//cambia la posicion de la imagen
 };

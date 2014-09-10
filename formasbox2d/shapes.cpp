@@ -42,7 +42,7 @@ bool shapes::b2d_objet(std::string data, b2World *mundo, int num) {
 	int lados = num_lados(get_node("tipo", "objetos", data, num,"rect"));
 	if (lados == 3)
 		lados = atoi(get_node("lados", "objetos", data, num,"3").c_str());
-
+	nLados=lados;
 	switch (lados) {//dependiendo del numero de lados
 	case 0: //0 es error
 		if (!log.abrirLog("shapes.log")) {
@@ -128,4 +128,8 @@ int shapes::num_lados(std::string data) {
 	else
 		return 0;
 
+}
+
+int shapes::getLados(){
+	return nLados;
 }
