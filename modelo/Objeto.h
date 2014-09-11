@@ -49,7 +49,7 @@ public:
 
 	SDL_Rect getSDL_Rect();
 
-private:
+protected:
 	b2Vec2 oPosicion;
 	Tamano oTamano;
 	int32 oEscala;

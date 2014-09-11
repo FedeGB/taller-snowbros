@@ -25,7 +25,7 @@ public:
 	virtual void render() {
 		// Se redefine distinto, usa el renderer directo
 		int status;
-		status = polygonRGBA(dRenderer, vx, vy, ver, oColor.r, oColor.g, oColor.b, oColor.a);
+		status = filledPolygonRGBA(dRenderer, vx, vy, ver, oColor.r, oColor.g, oColor.b, oColor.a);
 		if(status != 0) {
 			Logger& log = Logger::Instancia();
 			if(!log.abrirLog(DIBUJABLELOG)) {
