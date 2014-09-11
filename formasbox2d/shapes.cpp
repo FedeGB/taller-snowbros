@@ -4,6 +4,7 @@
 shapes::shapes() {
 	_shape = NULL;
 	_point = NULL;
+	nLados=0;
 	// TODO Auto-generated constructor stub
 }
 
@@ -25,15 +26,15 @@ bool shapes::b2d_objet(std::string data, b2World *mundo, int num) {
 	b2CircleShape circle;
 	b2PolygonShape poligon;
 
-	if (get_node("estatico", "objetos", data, num,"false").compare("false"))
+	if (get_node("estatico", "objetos", data, num,false))
 		b2dObjDef.type = b2_staticBody;
 	else
 		b2dObjDef.type = b2_dynamicBody;
 
 	//posicion inicial
-	b2dObjDef.position.x = atof(get_node("x", "objetos", data, num,"1").c_str());
-	b2dObjDef.position.y = atof(get_node("y", "objetos", data, num,"1").c_str());
-	b2dObjDef.angle = atoi(get_node("rot", "objetos", data, num,"0").c_str());
+	b2dObjDef.position.x = get_node("x", "objetos", data, num,1.0f);
+	b2dObjDef.position.y = get_node("y", "objetos", data, num,1.0f);
+	b2dObjDef.angle = get_node("rot", "objetos", data, num,0.0f);
 
 	//lo vinculo al mundo
 	_shape = mundo->CreateBody(&b2dObjDef);
@@ -41,7 +42,8 @@ bool shapes::b2d_objet(std::string data, b2World *mundo, int num) {
 	//le doy forma
 	int lados = num_lados(get_node("tipo", "objetos", data, num,"rect"));
 	if (lados == 3)
-		lados = atoi(get_node("lados", "objetos", data, num,"3").c_str());
+		lados = get_node("lados", "objetos", data, num,3);
+
 	nLados=lados;
 	switch (lados) {//dependiendo del numero de lados
 	case 0: //0 es error
@@ -56,37 +58,32 @@ bool shapes::b2d_objet(std::string data, b2World *mundo, int num) {
 	case 1: //1 solo lado  = circulo
 
 		myFixtureDef.shape = &circle; //defino que es un circulo
-		myFixtureDef.density = atof(
-				get_node("masa", "objetos", data, num,"1").c_str());//le doy masa
+		myFixtureDef.density =get_node("masa", "objetos", data, num,1.0f);//le doy masa
 
-		circle.m_radius = atof(
-				get_node("escala", "objetos", data, num,"1").c_str());
+		circle.m_radius =get_node("escala", "objetos", data, num,1.0f);
 		//y el tamaño
 		_shape->CreateFixture(&myFixtureDef); //le asigno la forma
 		break;
 
 	case 4: // 4 lados caja
-		poligon.SetAsBox(
-				atof(get_node("alto", "objetos", data, num,"1").c_str()) / 2,
-				atof(get_node("ancho", "objetos", data, num,"1").c_str()) / 2); //le doy dimenciones
+		poligon.SetAsBox(get_node("alto", "objetos", data, num,1.0f)/ 2,get_node("ancho", "objetos", data, num,1.0f)/ 2); //le doy dimenciones
 		myFixtureDef.shape = &poligon; //defino que es un poligono
 		_shape->CreateFixture(&myFixtureDef); //le asigno la forma
 		break;
 
 	case 5:{
 		_point = new b2Vec2[lados];
-		float base, tapa, alto, desp;
-		base = atof(get_node("base","objetos",data,num,"1").c_str());
-		tapa = atof(get_node("tapa","objetos",data,num,"1").c_str());
-		alto = atof(get_node("alto","objetos",data,num,"1").c_str());
-		desp = atof(get_node("desp","objetos",data,num,"1").c_str());//desplazamiento
+		float base=get_node("base","objetos",data,num,1.0f);
+		float tapa=get_node("tapa","objetos",data,num,1.0f);
+		float alto=get_node("alto","objetos",data,num,1.0f);
+		float desp=get_node("desp","objetos",data,num,1.0f);//desplazamiento
 		_point[0].Set(-1.0*base/2,0.0);
 		_point[1].Set(base/2,0.0);
 		_point[2].Set((tapa/2)+(desp/2),alto);
 		_point[3].Set((-1.0*tapa/2)+(desp/2),alto);
 		poligon.Set(_point, lados);
 		myFixtureDef.shape = &poligon;
-		myFixtureDef.density = atof(get_node("masa", "objetos", data, num,"1").c_str());
+		myFixtureDef.density =get_node("masa", "objetos", data, num,1.0f);
 		_shape->CreateFixture(&myFixtureDef);
 		break;}
 
@@ -99,8 +96,7 @@ bool shapes::b2d_objet(std::string data, b2World *mundo, int num) {
 
 		poligon.Set(_point, lados);
 		myFixtureDef.shape = &poligon;
-		myFixtureDef.density = atof(
-				get_node("masa", "objetos", data, num,"1").c_str()); //le asigno la masa
+		myFixtureDef.density =get_node("masa", "objetos", data, num,1.0f); //le asigno la masa
 		_shape->CreateFixture(&myFixtureDef); //le asigno la forma
 		break;
 
@@ -115,6 +111,8 @@ b2Body& shapes::getShape() {
 b2Vec2& shapes::getPoints() {
 	return *_point;
 }// retorna una referencia a los vertices originales de los objetos
+
+//TODO no se si estas funciones van aca o ponerlas en una clase parser
 
 int shapes::num_lados(std::string data) {
 	if (!data.compare("circ"))
