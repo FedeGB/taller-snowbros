@@ -10,7 +10,7 @@ bool loopPrincipal();
 bool close();
 
 Window* w = new Window();
-int hightScreen;
+int heightScreen;
 int widthScreen;
 
 int main() {
@@ -20,7 +20,7 @@ int main() {
 	string sConfig((std::istreambuf_iterator<char>(fConfig)), std::istreambuf_iterator<char>());;
 	fConfig.close();
 
-	int hightScreen=get_node("alto-px","escenario",sConfig,480);
+	int heightScreen=get_node("alto-px","escenario",sConfig,480);
 	int widthScreen=get_node("ancho-px","escenario",sConfig,640);
 
 	bool statusOK = true;
@@ -36,7 +36,7 @@ int main() {
 
 bool init() {
 
-	bool statusOK = w->init(widthtScreen, highScreen);
+	bool statusOK = w->init(widthScreen, heightScreen);
 	return statusOK;
 }
 
