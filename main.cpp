@@ -10,15 +10,18 @@ bool loopPrincipal();
 bool close();
 
 Window* w = new Window();
+int hightScreen;
+int widthScreen;
 
 int main() {
-
+	//abre el json y lo carga a un string
 	fstream fConfig;
 	fConfig.open("config.json",ios_base::in);
 	string sConfig((std::istreambuf_iterator<char>(fConfig)), std::istreambuf_iterator<char>());;
 	fConfig.close();
-	int altoPx=atoi(get_node("alto-px","escenario",sConfig,"200").c_str());
-	int anchoPx=atoi(get_node("ancho-px","escenario",sConfig,"200").c_str());
+
+	int hightScreen=get_node("alto-px","escenario",sConfig,480);
+	int widthScreen=get_node("ancho-px","escenario",sConfig,640);
 
 	bool statusOK = true;
 	statusOK = init();
@@ -33,7 +36,7 @@ int main() {
 
 bool init() {
 
-	bool statusOK = w->init(640, 480);
+	bool statusOK = w->init(widthtScreen, highScreen);
 	return statusOK;
 }
 
