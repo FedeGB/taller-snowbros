@@ -11,7 +11,7 @@ string get_node(string data, string param, string file, char* defaultData) {
 	if (!parsingOk) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		string errorLectura;
 		errorLectura = "no se pudo leer el archivo "+ reader.getFormattedErrorMessages();
@@ -21,7 +21,7 @@ string get_node(string data, string param, string file, char* defaultData) {
 	if (root[param][data].empty()) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		log.escribirLog("ERROR", "campo "+ data +" de "+param+" vacio");
 		log.cerrarLog();
@@ -29,7 +29,7 @@ string get_node(string data, string param, string file, char* defaultData) {
 	if (!root[param][data].isString()){
 		if (!log.abrirLog("Parser.log")) {
 					std::cout << "Error al abrir archivo de log" << std::endl;
-					return NULL;
+					return defaultData;
 				}
 				log.escribirLog("ERROR", " tipo incorrecto del campo "+ data +" de "+param +". Se espera string");
 				log.cerrarLog();
@@ -48,7 +48,7 @@ string get_node(char* datas, string param, string file, char* defaultData) {
 	if (!parsingOk) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		string errorLectura;
 		errorLectura = "no se pudo leer el archivo "+ reader.getFormattedErrorMessages();
@@ -58,7 +58,7 @@ string get_node(char* datas, string param, string file, char* defaultData) {
 	if (root[param][data].empty()) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		log.escribirLog("ERROR", "campo "+ data +" de "+param+" vacio");
 		log.cerrarLog();
@@ -66,7 +66,7 @@ string get_node(char* datas, string param, string file, char* defaultData) {
 	if (!root[param][data].isString()){
 			if (!log.abrirLog("Parser.log")) {
 						std::cout << "Error al abrir archivo de log" << std::endl;
-						return NULL;
+						return defaultData;
 					}
 					log.escribirLog("ERROR", " tipo incorrecto del campo "+ data +" de "+param +". Se espera string");
 					log.cerrarLog();
@@ -89,7 +89,7 @@ string get_node(string data, string param, string file, int field,
 	if (!parsingOk) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		string errorLectura;
 		errorLectura = "no se pudo leer el archivo "+ reader.getFormattedErrorMessages();
@@ -99,7 +99,7 @@ string get_node(string data, string param, string file, int field,
 	if (root[param][field][data].empty()) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		log.escribirLog("ERROR", "campo "+ data +" de "+param+" vacio, del objeto" + s);
 		log.cerrarLog();
@@ -107,7 +107,7 @@ string get_node(string data, string param, string file, int field,
 	if (!root[param][data].isString()){
 			if (!log.abrirLog("Parser.log")) {
 						std::cout << "Error al abrir archivo de log" << std::endl;
-						return NULL;
+						return defaultData;
 					}
 					log.escribirLog("ERROR", " tipo incorrecto del campo "+ data +" de "+param +"del objeto"+ s+ ". Se espera string");
 					log.cerrarLog();
@@ -124,7 +124,7 @@ int get_node(string data, string param, string file, int defaultData) {
 	if (!parsingOk) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		string errorLectura;
 		errorLectura = "no se pudo leer el archivo "+ reader.getFormattedErrorMessages();
@@ -134,7 +134,7 @@ int get_node(string data, string param, string file, int defaultData) {
 	if (root[param][data].empty()) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		log.escribirLog("ERROR", "campo "+ data +" de "+param+" vacio");
 		log.cerrarLog();
@@ -142,7 +142,7 @@ int get_node(string data, string param, string file, int defaultData) {
 	if (!root[param][data].isInt()){
 		if (!log.abrirLog("Parser.log")) {
 					std::cout << "Error al abrir archivo de log" << std::endl;
-					return NULL;
+					return defaultData;
 				}
 				log.escribirLog("ERROR", " tipo incorrecto del campo "+ data +" de "+param +". Se espera int");
 				log.cerrarLog();
@@ -161,7 +161,7 @@ int get_node(char* datas, string param, string file, int defaultData) {
 	if (!parsingOk) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		string errorLectura;
 		errorLectura = "no se pudo leer el archivo "+ reader.getFormattedErrorMessages();
@@ -171,7 +171,7 @@ int get_node(char* datas, string param, string file, int defaultData) {
 	if (root[param][data].empty()) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		log.escribirLog("ERROR", "campo "+ data +" de "+param+" vacio");
 		log.cerrarLog();
@@ -179,13 +179,13 @@ int get_node(char* datas, string param, string file, int defaultData) {
 	if (!root[param][data].isInt()){
 			if (!log.abrirLog("Parser.log")) {
 						std::cout << "Error al abrir archivo de log" << std::endl;
-						return NULL;
+						return defaultData;
 					}
 					log.escribirLog("ERROR", " tipo incorrecto del campo "+ data +" de "+param +". Se espera int");
 					log.cerrarLog();
 					return defaultData;
 		}
-	return root[param].get(data, defaultData).asString();
+	return root[param].get(data, defaultData).asInt();
 
 }
 
@@ -202,7 +202,7 @@ int get_node(string data, string param, string file, int field,
 	if (!parsingOk) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		string errorLectura;
 		errorLectura = "no se pudo leer el archivo "+ reader.getFormattedErrorMessages();
@@ -212,7 +212,7 @@ int get_node(string data, string param, string file, int field,
 	if (root[param][field][data].empty()) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		log.escribirLog("ERROR", "campo "+ data +" de "+param+" vacio, del objeto" + s);
 		log.cerrarLog();
@@ -220,7 +220,7 @@ int get_node(string data, string param, string file, int field,
 	if (!root[param][data].isInt()){
 			if (!log.abrirLog("Parser.log")) {
 						std::cout << "Error al abrir archivo de log" << std::endl;
-						return NULL;
+						return defaultData;
 					}
 					log.escribirLog("ERROR", " tipo incorrecto del campo "+ data +" de "+param +"del objeto"+ s+ ". Se espera int");
 					log.cerrarLog();
@@ -237,7 +237,7 @@ float get_node(string data, string param, string file, float defaultData) {
 	if (!parsingOk) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		string errorLectura;
 		errorLectura = "no se pudo leer el archivo "+ reader.getFormattedErrorMessages();
@@ -247,7 +247,7 @@ float get_node(string data, string param, string file, float defaultData) {
 	if (root[param][data].empty()) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		log.escribirLog("ERROR", "campo "+ data +" de "+param+" vacio");
 		log.cerrarLog();
@@ -255,7 +255,7 @@ float get_node(string data, string param, string file, float defaultData) {
 	if (!root[param][data].isNumeric()){
 		if (!log.abrirLog("Parser.log")) {
 					std::cout << "Error al abrir archivo de log" << std::endl;
-					return NULL;
+					return defaultData;
 				}
 				log.escribirLog("ERROR", " tipo incorrecto del campo "+ data +" de "+param +". Se espera float");
 				log.cerrarLog();
@@ -274,7 +274,7 @@ float get_node(char* datas, string param, string file, float defaultData) {
 	if (!parsingOk) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		string errorLectura;
 		errorLectura = "no se pudo leer el archivo "+ reader.getFormattedErrorMessages();
@@ -284,7 +284,7 @@ float get_node(char* datas, string param, string file, float defaultData) {
 	if (root[param][data].empty()) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		log.escribirLog("ERROR", "campo "+ data +" de "+param+" vacio");
 		log.cerrarLog();
@@ -292,7 +292,7 @@ float get_node(char* datas, string param, string file, float defaultData) {
 	if (!root[param][data].isNumeric()){
 			if (!log.abrirLog("Parser.log")) {
 						std::cout << "Error al abrir archivo de log" << std::endl;
-						return NULL;
+						return defaultData;
 					}
 					log.escribirLog("ERROR", " tipo incorrecto del campo "+ data +" de "+param +". Se espera int");
 					log.cerrarLog();
@@ -315,7 +315,7 @@ float get_node(string data, string param, string file, int field,
 	if (!parsingOk) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		string errorLectura;
 		errorLectura = "no se pudo leer el archivo "+ reader.getFormattedErrorMessages();
@@ -325,7 +325,7 @@ float get_node(string data, string param, string file, int field,
 	if (root[param][field][data].empty()) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		log.escribirLog("ERROR", "campo "+ data +" de "+param+" vacio, del objeto" + s);
 		log.cerrarLog();
@@ -333,7 +333,7 @@ float get_node(string data, string param, string file, int field,
 	if (!root[param][data].isNumeric()){
 			if (!log.abrirLog("Parser.log")) {
 						std::cout << "Error al abrir archivo de log" << std::endl;
-						return NULL;
+						return defaultData;
 					}
 					log.escribirLog("ERROR", " tipo incorrecto del campo "+ data +" de "+param +"del objeto"+ s+ ". Se espera int");
 					log.cerrarLog();
@@ -350,7 +350,7 @@ bool get_node(string data, string param, string file, bool defaultData) {
 	if (!parsingOk) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		string errorLectura;
 		errorLectura = "no se pudo leer el archivo "+ reader.getFormattedErrorMessages();
@@ -360,7 +360,7 @@ bool get_node(string data, string param, string file, bool defaultData) {
 	if (root[param][data].empty()) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		log.escribirLog("ERROR", "campo "+ data +" de "+param+" vacio");
 		log.cerrarLog();
@@ -368,7 +368,7 @@ bool get_node(string data, string param, string file, bool defaultData) {
 	if (!root[param][data].isBool()){
 		if (!log.abrirLog("Parser.log")) {
 					std::cout << "Error al abrir archivo de log" << std::endl;
-					return NULL;
+					return defaultData;
 				}
 				log.escribirLog("ERROR", " tipo incorrecto del campo "+ data +" de "+param +". Se espera Bool");
 				log.cerrarLog();
@@ -387,7 +387,7 @@ bool get_node(char* datas, string param, string file, bool defaultData) {
 	if (!parsingOk) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		string errorLectura;
 		errorLectura = "no se pudo leer el archivo "+ reader.getFormattedErrorMessages();
@@ -397,7 +397,7 @@ bool get_node(char* datas, string param, string file, bool defaultData) {
 	if (root[param][data].empty()) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		log.escribirLog("ERROR", "campo "+ data +" de "+param+" vacio");
 		log.cerrarLog();
@@ -405,7 +405,7 @@ bool get_node(char* datas, string param, string file, bool defaultData) {
 	if (!root[param][data].isBool()){
 			if (!log.abrirLog("Parser.log")) {
 						std::cout << "Error al abrir archivo de log" << std::endl;
-						return NULL;
+						return defaultData;
 					}
 					log.escribirLog("ERROR", " tipo incorrecto del campo "+ data +" de "+param +". Se espera Bool");
 					log.cerrarLog();
@@ -428,7 +428,7 @@ bool get_node(string data, string param, string file, int field,
 	if (!parsingOk) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		string errorLectura;
 		errorLectura = "no se pudo leer el archivo "+ reader.getFormattedErrorMessages();
@@ -438,7 +438,7 @@ bool get_node(string data, string param, string file, int field,
 	if (root[param][field][data].empty()) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
+			return defaultData;
 		}
 		log.escribirLog("ERROR", "campo "+ data +" de "+param+" vacio, del objeto" + s);
 		log.cerrarLog();
@@ -446,7 +446,7 @@ bool get_node(string data, string param, string file, int field,
 	if (!root[param][data].isBool()){
 			if (!log.abrirLog("Parser.log")) {
 						std::cout << "Error al abrir archivo de log" << std::endl;
-						return NULL;
+						return defaultData;
 					}
 					log.escribirLog("ERROR", " tipo incorrecto del campo "+ data +" de "+param +"del objeto"+ s+ ". Se espera int");
 					log.cerrarLog();

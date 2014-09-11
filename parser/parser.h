@@ -1,15 +1,8 @@
-/*
- * parser.h
- *
- *  Created on: 02/09/2014
- *      Author: coco
- */
-
 #ifndef PARSER_H_
 #define PARSER_H_
 
 #include <iostream>
-#include <json/json.h>
+#include "json.h"
 
 #include "../utiles/Logger.h"
 
@@ -23,12 +16,12 @@ string get_node(string data, string param, string file, char* defaultData);
 int get_node(string data, string param, string file, int field,
 		int defaultData);
 int get_node(char* datas, string param, string file, int defaultData);
-int get_node(string data, string param, string file, char* defaultData);
+int get_node(string data, string param, string file, int* defaultData);
 
 float get_node(string data, string param, string file, int field,
 		float defaultData);
-float get_node(char* datas, string param, string file, char* defaultData);
-float get_node(string data, string param, string file, char* defaultData);
+float get_node(char* datas, string param, string file, float defaultData);
+float get_node(string data, string param, string file, float defaultData);
 
 bool get_node(string data, string param, string file, int field,
 		bool defaultData);
