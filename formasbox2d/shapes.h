@@ -1,4 +1,3 @@
-
 #ifndef SHAPES_H_
 #define SHAPES_H_
 
@@ -26,7 +25,7 @@ private:
 	b2Body *_shape;
 	b2Vec2 *_point;
 	int nLados;
-
+	b2World *world;
 	bool update_Position();//cambia la posicion de la imagen
 };
 

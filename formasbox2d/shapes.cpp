@@ -1,20 +1,21 @@
-
 #include "shapes.h"
 
 shapes::shapes() {
 	_shape = NULL;
 	_point = NULL;
 	nLados=0;
+	world=NULL;
 	// TODO Auto-generated constructor stub
 }
 
 shapes::shapes(std::string data, b2World *mundo, int num) {
+	this->world=world;
 	if (!b2d_objet(data, mundo, num))
 		_shape = NULL;
 }
 
 shapes::~shapes() {
-
+	world->DestroyBody(_shape);
 	// TODO Auto-generated destructor stub
 }
 
