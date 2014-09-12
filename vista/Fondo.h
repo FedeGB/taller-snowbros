@@ -28,7 +28,7 @@ public:
 		SDL_Surface* imagenCargada = IMG_Load(path.c_str());
 		if( !imagenCargada )
 		{
-			if (!log.abrirLog("Window.log")) {
+			if (!log.abrirLog(WINDOWLOG)) {
 				std::cout << "Error al abrir archivo de log" << std::endl;
 				return false;
 			}

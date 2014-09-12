@@ -10,8 +10,8 @@ bool loopPrincipal();
 bool close();
 
 Window* w = new Window();
-int heightScreen;
-int widthScreen;
+int heightScreen =640;
+int widthScreen= 480;
 
 int main() {
 	//abre el json y lo carga a un string

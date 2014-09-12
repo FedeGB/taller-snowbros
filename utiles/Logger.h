@@ -12,11 +12,15 @@
 #include <fstream>
 #include <iostream>
 
-#define WINDOWLOG "../log/Window.log"
-#define DIBUJABLELOG "../log/Dibujable.log"
-#define HANDLERLOG "../log/Handler.log"
-#define SIMULACIONLOG "../log/Simulacion.log"
-#define PARSERLOG "../log/Parser.log"
+#define WINDOWLOG "log/Window.log"
+#define DIBUJABLELOG "log/Dibujable.log"
+#define HANDLERLOG "log/Handler.log"
+#define SIMULACIONLOG "log/Simulacion.log"
+#define PARSERLOG "log/Parser.log"
+
+#define WARNING "WAR"
+#define ERROR "ERR"
+#define OK "OK"
 
 class Logger{
 public:
