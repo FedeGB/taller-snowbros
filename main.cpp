@@ -1,17 +1,23 @@
 #include <iostream>
 #include "Window.h"
+#include <Box2D/Box2D.h>
+#include <list>
+#include "formasbox2d/shapes.h"
 
 #include "parser/parser.h"
 
 using namespace std;
 
 bool init();
+void worldInit();
 bool loopPrincipal();
 bool close();
 
 Window* w = new Window();
-int heightScreen =640;
-int widthScreen= 480;
+int heightScreen;
+int widthScreen;
+b2World *worldB2D;
+
 
 int main() {
 	//abre el json y lo carga a un string
@@ -20,8 +26,16 @@ int main() {
 	string sConfig((std::istreambuf_iterator<char>(fConfig)), std::istreambuf_iterator<char>());;
 	fConfig.close();
 
-	int heightScreen=get_node("alto-px","escenario",sConfig,480);
-	int widthScreen=get_node("ancho-px","escenario",sConfig,640);
+	heightScreen=get_node("alto-px","escenario",sConfig,480);
+	widthScreen=get_node("ancho-px","escenario",sConfig,640);
+
+	worldInit();
+	list<shapes> _shapes;
+	int formas =get_size("objetos",sConfig);
+	for(int i=0;i<formas;i++){
+		shapes temp(sConfig,worldB2D,i);
+		_shapes.push_back(temp);
+	}
 
 	bool statusOK = true;
 	statusOK = init();
@@ -35,7 +49,6 @@ int main() {
 }
 
 bool init() {
-
 	bool statusOK = w->init(widthScreen, heightScreen);
 	return statusOK;
 }
@@ -73,4 +86,10 @@ bool close() {
 		delete w;
 	}
 	return true;
+}
+
+void worldInit(){
+	b2Vec2 gravedad(0, -9.8);
+	worldB2D = new b2World(gravedad);
+	return;
 }
