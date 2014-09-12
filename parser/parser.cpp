@@ -495,7 +495,7 @@ bool get_node(string data, string param, string file, int field,
 	return root[param][field].get(data, defaultData).asBool();
 }
 
-int get_size(char* datas, string param, string file) {
+int get_size(string param, string file) {
 	Json::Value root;
 	Json::Reader reader;
 	Logger& log = *Logger::Instancia();
@@ -503,7 +503,7 @@ int get_size(char* datas, string param, string file) {
 	if (!parsingOk) {
 		if (!log.abrirLog("Parser.log")) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
-			return defaultData;
+			return 0;
 		}
 		string errorLectura;
 		errorLectura = "no se pudo leer el archivo "
@@ -511,6 +511,6 @@ int get_size(char* datas, string param, string file) {
 		log.escribirLog("ERROR", errorLectura);
 		log.cerrarLog();
 	}
-	return root[param][field].size();
+	return root[param].size();
 
 }

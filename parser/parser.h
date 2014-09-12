@@ -28,6 +28,6 @@ bool get_node(string data, string param, string file, int field,
 bool get_node(char* datas, string param, string file, bool defaultData);
 bool get_node(string data, string param, string file, bool defaultData);
 
-int get_size(char* datas, string param, string file);
+int get_size(string param, string file);
 
 #endif /* PARSER_H_ */
