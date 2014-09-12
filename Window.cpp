@@ -44,10 +44,6 @@ bool Window::init(int width, int height)
 
 			wEscenario = new Escenario();
 
-			Configurador configurador;
-			configurador.iniciar("config.json");
-			configurador.configurar(wEscenario);
-
 			Fondo* fondo = new Fondo(SCREEN_WIDTH, SCREEN_HEIGHT);
 			fondo->setRenderer(wRenderer);
 			fondo->cargarImagen("imagenes/fondo2.png");
@@ -56,7 +52,6 @@ bool Window::init(int width, int height)
 			// ejemplo de dibujado de un poligono
 			PoligonoDibujable* poligono = new PoligonoDibujable();
 			poligono->setRenderer(wRenderer);
-
 			// seteo de vertices
 			int numero_de_vertices = 4;
 			Sint16* vx = new Sint16[numero_de_vertices]; vx[0] = 100; vx[1] = 80; vx[2] = 60; vx[3] = 40;
