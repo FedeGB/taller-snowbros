@@ -7,6 +7,8 @@
 #include <SDL2/SDL2_rotozoom.h>
 #include <SDL2/SDL_image.h>
 
+#include "utiles/Configurador.h"
+
 Window::Window() {
 	window = NULL;
 	wSurface = NULL;
@@ -18,12 +20,10 @@ Window::Window() {
 	BGimage = NULL;
 }
 
-bool Window::init(int width, int height) {
-	Logger& log = * Logger::Instancia();
+bool Window::init(int width, int height)
+{
 	if( !validarAnchoYAlto( width, height ) )
-	{
 		return !error;
-	}
 
 	if (!iniciarSDL())
 	{
@@ -44,10 +44,28 @@ bool Window::init(int width, int height) {
 
 			wEscenario = new Escenario();
 
+			Configurador configurador;
+			configurador.iniciar("config.json");
+			configurador.configurar(wEscenario);
+
 			Fondo* fondo = new Fondo(SCREEN_WIDTH, SCREEN_HEIGHT);
 			fondo->setRenderer(wRenderer);
 			fondo->cargarImagen("imagenes/fondo2.png");
 			wEscenario->agregarDibujable(fondo);
+
+			// ejemplo de dibujado de un poligono
+			PoligonoDibujable* poligono = new PoligonoDibujable();
+			poligono->setRenderer(wRenderer);
+
+			// seteo de vertices
+			int numero_de_vertices = 4;
+			Sint16* vx = new Sint16[numero_de_vertices]; vx[0] = 100; vx[1] = 80; vx[2] = 60; vx[3] = 40;
+			Sint16* vy = new Sint16[numero_de_vertices]; vy[0] = 80; vy[1] = 120; vy[2] = 120; vy[3] = 80;
+			poligono->setVertices(vx, vy, numero_de_vertices);
+
+			SDL_Color color = { 255, 0 , 0, 255 };
+			poligono->color(color);
+			wEscenario->agregarDibujable(poligono);
 
 			Personaje* personaje = new Personaje();
 			personaje->setRenderer(wRenderer);
@@ -62,6 +80,9 @@ bool Window::init(int width, int height) {
 
 			Observador<Personaje>* observadorPersonaje = new Observador<Personaje>( personaje );
 			wHandlerEventos.agregarObservador(observadorPersonaje);
+
+			Observador<PoligonoDibujable>* observadorPoligono = new Observador<PoligonoDibujable>( poligono );
+			wHandlerEventos.agregarObservador(observadorPoligono);
 		}
 	}
 	return !error;
