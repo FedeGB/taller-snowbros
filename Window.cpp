@@ -7,7 +7,7 @@
 #include <SDL2/SDL2_rotozoom.h>
 #include <SDL2/SDL_image.h>
 
-#include "utiles/Configurador.h"
+//#include "utiles/Configurador.h"
 
 Window::Window() {
 	window = NULL;

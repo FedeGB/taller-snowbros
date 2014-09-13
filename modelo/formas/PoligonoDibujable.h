@@ -3,7 +3,7 @@
 
 #include "SDL.h"
 #include "SDL2_gfxPrimitives.h"
-#include "utiles/Logger.h"
+#include "../../utiles/Logger.h"
 
 class PoligonoDibujable: public Objeto, public IDibujable, public INotificable {
 
@@ -27,16 +27,17 @@ public:
 		int status;
 		status = filledPolygonRGBA(dRenderer, vx, vy, ver, oColor.r, oColor.g, oColor.b, oColor.a);
 		if(status != 0) {
-			Logger& log = Logger::Instancia();
+			Logger& log = * Logger::Instancia();
 			if(!log.abrirLog(DIBUJABLELOG)) {
-				log.escribirLog("WAR", "No se renderizo el poligono " + SDL_GetError());
+				std::string err(SDL_GetError());
+				log.escribirLog("WAR", "No se renderizo el poligono "+err);
 				log.cerrarLog();
 				return;
 			}
 		}
 	}
 
-	bool setVertices(Sint16* vx, Sint16 vy, int nvert) {
+	bool setVertices(Sint16* vx, Sint16* vy, int nvert) {
 		if (vx != NULL) {
 			this->vx = vx;
 		} else {

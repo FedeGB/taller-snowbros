@@ -46,6 +46,7 @@ public:
 	void moverY(float32 y);
 	void moverX(float32 x);
 	void moverXY(float32 x, float32 y);
+	void moverAngulo(float32 grados);
 
 	SDL_Rect getSDL_Rect();
 
