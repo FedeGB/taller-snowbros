@@ -1,8 +1,8 @@
 #ifndef WINDOW_H
 #define WINDOW_H
-//#include <SDL.h>
 
 #include <SDL2/SDL.h>
+#include <string>
 
 #include "control/HandlerDeEventos.h"
 #include "vista/Escenario.h"
@@ -18,7 +18,6 @@ class Window {
 private:
 	SDL_Window* window;
 	SDL_Surface* wSurface;
-	//SDL_Surface* BGimage;
 	SDL_Texture* BGimage;
 	SDL_Renderer* wRenderer;
 
@@ -35,14 +34,17 @@ private:
 	bool iniciarSDL();
 	SDL_Window* crearVentana();
 	SDL_Renderer* crearRenderer(SDL_Window*);
+	Escenario* crearEscenario(std::string BGpath);
 
 public:
 	// Constructor de la clase
 	Window();
 	// Cargar ventana
-	bool init(int width, int height);
+	bool init(int width, int height, std::string BGpath);
 	// Cargar el fondo
 	bool loadBackground(const char* pathToBG);
+	// Inserta un personaje
+	bool insertarPersonaje(float32 posX, float32 posY, uint32 height, uint32 width);
 	// manejar evento
 	void handleEvent(SDL_Event&);
 	// Update ventana

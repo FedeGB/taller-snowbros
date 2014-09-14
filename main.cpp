@@ -49,7 +49,8 @@ int main() {
 }
 
 bool init() {
-	bool statusOK = w->init(widthScreen, heightScreen);
+	bool statusOK = w->init(widthScreen, heightScreen, "imagenes/fondo2.png");
+	statusOK = w->insertarPersonaje(100, 100, 60, 50);
 	return statusOK;
 }
 
