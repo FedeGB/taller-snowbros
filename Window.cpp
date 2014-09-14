@@ -7,13 +7,11 @@
 
 Window::Window() {
 	window = NULL;
-	wSurface = NULL;
 	wEscenario = NULL;
 	error = false;
 	wRenderer = NULL;
 	SCREEN_WIDTH = 0;
 	SCREEN_HEIGHT = 0;
-	BGimage = NULL;
 }
 
 bool Window::init(int width, int height, std::string BGpath)
@@ -34,7 +32,6 @@ bool Window::init(int width, int height, std::string BGpath)
 		}
 		else
 		{
-//			wSurface = SDL_GetWindowSurface(window);
 			wRenderer = crearRenderer(window);
 			if( !wRenderer ) {
 				error = true;
@@ -252,14 +249,6 @@ bool Window::insertarPersonaje(float32 posX, float32 posY, uint32 height, uint32
 }
 
 Window::~Window(){
-	if(BGimage) {
-		SDL_DestroyTexture(BGimage);
-		BGimage = NULL;
-	}
-	if(wSurface) {
-		SDL_FreeSurface(wSurface);
-		wSurface = NULL;
-	}
 	if(wEscenario) {
 		delete(wEscenario);
 		wEscenario = NULL;

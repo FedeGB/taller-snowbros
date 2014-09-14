@@ -16,20 +16,18 @@ Escenario::~Escenario()
 	if( eLista.size() == 1 )
 	{
 		eLista.erase(it);
-		if(*it != NULL) {
-			delete(*it);
+		if((*it) != NULL) {
+			delete (*it);
 			*it = NULL;
 		}
 		return;
 	}
-
-	for( ; it != eLista.end(); it++)
-	{
-		eLista.erase(it);
-		if(*it !=NULL) {
-			delete(*it);
-			*it = NULL;
+	while( it != eLista.end()) {
+		if((*it) != NULL) {
+			delete (*it);
+			(*it) = NULL;
 		}
+		eLista.erase(it);
 	}
 }
 

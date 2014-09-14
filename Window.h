@@ -17,8 +17,6 @@ class Window {
 
 private:
 	SDL_Window* window;
-	SDL_Surface* wSurface;
-	SDL_Texture* BGimage;
 	SDL_Renderer* wRenderer;
 
 	Escenario* wEscenario;

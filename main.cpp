@@ -86,9 +86,21 @@ bool loopPrincipal() {
 	{
 		while( SDL_PollEvent( &event ) != 0 )
 		{
-			if( event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE )
+			if( event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE ) {
 				quit = true;
-			w->handleEvent(event);
+				break;
+			} else if(event.key.keysym.sym  == SDLK_r) {
+				close();
+				std::cout << "Saca lo anterior" << std::endl;
+				std::string sConfig;
+				loadInitialValues(sConfig);
+				int heightScreen=get_node("alto-px","escenario",sConfig,480);
+				int widthScreen=get_node("ancho-px","escenario",sConfig,640);
+				windowInit(heightScreen, widthScreen);
+				continue;
+			} else {
+				w->handleEvent(event);
+			}
 		}
 		statusOK = w->updateWindow();
 		if(!statusOK) {

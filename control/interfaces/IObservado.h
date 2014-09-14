@@ -16,14 +16,13 @@ public:
 	IObservado(){};
 	virtual ~IObservado()
 	{
-		for( ListaObservadores::iterator it = oLista.begin(); it != oLista.end(); it++)
-		{
-			oLista.erase(it);
-			if( *it != NULL ) {
-				delete(*it);
-				*it = NULL;
+		ListaObservadores::iterator it = oLista.begin();
+		while(it != oLista.end()) {
+			if( (*it) != NULL ) {
+				//delete (*it);
+				//(*it) = NULL;
 			}
-
+			oLista.erase(it);
 		}
 	};
 
