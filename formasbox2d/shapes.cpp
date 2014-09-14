@@ -48,7 +48,7 @@ bool shapes::b2d_objet(std::string data, b2World *mundo, int num) {
 	nLados=lados;
 	switch (lados) {//dependiendo del numero de lados
 	case 0: //0 es error
-		if (!log.abrirLog("shapes.log")) {
+		if (!log.abrirLog(SHAPESLOG)) {
 					std::cout << "Error al abrir archivo de log" << std::endl;
 					return false;
 				}

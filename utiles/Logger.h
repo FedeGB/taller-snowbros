@@ -17,6 +17,8 @@
 #define HANDLERLOG "log/Handler.log"
 #define SIMULACIONLOG "log/Simulacion.log"
 #define PARSERLOG "log/Parser.log"
+#define MAINLOG "log/Main.log"
+#define SHAPESLOG "log/shapes.log"
 
 #define WARNING "WAR"
 #define ERROR "ERR"

@@ -9,7 +9,7 @@ string get_node(string data, string param, string file, char* defaultData) {
 	Logger& log = *Logger::Instancia();
 	bool parsingOk = reader.parse(file, root);
 	if (!parsingOk) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -20,7 +20,7 @@ string get_node(string data, string param, string file, char* defaultData) {
 		log.cerrarLog();
 	}
 	if (root[param][data].empty()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -28,7 +28,7 @@ string get_node(string data, string param, string file, char* defaultData) {
 		log.cerrarLog();
 	}
 	if (!root[param][data].isString()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -49,7 +49,7 @@ string get_node(char* datas, string param, string file, char* defaultData) {
 	Logger& log = *Logger::Instancia();
 	bool parsingOk = reader.parse(file, root);
 	if (!parsingOk) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -60,7 +60,7 @@ string get_node(char* datas, string param, string file, char* defaultData) {
 		log.cerrarLog();
 	}
 	if (root[param][data].empty()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -68,7 +68,7 @@ string get_node(char* datas, string param, string file, char* defaultData) {
 		log.cerrarLog();
 	}
 	if (!root[param][data].isString()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -93,7 +93,7 @@ string get_node(string data, string param, string file, int field,
 	s = out.str();
 	bool parsingOk = reader.parse(file, root);
 	if (!parsingOk) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -104,7 +104,7 @@ string get_node(string data, string param, string file, int field,
 		log.cerrarLog();
 	}
 	if (root[param][field][data].empty()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -113,7 +113,7 @@ string get_node(string data, string param, string file, int field,
 		log.cerrarLog();
 	}
 	if (!root[param][data].isString()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -132,7 +132,7 @@ int get_node(string data, string param, string file, int defaultData) {
 	Logger& log = *Logger::Instancia();
 	bool parsingOk = reader.parse(file, root);
 	if (!parsingOk) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -143,7 +143,7 @@ int get_node(string data, string param, string file, int defaultData) {
 		log.cerrarLog();
 	}
 	if (root[param][data].empty()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -151,7 +151,7 @@ int get_node(string data, string param, string file, int defaultData) {
 		log.cerrarLog();
 	}
 	if (!root[param][data].isInt()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -172,7 +172,7 @@ int get_node(char* datas, string param, string file, int defaultData) {
 	Logger& log = *Logger::Instancia();
 	bool parsingOk = reader.parse(file, root);
 	if (!parsingOk) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -183,7 +183,7 @@ int get_node(char* datas, string param, string file, int defaultData) {
 		log.cerrarLog();
 	}
 	if (root[param][data].empty()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -191,7 +191,7 @@ int get_node(char* datas, string param, string file, int defaultData) {
 		log.cerrarLog();
 	}
 	if (!root[param][data].isInt()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -216,7 +216,7 @@ int get_node(string data, string param, string file, int field,
 	s = out.str();
 	bool parsingOk = reader.parse(file, root);
 	if (!parsingOk) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -227,7 +227,7 @@ int get_node(string data, string param, string file, int field,
 		log.cerrarLog();
 	}
 	if (root[param][field][data].empty()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -236,7 +236,7 @@ int get_node(string data, string param, string file, int field,
 		log.cerrarLog();
 	}
 	if (!root[param][data].isInt()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -255,7 +255,7 @@ float get_node(string data, string param, string file, float defaultData) {
 	Logger& log = *Logger::Instancia();
 	bool parsingOk = reader.parse(file, root);
 	if (!parsingOk) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -266,7 +266,7 @@ float get_node(string data, string param, string file, float defaultData) {
 		log.cerrarLog();
 	}
 	if (root[param][data].empty()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -274,7 +274,7 @@ float get_node(string data, string param, string file, float defaultData) {
 		log.cerrarLog();
 	}
 	if (!root[param][data].isNumeric()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -295,7 +295,7 @@ float get_node(char* datas, string param, string file, float defaultData) {
 	Logger& log = *Logger::Instancia();
 	bool parsingOk = reader.parse(file, root);
 	if (!parsingOk) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -306,7 +306,7 @@ float get_node(char* datas, string param, string file, float defaultData) {
 		log.cerrarLog();
 	}
 	if (root[param][data].empty()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -314,7 +314,7 @@ float get_node(char* datas, string param, string file, float defaultData) {
 		log.cerrarLog();
 	}
 	if (!root[param][data].isNumeric()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -339,7 +339,7 @@ float get_node(string data, string param, string file, int field,
 	s = out.str();
 	bool parsingOk = reader.parse(file, root);
 	if (!parsingOk) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -350,7 +350,7 @@ float get_node(string data, string param, string file, int field,
 		log.cerrarLog();
 	}
 	if (root[param][field][data].empty()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -359,7 +359,7 @@ float get_node(string data, string param, string file, int field,
 		log.cerrarLog();
 	}
 	if (!root[param][data].isNumeric()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -378,7 +378,7 @@ bool get_node(string data, string param, string file, bool defaultData) {
 	Logger& log = *Logger::Instancia();
 	bool parsingOk = reader.parse(file, root);
 	if (!parsingOk) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -389,7 +389,7 @@ bool get_node(string data, string param, string file, bool defaultData) {
 		log.cerrarLog();
 	}
 	if (root[param][data].empty()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -397,7 +397,7 @@ bool get_node(string data, string param, string file, bool defaultData) {
 		log.cerrarLog();
 	}
 	if (!root[param][data].isBool()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -418,7 +418,7 @@ bool get_node(char* datas, string param, string file, bool defaultData) {
 	Logger& log = *Logger::Instancia();
 	bool parsingOk = reader.parse(file, root);
 	if (!parsingOk) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -429,7 +429,7 @@ bool get_node(char* datas, string param, string file, bool defaultData) {
 		log.cerrarLog();
 	}
 	if (root[param][data].empty()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -437,7 +437,7 @@ bool get_node(char* datas, string param, string file, bool defaultData) {
 		log.cerrarLog();
 	}
 	if (!root[param][data].isBool()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -462,7 +462,7 @@ bool get_node(string data, string param, string file, int field,
 	s = out.str();
 	bool parsingOk = reader.parse(file, root);
 	if (!parsingOk) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -473,7 +473,7 @@ bool get_node(string data, string param, string file, int field,
 		log.cerrarLog();
 	}
 	if (root[param][field][data].empty()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -482,7 +482,7 @@ bool get_node(string data, string param, string file, int field,
 		log.cerrarLog();
 	}
 	if (!root[param][data].isBool()) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
@@ -501,7 +501,7 @@ int get_size(string param, string file) {
 	Logger& log = *Logger::Instancia();
 	bool parsingOk = reader.parse(file, root);
 	if (!parsingOk) {
-		if (!log.abrirLog("Parser.log")) {
+		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return 0;
 		}
