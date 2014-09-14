@@ -112,7 +112,7 @@ string get_node(string data, string param, string file, int field,
 				"campo " + data + " de " + param + " vacio, del objeto" + s);
 		log.cerrarLog();
 	}
-	if (!root[param][data].isString()) {
+	if (!root[param][field][data].isString()) {
 		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
@@ -235,7 +235,7 @@ int get_node(string data, string param, string file, int field,
 				"campo " + data + " de " + param + " vacio, del objeto" + s);
 		log.cerrarLog();
 	}
-	if (!root[param][data].isInt()) {
+	if (!root[param][field][data].isInt()) {
 		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
@@ -358,7 +358,7 @@ float get_node(string data, string param, string file, int field,
 				"campo " + data + " de " + param + " vacio, del objeto" + s);
 		log.cerrarLog();
 	}
-	if (!root[param][data].isNumeric()) {
+	if (!root[param][field][data].isNumeric()) {
 		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
@@ -481,7 +481,7 @@ bool get_node(string data, string param, string file, int field,
 				"campo " + data + " de " + param + " vacio, del objeto" + s);
 		log.cerrarLog();
 	}
-	if (!root[param][data].isBool()) {
+	if (!root[param][field][data].isBool()) {
 		if (!log.abrirLog(PARSERLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
