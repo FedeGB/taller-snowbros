@@ -77,7 +77,6 @@ bool windowInit(int widthScreen, int heightScreen) {
 }
 
 bool loopPrincipal() {
-
 	SDL_Event event;
 	bool quit = false;
 	bool statusOK = true;
@@ -91,13 +90,12 @@ bool loopPrincipal() {
 				break;
 			} else if(event.key.keysym.sym  == SDLK_r) {
 				close();
-				std::cout << "Saca lo anterior" << std::endl;
 				std::string sConfig;
 				loadInitialValues(sConfig);
 				int heightScreen=get_node("alto-px","escenario",sConfig,480);
 				int widthScreen=get_node("ancho-px","escenario",sConfig,640);
-				windowInit(heightScreen, widthScreen);
-				continue;
+				w = new Window();
+				windowInit(widthScreen, heightScreen);
 			} else {
 				w->handleEvent(event);
 			}
@@ -113,7 +111,7 @@ bool loopPrincipal() {
 		SDL_Delay(25);
 	}
 
-	return 0;
+	return statusOK;
 }
 
 void close() {

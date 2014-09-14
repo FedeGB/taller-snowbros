@@ -12,7 +12,7 @@
 #include "../interfaces/IDibujable.h"
 #include "../../control/interfaces/INotificable.h"
 
-class RectanguloDibujable: public Objeto, public IDibujable, public INotificable
+class RectanguloDibujable: public Objeto, public IDibujable
 {
 public:
 
@@ -22,26 +22,6 @@ public:
 	SDL_Rect getRecuadroDeDibujo()
 	{
 		return getSDL_Rect();
-	}
-
-	virtual void eventoArriba(){
-		moverY(-10.0);
-	}
-
-	virtual void eventoAbajo(){
-		moverY(10.0);
-	}
-
-	virtual void eventoDerecha(){
-		moverX(10.0);
-	}
-
-	virtual void eventoIzquierda(){
-		moverX(-10.0);
-	}
-
-	virtual void eventoRESTART(){
-		posicion( 30.0, 30.0);
 	}
 };
 

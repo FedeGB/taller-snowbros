@@ -16,9 +16,9 @@ Window::Window() {
 
 bool Window::init(int width, int height, std::string BGpath)
 {
-	if( !validarAnchoYAlto( width, height ) )
+	if( !validarAnchoYAlto( width, height ) ) {
 		return !error;
-
+	}
 	if (!iniciarSDL())
 	{
 		return !error;
@@ -52,13 +52,9 @@ bool Window::init(int width, int height, std::string BGpath)
 			SDL_Color color = { 255, 0 , 0, 255 };
 			poligono->color(color);
 			wEscenario->agregarDibujable(poligono);
-
-			Observador<PoligonoDibujable>* observadorPoligono = new Observador<PoligonoDibujable>( poligono );
-			wHandlerEventos.agregarObservador(observadorPoligono);
 		}
 	}
 	return !error;
-
 }
 
 void Window::handleEvent(SDL_Event& evento)
@@ -70,24 +66,6 @@ void Window::handleEvent(SDL_Event& evento)
 }
 
 bool Window::updateWindow() {
-//	Logger& log = * Logger::Instancia();
-//	 if (SDL_UpdateWindowSurface(window) != 0 ) {
-//		if (!log.abrirLog("Window.log")) {
-//			std::cout << "Error al abrir archivo de log" << std::endl;
-//			return false;
-//		}
-//		log.escribirLog("WAR", "Window update fail!");
-//		log.cerrarLog();
-//		error = true;
-//		return !error;
-//	 }
-	 // El dibujar supongo que deberia ir antes del update surface
-	 // Igualmente por ahi es mejor usar un wRenderer para los objetos dinamicos
-	 // Y el surface para los estaticos, asi solo hace un update surface al cargar
-	 // o cambiar de escenario (es una idea).
-	 // Por deberia haber 2 update uno para renderer y otro para surface.
-
-	 // DIBUJO EL ESCENARIO ACTUALIZADO
 	 wEscenario->dibujarEscena(wRenderer);
 
 	 return !error;

@@ -5,7 +5,7 @@
 #include "SDL2_gfxPrimitives.h"
 #include "../../utiles/Logger.h"
 
-class PoligonoDibujable: public Objeto, public IDibujable, public INotificable {
+class PoligonoDibujable: public Objeto, public IDibujable{
 
 private:
 	Sint16 *vx, *vy;
@@ -54,27 +54,6 @@ public:
 			return false;
 		}
 		return true;
-	}
-
-
-	virtual void eventoArriba(){
-		moverY(-10.0);
-	}
-
-	virtual void eventoAbajo(){
-		moverY(10.0);
-	}
-
-	virtual void eventoDerecha(){
-		moverX(10.0);
-	}
-
-	virtual void eventoIzquierda(){
-		moverX(-10.0);
-	}
-
-	virtual void eventoRESTART(){
-		posicion( 30.0, 30.0);
 	}
 };
 
