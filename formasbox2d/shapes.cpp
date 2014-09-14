@@ -15,7 +15,7 @@ shapes::shapes(std::string data, b2World *mundo, int num) {
 }
 
 shapes::~shapes() {
-	world->DestroyBody(_shape);
+	//world->DestroyBody(_shape);
 	// TODO Auto-generated destructor stub
 }
 
