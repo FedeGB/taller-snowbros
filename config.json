@@ -1,6 +1,29 @@
-
-	"escenario": {
-		"alto-px": 640,
-		"ancho-px": 480,
-		}
-
+{
+    "escenario": {
+        "alto-px": 640,
+        "ancho-px": 480
+    },
+    "objetos": [
+        {
+            "estatico": false,
+            "tipo": "rect",
+            "x": 3,
+            "y": 3,
+            "rot": 0,
+            "alto": 1,
+            "ancho": 1,
+            "masa": 1
+        },
+        {
+            "estatico": false,
+            "tipo": "circ",
+            "rad": 1,
+            "x": 3,
+            "y": 3,
+            "rot": 0,
+            "alto": 1,
+            "ancho": 1,
+            "masa": 1
+        }
+    ]
+}
