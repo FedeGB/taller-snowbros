@@ -10,6 +10,7 @@
 #include "modelo/Personaje.h"
 #include "modelo/formas/RectanguloDibujable.h"
 #include "modelo/formas/PoligonoDibujable.h"
+#include "modelo/formas/CirculoDibujable.h"
 #include "vista/Fondo.h"
 #include "utiles/Logger.h"
 

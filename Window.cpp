@@ -48,10 +48,17 @@ bool Window::init(int width, int height, std::string BGpath)
 			Sint16* vx = new Sint16[numero_de_vertices]; vx[0] = 100; vx[1] = 80; vx[2] = 60; vx[3] = 40;
 			Sint16* vy = new Sint16[numero_de_vertices]; vy[0] = 80; vy[1] = 120; vy[2] = 120; vy[3] = 80;
 			poligono->setVertices(vx, vy, numero_de_vertices);
-
 			SDL_Color color = { 255, 0 , 0, 255 };
 			poligono->color(color);
 			wEscenario->agregarDibujable(poligono);
+
+			CirculoDibujable* circulo = new CirculoDibujable();
+			circulo->setRenderer(wRenderer);
+			circulo->setRadio(10);
+			circulo->color(color);
+			circulo->posicion(350,240);
+			circulo->angulo(20);
+			wEscenario->agregarDibujable(circulo);
 		}
 	}
 	return !error;

@@ -54,7 +54,7 @@ protected:
 	b2Vec2 oPosicion;
 	Tamano oTamano;
 	int32 oEscala;
-	int32 oAngulo;
+	float32 oAngulo;
 	SDL_Color oColor;
 	uint32 oMasa;
 	bool oEsEstatico;
