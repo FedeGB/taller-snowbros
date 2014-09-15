@@ -8,6 +8,10 @@
 #include "../parser/parser.h"
 #include "../utiles/Logger.h"
 
+//diccionario
+enum tipo{CIRCULO=1,RECTANGULO=4,POLIGONO=3,IRREGULAR=5};
+const string formas[6]={"","circulo","","poligono","rectangulo","irregular"};
+
 class shapes {
 public:
 	shapes();

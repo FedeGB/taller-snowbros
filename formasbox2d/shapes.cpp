@@ -116,14 +116,22 @@ b2Vec2& shapes::getPoints() {
 //TODO no se si estas funciones van aca o ponerlas en una clase parser
 
 int shapes::num_lados(std::string data) {
-	if (!data.compare("circ"))
+	if (!data.compare("circ")){
+		this->_shape->SetUserData( new int(CIRCULO));
 		return 1;
-	if (!data.compare("rect"))
-		return 4;
-	if (!data.compare("poli"))
-		return 3;
-	if (!data.compare("irreg"))//trapecio o paralelogramo
-			return 5;
+	}
+	if (!data.compare("rect")){
+				this->_shape->SetUserData(new int(RECTANGULO));
+				return 4;
+			}
+	if (!data.compare("poli")){
+				this->_shape->SetUserData(new int(POLIGONO));
+				return 3;
+			}
+	if (!data.compare("irreg")){
+		this->_shape->SetUserData(new int(IRREGULAR));
+		return 5;
+			}
 	else
 		return 0;
 
