@@ -39,26 +39,6 @@ bool Window::init(int width, int height, std::string BGpath)
 			}
 
 			wEscenario = crearEscenario(BGpath);
-
-			// ejemplo de dibujado de un poligono
-			PoligonoDibujable* poligono = new PoligonoDibujable();
-			poligono->setRenderer(wRenderer);
-			// seteo de vertices
-			int numero_de_vertices = 4;
-			Sint16* vx = new Sint16[numero_de_vertices]; vx[0] = 100; vx[1] = 80; vx[2] = 60; vx[3] = 40;
-			Sint16* vy = new Sint16[numero_de_vertices]; vy[0] = 80; vy[1] = 120; vy[2] = 120; vy[3] = 80;
-			poligono->setVertices(vx, vy, numero_de_vertices);
-			SDL_Color color = { 255, 0 , 0, 255 };
-			poligono->color(color);
-			wEscenario->agregarDibujable(poligono);
-
-			CirculoDibujable* circulo = new CirculoDibujable();
-			circulo->setRenderer(wRenderer);
-			circulo->setRadio(10);
-			circulo->color(color);
-			circulo->posicion(350,240);
-			circulo->angulo(20);
-			wEscenario->agregarDibujable(circulo);
 		}
 	}
 	return !error;
@@ -231,6 +211,11 @@ bool Window::insertarPersonaje(float32 posX, float32 posY, uint32 height, uint32
 	}
 	wHandlerEventos.agregarObservador(observadorPersonaje);
 	return true;
+}
+
+void Window::insertarFigura(IDibujable* figura){
+	figura->setRenderer(wRenderer);
+	wEscenario->agregarDibujable(figura);
 }
 
 Window::~Window(){

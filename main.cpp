@@ -17,7 +17,7 @@ void worldInit();
 bool loopPrincipal();
 void close();
 
-Window* w = new Window();
+Window* w;
 b2World *worldB2D;
 
 
@@ -43,6 +43,23 @@ int main() {
 	if(!statusOK) {
 		return -1;
 	}
+
+	PoligonoDibujable* poligono = new PoligonoDibujable();
+	int numero_de_vertices = 4;
+	Sint16* vx = new Sint16[numero_de_vertices]; vx[0] = 100; vx[1] = 80; vx[2] = 60; vx[3] = 40;
+	Sint16* vy = new Sint16[numero_de_vertices]; vy[0] = 80; vy[1] = 120; vy[2] = 120; vy[3] = 80;
+	poligono->setVertices(vx, vy, numero_de_vertices);
+	SDL_Color color = { 255, 0 , 0, 255 };
+	poligono->color(color);
+	w->insertarFigura(poligono);
+
+	CirculoDibujable* circulo = new CirculoDibujable();
+	circulo->setRadio(10);
+	circulo->color(color);
+	circulo->posicion(350,240);
+	circulo->angulo(20);
+	w->insertarFigura(circulo);
+
 	loopPrincipal();
 	close();
 
@@ -71,6 +88,7 @@ bool loadInitialValues(std::string& sConfig) {
 }
 
 bool windowInit(int widthScreen, int heightScreen) {
+	w = new Window();
 	bool statusOK = w->init(widthScreen, heightScreen, "imagenes/fondo2.png");
 	statusOK = w->insertarPersonaje(100, 100, 60, 50);
 	return statusOK;

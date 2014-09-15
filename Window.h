@@ -11,6 +11,7 @@
 #include "modelo/formas/RectanguloDibujable.h"
 #include "modelo/formas/PoligonoDibujable.h"
 #include "modelo/formas/CirculoDibujable.h"
+#include "modelo/interfaces/IDibujable.h"
 #include "vista/Fondo.h"
 #include "utiles/Logger.h"
 
@@ -44,6 +45,8 @@ public:
 	bool loadBackground(const char* pathToBG);
 	// Inserta un personaje
 	bool insertarPersonaje(float32 posX, float32 posY, uint32 height, uint32 width);
+	// Inserta una figura
+	void insertarFigura(IDibujable* figura);
 	// manejar evento
 	void handleEvent(SDL_Event&);
 	// Update ventana
