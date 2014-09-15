@@ -34,8 +34,8 @@ int main() {
 	float heightWorld=get_node("alto-un","escenario",sConfig,10.0f);
 	float widthWorld=get_node("ancho-un","escenario",sConfig,10.0f);
 
-	float heightRelation=heightScreen/heightWorld;
-	float widthRelation=widthScreen/widthWorld;
+	float heightRatio=heightScreen/heightWorld;
+	float widthRatio=widthScreen/widthWorld;
 
 	worldInit(widthWorld,heightWorld);
 	list<shapes> _shapes;
