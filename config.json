@@ -17,7 +17,7 @@
         {
             "estatico": false,
             "tipo": "circ",
-            "rad": 1,
+            "escala": 1,
             "x": 3,
             "y": 3,
             "rot": 0,
