@@ -13,7 +13,7 @@ using namespace std;
 
 bool loadInitialValues(std::string& sConfig);
 bool windowInit(int widthScreen, int heightScreen);
-void worldInit();
+void worldInit(float w,float h);
 bool loopPrincipal();
 void close();
 
@@ -31,12 +31,17 @@ int main() {
 	int heightScreen=get_node("alto-px","escenario",sConfig,480);
 	int widthScreen=get_node("ancho-px","escenario",sConfig,640);
 
-	worldInit();
+	float heightWorld=get_node("alto-un","escenario",sConfig,10.0f);
+	float widthWorld=get_node("ancho-un","escenario",sConfig,10.0f);
+
+	float heightRelation=heightScreen/heightWorld;
+	float widthRelation=widthScreen/widthWorld;
+
+	worldInit(widthWorld,heightWorld);
 	list<shapes> _shapes;
 	int formas =get_size("objetos",sConfig);
 	for(int i=0;i<formas;i++){
 		shapes temp(sConfig,worldB2D,i);
-		_shapes.push_back(temp);
 	}
 
 	statusOK = windowInit(widthScreen, heightScreen);
@@ -143,8 +148,9 @@ void close() {
 	}
 }
 
-void worldInit(){
+void worldInit(float w,float h){
 	b2Vec2 gravedad(0, -9.8);
 	worldB2D = new b2World(gravedad);
+	//crear paredes piso y techo
 	return;
 }
