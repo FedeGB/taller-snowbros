@@ -15,7 +15,6 @@ private:
 		Uint8 newGreen = 255 - oColor.g;
 		Uint8 newBlue = 255 - oColor.b;
 		int32 anguloInit = this->angulo();
-		std::cout << anguloInit << std::endl;
 		if(anguloInit > 360) {
 			anguloInit -= 360;
 		}
