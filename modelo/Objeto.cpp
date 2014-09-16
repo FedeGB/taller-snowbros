@@ -11,7 +11,7 @@ Objeto::Objeto() :
 	oPosicion(0.0, 0.0), oTamano(Tamano(100, 100)),
 	oEscala(1.0), oAngulo(0), oMasa(10.0), oEsEstatico(true)
 {
-	oColor.r = 0.0; oColor.g = 0.0; oColor.b = 0.0; oColor.a = 1.0;
+	oColor.r = 0.0; oColor.g = 0.0; oColor.b = 0.0; oColor.a = 1.0; rad = 1;
 }
 
 Objeto::~Objeto() {}
@@ -79,6 +79,12 @@ void Objeto::masa(uint32 m){
 	oMasa = m;
 }
 
+bool Objeto::esEstatico(){
+	return oEsEstatico;
+}
+void Objeto::esEstatico(bool b){
+	oEsEstatico = b;
+}
 
 void Objeto::moverX(float32 x){
 	oPosicion.x += x;
@@ -91,6 +97,14 @@ void Objeto::moverY(float32 y){
 void Objeto::moverXY(float32 x, float32 y){
 	oPosicion.x += x;
 	oPosicion.y += y;
+}
+
+void Objeto::moverAngulo(float32 grados){
+	oAngulo += DEGTORAD * grados;
+}
+
+void Objeto::setRadio(Sint16 radio) {
+	rad = radio;
 }
 
 SDL_Rect Objeto::getSDL_Rect()

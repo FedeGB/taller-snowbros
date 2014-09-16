@@ -1,14 +1,15 @@
 #ifndef CIRCULODIBUJABLE_H_
 #define CIRCULODIBUJABLE_H_
 
-#include "SDL.h"
-#include "SDL2_gfxPrimitives.h"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL2_gfxPrimitives.h>
 #include "../../utiles/Logger.h"
 #include <math.h>
+#include "../ObjetoDibujable.h"
 
-class CirculoDibujable: public Objeto, public IDibujable {
+class CirculoDibujable: public ObjetoDibujable {
 private:
-	Sint16 rad; // radio
+	//Sint16 rad; // radio
 	int arcoMarca() {
 		Sint16 radioArco  = (Sint16)(rad*0.75);
 		Uint8 newRed = 255 - oColor.r;

@@ -2,7 +2,7 @@
 #include "Window.h"
 #include <Box2D/Box2D.h>
 #include <list>
-#include "formasbox2d/shapes.h"
+#include "formasbox2d/shape.h"
 #include "utiles/Logger.h"
 #include "parser/parser.h"
 
@@ -15,7 +15,7 @@ bool loadInitialValues(std::string& sConfig);
 bool windowInit(int widthScreen, int heightScreen);
 void worldInit(float w,float h);
 bool loopPrincipal();
-void close();
+void wClose();
 
 Window* w;
 b2World *worldB2D;
@@ -31,42 +31,30 @@ int main() {
 	int heightScreen=get_node("alto-px","escenario",sConfig,480);
 	int widthScreen=get_node("ancho-px","escenario",sConfig,640);
 
-	float heightWorld=get_node("alto-un","escenario",sConfig,10.0f);
-	float widthWorld=get_node("ancho-un","escenario",sConfig,10.0f);
+	float heightWorld=480; //get_node("alto-un","escenario",sConfig,10.0f);
+	float widthWorld=640; //get_node("ancho-un","escenario",sConfig,10.0f);
 
 	float heightRatio=heightScreen/heightWorld;
 	float widthRatio=widthScreen/widthWorld;
 
 	worldInit(widthWorld,heightWorld);
-	list<shapes> _shapes;
-	int formas =get_size("objetos",sConfig);
-	for(int i=0;i<formas;i++){
-		shapes temp(sConfig,worldB2D,i);
-	}
 
 	statusOK = windowInit(widthScreen, heightScreen);
 	if(!statusOK) {
 		return -1;
 	}
 
-	PoligonoDibujable* poligono = new PoligonoDibujable();
-	int numero_de_vertices = 4;
-	Sint16* vx = new Sint16[numero_de_vertices]; vx[0] = 100; vx[1] = 80; vx[2] = 60; vx[3] = 40;
-	Sint16* vy = new Sint16[numero_de_vertices]; vy[0] = 80; vy[1] = 120; vy[2] = 120; vy[3] = 80;
-	poligono->setVertices(vx, vy, numero_de_vertices);
-	SDL_Color color = { 255, 0 , 0, 255 };
-	poligono->color(color);
-	w->insertarFigura(poligono);
-
-	CirculoDibujable* circulo = new CirculoDibujable();
-	circulo->setRadio(10);
-	circulo->color(color);
-	circulo->posicion(350,240);
-	circulo->angulo(20);
-	w->insertarFigura(circulo);
+	//list<shape> objectsList;
+	int formas =get_size("objetos",sConfig);
+	shape * temp;
+	for(int i=0;i<formas;i++){
+		temp = new shape(sConfig,worldB2D,i);
+		//objectsList.push_front(temp);
+		w->insertarFigura(temp);
+	}
 
 	loopPrincipal();
-	close();
+	wClose();
 
 	return OKEXIT;
 }
@@ -78,8 +66,12 @@ bool loadInitialValues(std::string& sConfig) {
 	fConfig.open("config.json",ios_base::in);
 	if(!fConfig.is_open()) {
 		if (!log.abrirLog(MAINLOG)){
-			std::cout << "Error al abrir archivo de log "<< MAINLOG << std::endl;
-			return false;
+			log.crearLogs();
+			std::cout << "Error al abrir archivo de log "<< MAINLOG << ", creando..."<< std::endl;
+			if (!log.abrirLog(MAINLOG)) {
+				std::cout << "No se pudo crear el archivo de log.";
+				return false;
+			}
 		}
 
 		log.escribirLog("ERROR", "No se pudo encontrar o abrir el archivo config.json");
@@ -95,7 +87,7 @@ bool loadInitialValues(std::string& sConfig) {
 bool windowInit(int widthScreen, int heightScreen) {
 	w = new Window();
 	bool statusOK = w->init(widthScreen, heightScreen, "imagenes/fondo2.png");
-	statusOK = w->insertarPersonaje(100, 100, 60, 50);
+	statusOK = true; //rrw->insertarPersonaje(100, 100, 60, 50);
 	return statusOK;
 }
 
@@ -111,17 +103,27 @@ bool loopPrincipal() {
 			if( event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE ) {
 				quit = true;
 				break;
-			} else if(event.key.keysym.sym  == SDLK_r) {
-				close();
+			} /*else if(event.key.keysym.sym  == SDLK_r) {
+				wClose();
 				std::string sConfig;
 				loadInitialValues(sConfig);
 				int heightScreen=get_node("alto-px","escenario",sConfig,480);
 				int widthScreen=get_node("ancho-px","escenario",sConfig,640);
-				w = new Window();
+				worldInit(widthScreen,heightScreen);
 				windowInit(widthScreen, heightScreen);
+/*
+				SDL_Color color = { 255, 0 , 0, 255 };
+				CirculoDibujable* circulo = new CirculoDibujable();
+				circulo->setRadio(10);
+				circulo->color(color);
+				circulo->posicion(350,240);
+				circulo->angulo(20);
+				circulo->esEstatico(true);
+				w->insertarFigura(circulo);
+
 			} else {
-				w->handleEvent(event);
-			}
+				//w->handleEvent(event);
+			}*/
 		}
 		statusOK = w->updateWindow();
 		if(!statusOK) {
@@ -137,7 +139,7 @@ bool loopPrincipal() {
 	return statusOK;
 }
 
-void close() {
+void wClose() {
 	if(w) {
 		delete w;
 		w = NULL;

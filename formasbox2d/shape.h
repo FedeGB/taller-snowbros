@@ -7,19 +7,22 @@
 #include <cmath>
 #include "../parser/parser.h"
 #include "../utiles/Logger.h"
+#include "../modelo/ObjetoDibujable.h"
 
 //diccionario
 enum tipo{CIRCULO=1,RECTANGULO=4,POLIGONO=3,IRREGULAR=5};
 const string formas[6]={"","circulo","","poligono","rectangulo","irregular"};
 
-class shapes {
+class shape: public IDibujable {
 public:
-	shapes();
-	shapes(std::string data,b2World* mundo, int num);
-	virtual ~shapes();
+	shape();
+	shape(std::string data,b2World* mundo, int num);
+	virtual ~shape();
 	b2Body& getShape();
 	b2Vec2& getPoints();
 	int getLados();
+	virtual void render();
+	virtual void setRenderer(SDL_Renderer* r);
 
 
 
@@ -31,8 +34,8 @@ private:
 	int nLados;
 	b2World *world;
 	bool update_Position();//cambia la posicion de la imagen
+	ObjetoDibujable *figura;
 };
 
 #endif /* SHAPES_H_ */
-
 

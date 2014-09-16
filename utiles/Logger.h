@@ -12,6 +12,7 @@
 #include <fstream>
 #include <iostream>
 
+#define LOGDIR "log"
 #define WINDOWLOG "log/Window.log"
 #define DIBUJABLELOG "log/Dibujable.log"
 #define HANDLERLOG "log/Handler.log"
@@ -32,6 +33,7 @@ public:
 	bool escribirLog(std::string tipo, std::string detalle);
 	bool estaAbierto();
 	void cerrarLog();
+	bool crearLogs();
 
 private:
 	Logger(){};  // Constructor privado para que no lo invoquen

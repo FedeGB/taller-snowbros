@@ -8,6 +8,9 @@
 #include "Logger.h"
 #include <stddef.h> //Define NULL
 #include <ctime>
+#include <sys/types.h>
+#include <sys/stat.h>
+
 using namespace std;
 
 //Puntero global estatico para asegurar que solo se use una instancia del Logger
@@ -63,4 +66,32 @@ bool Logger::escribirLog(string tipo, string detalle){
 bool Logger::estaAbierto()
 {
 	return this->logActual.is_open();
+}
+
+bool Logger::crearLogs()
+{
+	mkdir(LOGDIR, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+
+	std::ofstream logfile (WINDOWLOG);
+	logfile.close();
+
+	logfile.open(DIBUJABLELOG);
+	logfile.close();
+
+	logfile.open(HANDLERLOG);
+	logfile.close();
+
+	logfile.open(SIMULACIONLOG);
+	logfile.close();
+
+	logfile.open(PARSERLOG);
+	logfile.close();
+
+	logfile.open(MAINLOG);
+	logfile.close();
+
+	logfile.open(SHAPESLOG);
+	logfile.close();
+
+	return true;
 }

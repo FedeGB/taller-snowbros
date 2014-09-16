@@ -24,8 +24,8 @@ public:
 	void posicion(float32 x, float32 y);
 
 	Tamano tamano();
-	virtual void tamano(Tamano);
-	virtual void tamano(uint32 alto, uint32 ancho);
+	void tamano(Tamano);
+	void tamano(uint32 alto, uint32 ancho);
 
 	int32 escala();
 	void escala(int32);
@@ -48,6 +48,8 @@ public:
 	void moverXY(float32 x, float32 y);
 	void moverAngulo(float32 grados);
 
+	void setRadio(Sint16 radio);
+
 	SDL_Rect getSDL_Rect();
 
 protected:
@@ -57,6 +59,7 @@ protected:
 	float32 oAngulo;
 	SDL_Color oColor;
 	uint32 oMasa;
+	Sint16 rad; // radio
 	bool oEsEstatico;
 };
 

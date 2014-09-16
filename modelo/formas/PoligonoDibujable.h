@@ -1,11 +1,12 @@
 #ifndef POLIGONODIBUJABLE_H
 #define POLIGONODIBUJABLE_H
 
-#include "SDL.h"
-#include "SDL2_gfxPrimitives.h"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL2_gfxPrimitives.h>
 #include "../../utiles/Logger.h"
+#include "../ObjetoDibujable.h"
 
-class PoligonoDibujable: public Objeto, public IDibujable{
+class PoligonoDibujable: public ObjetoDibujable {
 
 private:
 	Sint16 *vx, *vy;

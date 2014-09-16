@@ -26,7 +26,7 @@ public:
 		free();
 	};
 
-	virtual void dibujar()
+	void dibujar()
 	{
 		render();
 	}
@@ -80,15 +80,16 @@ public:
 	// cada elemnto tiene que redefinir este metodo para devolver el recuadro a donde se va a dibujar la imagen
 	virtual SDL_Rect getRecuadroDeDibujo() {};
 
-	virtual void render()
-	{
+	virtual void render() {
 		SDL_Rect r = getRecuadroDeDibujo();
 		SDL_RenderCopy( dRenderer, dTextura, NULL, &r );
 	}
 
-	void setRenderer(SDL_Renderer* r){
+	virtual void setRenderer(SDL_Renderer* r){
 		dRenderer = r;
 	}
+
+	virtual bool setVertices(Sint16* vx, Sint16* vy, int nvert) {return false;}
 
 protected:
 	SDL_Texture* dTextura;
