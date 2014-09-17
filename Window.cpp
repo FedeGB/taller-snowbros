@@ -5,16 +5,20 @@
 
 //#include "utiles/Configurador.h"
 
+float Window::wRatio, Window::hRatio = 1;
+
+
 Window::Window() {
 	window = NULL;
 	wEscenario = NULL;
 	error = false;
 	wRenderer = NULL;
-	SCREEN_WIDTH = 0;
-	SCREEN_HEIGHT = 0;
+	SCREEN_WIDTH = 480;
+	SCREEN_HEIGHT = 640;
+	wRatio = hRatio = 1;
 }
 
-bool Window::init(int width, int height, std::string BGpath)
+bool Window::init(int width, int height, float wRatio, float hRatio, std::string BGpath)
 {
 	if( !validarAnchoYAlto( width, height ) ) {
 		return !error;
@@ -41,6 +45,10 @@ bool Window::init(int width, int height, std::string BGpath)
 			wEscenario = crearEscenario(BGpath);
 		}
 	}
+
+	this->wRatio = wRatio;
+	this->hRatio = hRatio;
+
 	return !error;
 }
 
@@ -196,7 +204,7 @@ bool Window::insertarPersonaje(float32 posX, float32 posY, uint32 height, uint32
 	}
 	personaje->setRenderer(wRenderer);
 	personaje->cargarImagen("imagenes/parado.png");
-	personaje->posicion(posX, posY);
+	personaje->setPosicion(posX, posY);
 	personaje->tamano(height, width);
 	wEscenario->agregarDibujable(personaje);
 	Observador<Personaje>* observadorPersonaje = new Observador<Personaje>( personaje );

@@ -11,8 +11,9 @@
 
 using namespace std;
 
+bool init();
 bool loadInitialValues(std::string& sConfig);
-bool windowInit(int widthScreen, int heightScreen);
+bool windowInit(int widthScreen, int heightScreen, float wRatio, float hRatio);
 void worldInit(float w,float h);
 bool loopPrincipal();
 void wClose();
@@ -22,37 +23,8 @@ b2World *worldB2D;
 
 
 int main() {
-	std::string sConfig;
-	bool statusOK = true;
-	statusOK = loadInitialValues(sConfig);
-	if(!statusOK) {
-		return LOADERROR;
-	}
-	int heightScreen=get_node("alto-px","escenario",sConfig,480);
-	int widthScreen=get_node("ancho-px","escenario",sConfig,640);
 
-	float heightWorld=480; //get_node("alto-un","escenario",sConfig,10.0f);
-	float widthWorld=640; //get_node("ancho-un","escenario",sConfig,10.0f);
-
-	float heightRatio=heightScreen/heightWorld;
-	float widthRatio=widthScreen/widthWorld;
-
-	worldInit(widthWorld,heightWorld);
-
-	statusOK = windowInit(widthScreen, heightScreen);
-	if(!statusOK) {
-		return -1;
-	}
-
-	//list<shape> objectsList;
-	int formas =get_size("objetos",sConfig);
-	shape * temp;
-	for(int i=0;i<formas;i++){
-		temp = new shape(sConfig,worldB2D,i);
-		//objectsList.push_front(temp);
-		w->insertarFigura(temp);
-	}
-
+	init();
 	loopPrincipal();
 	wClose();
 
@@ -84,10 +56,11 @@ bool loadInitialValues(std::string& sConfig) {
 	return true;
 }
 
-bool windowInit(int widthScreen, int heightScreen) {
+bool windowInit(int widthScreen, int heightScreen, float wRatio, float hRatio, std::string path_fondo) {
 	w = new Window();
-	bool statusOK = w->init(widthScreen, heightScreen, "imagenes/fondo2.png");
-	statusOK = true; //rrw->insertarPersonaje(100, 100, 60, 50);
+	bool statusOK = w->init(widthScreen, heightScreen, wRatio, hRatio, path_fondo);
+	w->insertarPersonaje(100, 100, 32, 32);
+	statusOK = true;
 	return statusOK;
 }
 
@@ -103,28 +76,16 @@ bool loopPrincipal() {
 			if( event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE ) {
 				quit = true;
 				break;
-			} /*else if(event.key.keysym.sym  == SDLK_r) {
+			} else if(event.key.keysym.sym  == SDLK_r) {
 				wClose();
-				std::string sConfig;
-				loadInitialValues(sConfig);
-				int heightScreen=get_node("alto-px","escenario",sConfig,480);
-				int widthScreen=get_node("ancho-px","escenario",sConfig,640);
-				worldInit(widthScreen,heightScreen);
-				windowInit(widthScreen, heightScreen);
-/*
-				SDL_Color color = { 255, 0 , 0, 255 };
-				CirculoDibujable* circulo = new CirculoDibujable();
-				circulo->setRadio(10);
-				circulo->color(color);
-				circulo->posicion(350,240);
-				circulo->angulo(20);
-				circulo->esEstatico(true);
-				w->insertarFigura(circulo);
-
+				init();
+				break;
 			} else {
-				//w->handleEvent(event);
-			}*/
+				w->handleEvent(event);
+			}
 		}
+
+		worldB2D->Step(1.0f/60.0f, 8, 3);
 		statusOK = w->updateWindow();
 		if(!statusOK) {
 			if (w) {
@@ -151,8 +112,47 @@ void wClose() {
 }
 
 void worldInit(float w,float h){
-	b2Vec2 gravedad(0, -9.8);
-	worldB2D = new b2World(gravedad);
+	b2Vec2 gravedad(0, 10);
+	worldB2D = new b2World(gravedad, true);
 	//crear paredes piso y techo
+
 	return;
+}
+
+bool init(){
+
+	std::string sConfig;
+	bool statusOK = true;
+	statusOK = loadInitialValues(sConfig);
+	if(!statusOK) {
+		return LOADERROR;
+	}
+	int heightScreen=get_node("alto-px","escenario",sConfig,480);
+	int widthScreen=get_node("ancho-px","escenario",sConfig,640);
+
+	float heightWorld=get_node("alto-un","escenario",sConfig,10.0f);
+	float widthWorld=get_node("ancho-un","escenario",sConfig,10.0f);
+
+	std::string path_fondo = get_node("imagen-fondo","escenario",sConfig,"imagenes/fondo2.png");
+
+	float heightRatio=heightScreen/heightWorld;
+	float widthRatio=widthScreen/widthWorld;
+
+	worldInit(widthWorld,heightWorld);
+
+	statusOK = windowInit(widthScreen, heightScreen, widthRatio, heightRatio, path_fondo);
+	if(!statusOK) {
+		return -1;
+	}
+
+	//list<shape> objectsList;
+	int formas =get_size("objetos",sConfig);
+	shape * temp;
+	for(int i=0;i<formas;i++){
+		temp = new shape(sConfig,worldB2D,i);
+		//objectsList.push_front(temp);
+		w->insertarFigura(temp);
+	}
+
+	return true;
 }

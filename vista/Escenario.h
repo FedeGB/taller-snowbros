@@ -14,6 +14,8 @@
 #include "../utiles/tipos.h"
 #include "../utiles/Logger.h"
 
+typedef std::vector<IDibujable*> ListaDibujables;
+
 class Escenario : public INotificable {
 public:
 	Escenario();

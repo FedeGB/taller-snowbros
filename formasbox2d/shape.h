@@ -7,7 +7,7 @@
 #include <cmath>
 #include "../parser/parser.h"
 #include "../utiles/Logger.h"
-#include "../modelo/ObjetoDibujable.h"
+#include "../modelo/interfaces/IDibujable.h"
 
 //diccionario
 enum tipo{CIRCULO=1,RECTANGULO=4,POLIGONO=3,IRREGULAR=5};
@@ -34,7 +34,7 @@ private:
 	int nLados;
 	b2World *world;
 	bool update_Position();//cambia la posicion de la imagen
-	ObjetoDibujable *figura;
+	IDibujable * figura;
 };
 
 #endif /* SHAPES_H_ */

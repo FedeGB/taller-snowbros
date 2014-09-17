@@ -10,33 +10,50 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL2_gfxPrimitives.h>
-#include "../ObjetoDibujable.h"
+#include "../interfaces/IDibujable.h"
 #include "../../control/interfaces/INotificable.h"
+#include "../../Window.h"
 
-class RectanguloDibujable: public ObjetoDibujable {
+class RectanguloDibujable: public IDibujable {
 
 private:
-	Sint16 *vx, *vy;
+	float32 halfHeight, halfWidth;
 
 public:
 
-	RectanguloDibujable() {	vx = vy = NULL;}
-	~RectanguloDibujable() {
-		if(vx)
-			delete[] vx;
-		if(vy)
-			delete[] vy;
-	}
+	RectanguloDibujable() {	halfHeight = 0; halfWidth = 0;}
+	~RectanguloDibujable() { }
 
-	SDL_Rect getRecuadroDeDibujo()
-	{
+	/*SDL_Rect getRecuadroDeDibujo(){
 		return getSDL_Rect();
-	}
+	}*/
 
 	virtual void render() {
 		// Se redefine distinto, usa el renderer directo
 		int status;
-		status = boxRGBA(dRenderer, vx[0], vy[0], vx[1], vy[1], oColor.r, oColor.g, oColor.b, oColor.a);
+
+		// Calcula las coordenadas en X e Y segun la posicion, el tamaño, y la rotacion del rectangulo.
+		float modulo = sqrt( pow(halfWidth, 2) + pow(halfHeight, 2) );
+		float thita = angulo + atan( halfHeight / halfWidth );
+		float xaux = modulo * cos(thita);
+		float yaux = modulo * sin(thita);
+		float thita2 = - angulo + atan( halfHeight / halfWidth );
+		float xaux2 = modulo * cos(thita2);
+		float yaux2 = modulo * sin(thita2);
+
+		Sint16* vx = new Sint16[2];
+		vx[0] = (posicion.x - xaux) * Window::wRatio;
+		vx[1] = (posicion.x + xaux2) * Window::wRatio;
+		vx[2] = (posicion.x + xaux) * Window::wRatio;
+		vx[3] = (posicion.x - xaux2) * Window::wRatio;
+
+		Sint16* vy = new Sint16[2];
+		vy[0] = (posicion.y - yaux) * Window::hRatio;
+		vy[1] = (posicion.y - yaux2) * Window::hRatio;
+		vy[2] = (posicion.y + yaux) * Window::hRatio;
+		vy[3] = (posicion.y + yaux2) * Window::hRatio;
+
+		status = filledPolygonRGBA(dRenderer, vx, vy, 4, color.r, color.g, color.b, color.a);
 		if(status != 0) {
 			Logger& log = * Logger::Instancia();
 			if(!log.abrirLog(DIBUJABLELOG)) {
@@ -48,19 +65,12 @@ public:
 		}
 	}
 
-	bool setVertices(Sint16* vx, Sint16* vy, int nvert) {
-		if (vx != NULL) {
-			this->vx = vx;
-		} else {
-			return false;
-		}
-		if (vy != NULL) {
-			this->vy = vy;
-		} else {
-			return false;
-		}
+	bool setDimensiones(float32 height, float32 width){
+		halfHeight = height / 2;
+		halfWidth = width / 2;
 		return true;
 	}
+
 };
 
 #endif /* RECTANGULO_H_ */

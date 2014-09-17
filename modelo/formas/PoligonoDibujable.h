@@ -4,29 +4,36 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL2_gfxPrimitives.h>
 #include "../../utiles/Logger.h"
-#include "../ObjetoDibujable.h"
+#include "../interfaces/IDibujable.h"
 
-class PoligonoDibujable: public ObjetoDibujable {
+class PoligonoDibujable: public IDibujable {
 
 private:
-	Sint16 *vx, *vy;
-	int ver; // Cantidad de vertices
+	int nVertices;
+	float32 escala;
+
 public:
 	PoligonoDibujable() {
-		ver = 0;
-		vx = vy = NULL;
+		nVertices = 5;
+		escala = 1;
 	}
-	~PoligonoDibujable() {
-		if(vx)
-			delete[] vx;
-		if(vy)
-			delete[] vy;
-	}
+	~PoligonoDibujable() { }
 
 	virtual void render() {
-		// Se redefine distinto, usa el renderer directo
+
+		// Calculo la posicion de los vertices.
+
+		Sint16 vx[nVertices]; Sint16 vy[nVertices];
+
+		for (int i = 0; i < nVertices; i++) {
+			float thita = (2 * i * PI / nVertices) - (angulo);
+			vx[i] = ( posicion.x + escala * cos(thita) ) * Window::wRatio;
+			vy[i] = ( posicion.y - escala * sin(thita) ) * Window::hRatio;
+		}
+
+
 		int status;
-		status = filledPolygonRGBA(dRenderer, vx, vy, ver, oColor.r, oColor.g, oColor.b, oColor.a);
+		status = filledPolygonRGBA(dRenderer, vx, vy, nVertices, color.r, color.g, color.b, color.a);
 		if(status != 0) {
 			Logger& log = * Logger::Instancia();
 			if(!log.abrirLog(DIBUJABLELOG)) {
@@ -38,24 +45,14 @@ public:
 		}
 	}
 
-	bool setVertices(Sint16* vx, Sint16* vy, int nvert) {
-		if (vx != NULL) {
-			this->vx = vx;
-		} else {
-			return false;
-		}
-		if (vy != NULL) {
-			this->vy = vy;
-		} else {
-			return false;
-		}
-		if (nvert >= 3) {
-			this->ver = nvert;
-		} else {
-			return false;
-		}
-		return true;
+	void setNumVertices(int nvert) {
+		nVertices = nvert;
 	}
+
+	void setEscala(float32 e){
+		escala = e;
+	}
+
 };
 
 #endif

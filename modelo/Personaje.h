@@ -10,7 +10,7 @@
 
 #include "Objeto.h"
 #include "../control/interfaces/INotificable.h"
-#include "../modelo/interfaces/IDibujable.h"
+#include "../modelo/ObjetoDibujable.h"
 
 enum ESTADOS
 {
@@ -21,7 +21,7 @@ enum ESTADOS
 	ESTADO_ABAJO,
 };
 
-class Personaje : public Objeto, public IDibujable, public INotificable {
+class Personaje : public ObjetoDibujable, public INotificable {
 public:
 	Personaje();
 	virtual ~Personaje();

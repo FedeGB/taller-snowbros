@@ -59,7 +59,7 @@ void Personaje::eventoRESTART()
 		pEstado = ESTADO_PARADO;
 		cargarImagen("imagenes/parado.png");
 	}
-	posicion(100.0 ,100.0);
+	//posicion(100.0 ,100.0);
 }
 
 bool Personaje::saltar()

@@ -8,9 +8,9 @@
 #include "vista/Escenario.h"
 #include "control/Observador.h"
 #include "modelo/Personaje.h"
-#include "modelo/formas/RectanguloDibujable.h"
-#include "modelo/formas/PoligonoDibujable.h"
-#include "modelo/formas/CirculoDibujable.h"
+//#include "modelo/formas/RectanguloDibujable.h"
+//#include "modelo/formas/PoligonoDibujable.h"
+//#include "modelo/formas/CirculoDibujable.h"
 #include "modelo/interfaces/IDibujable.h"
 #include "vista/Fondo.h"
 #include "utiles/Logger.h"
@@ -37,10 +37,13 @@ private:
 	Escenario* crearEscenario(std::string BGpath);
 
 public:
+
+	static float wRatio, hRatio;
+
 	// Constructor de la clase
 	Window();
 	// Cargar ventana
-	bool init(int width, int height, std::string BGpath);
+	bool init(int width, int height, float wRatio, float hRatio, std::string BGpath);
 	// Cargar el fondo
 	bool loadBackground(const char* pathToBG);
 	// Inserta un personaje

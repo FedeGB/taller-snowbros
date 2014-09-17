@@ -5,34 +5,50 @@
 #include <SDL2/SDL2_gfxPrimitives.h>
 #include "../../utiles/Logger.h"
 #include <math.h>
-#include "../ObjetoDibujable.h"
+#include "../interfaces/IDibujable.h"
+#include "../../Window.h"
 
-class CirculoDibujable: public ObjetoDibujable {
+class CirculoDibujable: public IDibujable {
 private:
-	//Sint16 rad; // radio
+
+	float32 radio;
+
 	int arcoMarca() {
-		Sint16 radioArco  = (Sint16)(rad*0.75);
-		Uint8 newRed = 255 - oColor.r;
-		Uint8 newGreen = 255 - oColor.g;
-		Uint8 newBlue = 255 - oColor.b;
-		int32 anguloInit = this->angulo();
+
+		float32 ratio = ( Window::wRatio < Window::hRatio ? Window::wRatio : Window::hRatio );
+
+		Sint16 radioArco  = (Sint16)(radio*0.4 * ratio);
+		Uint8 newRed = 255 - color.r;
+		Uint8 newGreen = 255 - color.g;
+		Uint8 newBlue = 255 - color.b;
+		int32 anguloInit = RADTODEG * this->angulo;
 		if(anguloInit > 360) {
 			anguloInit -= 360;
 		}
-		int32 anguloEnd = anguloInit + 50;
-		return arcRGBA(dRenderer, oPosicion.x, oPosicion.y, radioArco, anguloInit, anguloEnd, newRed, newGreen, newBlue, oColor.a);
+		int32 anguloEnd = anguloInit + 70;
+
+		Sint16 posX = posicion.x * Window::wRatio;
+		Sint16 posY = posicion.y * Window::hRatio;
+
+		return arcRGBA(dRenderer, posX, posY, radioArco, anguloInit, anguloEnd, newRed, newGreen, newBlue, color.a);
 	}
 
 public:
 	CirculoDibujable() {
-		rad = 0;
+		radio = 1.0;
 	}
-	~CirculoDibujable() {}
+	virtual ~CirculoDibujable() {}
 
 	virtual void render() {
 		// Se redefine distinto, usa el renderer directo
 		int status;
-		status = filledCircleRGBA(dRenderer, oPosicion.x, oPosicion.y, rad, oColor.r, oColor.g, oColor.b, oColor.a);
+
+		Sint16 posX = posicion.x * Window::wRatio;
+		Sint16 posY = posicion.y * Window::hRatio;
+		Sint16 radX = radio * Window::wRatio;
+		Sint16 radY = radio * Window::hRatio;
+
+		status = filledEllipseRGBA(dRenderer, posX, posY, radX, radY, color.r, color.g, color.b, color.a);
 		if(status != 0) {
 			Logger& log = * Logger::Instancia();
 			if(!log.abrirLog(DIBUJABLELOG)) {
@@ -55,8 +71,8 @@ public:
 
 	}
 
-	void setRadio(Sint16 radio) {
-		rad = radio;
+	void setRadio(float32 r) {
+		radio = r;
 	}
 
 };

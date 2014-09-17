@@ -2,6 +2,8 @@
 #include "../modelo/formas/CirculoDibujable.h"
 #include "../modelo/formas/PoligonoDibujable.h"
 #include "../modelo/formas/RectanguloDibujable.h"
+#include "../utiles/tipos.h"
+
 #include <sstream>
 
 
@@ -35,13 +37,19 @@ bool shape::b2d_objet(std::string data, b2World *mundo, int num) {
 
 	if (get_node("estatico", "objetos", data, num,false))
 		b2dObjDef.type = b2_staticBody;
-	else
-		b2dObjDef.type = b2_dynamicBody;
+	else b2dObjDef.type = b2_dynamicBody;
 
 	//posicion inicial
 	b2dObjDef.position.x = get_node("x", "objetos", data, num,1.0f);
 	b2dObjDef.position.y = get_node("y", "objetos", data, num,1.0f);
-	b2dObjDef.angle = get_node("rot", "objetos", data, num,0.0f);
+	b2dObjDef.angle = get_node("rot", "objetos", data, num,0.0f) * DEGTORAD;
+	if (b2dObjDef.type == b2_dynamicBody) {
+		//b2dObjDef.angularVelocity = 10;
+		b2dObjDef.linearDamping = 0.1;
+		//b2dObjDef.angularDamping = 1;
+	} else {
+
+	}
 
 	//lo vinculo al mundo
 	_shape = mundo->CreateBody(&b2dObjDef);
@@ -63,49 +71,27 @@ bool shape::b2d_objet(std::string data, b2World *mundo, int num) {
 	case 1: //1 solo lado  = circulo
 	{
 		myFixtureDef.shape = &circle; //defino que es un circulo
-		myFixtureDef.density =get_node("masa", "objetos", data, num,1.0f); //le doy masa
-
 		circle.m_radius =get_node("escala", "objetos", data, num,1.0f);	//y el tamaño
-		_shape->CreateFixture(&myFixtureDef); //le asigno la forma
 
 		// Determina el tipo de figura para poder dibujarla.
-		figura = new CirculoDibujable();
-		figura->setRadio(circle.m_radius);
+		CirculoDibujable * circ = new CirculoDibujable();
+		circ->setRadio(circle.m_radius);
+		figura = circ;
 
 		break;
 	}
 	case 4: // 4 lados caja
 	{
-		float halfHeight = get_node("alto", "objetos", data, num,1.0f) / 2;
-		float halfWidth = get_node("ancho", "objetos", data, num,1.0f) / 2;
-		poligon.SetAsBox(halfHeight, halfWidth); //le doy dimensiones
+		float32 halfHeight = get_node("alto", "objetos", data, num,1.0f) / 2;
+		float32 halfWidth = get_node("ancho", "objetos", data, num,1.0f) / 2;
+		poligon.SetAsBox(halfWidth, halfHeight); //le doy dimensiones
 		myFixtureDef.shape = &poligon; //defino que es un poligono
 		_shape->CreateFixture(&myFixtureDef); //le asigno la forma
 
 		// Determina el tipo de figura para poder dibujarla.
-		figura = new PoligonoDibujable();
-
-		float modulo = sqrt( pow(halfWidth, 2) + pow(halfHeight, 2) );
-		float thita = b2dObjDef.angle * 0.017469944f + atan( halfHeight / halfWidth );
-		float xaux = modulo * cos(thita);
-		float yaux = modulo * sin(thita);
-		float thita2 = - b2dObjDef.angle * 0.017469944f + atan( halfHeight / halfWidth );
-		float xaux2 = modulo * cos(thita2);
-		float yaux2 = modulo * sin(thita2);
-
-		Sint16* vx = new Sint16[2];
-		vx[0] = b2dObjDef.position.x - xaux;
-		vx[1] = b2dObjDef.position.x + xaux2;
-		vx[2] = b2dObjDef.position.x + xaux;
-		vx[3] = b2dObjDef.position.x - xaux2;
-
-		Sint16* vy = new Sint16[2];
-		vy[0] = b2dObjDef.position.y - yaux;
-		vy[1] = b2dObjDef.position.y - yaux2;
-		vy[2] = b2dObjDef.position.y + yaux;
-		vy[3] = b2dObjDef.position.y + yaux2;
-
-		figura->setVertices(vx, vy, 4);
+		RectanguloDibujable * rect = new RectanguloDibujable();
+		rect->setDimensiones(halfHeight * 2, halfWidth * 2);
+		figura = rect;
 
 		break;
 	}
@@ -140,39 +126,29 @@ bool shape::b2d_objet(std::string data, b2World *mundo, int num) {
 
 		poligon.Set(_point, lados);
 		myFixtureDef.shape = &poligon;
-		myFixtureDef.density =get_node("masa", "objetos", data, num,1.0f); //le asigno la masa
-		_shape->CreateFixture(&myFixtureDef); //le asigno la forma
 
 		// Determina el tipo de figura para poder dibujarla.
-		figura = new PoligonoDibujable();
+		PoligonoDibujable * poli = new PoligonoDibujable();
 
-		Sint16* vx = new Sint16[lados];
-		Sint16* vy = new Sint16[lados];
-		for (int i = 0; i < lados; i++)	{
-			vx[i] = _shape->GetWorldPoint(_point[i]).x;
-			vy[i] = _shape->GetWorldPoint(_point[i]).y;
-		}
+		poli->setNumVertices(lados);
+		poli->setEscala(escala);
 
-		figura->setVertices(vx, vy, lados);
+		figura = poli;
 
 		break;
 
 	}
 
-	// Determina el color de la figura.
-	std::string hexT;
-	hexT.assign(get_node("color", "objetos", data, num, "FF0000"));
-	std::stringstream s(hexT.substr(0, 2));
-	int R; s >> std::hex >> R;
-	int G; s.clear(); s.str(hexT.substr(2, 2)); s >> std::hex >> G;
-	int B; s.clear(); s.str(hexT.substr(4, 2)); s >> std::hex >> B;
-	SDL_Color color = { R , G , B , 255 };
-	figura->color(color);
+	myFixtureDef.density = get_node("masa", "objetos", data, num,1.0f); //le doy masa
+	myFixtureDef.restitution = 0.35f;
+	//myFixtureDef.friction = 0.1f;
+	_shape->CreateFixture(&myFixtureDef); //le asigno la forma
 
-	// Determina los demas parametros de la figura.
-	figura->posicion(b2dObjDef.position.x,b2dObjDef.position.y);
-	figura->angulo(b2dObjDef.angle);
-	figura->esEstatico(true);
+	// Determina los parametros basicos de la figura.
+
+	figura->setColor((get_node("color", "objetos", data, num, "FF0000")));
+	figura->setPosicion(b2dObjDef.position.x,b2dObjDef.position.y);
+	figura->setAngulo(b2dObjDef.angle);
 
 	return true;
 }
@@ -214,7 +190,12 @@ int shape::getLados(){
 }
 
 void shape::render(){
+	// SOLO FUNCIONA PARA RECTANGULOS Y CIRCULOS !! !! ! !! ! ! ! !1 1 1 1 1 1 1one one one one one
+	figura->setAngulo(_shape->GetAngle());
+	figura->setPosicion(_shape->GetPosition());
 	figura->render();
+
+	//std::cout << "el angulo es: " << _shape->GetAngle() << std::endl;
 }
 
 void shape::setRenderer(SDL_Renderer* r){

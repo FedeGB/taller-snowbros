@@ -14,13 +14,21 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+#include <Box2D/Box2D.h>
+
 #include <string>
+#include <sstream>
 
 #include "../../utiles/Logger.h"
+#include "../../utiles/tipos.h"
 
 class IDibujable {
 public:
-	IDibujable() : dTextura(NULL), dRenderer(NULL){};
+	IDibujable() : dTextura(NULL), dRenderer(NULL){
+		posicion.Set(0.0,0.0);
+		angulo = 0;
+		color = {255 , 0 , 0 , 255};
+	};
 	virtual ~IDibujable()
 	{
 		free();
@@ -89,11 +97,32 @@ public:
 		dRenderer = r;
 	}
 
-	virtual bool setVertices(Sint16* vx, Sint16* vy, int nvert) {return false;}
+	// Determina el color de la figura en base al hex triplet pasado por parametro.
+	bool setColor (std::string hexT){
+
+		//TODO: parsear hexT para checkear errores.
+		std::stringstream s(hexT.substr(0, 2));
+		int R; s >> std::hex >> R;
+		int G; s.clear(); s.str(hexT.substr(2, 2)); s >> std::hex >> G;
+		int B; s.clear(); s.str(hexT.substr(4, 2)); s >> std::hex >> B;
+		color = { R , G , B , 255 };
+		return true;
+	}
+
+	b2Vec2 getPosicion(){ return posicion; }
+	void setPosicion(b2Vec2 p){	posicion.Set(p.x , p.y); }
+	void setPosicion(float32 x, float32 y){	posicion.Set(x , y); }
+
+	// Almacena el angulo. Recibe y entrega angulos en radianes.
+	float32 getAngulo(){ return angulo; }
+	void setAngulo(float32 a){ angulo = a;	}
 
 protected:
 	SDL_Texture* dTextura;
 	SDL_Renderer* dRenderer;
+	SDL_Color color;
+	b2Vec2 posicion;
+	float32 angulo;
 };
 
 

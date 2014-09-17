@@ -1,29 +1,109 @@
 {
     "escenario": {
-        "alto-px": 640,
-        "ancho-px": 480
+        "alto-px": 720,
+        "ancho-px": 720,
+        "alto-un": 33.75,
+        "ancho-un": 33.75
     },
     "objetos": [
-        {
-            "estatico": false,
+	{
+            "estatico": true,
             "tipo": "rect",
-            "x": 3,
-            "y": 3,
+            "x": 16.875,
+            "y": 0.5,
             "rot": 0,
             "alto": 1,
-            "ancho": 1,
-            "masa": 1
+            "ancho": 33.75,
+            "masa": 1,
+	    "color": "A42050"
         },
-        {
+
+	{
+            "estatico": true,
+            "tipo": "rect",
+            "x": 16.875,
+            "y": 22,
+            "rot": 0,
+            "alto": 1,
+            "ancho": 33.75,
+            "masa": 1,
+	    "color": "A42050"
+        },
+
+	{
+            "estatico": true,
+            "tipo": "rect",
+            "x": 0.5,
+            "y": 11.25,
+            "rot": 0,
+            "alto": 22.5,
+            "ancho": 1,
+            "masa": 1,
+	    "color": "A42050"
+        },
+
+	{
+            "estatico": true,
+            "tipo": "rect",
+            "x": 33.25,
+            "y": 11.25,
+            "rot": 0,
+            "alto": 22.5,
+            "ancho": 1,
+            "masa": 1,
+	    "color": "A42050"
+        },
+
+	{
+            "estatico": true,
+            "tipo": "rect",
+            "x": 30,
+            "y": 10,
+            "rot": 335,
+            "alto": 0.6,
+            "ancho": 4.9,
+            "masa": 1,
+	    "color": "A42050"
+        },
+
+	{
+            "estatico": true,
+            "tipo": "rect",
+            "x": 3.75,
+            "y": 10,
+            "rot": 25,
+            "alto": 0.6,
+            "ancho": 4.9,
+            "masa": 1,
+	    "color": "A42050"
+        },
+
+	{
             "estatico": false,
             "tipo": "circ",
-            "escala": 1,
-            "x": 3,
-            "y": 3,
+            "x": 30.75,
+            "y": 4,
             "rot": 0,
-            "alto": 1,
-            "ancho": 1,
-            "masa": 1
+	    "escala": 0.95,
+            "alto": 0.5,
+            "ancho": 2.0,
+	    "lados": 5,
+            "masa": 70,
+	    "color": "1420B2"
+        },
+
+	{
+            "estatico": false,
+            "tipo": "circ",
+            "x": 3,
+            "y": 4,
+            "rot": 0,
+	    "escala": 1.55,
+            "alto": 0.5,
+            "ancho": 2.0,
+	    "lados": 5,
+            "masa": 40,
+	    "color": "1420B2"
         }
-    ]
+   ]
 }
