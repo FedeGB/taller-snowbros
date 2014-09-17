@@ -3,7 +3,8 @@
         "alto-px": 720,
         "ancho-px": 720,
         "alto-un": 33.75,
-        "ancho-un": 33.75
+        "ancho-un": 33.75,
+        "imagen-fondo": "imagenes/fondo2.png"
     },
     "objetos": [
 	{
