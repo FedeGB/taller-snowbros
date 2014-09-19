@@ -26,10 +26,20 @@ Logger::~Logger(){
 
 Logger* Logger::Instancia()
 {
-   if (!InstanciaActual)   // Only allow one instance of class to be generated.
+   if (!InstanciaActual){   // Only allow one instance of class to be generated.
 	   InstanciaActual = new Logger;
+	   InstanciaActual->mode = ALL;
+   }
 
    return InstanciaActual;
+}
+
+bool Logger::setMode(string mode){
+	if (mode != ALL || mode != ERRORS_ONLY || mode != NO_ERRORS){
+		return false;
+	}
+	this->mode = mode;
+	return true;
 }
 
 bool Logger::abrirLog(std::string _logFile)
@@ -49,6 +59,11 @@ void Logger::cerrarLog()
 
 bool Logger::escribirLog(string tipo, string detalle){
 	if(! this->logActual.is_open())return false;
+
+	//Verifico el modo del logger
+	if (this->mode == ERRORS_ONLY && tipo != ERROR) return true;
+	if (this->mode == NO_ERRORS && tipo ==ERROR) return true;
+
 	time_t rawtime;
 	struct tm * timeinfo;
 	char buffer[80];

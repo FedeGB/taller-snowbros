@@ -25,6 +25,10 @@
 #define ERROR "ERR"
 #define OK "OK"
 
+#define ERRORS_ONLY "errors_only"
+#define ALL "all"
+#define NO_ERRORS "no_errors"
+
 class Logger{
 public:
 	~Logger(); //Destructor creado para garantizar que se cierre el log.
@@ -34,6 +38,7 @@ public:
 	bool estaAbierto();
 	void cerrarLog();
 	bool crearLogs();
+	bool setMode(std::string mode);
 
 private:
 	Logger(){};  // Constructor privado para que no lo invoquen
@@ -41,6 +46,7 @@ private:
 	Logger& operator=(Logger const&);  // Asignacion es privado
 	static Logger* InstanciaActual;
 	std::ofstream logActual;
+	std::string mode;
 
 };
 

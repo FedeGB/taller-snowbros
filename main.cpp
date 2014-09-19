@@ -113,7 +113,7 @@ void wClose() {
 
 void worldInit(float w,float h){
 	b2Vec2 gravedad(0, 10);
-	worldB2D = new b2World(gravedad, true);
+	worldB2D = new b2World(gravedad);
 	//crear paredes piso y techo
 
 	return;
