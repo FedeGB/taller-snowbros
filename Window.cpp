@@ -106,6 +106,13 @@ bool Window::iniciarSDL()
 		log.escribirLog("ERROR", buf);
 		log.cerrarLog();
 		error = true;
+	}else{
+		//Inicio la carga de imagenes
+		int imgFlags = IMG_INIT_PNG;
+		if( !( IMG_Init( imgFlags ) & imgFlags ) ) {
+			printf( "SDL_image no pudo iniciar! SDL_image Error: %s" , IMG_GetError() , "\n" );
+			error = true;
+			}
 	}
 	return !error;
 }

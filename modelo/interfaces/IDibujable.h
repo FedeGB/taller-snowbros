@@ -51,7 +51,7 @@ public:
 		if( surfaceCargada  == NULL )
 		{
 			log.abrirLog(DIBUJABLELOG);
-			log.escribirLog("ERROR", "Imposible cargar la imagen "+path+"\n");
+			log.escribirLog("ERROR", "Imposible cargar la imagen " +path+ " " + IMG_GetError() + "\n");
 			log.cerrarLog();
 			return !exito;
 		}
