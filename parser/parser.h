@@ -8,6 +8,8 @@
 
 using namespace std;
 
+bool parsingOk(string file);
+
 string get_node(string data, string param, string file, int field,
 		char* defaultData);
 string get_node(char* datas, string param, string file, char* defaultData);

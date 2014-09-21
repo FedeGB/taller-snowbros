@@ -30,6 +30,28 @@ bool loadInitialValues(std::string& sConfig) {
 	std::string newStr((std::istreambuf_iterator<char>(fConfig)), std::istreambuf_iterator<char>());
 	sConfig = newStr;
 	fConfig.close();
+
+	if(!parsingOk(sConfig)){
+			fConfig.open("default.json",ios_base::in);
+				if(!fConfig.is_open()) {
+					if (!log.abrirLog(MAINLOG)){
+						log.crearLogs();
+						std::cout << "Error al abrir archivo de log "<< MAINLOG << ", creando..."<< std::endl;
+						if (!log.abrirLog(MAINLOG)) {
+							std::cout << "No se pudo crear el archivo de log.";
+							return false;
+						}
+					}
+
+					log.escribirLog("ERROR", "No se pudo encontrar o abrir el archivo config.json");
+					log.cerrarLog();
+					return false;
+				}
+				std::string newStr((std::istreambuf_iterator<char>(fConfig)), std::istreambuf_iterator<char>());
+				sConfig = newStr;
+				fConfig.close();
+		}
+
 	return true;
 }
 
