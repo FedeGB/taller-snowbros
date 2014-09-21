@@ -8,7 +8,7 @@
 #ifndef OBSERVADORPERSONAJE_H_
 #define OBSERVADORPERSONAJE_H_
 
-#include "../modelo/Personaje.h"
+//#include "../modelo/Personaje.h"
 #include "interfaces/IObservador.h"
 #include "../utiles/tipos.h"
 
@@ -31,9 +31,12 @@ public:
 		switch( EVENTO )
 		{
 		case ARRIBA: puntero_al_objeto_a_notificar->eventoArriba(); break;
+		case SOLTOARRIBA: puntero_al_objeto_a_notificar->eventoSoltoArriba(); break;
 		case DERECHA: puntero_al_objeto_a_notificar->eventoDerecha(); break;
+		case SOLTODERECHA: puntero_al_objeto_a_notificar->eventoSoltoDerecha(); break;
 		case IZQUIERDA: puntero_al_objeto_a_notificar->eventoIzquierda(); break;
-		case ABAJO: puntero_al_objeto_a_notificar->eventoAbajo(); break;
+		case SOLTOIZQUIERDA: puntero_al_objeto_a_notificar->eventoSoltoIzquierda(); break;
+		//case ABAJO: puntero_al_objeto_a_notificar->eventoAbajo(); break;
 		case RESTART: puntero_al_objeto_a_notificar->eventoRESTART(); break;
 		}
 	}

@@ -5,19 +5,20 @@
 #include <SDL2/SDL2_gfxPrimitives.h>
 #include "../../utiles/Logger.h"
 #include "../interfaces/IDibujable.h"
+#include "../../Window.h"
 
-class PoligonoDibujable: public IDibujable {
+class PoligonoRegularDibujable: public IDibujable {
 
 private:
 	int nVertices;
 	float32 escala;
 
 public:
-	PoligonoDibujable() {
+	PoligonoRegularDibujable() {
 		nVertices = 5;
 		escala = 1;
 	}
-	~PoligonoDibujable() { }
+	~PoligonoRegularDibujable() { }
 
 	virtual void render() {
 

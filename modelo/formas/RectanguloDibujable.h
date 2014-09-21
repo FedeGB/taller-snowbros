@@ -11,7 +11,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL2_gfxPrimitives.h>
 #include "../interfaces/IDibujable.h"
-#include "../../control/interfaces/INotificable.h"
+//#include "../../control/interfaces/INotificable.h"
 #include "../../Window.h"
 
 class RectanguloDibujable: public IDibujable {
@@ -24,11 +24,8 @@ public:
 	RectanguloDibujable() {	halfHeight = 0; halfWidth = 0;}
 	~RectanguloDibujable() { }
 
-	/*SDL_Rect getRecuadroDeDibujo(){
-		return getSDL_Rect();
-	}*/
-
 	virtual void render() {
+
 		// Se redefine distinto, usa el renderer directo
 		int status;
 
@@ -41,19 +38,21 @@ public:
 		float xaux2 = modulo * cos(thita2);
 		float yaux2 = modulo * sin(thita2);
 
-		Sint16* vx = new Sint16[2];
+		Sint16 * vx = new Sint16[4];
 		vx[0] = (posicion.x - xaux) * Window::wRatio;
 		vx[1] = (posicion.x + xaux2) * Window::wRatio;
 		vx[2] = (posicion.x + xaux) * Window::wRatio;
 		vx[3] = (posicion.x - xaux2) * Window::wRatio;
 
-		Sint16* vy = new Sint16[2];
+		Sint16 * vy = new Sint16[4];
 		vy[0] = (posicion.y - yaux) * Window::hRatio;
 		vy[1] = (posicion.y - yaux2) * Window::hRatio;
 		vy[2] = (posicion.y + yaux) * Window::hRatio;
 		vy[3] = (posicion.y + yaux2) * Window::hRatio;
 
 		status = filledPolygonRGBA(dRenderer, vx, vy, 4, color.r, color.g, color.b, color.a);
+		delete[] vx ; delete[] vy ;
+
 		if(status != 0) {
 			Logger& log = * Logger::Instancia();
 			if(!log.abrirLog(DIBUJABLELOG)) {

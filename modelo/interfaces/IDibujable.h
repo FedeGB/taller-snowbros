@@ -86,11 +86,12 @@ public:
 	}
 
 	// cada elemnto tiene que redefinir este metodo para devolver el recuadro a donde se va a dibujar la imagen
-	virtual SDL_Rect getRecuadroDeDibujo() {};
+	virtual SDL_Rect * getRecuadroDeDibujo() {}
 
 	virtual void render() {
-		SDL_Rect r = getRecuadroDeDibujo();
-		SDL_RenderCopy( dRenderer, dTextura, NULL, &r );
+		SDL_Rect  * r = getRecuadroDeDibujo();
+		SDL_RenderCopy( dRenderer, dTextura, NULL, r );
+		delete (r);
 	}
 
 	virtual void setRenderer(SDL_Renderer* r){

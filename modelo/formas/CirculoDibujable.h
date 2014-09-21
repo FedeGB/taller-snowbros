@@ -48,6 +48,7 @@ public:
 		Sint16 radX = radio * Window::wRatio;
 		Sint16 radY = radio * Window::hRatio;
 
+
 		status = filledEllipseRGBA(dRenderer, posX, posY, radX, radY, color.r, color.g, color.b, color.a);
 		if(status != 0) {
 			Logger& log = * Logger::Instancia();

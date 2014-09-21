@@ -16,7 +16,7 @@ public:
 	HandlerDeEventos();
 	virtual ~HandlerDeEventos();
 
-	void manejarTeclaPresionada(SDL_Keycode);
+	void manejarEventoTeclado(SDL_KeyboardEvent);
 };
 
 #endif /* HANDLERDEEVENTOS_H_ */

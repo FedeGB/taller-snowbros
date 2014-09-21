@@ -4,25 +4,27 @@
 #include <SDL2/SDL.h>
 #include <string>
 
-#include "control/HandlerDeEventos.h"
-#include "vista/Escenario.h"
+//#include "control/HandlerDeEventos.h"
+//#include "vista/Escenario.h"
 #include "control/Observador.h"
-#include "modelo/Personaje.h"
+//#include "modelo/Personaje.h"
 //#include "modelo/formas/RectanguloDibujable.h"
 //#include "modelo/formas/PoligonoDibujable.h"
 //#include "modelo/formas/CirculoDibujable.h"
-#include "modelo/interfaces/IDibujable.h"
-#include "vista/Fondo.h"
+//#include "modelo/interfaces/IDibujable.h"
+//#include "vista/Fondo.h"
 #include "utiles/Logger.h"
+#include "vista/Fondo.h"
 
 class Window {
 
 private:
 	SDL_Window* window;
 	SDL_Renderer* wRenderer;
+	Fondo* background;
 
-	Escenario* wEscenario;
-	HandlerDeEventos wHandlerEventos;
+	//Escenario* wEscenario;
+	//HandlerDeEventos wHandlerEventos;
 
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
@@ -34,7 +36,7 @@ private:
 	bool iniciarSDL();
 	SDL_Window* crearVentana();
 	SDL_Renderer* crearRenderer(SDL_Window*);
-	Escenario* crearEscenario(std::string BGpath);
+	//rEscenario* crearEscenario(std::string BGpath);
 
 public:
 
@@ -47,13 +49,13 @@ public:
 	// Cargar el fondo
 	bool loadBackground(const char* pathToBG);
 	// Inserta un personaje
-	bool insertarPersonaje(float32 posX, float32 posY, uint32 height, uint32 width);
+	//Personaje * insertarPersonaje(float32 height, float32 width);
 	// Inserta una figura
 	void insertarFigura(IDibujable* figura);
 	// manejar evento
-	void handleEvent(SDL_Event&);
+	//void handleEvent(SDL_Event&);
 	// Update ventana
-	bool updateWindow();
+	bool updateWindow(b2World * worldB2D);
 	// Destructor de la clase
 	virtual ~Window();
 };

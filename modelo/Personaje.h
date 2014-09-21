@@ -8,9 +8,8 @@
 #ifndef PERSONAJE_H_
 #define PERSONAJE_H_
 
-#include "Objeto.h"
 #include "../control/interfaces/INotificable.h"
-#include "../modelo/ObjetoDibujable.h"
+#include "../modelo/formas/RectanguloDibujable.h"
 
 enum ESTADOS
 {
@@ -21,30 +20,33 @@ enum ESTADOS
 	ESTADO_ABAJO,
 };
 
-class Personaje : public ObjetoDibujable, public INotificable {
+class Personaje : public RectanguloDibujable, public INotificable {
 public:
 	Personaje();
 	virtual ~Personaje();
 
+	void setB2DBody(b2Body * pjB2D);
+	void modifyFootContacts(int i);
+
 	// metodos de INotificable
 	virtual void eventoArriba();
+	virtual void eventoSoltoArriba();
 	virtual void eventoDerecha();
+	virtual void eventoSoltoDerecha();
 	virtual void eventoIzquierda();
-	virtual void eventoAbajo();
+	virtual void eventoSoltoIzquierda();
 	virtual void eventoRESTART(); // NO HACE NADA
 
-	// metodos de IDibujable
-	virtual SDL_Rect getRecuadroDeDibujo()
-	{
-		return getSDL_Rect();
-	}
+	virtual void render();
 
 private:
-	int pEstado;
-
-	bool saltar();
-	bool moverDerecha();
-	bool moverIzquierda();
+	//int pEstado;
+	b2Body * bodyB2D;
+	int numFootContacts;
+	bool isRightPressed;
+	bool isLeftPressed;
+	bool isUpPressed;
+	bool wasLeftPressed1st;
 };
 
 #endif /* PERSONAJE_H_ */

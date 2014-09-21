@@ -15,8 +15,8 @@
 
 class Fondo : public IDibujable {
 public:
-	Fondo() : path(""), width(640), heigth(480) {};
-	Fondo(int w, int h) : path("") , width(w), heigth(h){};
+	Fondo() : path(""), width(640), height(480) {};
+	Fondo(int w, int h) : path("") , width(w), height(h){};
 	virtual ~Fondo(){};
 
 	bool cargarImagen(std::string path)
@@ -39,14 +39,19 @@ public:
 		else
 		{
 			dTextura = SDL_CreateTextureFromSurface(dRenderer, imagenCargada);
+			SDL_FreeSurface( imagenCargada );
 		}
 
 		return true;
 	}
 
-	SDL_Rect getRecuadroDeDibujo()
+	SDL_Rect * getRecuadroDeDibujo()
 	{
-		SDL_Rect r = { 0, 0, width, heigth };
+		SDL_Rect * r = new SDL_Rect();
+		r->x = 0;
+		r->y = 0;
+		r->h = height;
+		r->w = width;
 		return r;
 	}
 
@@ -57,7 +62,7 @@ public:
 
 private:
 	std::string path;
-	int width, heigth;
+	int width, height;
 };
 
 
