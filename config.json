@@ -13,7 +13,7 @@
             "x": 16.875,
             "y": 0.5,
             "rot": 0,
-            "alto": 1,
+            "alto": 0.1,
             "ancho": 33.75,
             "masa": 1,
 	    "color": "A42050"
@@ -23,22 +23,22 @@
             "estatico": true,
             "tipo": "rect",
             "x": 16.875,
-            "y": 22,
+            "y": 32,
             "rot": 0,
-            "alto": 1,
+            "alto": 4,
             "ancho": 33.75,
             "masa": 1,
-	    "color": "A42050"
+	    "color": "FFFF00"
         },
 
 	{
             "estatico": true,
             "tipo": "rect",
             "x": 0.5,
-            "y": 11.25,
+            "y": 16.875,
             "rot": 0,
-            "alto": 22.5,
-            "ancho": 1,
+            "alto": 33.75,
+            "ancho": 0,
             "masa": 1,
 	    "color": "A42050"
         },
@@ -47,10 +47,10 @@
             "estatico": true,
             "tipo": "rect",
             "x": 33.25,
-            "y": 11.25,
+            "y": 16.875,
             "rot": 0,
-            "alto": 22.5,
-            "ancho": 1,
+            "alto": 33.75,
+            "ancho": 0,
             "masa": 1,
 	    "color": "A42050"
         },
@@ -81,15 +81,15 @@
 
 	{
             "estatico": false,
-            "tipo": "circ",
+            "tipo": "poli",
             "x": 30.75,
             "y": 4,
-            "rot": 0,
+            "rot": 65,
 	    "escala": 0.95,
             "alto": 0.5,
             "ancho": 2.0,
 	    "lados": 5,
-            "masa": 70,
+            "masa": 4,
 	    "color": "1420B2"
         },
 
@@ -103,8 +103,30 @@
             "alto": 0.5,
             "ancho": 2.0,
 	    "lados": 5,
-            "masa": 40,
-	    "color": "1420B2"
+            "masa": 4,
+	    "color": "1420B2",
+	    "base": 2.4,
+	    "tapa": 3.0,
+	    "desp": 0.3,
+	    "alto": 1.5
+        },
+
+	{
+            "estatico": false,
+            "tipo": "circ",
+            "x": 28,
+            "y": 2,
+            "rot": 0,
+	    "escala": 1.55,
+            "alto": 0.5,
+            "ancho": 2.0,
+	    "lados": 5,
+            "masa": 4,
+	    "color": "FF00FF",
+	    "base": 2.4,
+	    "tapa": 3.0,
+	    "desp": 0.3,
+	    "alto": 1.5
         }
    ]
 }
