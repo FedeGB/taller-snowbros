@@ -30,4 +30,7 @@ bool get_node(string data, string param, string file, bool defaultData);
 
 int get_size(string param, string file);
 
+bool validarColor(std::string parametro);
+int ajustarAngulo(int angulo);
+
 #endif /* PARSER_H_ */
