@@ -23,7 +23,7 @@ bool loadInitialValues(std::string& sConfig) {
 			}
 		}
 
-		log.escribirLog("ERROR", "No se pudo encontrar o abrir el archivo config.json");
+		log.escribirLog(ERROR, "No se pudo encontrar o abrir el archivo config.json");
 		log.cerrarLog();
 		return false;
 	}
@@ -112,7 +112,7 @@ void worldInit(Window ** w, b2World ** worldB2D, ContactListener * contactListen
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return;
 		}
-		log.escribirLog("ERROR", "No se pudo asignar memoria para al personaje");
+		log.escribirLog(ERROR, "No se pudo asignar memoria para al personaje");
 		log.cerrarLog();
 		return;
 	}
@@ -131,7 +131,7 @@ void worldInit(Window ** w, b2World ** worldB2D, ContactListener * contactListen
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return;
 		}
-		log.escribirLog("ERROR", "No se pudo asignar memoria para el observador de personaje");
+		log.escribirLog(ERROR, "No se pudo asignar memoria para el observador de personaje");
 		log.cerrarLog();
 		return;
 	}
@@ -174,16 +174,16 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num){
 
 	//le doy forma
 	int lados = num_lados(get_node("tipo", "objetos", data, num,"rect"));
-
 	//nLados=lados;
 	switch (lados) {//dependiendo del numero de lados
 	case 0: //0 es error
 		if (!log.abrirLog(SHAPESLOG)) {
-					std::cout << "Error al abrir archivo de log" << std::endl;
-					return NULL;
-				}
-				log.escribirLog("ERROR", "No se definio ninguna forma");
-				log.cerrarLog();
+			std::cout << "Error al abrir archivo de log" << std::endl;
+			return NULL;
+		}
+		log.escribirLog(ERROR, "No se definio ninguna forma");
+		log.cerrarLog();
+		(*wB2D)->DestroyBody(_shape);
 		return NULL;
 
 	case 1: //1 solo lado  = circulo
@@ -195,7 +195,6 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num){
 		CirculoDibujable * circ = new CirculoDibujable();
 		circ->setRadio(circle.m_radius);
 		figura = circ;
-
 		break;
 	}
 	case 4: // 4 lados caja
@@ -209,7 +208,6 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num){
 		RectanguloDibujable * rect = new RectanguloDibujable();
 		rect->setDimensiones(halfHeight * 2, halfWidth * 2);
 		figura = rect;
-
 		break;
 	}
 	case 5:{ // poligonos irregulares
@@ -236,7 +234,6 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num){
 		poli->setAltura(alto);
 		poli->setDesplazamiento(desp);
 		figura = poli;
-
 		break;
 	}
 
@@ -259,7 +256,6 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num){
 		poli->setNumVertices(lados);
 		poli->setEscala(escala);
 		figura = poli;
-
 		break;
 
 	}

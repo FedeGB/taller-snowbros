@@ -94,7 +94,7 @@ bool Window::validarAnchoYAlto(int width, int height)
 			return false;
 		}
 
-		log.escribirLog("ERROR", "Altura y/o ancho menor a 0");
+		log.escribirLog(ERROR, "Altura y/o ancho menor a 0");
 		log.cerrarLog();
 		error = true;
 		return !error;
@@ -114,7 +114,7 @@ bool Window::iniciarSDL()
 		}
 		std::string buf ("No se pudo inicializar SDL!");
 		buf = buf + SDL_GetError();
-		log.escribirLog("ERROR", buf);
+		log.escribirLog(ERROR, buf);
 		log.cerrarLog();
 		error = true;
 	}else{
@@ -139,7 +139,7 @@ SDL_Window* Window::crearVentana()
 		}
 		std::string buf("No se pudo crear la ventana.");
 		buf = buf + SDL_GetError();
-		log.escribirLog("ERROR", buf);
+		log.escribirLog(ERROR, buf);
 		log.cerrarLog();
 		error = true;
 	}
@@ -157,7 +157,7 @@ SDL_Renderer* Window::crearRenderer(SDL_Window* w)
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return renderer;
 		}
-		log.escribirLog("ERROR", "No se pudo crear el renderer!");
+		log.escribirLog(ERROR, "No se pudo crear el renderer!");
 		log.cerrarLog();
 		SDL_DestroyWindow(window);
 		return renderer;
