@@ -247,6 +247,7 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num){
 		myFixtureDef.restitution = 0.15f;
 		//myFixtureDef.friction = 0.1f;
 	}
+	myFixtureDef.friction=get_node("friccion","objetos",data,num,0.3f);
 	b2Fixture * shapeFixture = _shape->CreateFixture(&myFixtureDef); //le asigno la forma
 	shapeFixture->SetUserData( (void*) 1 );
 
