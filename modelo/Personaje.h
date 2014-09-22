@@ -52,6 +52,7 @@ private:
 	SDL_Rect activeSprite;
 	SDL_Rect spriteRects[10];
 	int animationCounter;
+	bool leftOriented;
 
 	enum SPRITES
 	{

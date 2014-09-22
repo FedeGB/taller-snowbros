@@ -14,6 +14,7 @@ Personaje::Personaje(){
 	isLeftPressed = false;
 	isRightPressed = false;
 	wasLeftPressed1st = false;
+	leftOriented=false;
 	animationCounter = 0;
 }
 
@@ -127,7 +128,7 @@ void Personaje::render(){
 	}
 
 	if (isLeftPressed && wasLeftPressed1st){
-
+		leftOriented=true;
 		b2Vec2 vel = bodyB2D->GetLinearVelocity();
 		float desiredVel = -15;
 		float velChange = desiredVel - vel.x;
@@ -136,7 +137,7 @@ void Personaje::render(){
 	}
 
 	if (isRightPressed && !wasLeftPressed1st){
-
+		leftOriented=false;
 		b2Vec2 vel = bodyB2D->GetLinearVelocity();
 		float desiredVel = 15;
 		float velChange = desiredVel - vel.x;
@@ -170,16 +171,19 @@ void Personaje::render(){
 		else activeSprite = spriteRects[SALTANDOIZQUIERDA5];
 	}
 
-	if (!isRightPressed && !isLeftPressed){
+	if (!isRightPressed && !isLeftPressed ){
 
 		b2Vec2 vel = bodyB2D->GetLinearVelocity();
 		float desiredVel = 0;
 		float velChange = desiredVel - vel.x;
 		float impulse = bodyB2D->GetMass() * velChange;
 		bodyB2D->ApplyLinearImpulse( b2Vec2(impulse, 0), bodyB2D->GetWorldCenter(), true);
-
-		activeSprite = spriteRects[PARADOIZQUIERDA];
-		animationCounter = 0;
+		if(numFootContacts >= 1){
+			activeSprite = spriteRects[PARADOIZQUIERDA];
+		animationCounter = 0;}
+	}
+	if(bodyB2D->GetLinearVelocity().y>1 && numFootContacts < 1 ){
+		 activeSprite = spriteRects[SALTANDOIZQUIERDA5];
 	}
 
 	int X = (posicion.x - halfWidth) * Window::wRatio;
@@ -189,7 +193,7 @@ void Personaje::render(){
 	SDL_Rect pos = {X, Y, width, height};
 
 	SDL_RendererFlip flip;
-	if (isRightPressed && !wasLeftPressed1st) flip = SDL_FLIP_HORIZONTAL;
+	if ((isRightPressed && !wasLeftPressed1st)||!leftOriented) flip = SDL_FLIP_HORIZONTAL;
 	else flip = SDL_FLIP_NONE;
 
 	SDL_RenderCopyEx( dRenderer, dTextura, &activeSprite, &pos, 0.0f, NULL, flip);
