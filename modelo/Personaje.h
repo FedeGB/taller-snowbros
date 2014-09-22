@@ -37,7 +37,9 @@ public:
 	virtual void eventoSoltoIzquierda();
 	virtual void eventoRESTART(); // NO HACE NADA
 
+	//virtual SDL_Rect * getRecuadroDeDibujo();
 	virtual void render();
+	virtual bool cargarImagen(std::string path);
 
 private:
 	//int pEstado;
@@ -47,6 +49,23 @@ private:
 	bool isLeftPressed;
 	bool isUpPressed;
 	bool wasLeftPressed1st;
+	SDL_Rect activeSprite;
+	SDL_Rect spriteRects[10];
+	int animationCounter;
+
+	enum SPRITES
+	{
+		PARADOIZQUIERDA,
+		MOVIENDOIZQUIERDA1,
+		MOVIENDOIZQUIERDA2,
+		MOVIENDOIZQUIERDA3,
+		MOVIENDOIZQUIERDA4,
+		SALTANDOIZQUIERDA1,
+		SALTANDOIZQUIERDA2,
+		SALTANDOIZQUIERDA3,
+		SALTANDOIZQUIERDA4,
+		SALTANDOIZQUIERDA5,
+	};
 };
 
 #endif /* PERSONAJE_H_ */

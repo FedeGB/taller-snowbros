@@ -66,8 +66,6 @@ void worldInit(Window ** w, b2World ** worldB2D, ContactListener * contactListen
 	b2Vec2 gravedad(0, 25);
 	*worldB2D = new b2World(gravedad);
 
-	//return;
-
 	(*worldB2D)->SetContactListener(contactListener);
 
 	b2BodyDef b2dObjDef;
@@ -86,8 +84,8 @@ void worldInit(Window ** w, b2World ** worldB2D, ContactListener * contactListen
 	b2Body *pjB2D = (*worldB2D)->CreateBody(&b2dObjDef);
 
 	//le doy forma
-	float32 halfHeight = 0.75f;
-	float32 halfWidth = 0.35f;
+	float32 halfHeight = 1.4f;
+	float32 halfWidth = 1.2f;
 	polygon.SetAsBox(halfWidth, halfHeight); //le doy dimensiones
 	myFixtureDef.shape = &polygon; //defino que es un poligono
 	myFixtureDef.density = 20.0f; //le doy masa
@@ -96,7 +94,7 @@ void worldInit(Window ** w, b2World ** worldB2D, ContactListener * contactListen
 	bodyFixture->SetUserData( (void*)0 );
 
     // Agrego el sensor para saltos
-    polygon.SetAsBox(0.15f, 0.15f, b2Vec2(0.0f,0.75f), 0);
+    polygon.SetAsBox(0.15f, 0.15f, b2Vec2(0.0f,1.4f), 0);
 	myFixtureDef.shape = &polygon; //defino que es un poligono
     myFixtureDef.isSensor = true;
 	myFixtureDef.density = 20.0f; //le doy masa
@@ -117,13 +115,13 @@ void worldInit(Window ** w, b2World ** worldB2D, ContactListener * contactListen
 		return;
 	}
 
-	//personaje->cargarImagen("imagenes/parado.png");
 	personaje->setDimensiones(halfHeight * 2, halfWidth * 2);
 
 	pjB2D->SetUserData(personaje);
 	personaje->setB2DBody(pjB2D);
 
 	(*w)->insertarFigura(personaje);
+	personaje->cargarImagen("imagenes/playerSpritesheet.png");
 
 	Observador<Personaje>* observadorPersonaje = new Observador<Personaje>( personaje );
 	if(!observadorPersonaje) {

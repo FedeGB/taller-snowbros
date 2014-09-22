@@ -15,8 +15,15 @@
 
 class Fondo : public IDibujable {
 public:
-	Fondo() : path(""), width(640), height(480) {};
-	Fondo(int w, int h) : path("") , width(w), height(h){};
+	Fondo() : path(""), width(640), height(480) {
+	};
+	Fondo(int w, int h) : path("") , width(w), height(h){
+/*		r = new SDL_Rect();
+		r->x = 0;
+		r->y = 0;
+		r->h = height;
+		r->w = width;*/
+	};
 	virtual ~Fondo(){};
 
 	bool cargarImagen(std::string path)
@@ -45,14 +52,16 @@ public:
 		return true;
 	}
 
-	SDL_Rect * getRecuadroDeDibujo()
-	{
-		SDL_Rect * r = new SDL_Rect();
-		r->x = 0;
-		r->y = 0;
-		r->h = height;
-		r->w = width;
-		return r;
+	//SDL_Rect * getRecuadroDeDibujo(){ return r;	}
+
+	virtual void render() {
+		// Quien inplemente la interfaz tiene que encargarse de mantener un puntero al rect para
+		// liberarlo cuando corresponda.
+		//SDL_Rect  * r = getRecuadroDeDibujo();
+
+		//std::cout << "llame al render de interfaz: en posicion " << r->x << ", " << r->y << std::endl;
+
+		SDL_RenderCopy( dRenderer, dTextura, NULL, NULL );
 	}
 
 	void dibujar()
@@ -63,6 +72,7 @@ public:
 private:
 	std::string path;
 	int width, height;
+	//SDL_Rect * r;
 };
 
 

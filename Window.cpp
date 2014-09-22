@@ -150,7 +150,7 @@ SDL_Renderer* Window::crearRenderer(SDL_Window* w)
 {
 	Logger& log = * Logger::Instancia();
 	SDL_Renderer* renderer = NULL;
-	renderer = SDL_CreateRenderer( w, -1, SDL_RENDERER_ACCELERATED );
+	renderer = SDL_CreateRenderer( w, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
 	if( !renderer )
 	{
 		if (!log.abrirLog(WINDOWLOG)) {

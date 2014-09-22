@@ -16,7 +16,7 @@
 
 class RectanguloDibujable: public IDibujable {
 
-private:
+protected:
 	float32 halfHeight, halfWidth;
 
 public:
