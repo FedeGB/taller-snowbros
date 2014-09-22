@@ -94,7 +94,7 @@ void worldInit(Window ** w, b2World ** worldB2D, ContactListener * contactListen
 	bodyFixture->SetUserData( (void*)0 );
 
     // Agrego el sensor para saltos
-    polygon.SetAsBox(0.15f, 0.15f, b2Vec2(0.0f,1.4f), 0);
+    polygon.SetAsBox(0.15f, halfWidth, b2Vec2(0.0f,1.4f), 0);
 	myFixtureDef.shape = &polygon; //defino que es un poligono
     myFixtureDef.isSensor = true;
 	myFixtureDef.density = 20.0f; //le doy masa
