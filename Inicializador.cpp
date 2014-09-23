@@ -61,20 +61,27 @@ bool windowInit(Window ** w, int widthScreen, int heightScreen, float wRatio, fl
 	return statusOK;
 }
 
-void worldInit(Window ** w, b2World ** worldB2D, ContactListener * contactListener, HandlerDeEventos * wHandlerEventos, float width,float height){
+void worldInit(b2World ** worldB2D, ContactListener * contactListener){
 
 	b2Vec2 gravedad(0, 25);
 	*worldB2D = new b2World(gravedad);
 
 	(*worldB2D)->SetContactListener(contactListener);
 
+	return;
+}
+
+void pjInit(Window ** w, b2World ** worldB2D,  HandlerDeEventos * wHandlerEventos, std::string data)
+{
 	b2BodyDef b2dObjDef;
 	b2FixtureDef myFixtureDef;
 	b2PolygonShape polygon;
 
 	// Parametros iniciales.
 	b2dObjDef.type = b2_dynamicBody;
-	b2dObjDef.position.Set(10.0f, 10.0f); //TODO: sacar este hardcodeo
+	float32 pj_x = get_node("x", "personaje", data, 5.0f);
+	float32 pj_y = get_node("y", "personaje", data, 10.0f);
+	b2dObjDef.position.Set(pj_x, pj_y);
 	b2dObjDef.angle = 0;
 	b2dObjDef.fixedRotation = true;
 	b2dObjDef.bullet = true;
@@ -84,11 +91,11 @@ void worldInit(Window ** w, b2World ** worldB2D, ContactListener * contactListen
 	b2Body *pjB2D = (*worldB2D)->CreateBody(&b2dObjDef);
 
 	//le doy forma
-	float32 halfHeight = 1.4f;
-	float32 halfWidth = 1.2f;
+	float32 halfHeight = get_node("alto", "personaje", data, 1.4f);
+	float32 halfWidth = get_node("ancho", "personaje", data, 1.2f);
 	polygon.SetAsBox(halfWidth, halfHeight); //le doy dimensiones
 	myFixtureDef.shape = &polygon; //defino que es un poligono
-	myFixtureDef.density = 20.0f; //le doy masa
+	myFixtureDef.density =  get_node("masa", "personaje", data, 20.0f); //le doy masa
 	myFixtureDef.restitution = 0.0f;
 	b2Fixture * bodyFixture = pjB2D->CreateFixture(&myFixtureDef); //le asigno la forma
 	bodyFixture->SetUserData( (void*)0 );
@@ -121,7 +128,7 @@ void worldInit(Window ** w, b2World ** worldB2D, ContactListener * contactListen
 	personaje->setB2DBody(pjB2D);
 
 	(*w)->insertarFigura(personaje);
-	personaje->cargarImagen("imagenes/playerSpritesheet.png");
+	personaje->cargarImagen( get_node("sprite-sheet", "personaje", data, "imagenes/playerSpritesheet.png") );
 
 	Observador<Personaje>* observadorPersonaje = new Observador<Personaje>( personaje );
 	if(!observadorPersonaje) {
@@ -134,8 +141,6 @@ void worldInit(Window ** w, b2World ** worldB2D, ContactListener * contactListen
 		return;
 	}
 	wHandlerEventos->agregarObservador(observadorPersonaje);
-
-	return;
 }
 
 int num_lados(std::string data) {
@@ -299,7 +304,10 @@ bool Inicializador::init(Window ** w, b2World ** worldB2D, ContactListener * con
 	float widthRatio=widthScreen/widthWorld;
 
 	statusOK = windowInit(w, widthScreen, heightScreen, widthRatio, heightRatio, path_fondo);
-	worldInit(w, worldB2D, contactListener, wHandlerEventos, widthWorld, heightWorld);
+	//worldInit(w, worldB2D, contactListener, wHandlerEventos, widthWorld, heightWorld);
+	worldInit(worldB2D, contactListener);
+
+	pjInit(w, worldB2D, wHandlerEventos, sConfig);
 
 	if(!statusOK) {
 		return -1;
