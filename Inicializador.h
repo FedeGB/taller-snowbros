@@ -28,7 +28,7 @@ class Inicializador {
 
 public:
 
-	bool init(Window ** w, b2World ** worldB2D, ContactListener * contactListener, HandlerDeEventos * wHandlerEventos);
+	bool init(std::string configFile, Window ** w, b2World ** worldB2D, ContactListener * contactListener, HandlerDeEventos * wHandlerEventos);
 
 };
 

@@ -7,11 +7,11 @@
 
 #include "Inicializador.h"
 
-bool loadInitialValues(std::string& sConfig) {
+bool loadInitialValues(std::string configFile, std::string& sConfig) {
 	Logger& log = *Logger::Instancia();
 	//abre el json y lo carga a un string
 	fstream fConfig;
-	fConfig.open("config.json", ios_base::in);
+	fConfig.open(configFile.c_str(), ios_base::in);
 	if (!fConfig.is_open()) {
 		if (!log.abrirLog(MAINLOG)) {
 			log.crearLogs();
@@ -23,10 +23,28 @@ bool loadInitialValues(std::string& sConfig) {
 			}
 		}
 
-		log.escribirLog(ERROR,
-				"No se pudo encontrar o abrir el archivo config.json");
+		log.escribirLog(WARNING,
+				"No se pudo encontrar o abrir el archivo de configuracion. Cargando mapa por defecto.");
 		log.cerrarLog();
-		return false;
+
+		fConfig.open("defaultConfig.json", ios_base::in);
+		if (!fConfig.is_open()) {
+			if (!log.abrirLog(MAINLOG)) {
+				log.crearLogs();
+				std::cout << "Error al abrir archivo de log " << MAINLOG
+						<< ", creando..." << std::endl;
+				if (!log.abrirLog(MAINLOG)) {
+					std::cout << "No se pudo crear el archivo de log.";
+					return false;
+				}
+			}
+
+			log.escribirLog(ERROR,
+					"No se pudo encontrar o abrir el archivo de configuracion por defecto.");
+			log.cerrarLog();
+			return false;
+		}
+
 	}
 	std::string newStr((std::istreambuf_iterator<char>(fConfig)),
 			std::istreambuf_iterator<char>());
@@ -314,12 +332,12 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 	return _shape;
 }
 
-bool Inicializador::init(Window ** w, b2World ** worldB2D,
+bool Inicializador::init(std::string configFile, Window ** w, b2World ** worldB2D,
 		ContactListener * contactListener, HandlerDeEventos * wHandlerEventos) {
 	Logger& log = *Logger::Instancia();
 	std::string sConfig;
 	bool statusOK = true;
-	statusOK = loadInitialValues(sConfig);
+	statusOK = loadInitialValues(configFile, sConfig);
 	if (!statusOK)
 		return false;
 

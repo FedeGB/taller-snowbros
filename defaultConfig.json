@@ -1,7 +1,7 @@
 {
     "escenario": {
         "alto-px": 640,
-        "ancho-px": 1080,
+        "ancho-px": 720,
         "alto-un": 30.0,
         "ancho-un": 33.75,
         "imagen-fondo": "imagenes/fondo2.png"

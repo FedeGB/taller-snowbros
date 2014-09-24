@@ -17,8 +17,10 @@ b2World *worldB2D;
 Inicializador inicializador;
 ContactListener contactListener;
 HandlerDeEventos wHandlerEventos;
+string configFile;
 
-int main() {
+int main(int argc, char *argv[]) {
+
 	Logger& log = *Logger::Instancia();
 
 	if (!log.abrirLog(MAINLOG)) std::cout << "Error al abrir archivo de log " << MAINLOG << std::endl;
@@ -27,8 +29,16 @@ int main() {
 		log.cerrarLog();
 	}
 
-	inicializador.init(&w, &worldB2D, &contactListener, &wHandlerEventos);
-	loopPrincipal();
+	if (argc < 2) {
+		if (!log.abrirLog(MAINLOG)) std::cout << "Error al abrir archivo de log " << MAINLOG << std::endl;
+			else {
+				log.escribirLog(ERROR, "No se proporciono archivo de configuracion. Cargando mapa por defecto.");
+				log.cerrarLog();
+				configFile = "defaultConfig.json";
+			}
+	} else configFile = argv[1];
+
+	if (inicializador.init(configFile, &w, &worldB2D, &contactListener, &wHandlerEventos)) loopPrincipal();
 	wClose();
 
 	if (!log.abrirLog(MAINLOG)) std::cout << "Error al abrir archivo de log " << MAINLOG << std::endl;
@@ -63,7 +73,7 @@ bool loopPrincipal() {
 						log.escribirLog(OK, "Reiniciando SnowBros...");
 						log.cerrarLog();
 					}
-					inicializador.init(&w, &worldB2D, &contactListener, &wHandlerEventos);
+					inicializador.init(configFile, &w, &worldB2D, &contactListener, &wHandlerEventos);
 				} else if (event.key.keysym.sym == SDLK_ESCAPE) quit = true;
 				else wHandlerEventos.manejarEventoTeclado(event.key);
 				break;
