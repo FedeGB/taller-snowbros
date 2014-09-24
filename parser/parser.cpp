@@ -12,13 +12,13 @@ bool parsingOk(string file){
 		bool parsingOk = reader.parse(file, root);
 		if (!parsingOk) {
 			if (!log.abrirLog(PARSERLOG)) {
-				std::cout << "Error al abrir archivo de log" << std::endl;
+				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return false;
 			}
 			string errorLectura;
 			errorLectura = "no se pudo leer el archivo "
 					+ reader.getFormattedErrorMessages();
-			log.escribirLog("ERROR", errorLectura);
+			log.escribirLog(ERROR, errorLectura);
 			log.cerrarLog();
 			return false;
 		}
@@ -32,7 +32,7 @@ string get_node(string data, string param, string file, char* defaultData) {
 	bool parsingOk = reader.parse(file, root);
 	if (!parsingOk) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		string errorLectura;
@@ -44,7 +44,7 @@ string get_node(string data, string param, string file, char* defaultData) {
 	}
 	if (root[param][data].empty()) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		log.escribirLog(ERROR, "campo '" + data + "' de '" + param + "' vacio.");
@@ -53,7 +53,7 @@ string get_node(string data, string param, string file, char* defaultData) {
 	}
 	if (!root[param][data].isString()) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
@@ -69,7 +69,8 @@ string get_node(string data, string param, string file, char* defaultData) {
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return defaultData;
 			}
-			log.escribirLog(ERROR, "El color '" + result + "' no es valido.");
+			log.escribirLog(ERROR, "El color " + result + " del campo " + data
+							+ " de " + param +" no es valido");
 			log.cerrarLog();
 			return defaultData;
 		}
@@ -95,7 +96,7 @@ string get_node(string data, string param, string file, int field,
 	bool parsingOk = reader.parse(file, root);
 	if (!parsingOk) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		string errorLectura;
@@ -107,7 +108,7 @@ string get_node(string data, string param, string file, int field,
 	}
 	if (root[param][field][data].empty()) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
@@ -117,12 +118,12 @@ string get_node(string data, string param, string file, int field,
 	}
 	if (!root[param][field][data].isString()) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
-				" tipo incorrecto del campo '" + data + "' de '" + param
-						+ "' del elemento " + s + ". Se espera string.");
+				" tipo incorrecto del campo " + data + " de " + param
+						+ " del elemento " + s + ". Se espera string");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -133,7 +134,7 @@ string get_node(string data, string param, string file, int field,
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return defaultData;
 			}
-			log.escribirLog(ERROR, "El color '" + result + "' no es valido");
+			log.escribirLog(ERROR, "El color " + result + " del elemento " + s + " de " + param + " no es valido");
 			log.cerrarLog();
 			return defaultData;
 		}
@@ -149,7 +150,7 @@ int get_node(string data, string param, string file, int defaultData) {
 	bool parsingOk = reader.parse(file, root);
 	if (!parsingOk) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		string errorLectura;
@@ -161,7 +162,7 @@ int get_node(string data, string param, string file, int defaultData) {
 	}
 	if (root[param][data].empty()) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		log.escribirLog(ERROR, "Campo '" + data + "' de '" + param + "' vacio.");
@@ -170,7 +171,7 @@ int get_node(string data, string param, string file, int defaultData) {
 	}
 	if (!root[param][data].isInt()) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
@@ -188,7 +189,7 @@ int get_node(string data, string param, string file, int defaultData) {
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return defaultData;
 			}
-			log.escribirLog(ERROR, "El valor de '" + data + "' no puede ser negativo.");
+			log.escribirLog(ERROR, "El valor de " + data + " de " + param + " no puede ser negativo.");
 			log.cerrarLog();
 			return defaultData;
 		}
@@ -216,7 +217,7 @@ int get_node(string data, string param, string file, int field,
 	bool parsingOk = reader.parse(file, root);
 	if (!parsingOk) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		string errorLectura;
@@ -228,7 +229,7 @@ int get_node(string data, string param, string file, int field,
 	}
 	if (root[param][field][data].empty()) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
@@ -238,7 +239,7 @@ int get_node(string data, string param, string file, int field,
 	}
 	if (!root[param][field][data].isInt()) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
@@ -247,7 +248,7 @@ int get_node(string data, string param, string file, int field,
 		log.cerrarLog();
 		return defaultData;
 	}
-	float result = root[param][field].get(data, defaultData).asInt();
+	int result = root[param][field].get(data, defaultData).asInt();
 	if(data.compare("x") == 0 || data.compare("y") == 0 || data.compare("masa") == 0
 		|| data.compare("base") == 0 || data.compare("tapa") == 0 || data.compare("desp") == 0
 		|| data.compare("alto") == 0 || data.compare("ancho") == 0 || data.compare("friccion") == 0 ) {
@@ -256,7 +257,7 @@ int get_node(string data, string param, string file, int field,
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return defaultData;
 			}
-			log.escribirLog(ERROR, "El valor de '" + data + "' no puede ser negativo.");
+			log.escribirLog(ERROR, "El valor de " + data + " de " + param + " del elemento " + s + " no puede ser negativo.");
 			log.cerrarLog();
 			return defaultData;
 		}
@@ -274,7 +275,7 @@ float get_node(string data, string param, string file, float defaultData) {
 	bool parsingOk = reader.parse(file, root);
 	if (!parsingOk) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		string errorLectura;
@@ -286,7 +287,7 @@ float get_node(string data, string param, string file, float defaultData) {
 	}
 	if (root[param][data].empty()) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		log.escribirLog(ERROR, "Campo '" + data + "' de '" + param + "' vacio");
@@ -295,7 +296,7 @@ float get_node(string data, string param, string file, float defaultData) {
 	}
 	if (!root[param][data].isNumeric()) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
@@ -313,7 +314,7 @@ float get_node(string data, string param, string file, float defaultData) {
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return defaultData;
 			}
-			log.escribirLog(ERROR, "El valor de '" + data + "' no puede ser negativo.");
+			log.escribirLog(ERROR, "El valor de " + data + " de " + param + " no puede ser negativo.");
 			log.cerrarLog();
 			return defaultData;
 		}
@@ -341,7 +342,7 @@ float get_node(string data, string param, string file, int field,
 	bool parsingOk = reader.parse(file, root);
 	if (!parsingOk) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		string errorLectura;
@@ -353,7 +354,7 @@ float get_node(string data, string param, string file, int field,
 	}
 	if (root[param][field][data].empty()) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
@@ -363,7 +364,7 @@ float get_node(string data, string param, string file, int field,
 	}
 	if (!root[param][field][data].isNumeric()) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
@@ -381,7 +382,7 @@ float get_node(string data, string param, string file, int field,
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return defaultData;
 			}
-			log.escribirLog(ERROR, "El valor de '" + data + "' no puede ser negativo.");
+			log.escribirLog(ERROR, "El valor de " + data + " de " + param + " del elemento " + s + " no puede ser negativo.");
 			log.cerrarLog();
 			return defaultData;
 		}
@@ -399,7 +400,7 @@ bool get_node(string data, string param, string file, bool defaultData) {
 	bool parsingOk = reader.parse(file, root);
 	if (!parsingOk) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		string errorLectura;
@@ -411,7 +412,7 @@ bool get_node(string data, string param, string file, bool defaultData) {
 	}
 	if (root[param][data].empty()) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		log.escribirLog(ERROR, "Campo '" + data + "' de '" + param + "' vacio.");
@@ -420,7 +421,7 @@ bool get_node(string data, string param, string file, bool defaultData) {
 	}
 	if (!root[param][data].isBool()) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
@@ -449,7 +450,7 @@ bool get_node(string data, string param, string file, int field,
 	bool parsingOk = reader.parse(file, root);
 	if (!parsingOk) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		string errorLectura;
@@ -461,7 +462,7 @@ bool get_node(string data, string param, string file, int field,
 	}
 	if (root[param][field][data].empty()) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
@@ -471,7 +472,7 @@ bool get_node(string data, string param, string file, int field,
 	}
 	if (!root[param][field][data].isBool()) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
@@ -490,7 +491,7 @@ int get_size(string param, string file) {
 	bool parsingOk = reader.parse(file, root);
 	if (!parsingOk) {
 		if (!log.abrirLog(PARSERLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return -1;
 		}
 		string errorLectura;
