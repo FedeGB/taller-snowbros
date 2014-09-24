@@ -47,7 +47,7 @@ string get_node(string data, string param, string file, char* defaultData) {
 			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(WARNING, "campo '" + data + "' de '" + param + "' vacio.");
+		log.escribirLog(WARNING, "campo '" + data + "' de '" + param + "' vacio. Cargando datos por defecto.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -58,7 +58,7 @@ string get_node(string data, string param, string file, char* defaultData) {
 		}
 		log.escribirLog(WARNING,
 				"tipo incorrecto del campo '" + data + "' de '" + param
-						+ "'. Se espera string.");
+						+ "'. Se espera string. Cargando datos por defecto.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -70,7 +70,7 @@ string get_node(string data, string param, string file, char* defaultData) {
 				return defaultData;
 			}
 			log.escribirLog(WARNING, "El color " + result + " del campo " + data
-							+ " de " + param +" no es valido");
+							+ " de " + param +" no es valido. Cargando datos por defecto.");
 			log.cerrarLog();
 			return defaultData;
 		}
@@ -112,7 +112,7 @@ string get_node(string data, string param, string file, int field,
 			return defaultData;
 		}
 		log.escribirLog(WARNING,
-				"campo '" + data + "' de '" + param + "' vacio, del elemento " + s + ".");
+				"campo '" + data + "' de '" + param + "' vacio, del elemento " + s + ". Cargando datos por defecto.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -123,7 +123,7 @@ string get_node(string data, string param, string file, int field,
 		}
 		log.escribirLog(WARNING,
 				" tipo incorrecto del campo " + data + " de " + param
-						+ " del elemento " + s + ". Se espera string");
+						+ " del elemento " + s + ". Se espera string. Cargando datos por defecto.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -134,7 +134,7 @@ string get_node(string data, string param, string file, int field,
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return defaultData;
 			}
-			log.escribirLog(WARNING, "El color " + result + " del elemento " + s + " de " + param + " no es valido");
+			log.escribirLog(WARNING, "El color " + result + " del elemento " + s + " de " + param + " no es valido. Cargando datos por defecto.");
 			log.cerrarLog();
 			return defaultData;
 		}
@@ -165,7 +165,7 @@ int get_node(string data, string param, string file, int defaultData) {
 			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(WARNING, "Campo '" + data + "' de '" + param + "' vacio.");
+		log.escribirLog(WARNING, "Campo '" + data + "' de '" + param + "' vacio. Cargando datos por defecto.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -176,7 +176,7 @@ int get_node(string data, string param, string file, int defaultData) {
 		}
 		log.escribirLog(WARNING,
 				" Tipo incorrecto del campo '" + data + "' de '" + param
-						+ "'. Se espera 'int'.");
+						+ "'. Se espera 'int'. Cargando datos por defecto.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -189,7 +189,7 @@ int get_node(string data, string param, string file, int defaultData) {
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return defaultData;
 			}
-			log.escribirLog(WARNING, "El valor de " + data + " de " + param + " no puede ser negativo.");
+			log.escribirLog(WARNING, "El valor de " + data + " de " + param + " no puede ser negativo. Cargando datos por defecto.");
 			log.cerrarLog();
 			return defaultData;
 		}
@@ -233,7 +233,7 @@ int get_node(string data, string param, string file, int field,
 			return defaultData;
 		}
 		log.escribirLog(WARNING,
-				"campo '" + data + "' de '" + param + "' vacio, del elemento " + s + ".");
+				"campo '" + data + "' de '" + param + "' vacio, del elemento " + s + ". Cargando datos por defecto.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -244,7 +244,7 @@ int get_node(string data, string param, string file, int field,
 		}
 		log.escribirLog(WARNING,
 				" Tipo incorrecto del campo '" + data + "' de '" + param
-						+ "' del elemento " + s + ". Se espera 'int'.");
+						+ "' del elemento " + s + ". Se espera 'int'. Cargando datos por defecto.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -257,7 +257,7 @@ int get_node(string data, string param, string file, int field,
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return defaultData;
 			}
-			log.escribirLog(WARNING, "El valor de " + data + " de " + param + " del elemento " + s + " no puede ser negativo.");
+			log.escribirLog(WARNING, "El valor de " + data + " de " + param + " del elemento " + s + " no puede ser negativo. Cargando datos por defecto.");
 			log.cerrarLog();
 			return defaultData;
 		}
@@ -290,7 +290,7 @@ float get_node(string data, string param, string file, float defaultData) {
 			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(WARNING, "Campo '" + data + "' de '" + param + "' vacio");
+		log.escribirLog(WARNING, "Campo '" + data + "' de '" + param + "' vacio. Cargando datos por defecto.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -301,7 +301,7 @@ float get_node(string data, string param, string file, float defaultData) {
 		}
 		log.escribirLog(WARNING,
 				"Tipo incorrecto del campo '" + data + "' de '" + param
-						+ "'. Se espera 'float'.");
+						+ "'. Se espera 'float'. Cargando datos por defecto.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -314,7 +314,7 @@ float get_node(string data, string param, string file, float defaultData) {
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return defaultData;
 			}
-			log.escribirLog(WARNING, "El valor de " + data + " de " + param + " no puede ser negativo.");
+			log.escribirLog(WARNING, "El valor de " + data + " de " + param + " no puede ser negativo. Cargando datos por defecto.");
 			log.cerrarLog();
 			return defaultData;
 		}
@@ -358,7 +358,7 @@ float get_node(string data, string param, string file, int field,
 			return defaultData;
 		}
 		log.escribirLog(WARNING,
-				"Campo '" + data + "' de '" + param + "' vacio, del elemento " + s + ".");
+				"Campo '" + data + "' de '" + param + "' vacio, del elemento " + s + ". Cargando datos por defecto.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -369,7 +369,7 @@ float get_node(string data, string param, string file, int field,
 		}
 		log.escribirLog(WARNING,
 				"Tipo incorrecto del campo '" + data + "' de '" + param
-						+ "' del elemento " + s + ". Se espera 'int'.");
+						+ "' del elemento " + s + ". Se espera 'int'. Cargando datos por defecto.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -382,7 +382,7 @@ float get_node(string data, string param, string file, int field,
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return defaultData;
 			}
-			log.escribirLog(WARNING, "El valor de " + data + " de " + param + " del elemento " + s + " no puede ser negativo.");
+			log.escribirLog(WARNING, "El valor de " + data + " de " + param + " del elemento " + s + " no puede ser negativo. Cargando datos por defecto.");
 			log.cerrarLog();
 			return defaultData;
 		}
@@ -415,7 +415,7 @@ bool get_node(string data, string param, string file, bool defaultData) {
 			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(WARNING, "Campo '" + data + "' de '" + param + "' vacio.");
+		log.escribirLog(WARNING, "Campo '" + data + "' de '" + param + "' vacio. Cargando datos por defecto.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -426,7 +426,7 @@ bool get_node(string data, string param, string file, bool defaultData) {
 		}
 		log.escribirLog(WARNING,
 				"Tipo incorrecto del campo '" + data + "' de '" + param
-						+ "'. Se espera 'Bool'.");
+						+ "'. Se espera 'Bool'. Cargando datos por defecto.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -466,7 +466,7 @@ bool get_node(string data, string param, string file, int field,
 			return defaultData;
 		}
 		log.escribirLog(WARNING,
-				"Campo '" + data + "' de '" + param + "' vacio, del elemento " + s + ".");
+				"Campo '" + data + "' de '" + param + "' vacio, del elemento " + s + ". Cargando datos por defecto.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -477,7 +477,7 @@ bool get_node(string data, string param, string file, int field,
 		}
 		log.escribirLog(WARNING,
 				"Tipo incorrecto del campo '" + data + "' de '" + param
-						+ "' del elemento " + s + ". Se espera 'int'.");
+						+ "' del elemento " + s + ". Se espera 'int'. Cargando datos por defecto.");
 		log.cerrarLog();
 		return defaultData;
 	}

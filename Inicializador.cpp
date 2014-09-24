@@ -372,6 +372,7 @@ bool Inicializador::init(Window ** w, b2World ** worldB2D,
 				convert << b2->GetPosition().x;
 				ss+= convert.str();
 				ss += ",";
+				convert.str(""); convert.clear();
 				convert << b2->GetPosition().y;
 				ss+= convert.str();
 				ss += " borrado por solapamiento";
@@ -383,6 +384,13 @@ bool Inicializador::init(Window ** w, b2World ** worldB2D,
 			}
 		}
 	}
+
+	if (!log.abrirLog(MAINLOG)) {
+		std::cout << "Error al abrir archivo de log " << MAINLOG << std::endl;
+		return true;
+	}
+	log.escribirLog(OK, "Se ha inicializado correctamente el mundo.");
+	log.cerrarLog();
 
 	return true;
 }

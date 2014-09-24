@@ -19,15 +19,30 @@ ContactListener contactListener;
 HandlerDeEventos wHandlerEventos;
 
 int main() {
+	Logger& log = *Logger::Instancia();
+
+	if (!log.abrirLog(MAINLOG)) std::cout << "Error al abrir archivo de log " << MAINLOG << std::endl;
+	else {
+		log.escribirLog(OK, "Iniciando SnowBros...");
+		log.cerrarLog();
+	}
 
 	inicializador.init(&w, &worldB2D, &contactListener, &wHandlerEventos);
 	loopPrincipal();
 	wClose();
 
+	if (!log.abrirLog(MAINLOG)) std::cout << "Error al abrir archivo de log " << MAINLOG << std::endl;
+	else {
+		log.escribirLog(OK, "SnowBros ha finalizado correctamente.");
+		log.cerrarLog();
+	}
+
 	return 0;
 }
 
 bool loopPrincipal() {
+	Logger& log = *Logger::Instancia();
+
 	SDL_Event event;
 	bool quit = false;
 	bool statusOK = true;
@@ -42,6 +57,12 @@ bool loopPrincipal() {
 			case SDL_KEYDOWN:
 				if (event.key.keysym.sym  == SDLK_r){
 					wClose();
+					if (!log.abrirLog(MAINLOG))
+						std::cout << "Error al abrir archivo de log " << MAINLOG << std::endl;
+					else {
+						log.escribirLog(OK, "Reiniciando SnowBros...");
+						log.cerrarLog();
+					}
 					inicializador.init(&w, &worldB2D, &contactListener, &wHandlerEventos);
 				} else if (event.key.keysym.sym == SDLK_ESCAPE) quit = true;
 				else wHandlerEventos.manejarEventoTeclado(event.key);
