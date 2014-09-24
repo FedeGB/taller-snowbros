@@ -54,7 +54,7 @@ public:
 			Logger& log = * Logger::Instancia();
 			if(!log.abrirLog(DIBUJABLELOG)) {
 				std::string err(SDL_GetError());
-				log.escribirLog("WAR", "No se renderizo el circulo "+err);
+				log.escribirLog(WARNING, "No se renderizo el circulo "+err);
 				log.cerrarLog();
 				return;
 			}
@@ -64,7 +64,7 @@ public:
 			Logger& log = * Logger::Instancia();
 			if(!log.abrirLog(DIBUJABLELOG)) {
 				std::string err(SDL_GetError());
-				log.escribirLog("WAR", "No se renderizar la marca del circulo "+err);
+				log.escribirLog(WARNING, "No se renderizo la marca del circulo "+err);
 				log.cerrarLog();
 				return;
 			}

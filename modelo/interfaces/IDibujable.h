@@ -51,7 +51,7 @@ public:
 		if( surfaceCargada  == NULL )
 		{
 			log.abrirLog(DIBUJABLELOG);
-			log.escribirLog("ERROR", "Imposible cargar la imagen " +path+ " " + IMG_GetError() + "\n");
+			log.escribirLog(ERROR, "Imposible cargar la imagen " +path+ " " + IMG_GetError());
 			log.cerrarLog();
 			return !exito;
 		}
@@ -63,7 +63,7 @@ public:
 			if( texturaNueva == NULL )
 			{
 				log.abrirLog(DIBUJABLELOG);
-				log.escribirLog("ERROR", "Imposible crear textura desde "+path+"\n");
+				log.escribirLog(ERROR, "Imposible crear textura desde "+path);
 				log.cerrarLog();
 				return !exito;
 			}
@@ -88,15 +88,7 @@ public:
 	// cada elemnto tiene que redefinir este metodo para devolver el recuadro a donde se va a dibujar la imagen
 	//virtual SDL_Rect * getRecuadroDeDibujo() {}
 
-	virtual void render() {
-/*		// Quien inplemente la interfaz tiene que encargarse de mantener un puntero al rect para
-		// liberarlo cuando corresponda.
-		SDL_Rect  * r = getRecuadroDeDibujo();
-
-		//std::cout << "llame al render de interfaz: en posicion " << r->x << ", " << r->y << std::endl;
-
-		SDL_RenderCopy( dRenderer, dTextura, NULL, r );*/
-	}
+	virtual void render() {	}
 
 	virtual void setRenderer(SDL_Renderer* r){
 		dRenderer = r;

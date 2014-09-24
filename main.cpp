@@ -56,10 +56,7 @@ bool loopPrincipal() {
 		statusOK = w->updateWindow(worldB2D);
 
 		if(!statusOK) {
-			if (w) {
-				delete w;
-				w = NULL;
-			}
+			wClose();
 			return -1;
 		}
 

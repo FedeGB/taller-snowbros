@@ -39,28 +39,29 @@ public:
 				std::cout << "Error al abrir archivo de log" << std::endl;
 				return false;
 			}
-			log.escribirLog("WAR", "No se pudo cargar la imagen "+ path + "!");
+			log.escribirLog(WARNING, "No se pudo cargar la imagen "+ path + "!");
 			log.cerrarLog();
 			return false;
 		}
 		else
 		{
 			dTextura = SDL_CreateTextureFromSurface(dRenderer, imagenCargada);
+			if(!dTextura) {
+				if (!log.abrirLog(WINDOWLOG)) {
+					std::cout << "Error al abrir archivo de log" << std::endl;
+					return false;
+				}
+				log.escribirLog(WARNING, "No se pudo crear la textura de " + path + "!");
+				log.cerrarLog();
+				return false;
+			}
 			SDL_FreeSurface( imagenCargada );
 		}
 
 		return true;
 	}
 
-	//SDL_Rect * getRecuadroDeDibujo(){ return r;	}
-
 	virtual void render() {
-		// Quien inplemente la interfaz tiene que encargarse de mantener un puntero al rect para
-		// liberarlo cuando corresponda.
-		//SDL_Rect  * r = getRecuadroDeDibujo();
-
-		//std::cout << "llame al render de interfaz: en posicion " << r->x << ", " << r->y << std::endl;
-
 		SDL_RenderCopy( dRenderer, dTextura, NULL, NULL );
 	}
 
@@ -72,7 +73,6 @@ public:
 private:
 	std::string path;
 	int width, height;
-	//SDL_Rect * r;
 };
 
 

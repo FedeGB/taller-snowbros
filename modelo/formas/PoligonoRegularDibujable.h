@@ -39,7 +39,7 @@ public:
 			Logger& log = * Logger::Instancia();
 			if(!log.abrirLog(DIBUJABLELOG)) {
 				std::string err(SDL_GetError());
-				log.escribirLog("WAR", "No se renderizo el poligono "+err);
+				log.escribirLog(WARNING, "No se renderizo el poligono "+err);
 				log.cerrarLog();
 				return;
 			}

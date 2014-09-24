@@ -54,9 +54,27 @@ bool Window::init(int width, int height, float wRatio, float hRatio, std::string
 }
 
 bool Window::updateWindow(b2World * worldB2D) {
-
-	SDL_SetRenderDrawColor(wRenderer, 0x00, 0x00, 0x00, 0x00);
-	SDL_RenderClear(wRenderer);
+	Logger& log = * Logger::Instancia();
+	if(SDL_SetRenderDrawColor(wRenderer, 0x00, 0x00, 0x00, 0x00) != 0) {
+		if (!log.abrirLog(WINDOWLOG)) {
+			std::cout << "Error al abrir archivo de log " << WINDOWLOG << std::endl;
+			return false;
+		}
+		log.escribirLog(ERROR, "Error al settear color de dibujo de renderer 'RenderDrawColor'");
+		log.cerrarLog();
+		error = true;
+		return !error;
+	}
+	if(SDL_RenderClear(wRenderer) != 0 ) {
+		if (!log.abrirLog(WINDOWLOG)) {
+			std::cout << "Error al abrir archivo de log " << WINDOWLOG << std::endl;
+			return false;
+		}
+		log.escribirLog(ERROR, "Error al querer limpiar el Render 'RenderClear'");
+		log.cerrarLog();
+		error = true;
+		return !error;
+	}
 
 	b2Body * objeto = worldB2D->GetBodyList();
 	int numObjetos = worldB2D->GetBodyCount();
@@ -88,7 +106,7 @@ bool Window::validarAnchoYAlto(int width, int height)
 	{
 		if (!log.abrirLog(WINDOWLOG))
 		{
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << WINDOWLOG << std::endl;
 			return false;
 		}
 
@@ -107,7 +125,7 @@ bool Window::iniciarSDL()
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 	{
 		if (!log.abrirLog(WINDOWLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << WINDOWLOG << std::endl;
 			return false;
 		}
 		std::string buf ("No se pudo inicializar SDL!");
@@ -119,7 +137,14 @@ bool Window::iniciarSDL()
 		//Inicio la carga de imagenes
 		int imgFlags = IMG_INIT_PNG;
 		if( !( IMG_Init( imgFlags ) & imgFlags ) ) {
-			printf( "SDL_image no pudo iniciar! SDL_image Error: %s" , IMG_GetError() , "\n" );
+			if (!log.abrirLog(WINDOWLOG)) {
+				std::cout << "Error al abrir archivo de log " << WINDOWLOG << std::endl;
+				return false;
+			}
+			std::string buf ("SDL_image no pudo iniciar! SDL_image Error: ");
+			buf = buf + IMG_GetError();
+			log.escribirLog(ERROR, buf);
+			log.cerrarLog();
 			error = true;
 		}
 	}
@@ -132,10 +157,10 @@ SDL_Window* Window::crearVentana()
 	SDL_Window* w = SDL_CreateWindow("Snow Bros", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	if(!w) {
 		if (!log.abrirLog(WINDOWLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << WINDOWLOG << std::endl;
 			return w;
 		}
-		std::string buf("No se pudo crear la ventana.");
+		std::string buf("No se pudo crear la ventana. ");
 		buf = buf + SDL_GetError();
 		log.escribirLog(ERROR, buf);
 		log.cerrarLog();
@@ -152,7 +177,7 @@ SDL_Renderer* Window::crearRenderer(SDL_Window* w)
 	if( !renderer )
 	{
 		if (!log.abrirLog(WINDOWLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
+			std::cout << "Error al abrir archivo de log " << WINDOWLOG << std::endl;
 			return renderer;
 		}
 		log.escribirLog(ERROR, "No se pudo crear el renderer!");

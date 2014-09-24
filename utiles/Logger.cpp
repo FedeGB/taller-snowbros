@@ -62,7 +62,7 @@ bool Logger::escribirLog(string tipo, string detalle){
 
 	//Verifico el modo del logger
 	if (this->mode == ERRORS_ONLY && tipo != ERROR) return true;
-	if (this->mode == NO_ERRORS && tipo ==ERROR) return true;
+	if (this->mode == NO_ERRORS && tipo == ERROR) return true;
 
 	time_t rawtime;
 	struct tm * timeinfo;
