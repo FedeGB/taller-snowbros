@@ -51,8 +51,8 @@ bool loopPrincipal() {
 				break;
 			}
 		}
-
-		worldB2D->Step(1.0f/60.0f, 8, 5);
+		for(int i=0;i<10;i++)
+			worldB2D->Step(1.0f/600.0f, 8, 5);
 		statusOK = w->updateWindow(worldB2D);
 
 		if(!statusOK) {
