@@ -7,8 +7,8 @@
         "imagen-fondo": "imagenes/fondo2.png"
     },
     "personaje":{
-		"x": 20.0,
-		"y": 10.0,
+		"x": 22.0,
+		"y": 2.0,
 		"masa": 20.0,
 		"ancho": 1.2,
 		"alto": 1.4,
@@ -24,7 +24,8 @@
             "alto": 0.1,
             "ancho": 33.75,
             "masa": 1,
-	    "color": "#FFFF00"
+	    "color": "#FFFF00",
+            "friccion": 0.2
         },
 
 	{
@@ -36,7 +37,8 @@
             "alto": 0.1,
             "ancho": 33.75,
             "masa": 1,
-	    "color": "#5DB330"
+	    "color": "#5DB330",
+            "friccion": 0.5
         },
 
 	{
@@ -49,7 +51,7 @@
             "ancho": 0,
             "masa": 1,
 	    "color": "#FFFF00",
-		"friccion": 0.0
+	    "friccion": 0.0
         },
 
 	{
@@ -62,31 +64,33 @@
             "ancho": 0,
             "masa": 1,
 	    "color": "#FFFF00",
-		"friccion": 0.0
+	    "friccion": 0.0
         },
 
 	{
             "estatico": true,
             "tipo": "rect",
-            "x": 30,
+            "x": 25,
             "y": 10,
             "rot": 335,
             "alto": 0.6,
-            "ancho": 4.9,
+            "ancho": 7.9,
             "masa": 1,
-	    "color": "#A42050"
+	    "color": "#A42050",
+            "friccion": 0.2
         },
 
 	{
             "estatico": true,
             "tipo": "rect",
             "x": 9.75,
-            "y": 18,
-            "rot": 55,
+            "y": 13,
+            "rot": 35,
             "alto": 0.6,
             "ancho": 17.9,
             "masa": 1,
-	    "color": "#A42050"
+	    "color": "#A42050",
+            "friccion": 0.2
         },
 
 	{
@@ -99,8 +103,9 @@
             "alto": 0.5,
             "ancho": 2.0,
 	    "lados": 5,
-            "masa": 4,
-	    "color": "#1420B2"
+            "masa": 40,
+	    "color": "#1420B2",
+            "friccion": 0.2
         },
 
 	{
@@ -118,7 +123,8 @@
 	    "base": 2.4,
 	    "tapa": 3.0,
 	    "desp": 0.3,
-	    "alto": 1.5
+	    "alto": 1.5,
+            "friccion": 0.2
         },
 
 	{
@@ -131,12 +137,13 @@
             "alto": 0.5,
             "ancho": 2.0,
 	    "lados": 5,
-            "masa": 1,
+            "masa": 100,
 	    "color": "#FF00FF",
 	    "base": 2.4,
 	    "tapa": 3.0,
 	    "desp": 0.3,
-	    "alto": 1.5
+	    "alto": 1.5,
+            "friccion": 0.2
         },
 	{
             "estatico": false,
@@ -153,7 +160,8 @@
 	    "base": 3.4,
 	    "tapa": 2.0,
 	    "desp": 0.3,
-	    "alto": 10.0
+	    "alto": 10.0,
+            "friccion": 0.2
         }
    ]
 }
