@@ -47,7 +47,7 @@ string get_node(string data, string param, string file, char* defaultData) {
 			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(ERROR, "campo '" + data + "' de '" + param + "' vacio.");
+		log.escribirLog(WARNING, "campo '" + data + "' de '" + param + "' vacio.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -56,7 +56,7 @@ string get_node(string data, string param, string file, char* defaultData) {
 			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(ERROR,
+		log.escribirLog(WARNING,
 				"tipo incorrecto del campo '" + data + "' de '" + param
 						+ "'. Se espera string.");
 		log.cerrarLog();
@@ -69,7 +69,7 @@ string get_node(string data, string param, string file, char* defaultData) {
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return defaultData;
 			}
-			log.escribirLog(ERROR, "El color " + result + " del campo " + data
+			log.escribirLog(WARNING, "El color " + result + " del campo " + data
 							+ " de " + param +" no es valido");
 			log.cerrarLog();
 			return defaultData;
@@ -111,7 +111,7 @@ string get_node(string data, string param, string file, int field,
 			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(ERROR,
+		log.escribirLog(WARNING,
 				"campo '" + data + "' de '" + param + "' vacio, del elemento " + s + ".");
 		log.cerrarLog();
 		return defaultData;
@@ -121,7 +121,7 @@ string get_node(string data, string param, string file, int field,
 			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(ERROR,
+		log.escribirLog(WARNING,
 				" tipo incorrecto del campo " + data + " de " + param
 						+ " del elemento " + s + ". Se espera string");
 		log.cerrarLog();
@@ -134,7 +134,7 @@ string get_node(string data, string param, string file, int field,
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return defaultData;
 			}
-			log.escribirLog(ERROR, "El color " + result + " del elemento " + s + " de " + param + " no es valido");
+			log.escribirLog(WARNING, "El color " + result + " del elemento " + s + " de " + param + " no es valido");
 			log.cerrarLog();
 			return defaultData;
 		}
@@ -165,7 +165,7 @@ int get_node(string data, string param, string file, int defaultData) {
 			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(ERROR, "Campo '" + data + "' de '" + param + "' vacio.");
+		log.escribirLog(WARNING, "Campo '" + data + "' de '" + param + "' vacio.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -174,7 +174,7 @@ int get_node(string data, string param, string file, int defaultData) {
 			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(ERROR,
+		log.escribirLog(WARNING,
 				" Tipo incorrecto del campo '" + data + "' de '" + param
 						+ "'. Se espera 'int'.");
 		log.cerrarLog();
@@ -189,7 +189,7 @@ int get_node(string data, string param, string file, int defaultData) {
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return defaultData;
 			}
-			log.escribirLog(ERROR, "El valor de " + data + " de " + param + " no puede ser negativo.");
+			log.escribirLog(WARNING, "El valor de " + data + " de " + param + " no puede ser negativo.");
 			log.cerrarLog();
 			return defaultData;
 		}
@@ -232,7 +232,7 @@ int get_node(string data, string param, string file, int field,
 			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(ERROR,
+		log.escribirLog(WARNING,
 				"campo '" + data + "' de '" + param + "' vacio, del elemento " + s + ".");
 		log.cerrarLog();
 		return defaultData;
@@ -242,7 +242,7 @@ int get_node(string data, string param, string file, int field,
 			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(ERROR,
+		log.escribirLog(WARNING,
 				" Tipo incorrecto del campo '" + data + "' de '" + param
 						+ "' del elemento " + s + ". Se espera 'int'.");
 		log.cerrarLog();
@@ -257,7 +257,7 @@ int get_node(string data, string param, string file, int field,
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return defaultData;
 			}
-			log.escribirLog(ERROR, "El valor de " + data + " de " + param + " del elemento " + s + " no puede ser negativo.");
+			log.escribirLog(WARNING, "El valor de " + data + " de " + param + " del elemento " + s + " no puede ser negativo.");
 			log.cerrarLog();
 			return defaultData;
 		}
@@ -290,7 +290,7 @@ float get_node(string data, string param, string file, float defaultData) {
 			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(ERROR, "Campo '" + data + "' de '" + param + "' vacio");
+		log.escribirLog(WARNING, "Campo '" + data + "' de '" + param + "' vacio");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -299,7 +299,7 @@ float get_node(string data, string param, string file, float defaultData) {
 			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(ERROR,
+		log.escribirLog(WARNING,
 				"Tipo incorrecto del campo '" + data + "' de '" + param
 						+ "'. Se espera 'float'.");
 		log.cerrarLog();
@@ -314,7 +314,7 @@ float get_node(string data, string param, string file, float defaultData) {
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return defaultData;
 			}
-			log.escribirLog(ERROR, "El valor de " + data + " de " + param + " no puede ser negativo.");
+			log.escribirLog(WARNING, "El valor de " + data + " de " + param + " no puede ser negativo.");
 			log.cerrarLog();
 			return defaultData;
 		}
@@ -367,7 +367,7 @@ float get_node(string data, string param, string file, int field,
 			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(ERROR,
+		log.escribirLog(WARNING,
 				"Tipo incorrecto del campo '" + data + "' de '" + param
 						+ "' del elemento " + s + ". Se espera 'int'.");
 		log.cerrarLog();
@@ -382,7 +382,7 @@ float get_node(string data, string param, string file, int field,
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return defaultData;
 			}
-			log.escribirLog(ERROR, "El valor de " + data + " de " + param + " del elemento " + s + " no puede ser negativo.");
+			log.escribirLog(WARNING, "El valor de " + data + " de " + param + " del elemento " + s + " no puede ser negativo.");
 			log.cerrarLog();
 			return defaultData;
 		}
@@ -415,7 +415,7 @@ bool get_node(string data, string param, string file, bool defaultData) {
 			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(ERROR, "Campo '" + data + "' de '" + param + "' vacio.");
+		log.escribirLog(WARNING, "Campo '" + data + "' de '" + param + "' vacio.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -424,7 +424,7 @@ bool get_node(string data, string param, string file, bool defaultData) {
 			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(ERROR,
+		log.escribirLog(WARNING,
 				"Tipo incorrecto del campo '" + data + "' de '" + param
 						+ "'. Se espera 'Bool'.");
 		log.cerrarLog();
@@ -465,7 +465,7 @@ bool get_node(string data, string param, string file, int field,
 			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(ERROR,
+		log.escribirLog(WARNING,
 				"Campo '" + data + "' de '" + param + "' vacio, del elemento " + s + ".");
 		log.cerrarLog();
 		return defaultData;
@@ -475,7 +475,7 @@ bool get_node(string data, string param, string file, int field,
 			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(ERROR,
+		log.escribirLog(WARNING,
 				"Tipo incorrecto del campo '" + data + "' de '" + param
 						+ "' del elemento " + s + ". Se espera 'int'.");
 		log.cerrarLog();
