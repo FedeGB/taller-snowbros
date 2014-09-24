@@ -47,7 +47,7 @@ bool loadInitialValues(std::string& sConfig) {
 			}
 
 			log.escribirLog("ERROR",
-					"No se pudo encontrar o abrir el archivo config.json");
+					"No se pudo encontrar o abrir el archivo default.json");
 			log.cerrarLog();
 			return false;
 		}
