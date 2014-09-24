@@ -358,7 +358,6 @@ bool Inicializador::init(Window ** w, b2World ** worldB2D,
 				convert << b2->GetPosition().y;
 				ss+= convert.str();
 				ss += " borrado por solapamiento";
-				cout << ss;
 				log.escribirLog(ERROR, ss);
 				log.cerrarLog();
 				(*worldB2D)->DestroyBody(b);
