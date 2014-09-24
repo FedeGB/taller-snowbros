@@ -52,7 +52,7 @@ bool loadInitialValues(std::string configFile, std::string& sConfig) {
 	fConfig.close();
 
 	if (!parsingOk(sConfig)) {
-		fConfig.open("default.json", ios_base::in);
+		fConfig.open("defaultConfig.json", ios_base::in);
 		if (!fConfig.is_open()) {
 			if (!log.abrirLog(MAINLOG)) {
 				log.crearLogs();
