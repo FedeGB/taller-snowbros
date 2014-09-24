@@ -80,6 +80,8 @@ void worldInit(b2World ** worldB2D, ContactListener * contactListener) {
 
 void pjInit(Window ** w, b2World ** worldB2D,  HandlerDeEventos * wHandlerEventos, std::string data)
 {
+	Logger& log = *Logger::Instancia();
+
 	b2BodyDef b2dObjDef;
 	b2FixtureDef myFixtureDef;
 	b2PolygonShape polygon;
@@ -88,6 +90,21 @@ void pjInit(Window ** w, b2World ** worldB2D,  HandlerDeEventos * wHandlerEvento
 	b2dObjDef.type = b2_dynamicBody;
 	float32 pj_x = get_node("x", "personaje", data, 5.0f);
 	float32 pj_y = get_node("y", "personaje", data, 10.0f);
+
+	float32 anchoMaximo = get_node("ancho-un", "escenario", data, 10.0f);
+	float32 altoMaximo = get_node("alto-un", "escenario", data, 10.0f);
+
+	// si la posicion del persona esta fuera del escenario, entonces lo posicionamos en el medio
+	if( (pj_x > anchoMaximo) | (pj_y > altoMaximo) ){
+		if (!log.abrirLog(WINDOWLOG)) {
+			std::cout << "Error al abrir archivo de log" << std::endl;
+			return;
+		}
+		log.escribirLog(WARNING, "No se puede inicializar al personaje fuera del escenario. Seteado por default al medio del escenario.");
+		log.cerrarLog();
+		pj_x = ( anchoMaximo * 0.5 ); pj_y = ( altoMaximo * 0.5 );
+	}
+
 	b2dObjDef.position.Set(pj_x, pj_y);
 	b2dObjDef.angle = 0;
 	b2dObjDef.fixedRotation = true;
@@ -116,15 +133,13 @@ void pjInit(Window ** w, b2World ** worldB2D,  HandlerDeEventos * wHandlerEvento
     b2Fixture* footSensorFixture = pjB2D->CreateFixture(&myFixtureDef);
     footSensorFixture->SetUserData( (void*)3 );
 
-	Logger& log = * Logger::Instancia();
-
 	Personaje * personaje = new Personaje();
 	if(!personaje) {
 		if (!log.abrirLog(WINDOWLOG)) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return;
 		}
-		log.escribirLog(ERROR, "No se pudo asignar memoria para al personaje");
+		log.escribirLog(ERROR, "No se pudo asignar memoria para al personaje.");
 		log.cerrarLog();
 		return;
 	}
