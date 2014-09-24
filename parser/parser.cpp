@@ -357,7 +357,7 @@ float get_node(string data, string param, string file, int field,
 			std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(ERROR,
+		log.escribirLog(WARNING,
 				"Campo '" + data + "' de '" + param + "' vacio, del elemento " + s + ".");
 		log.cerrarLog();
 		return defaultData;
