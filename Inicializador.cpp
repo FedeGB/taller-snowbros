@@ -359,9 +359,9 @@ bool Inicializador::init(Window ** w, b2World ** worldB2D,
 			if (overlap) {
 				if (!log.abrirLog(WINDOWLOG)) {
 					log.crearLogs();
-					std::cout << "Error al abrir archivo de log " << MAINLOG
+					std::cout << "Error al abrir archivo de log " << WINDOWLOG
 							<< ", creando..." << std::endl;
-					if (!log.abrirLog(MAINLOG)) {
+					if (!log.abrirLog(WINDOWLOG)) {
 						std::cout << "No se pudo crear el archivo de log.";
 					}
 				}
@@ -375,7 +375,7 @@ bool Inicializador::init(Window ** w, b2World ** worldB2D,
 				convert << b2->GetPosition().y;
 				ss+= convert.str();
 				ss += " borrado por solapamiento";
-				log.escribirLog(ERROR, ss);
+				log.escribirLog(WARNING, ss);
 				log.cerrarLog();
 				(*worldB2D)->DestroyBody(b);
 				b = (*worldB2D)->GetBodyList();
