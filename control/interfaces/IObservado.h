@@ -18,10 +18,6 @@ public:
 	{
 		ListaObservadores::iterator it = oLista.begin();
 		while(it != oLista.end()) {
-			if( (*it) != NULL ) {
-				//delete (*it);
-				//(*it) = NULL;
-			}
 			oLista.erase(it);
 		}
 	};

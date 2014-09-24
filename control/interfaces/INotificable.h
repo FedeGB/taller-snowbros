@@ -19,8 +19,6 @@ public:
 	virtual void eventoSoltoDerecha() = 0;
 	virtual void eventoIzquierda() = 0;
 	virtual void eventoSoltoIzquierda() = 0;
-	//virtual void eventoAbajo() = 0;
-	//virtual void eventoSoltoAbajo() = 0;
 	virtual void eventoRESTART() = 0;
 };
 
