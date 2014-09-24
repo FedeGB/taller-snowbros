@@ -128,13 +128,16 @@ void Personaje::render(){
 	if (isLeftPressed && wasLeftPressed1st){
 		leftOriented=true;
 		desiredVel = -15;
-		scale = 0.25;
+		if (angle <= 180 * DEGTORAD) scale = 0.25;
+		else scale = 4;
 	}
 
 	if (isRightPressed && !wasLeftPressed1st){
 		leftOriented=false;
 		desiredVel = 15;
 		scale = 4;
+		if (angle <= 180 * DEGTORAD) scale = 4;
+		else scale = 0.25;
 	}
 
 	animationCounter++;
@@ -183,7 +186,7 @@ void Personaje::render(){
 
 	if (isUpPressed && (numFootContacts >= 1)){
 		b2Vec2 vel = bodyB2D->GetLinearVelocity();
-		float desiredVel = -15;
+		float desiredVel = -18;
 		float velChange = desiredVel - vel.y;
 		float impulse = bodyB2D->GetMass() * velChange;
 		bodyB2D->ApplyLinearImpulse( b2Vec2(0,impulse), bodyB2D->GetWorldCenter(), true);

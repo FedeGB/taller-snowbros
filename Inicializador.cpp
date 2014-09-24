@@ -70,7 +70,7 @@ bool windowInit(Window ** w, int widthScreen, int heightScreen, float wRatio,
 
 void worldInit(b2World ** worldB2D, ContactListener * contactListener) {
 
-	b2Vec2 gravedad(0, 25);
+	b2Vec2 gravedad(0, 35);
 	*worldB2D = new b2World(gravedad);
 
 	(*worldB2D)->SetContactListener(contactListener);

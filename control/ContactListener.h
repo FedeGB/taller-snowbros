@@ -17,17 +17,18 @@ class ContactListener : public b2ContactListener
 		//check if fixture A was the foot sensor
 		void* fixtureAUserData = contact->GetFixtureA()->GetUserData();
 		void* fixtureBUserData = contact->GetFixtureB()->GetUserData();
+		// TODO: sacar estos '2' y '3' y cambiarlos por constantes.
 		if ( *((int*)(&fixtureAUserData)) == 3 ){
 			( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->modifyFootContacts(1);
-			if ( *((int*)(&fixtureBUserData)) == 2 ) // Check if fixture B is a static object
-				//std::cout << "el PJ colisiono con un objeto estatico" << std::endl;
+			if ( (*((int*)(&fixtureBUserData)) == 2) ) // Check if fixture B is a static object and angle <= 89
+					//contact->GetFixtureB()->GetBody()->GetAngle() <= 89 * DEGTORAD)
 				( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->setNewAngle(contact->GetFixtureB()->GetBody()->GetAngle());
 		}
 		//check if fixture B was the foot sensor
 		if ( *((int*)(&fixtureBUserData)) == 3 ){
 		  ( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->modifyFootContacts(1);
-		  if ( *((int*)(&fixtureAUserData)) == 2 ) // Check if fixture A is a static object
-			  //std::cout << "el PJ colisiono con un objeto estatico" << std::endl;
+		  if ( (*((int*)(&fixtureAUserData)) == 2) )  // Check if fixture A is a static object and angle <= 89
+		  					//contact->GetFixtureA()->GetBody()->GetAngle() <= 89 * DEGTORAD)
 			  ( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->setNewAngle(contact->GetFixtureA()->GetBody()->GetAngle());
 		}
 	}
