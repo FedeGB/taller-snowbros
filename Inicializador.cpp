@@ -369,29 +369,89 @@ bool Inicializador::init(std::string configFile, Window ** w, b2World ** worldB2
 	}
 	bool overlap;
 	for (b2Body *b = (*worldB2D)->GetBodyList(); b; b = b->GetNext()) {
+		if(b->GetPosition().x>widthWorld ||b->GetPosition().y>heightWorld){
+			if (!log.abrirLog(WINDOWLOG)) {
+								log.crearLogs();
+								std::cout << "Error al abrir archivo de log " << WINDOWLOG
+										<< ", creando..." << std::endl;
+								if (!log.abrirLog(WINDOWLOG)) {
+									std::cout << "No se pudo crear el archivo de log.";
+									(*worldB2D)->DestroyBody(b);
+									b = (*worldB2D)->GetBodyList();
+									break;
+								}
+							}
+			string ss = "";
+							ss += "objeto en la posicion ";
+							ostringstream convert;   // stream used for the conversion
+
+							convert << b->GetPosition().x;
+							ss+= convert.str();
+							ss += ",";
+							convert.str(""); convert.clear();
+							convert << b->GetPosition().y;
+							ss+= convert.str();
+							ss += " fuera del mapa. Borrado";
+							log.escribirLog(WARNING, ss);
+							(*worldB2D)->DestroyBody(b);
+							b = (*worldB2D)->GetBodyList();
+		}
+
+
 		for (b2Body *b2 = b->GetNext(); b2; b2 = b2->GetNext()) {
 			overlap = b2TestOverlap(b->GetFixtureList()->GetShape(), 0,
 					b2->GetFixtureList()->GetShape(), 0,
 					b->GetFixtureList()->GetBody()->GetTransform(),
 					b2->GetFixtureList()->GetBody()->GetTransform());
 			if (overlap) {
+				if(b->GetPosition().x>widthWorld ||b->GetPosition().y>heightWorld){
+							if (!log.abrirLog(WINDOWLOG)) {
+												log.crearLogs();
+												std::cout << "Error al abrir archivo de log " << WINDOWLOG
+														<< ", creando..." << std::endl;
+												if (!log.abrirLog(WINDOWLOG)) {
+													std::cout << "No se pudo crear el archivo de log.";
+													(*worldB2D)->DestroyBody(b);
+													b = (*worldB2D)->GetBodyList();
+													break;
+												}
+											}
+							string ss = "";
+											ss += "objeto en la posicion ";
+											ostringstream convert;   // stream used for the conversion
+
+											convert << b->GetPosition().x;
+											ss+= convert.str();
+											ss += ",";
+											convert.str(""); convert.clear();
+											convert << b->GetPosition().y;
+											ss+= convert.str();
+											ss += " fuera del mapa. Borrado";
+											log.escribirLog(WARNING, ss);
+											(*worldB2D)->DestroyBody(b);
+											b = (*worldB2D)->GetBodyList();
+						}
 				if (!log.abrirLog(WINDOWLOG)) {
 					log.crearLogs();
 					std::cout << "Error al abrir archivo de log " << WINDOWLOG
 							<< ", creando..." << std::endl;
 					if (!log.abrirLog(WINDOWLOG)) {
 						std::cout << "No se pudo crear el archivo de log.";
+						(*worldB2D)->DestroyBody(b);
+						b = (*worldB2D)->GetBodyList();
+						b2 = b->GetNext();
+						break;
 					}
 				}
 				string ss = "";
 				ss += "objeto en la posicion ";
 				ostringstream convert;   // stream used for the conversion
 
-				convert << b2->GetPosition().x;
+				convert << b->GetPosition().x;
 				ss+= convert.str();
 				ss += ",";
 				convert.str(""); convert.clear();
-				convert << b2->GetPosition().y;
+				convert << b->GetPosition().y;
 				ss+= convert.str();
 				ss += " borrado por solapamiento";
 				log.escribirLog(WARNING, ss);
