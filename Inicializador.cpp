@@ -125,10 +125,10 @@ void pjInit(Window ** w, b2World ** worldB2D,  HandlerDeEventos * wHandlerEvento
 	bodyFixture->SetUserData( (void*)0 );
 
     // Agrego el sensor para saltos
-    polygon.SetAsBox(halfWidth/1.2, 0.15f, b2Vec2(0.0f,1.5f), 0);
+    polygon.SetAsBox(halfWidth, 0.15f, b2Vec2(0.0f,1.5f), 0);
 	myFixtureDef.shape = &polygon; //defino que es un poligono
     myFixtureDef.isSensor = true;
-	myFixtureDef.density = 100.0f; //le doy masa
+	myFixtureDef.density = 1.0f; //le doy masa
 	myFixtureDef.restitution = 0.0f;
     b2Fixture* footSensorFixture = pjB2D->CreateFixture(&myFixtureDef);
     footSensorFixture->SetUserData( (void*)3 );
@@ -192,7 +192,6 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 	else {
 		b2dObjDef.type = b2_dynamicBody;
 		b2dObjDef.bullet = true;
-		//b2dObjDef.fixedRotation = false;
 	}
 
 	//posicion inicial
@@ -299,7 +298,8 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 	}
 	myFixtureDef.friction = get_node("friccion", "objetos", data, num, 0.3f);
 	b2Fixture * shapeFixture = _shape->CreateFixture(&myFixtureDef); //le asigno la forma
-	shapeFixture->SetUserData((void*) 1);
+	if (b2dObjDef.type == b2_dynamicBody) shapeFixture->SetUserData((void*) 1);
+	else shapeFixture->SetUserData((void*) 2);
 
 	// Determina los parametros basicos de la figura.
 

@@ -27,6 +27,7 @@ public:
 
 	void setB2DBody(b2Body * pjB2D);
 	void modifyFootContacts(int i);
+	void setNewAngle(float32 a);
 
 	// metodos de INotificable
 	virtual void eventoArriba();
@@ -45,6 +46,7 @@ private:
 	//int pEstado;
 	b2Body * bodyB2D;
 	int numFootContacts;
+	float32 angle;
 	bool isRightPressed;
 	bool isLeftPressed;
 	bool isUpPressed;

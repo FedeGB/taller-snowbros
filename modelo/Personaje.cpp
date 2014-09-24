@@ -16,6 +16,7 @@ Personaje::Personaje(){
 	wasLeftPressed1st = false;
 	leftOriented=false;
 	animationCounter = 0;
+	angle = 0;
 }
 
 Personaje::~Personaje() {}
@@ -114,35 +115,26 @@ bool Personaje::cargarImagen(std::string path){
 	return true;
 }
 
+void Personaje::setNewAngle(float32 a){
+	angle = a;
+}
 
 
 void Personaje::render(){
 
-	if (isUpPressed && (numFootContacts >= 1)){
-		b2Vec2 vel = bodyB2D->GetLinearVelocity();
-		float desiredVel = -10;
-		float velChange = desiredVel - vel.y;
-		float impulse = bodyB2D->GetMass() * velChange;
-		bodyB2D->ApplyLinearImpulse( b2Vec2(0,impulse), bodyB2D->GetWorldCenter(), true);
-		animationCounter = 0;
-	}
+	bodyB2D->SetTransform(bodyB2D->GetPosition(), angle);
 
+	float32 desiredVel = 0, scale = 0;
 	if (isLeftPressed && wasLeftPressed1st){
 		leftOriented=true;
-		b2Vec2 vel = bodyB2D->GetLinearVelocity();
-		float desiredVel = -15;
-		float velChange = desiredVel - vel.x;
-		float impulse = bodyB2D->GetMass() * velChange;
-		bodyB2D->ApplyLinearImpulse( b2Vec2(impulse, 0), bodyB2D->GetWorldCenter(), true);
+		desiredVel = -15;
+		scale = 0.25;
 	}
 
 	if (isRightPressed && !wasLeftPressed1st){
 		leftOriented=false;
-		b2Vec2 vel = bodyB2D->GetLinearVelocity();
-		float desiredVel = 15;
-		float velChange = desiredVel - vel.x;
-		float impulse = bodyB2D->GetMass() * velChange;
-		bodyB2D->ApplyLinearImpulse( b2Vec2(impulse, 0), bodyB2D->GetWorldCenter(), true);
+		desiredVel = 15;
+		scale = 4;
 	}
 
 	animationCounter++;
@@ -171,17 +163,33 @@ void Personaje::render(){
 		else activeSprite = spriteRects[SALTANDOIZQUIERDA5];
 	}
 
-	if (!isRightPressed && !isLeftPressed ){
+	b2Vec2 vel = bodyB2D->GetLinearVelocity();
+	float32 velXChange = desiredVel * cos(angle) - vel.x;
+	float32 velYChange = 0;
+	if ( angle != 0 ) velYChange =  scale * desiredVel * sin(angle) - vel.y ;
 
-		b2Vec2 vel = bodyB2D->GetLinearVelocity();
-		float desiredVel = 0;
-		float velChange = desiredVel - vel.x;
-		float impulse = bodyB2D->GetMass() * velChange;
-		bodyB2D->ApplyLinearImpulse( b2Vec2(impulse, 0), bodyB2D->GetWorldCenter(), true);
-		if(numFootContacts >= 1){
-			activeSprite = spriteRects[PARADOIZQUIERDA];
-		animationCounter = 0;}
+	if (!isRightPressed && !isLeftPressed ){
+			velXChange = -vel.x; // I want the PJ to stop moving in the X axis.
+			velYChange = 0; // I want the PJ to keep moving normally in the Y axis.
+			if(numFootContacts >= 1){
+				activeSprite = spriteRects[PARADOIZQUIERDA];
+			animationCounter = 0;}
 	}
+
+	float impulseX = bodyB2D->GetMass() * velXChange;
+	float impulseY = bodyB2D->GetMass() * velYChange;
+	bodyB2D->ApplyLinearImpulse( b2Vec2(impulseX, impulseY), bodyB2D->GetWorldCenter(), true);
+
+
+	if (isUpPressed && (numFootContacts >= 1)){
+		b2Vec2 vel = bodyB2D->GetLinearVelocity();
+		float desiredVel = -15;
+		float velChange = desiredVel - vel.y;
+		float impulse = bodyB2D->GetMass() * velChange;
+		bodyB2D->ApplyLinearImpulse( b2Vec2(0,impulse), bodyB2D->GetWorldCenter(), true);
+		animationCounter = 0;
+	}
+
 	if(bodyB2D->GetLinearVelocity().y>1 && numFootContacts < 1 ){
 		 activeSprite = spriteRects[SALTANDOIZQUIERDA5];
 	}
@@ -196,6 +204,6 @@ void Personaje::render(){
 	if ((isRightPressed && !wasLeftPressed1st)||!leftOriented) flip = SDL_FLIP_HORIZONTAL;
 	else flip = SDL_FLIP_NONE;
 
-	SDL_RenderCopyEx( dRenderer, dTextura, &activeSprite, &pos, 0.0f, NULL, flip);
+	SDL_RenderCopyEx( dRenderer, dTextura, &activeSprite, &pos, angle * RADTODEG, NULL, flip);
 }
 
