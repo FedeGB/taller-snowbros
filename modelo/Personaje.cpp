@@ -207,6 +207,8 @@ void Personaje::render(){
 	if ((isRightPressed && !wasLeftPressed1st)||!leftOriented) flip = SDL_FLIP_HORIZONTAL;
 	else flip = SDL_FLIP_NONE;
 
-	SDL_RenderCopyEx( dRenderer, dTextura, &activeSprite, &pos, angle * RADTODEG, NULL, flip);
+	float32 Yaux = width * sin(angle) * Window::hRatio, Xaux = width * cos(angle) * Window::wRatio;
+	float32 modifiedAngle = atan(Yaux/Xaux) * RADTODEG;
+	SDL_RenderCopyEx( dRenderer, dTextura, &activeSprite, &pos, modifiedAngle, NULL, flip);
 }
 
