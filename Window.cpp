@@ -3,8 +3,6 @@
 #include <SDL2/SDL2_rotozoom.h>
 #include <SDL2/SDL_image.h>
 
-//#include "utiles/Configurador.h"
-
 float Window::wRatio, Window::hRatio;
 
 

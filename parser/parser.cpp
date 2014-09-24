@@ -36,8 +36,8 @@ string get_node(string data, string param, string file, char* defaultData) {
 			return defaultData;
 		}
 		string errorLectura;
-		errorLectura = "no se pudo leer el archivo "
-				+ reader.getFormattedErrorMessages();
+		errorLectura = "no se pudo leer el archivo: "
+				+ reader.getFormattedErrorMessages() + ".";
 		log.escribirLog(ERROR, errorLectura);
 		log.cerrarLog();
 		return defaultData;
@@ -47,7 +47,7 @@ string get_node(string data, string param, string file, char* defaultData) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(ERROR, "campo " + data + " de " + param + " vacio");
+		log.escribirLog(ERROR, "campo '" + data + "' de '" + param + "' vacio.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -57,8 +57,8 @@ string get_node(string data, string param, string file, char* defaultData) {
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
-				" tipo incorrecto del campo " + data + " de " + param
-						+ ". Se espera string");
+				"tipo incorrecto del campo '" + data + "' de '" + param
+						+ "'. Se espera string.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -69,7 +69,7 @@ string get_node(string data, string param, string file, char* defaultData) {
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return defaultData;
 			}
-			log.escribirLog(ERROR, "El color " + result + " no es valido");
+			log.escribirLog(ERROR, "El color '" + result + "' no es valido.");
 			log.cerrarLog();
 			return defaultData;
 		}
@@ -100,7 +100,7 @@ string get_node(string data, string param, string file, int field,
 		}
 		string errorLectura;
 		errorLectura = "no se pudo leer el archivo "
-				+ reader.getFormattedErrorMessages();
+				+ reader.getFormattedErrorMessages() + ".";
 		log.escribirLog(ERROR, errorLectura);
 		log.cerrarLog();
 		return defaultData;
@@ -111,7 +111,7 @@ string get_node(string data, string param, string file, int field,
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
-				"campo " + data + " de " + param + " vacio, del elemento " + s);
+				"campo '" + data + "' de '" + param + "' vacio, del elemento " + s + ".");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -121,8 +121,8 @@ string get_node(string data, string param, string file, int field,
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
-				" tipo incorrecto del campo " + data + " de " + param
-						+ "del elemento " + s + ". Se espera string");
+				" tipo incorrecto del campo '" + data + "' de '" + param
+						+ "' del elemento " + s + ". Se espera string.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -133,7 +133,7 @@ string get_node(string data, string param, string file, int field,
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return defaultData;
 			}
-			log.escribirLog(ERROR, "El color " + result + " no es valido");
+			log.escribirLog(ERROR, "El color '" + result + "' no es valido");
 			log.cerrarLog();
 			return defaultData;
 		}
@@ -153,8 +153,8 @@ int get_node(string data, string param, string file, int defaultData) {
 			return defaultData;
 		}
 		string errorLectura;
-		errorLectura = "no se pudo leer el archivo "
-				+ reader.getFormattedErrorMessages();
+		errorLectura = "No se pudo leer el archivo "
+				+ reader.getFormattedErrorMessages() + ".";
 		log.escribirLog(ERROR, errorLectura);
 		log.cerrarLog();
 		return defaultData;
@@ -164,7 +164,7 @@ int get_node(string data, string param, string file, int defaultData) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(ERROR, "campo " + data + " de " + param + " vacio");
+		log.escribirLog(ERROR, "Campo '" + data + "' de '" + param + "' vacio.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -174,8 +174,8 @@ int get_node(string data, string param, string file, int defaultData) {
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
-				" tipo incorrecto del campo " + data + " de " + param
-						+ ". Se espera int");
+				" Tipo incorrecto del campo '" + data + "' de '" + param
+						+ "'. Se espera 'int'.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -188,7 +188,7 @@ int get_node(string data, string param, string file, int defaultData) {
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return defaultData;
 			}
-			log.escribirLog(ERROR, "El valor de " + data + " no puede ser negativo");
+			log.escribirLog(ERROR, "El valor de '" + data + "' no puede ser negativo.");
 			log.cerrarLog();
 			return defaultData;
 		}
@@ -220,8 +220,8 @@ int get_node(string data, string param, string file, int field,
 			return defaultData;
 		}
 		string errorLectura;
-		errorLectura = "no se pudo leer el archivo "
-				+ reader.getFormattedErrorMessages();
+		errorLectura = "No se pudo leer el archivo: "
+				+ reader.getFormattedErrorMessages() +".";
 		log.escribirLog(ERROR, errorLectura);
 		log.cerrarLog();
 		return defaultData;
@@ -232,7 +232,7 @@ int get_node(string data, string param, string file, int field,
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
-				"campo " + data + " de " + param + " vacio, del elemento " + s);
+				"campo '" + data + "' de '" + param + "' vacio, del elemento " + s + ".");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -242,8 +242,8 @@ int get_node(string data, string param, string file, int field,
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
-				" tipo incorrecto del campo " + data + " de " + param
-						+ "del elemento " + s + ". Se espera int");
+				" Tipo incorrecto del campo '" + data + "' de '" + param
+						+ "' del elemento " + s + ". Se espera 'int'.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -256,7 +256,7 @@ int get_node(string data, string param, string file, int field,
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return defaultData;
 			}
-			log.escribirLog(ERROR, "El valor de " + data + " no puede ser negativo");
+			log.escribirLog(ERROR, "El valor de '" + data + "' no puede ser negativo.");
 			log.cerrarLog();
 			return defaultData;
 		}
@@ -278,8 +278,8 @@ float get_node(string data, string param, string file, float defaultData) {
 			return defaultData;
 		}
 		string errorLectura;
-		errorLectura = "no se pudo leer el archivo "
-				+ reader.getFormattedErrorMessages();
+		errorLectura = "No se pudo leer el archivo "
+				+ reader.getFormattedErrorMessages() + ".";
 		log.escribirLog(ERROR, errorLectura);
 		log.cerrarLog();
 		return defaultData;
@@ -289,7 +289,7 @@ float get_node(string data, string param, string file, float defaultData) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(ERROR, "campo " + data + " de " + param + " vacio");
+		log.escribirLog(ERROR, "Campo '" + data + "' de '" + param + "' vacio");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -299,8 +299,8 @@ float get_node(string data, string param, string file, float defaultData) {
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
-				" tipo incorrecto del campo " + data + " de " + param
-						+ ". Se espera float");
+				"Tipo incorrecto del campo '" + data + "' de '" + param
+						+ "'. Se espera 'float'.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -313,7 +313,7 @@ float get_node(string data, string param, string file, float defaultData) {
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return defaultData;
 			}
-			log.escribirLog(ERROR, "El valor de " + data + " no puede ser negativo");
+			log.escribirLog(ERROR, "El valor de '" + data + "' no puede ser negativo.");
 			log.cerrarLog();
 			return defaultData;
 		}
@@ -345,8 +345,8 @@ float get_node(string data, string param, string file, int field,
 			return defaultData;
 		}
 		string errorLectura;
-		errorLectura = "no se pudo leer el archivo "
-				+ reader.getFormattedErrorMessages();
+		errorLectura = "No se pudo leer el archivo "
+				+ reader.getFormattedErrorMessages() + ".";
 		log.escribirLog(ERROR, errorLectura);
 		log.cerrarLog();
 		return defaultData;
@@ -357,7 +357,7 @@ float get_node(string data, string param, string file, int field,
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
-				"campo " + data + " de " + param + " vacio, del elemento " + s);
+				"Campo '" + data + "' de '" + param + "' vacio, del elemento " + s + ".");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -367,8 +367,8 @@ float get_node(string data, string param, string file, int field,
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
-				" tipo incorrecto del campo " + data + " de " + param
-						+ "del elemento " + s + ". Se espera int");
+				"Tipo incorrecto del campo '" + data + "' de '" + param
+						+ "' del elemento " + s + ". Se espera 'int'.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -381,7 +381,7 @@ float get_node(string data, string param, string file, int field,
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 				return defaultData;
 			}
-			log.escribirLog(ERROR, "El valor de " + data + " no puede ser negativo");
+			log.escribirLog(ERROR, "El valor de '" + data + "' no puede ser negativo.");
 			log.cerrarLog();
 			return defaultData;
 		}
@@ -403,8 +403,8 @@ bool get_node(string data, string param, string file, bool defaultData) {
 			return defaultData;
 		}
 		string errorLectura;
-		errorLectura = "no se pudo leer el archivo "
-				+ reader.getFormattedErrorMessages();
+		errorLectura = "No se pudo leer el archivo "
+				+ reader.getFormattedErrorMessages() + ".";
 		log.escribirLog(ERROR, errorLectura);
 		log.cerrarLog();
 		return defaultData;
@@ -414,7 +414,7 @@ bool get_node(string data, string param, string file, bool defaultData) {
 			std::cout << "Error al abrir archivo de log" << std::endl;
 			return defaultData;
 		}
-		log.escribirLog(ERROR, "campo " + data + " de " + param + " vacio");
+		log.escribirLog(ERROR, "Campo '" + data + "' de '" + param + "' vacio.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -424,8 +424,8 @@ bool get_node(string data, string param, string file, bool defaultData) {
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
-				" tipo incorrecto del campo " + data + " de " + param
-						+ ". Se espera Bool");
+				"Tipo incorrecto del campo '" + data + "' de '" + param
+						+ "'. Se espera 'Bool'.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -453,8 +453,8 @@ bool get_node(string data, string param, string file, int field,
 			return defaultData;
 		}
 		string errorLectura;
-		errorLectura = "no se pudo leer el archivo "
-				+ reader.getFormattedErrorMessages();
+		errorLectura = "No se pudo leer el archivo "
+				+ reader.getFormattedErrorMessages() + ".";
 		log.escribirLog(ERROR, errorLectura);
 		log.cerrarLog();
 		return defaultData;
@@ -465,7 +465,7 @@ bool get_node(string data, string param, string file, int field,
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
-				"campo " + data + " de " + param + " vacio, del elemento " + s);
+				"Campo '" + data + "' de '" + param + "' vacio, del elemento " + s + ".");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -475,8 +475,8 @@ bool get_node(string data, string param, string file, int field,
 			return defaultData;
 		}
 		log.escribirLog(ERROR,
-				" tipo incorrecto del campo " + data + " de " + param
-						+ "del elemento " + s + ". Se espera int");
+				"Tipo incorrecto del campo '" + data + "' de '" + param
+						+ "' del elemento " + s + ". Se espera 'int'.");
 		log.cerrarLog();
 		return defaultData;
 	}
@@ -494,8 +494,8 @@ int get_size(string param, string file) {
 			return -1;
 		}
 		string errorLectura;
-		errorLectura = "no se pudo leer el archivo "
-				+ reader.getFormattedErrorMessages();
+		errorLectura = "No se pudo leer el archivo "
+				+ reader.getFormattedErrorMessages() + ".";
 		log.escribirLog(ERROR, errorLectura);
 		log.cerrarLog();
 		return -1;
