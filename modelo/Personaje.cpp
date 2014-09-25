@@ -62,29 +62,29 @@ bool Personaje::cargarImagen(std::string path){
 
 	//Set sprite clips
 	spriteRects[PARADOIZQUIERDA].x =   7;
-	spriteRects[PARADOIZQUIERDA].y =   6;
+	spriteRects[PARADOIZQUIERDA].y =   9;
 	spriteRects[PARADOIZQUIERDA].w =  23;
-	spriteRects[PARADOIZQUIERDA].h = 29;
+	spriteRects[PARADOIZQUIERDA].h = 26;
 
 	spriteRects[MOVIENDOIZQUIERDA1].x =  37;
-	spriteRects[MOVIENDOIZQUIERDA1].y =   6;
+	spriteRects[MOVIENDOIZQUIERDA1].y =   9;
 	spriteRects[MOVIENDOIZQUIERDA1].w =  23;
-	spriteRects[MOVIENDOIZQUIERDA1].h = 29;
+	spriteRects[MOVIENDOIZQUIERDA1].h = 26;
 
 	spriteRects[MOVIENDOIZQUIERDA2].x = 62;
-	spriteRects[MOVIENDOIZQUIERDA2].y =   6;
+	spriteRects[MOVIENDOIZQUIERDA2].y =   9;
 	spriteRects[MOVIENDOIZQUIERDA2].w =  23;
-	spriteRects[MOVIENDOIZQUIERDA2].h = 29;
+	spriteRects[MOVIENDOIZQUIERDA2].h = 26;
 
 	spriteRects[MOVIENDOIZQUIERDA3].x = 92;
-	spriteRects[MOVIENDOIZQUIERDA3].y =   6;
+	spriteRects[MOVIENDOIZQUIERDA3].y =   9;
 	spriteRects[MOVIENDOIZQUIERDA3].w =  23;
-	spriteRects[MOVIENDOIZQUIERDA3].h = 29;
+	spriteRects[MOVIENDOIZQUIERDA3].h = 26;
 
 	spriteRects[MOVIENDOIZQUIERDA4].x = 62;
-	spriteRects[MOVIENDOIZQUIERDA4].y =   6;
+	spriteRects[MOVIENDOIZQUIERDA4].y =   9;
 	spriteRects[MOVIENDOIZQUIERDA4].w =  23;
-	spriteRects[MOVIENDOIZQUIERDA4].h = 29;
+	spriteRects[MOVIENDOIZQUIERDA4].h = 26;
 
 	spriteRects[SALTANDOIZQUIERDA1].x = 152;
 	spriteRects[SALTANDOIZQUIERDA1].y =   6;

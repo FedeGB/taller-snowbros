@@ -139,6 +139,7 @@ void pjInit(Window ** w, b2World ** worldB2D,  HandlerDeEventos * wHandlerEvento
 	myFixtureDef.shape = &polygon; //defino que es un poligono
 	myFixtureDef.density =  get_node("masa", "personaje", data, 20.0f); //le doy masa
 	myFixtureDef.restitution = 0.0f;
+	myFixtureDef.friction=0.0;
 	b2Fixture * bodyFixture = pjB2D->CreateFixture(&myFixtureDef); //le asigno la forma
 	bodyFixture->SetUserData( (void*)0 );
 
