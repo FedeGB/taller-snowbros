@@ -166,12 +166,13 @@ void pjInit(Window ** w, b2World ** worldB2D,  HandlerDeEventos * wHandlerEvento
 		//pies
 			v.x=0;
 			v.y=halfHeight*0.8;
-				polygon.SetAsBox(halfWidth*0.2, halfHeight*0.095,v,0); //le doy dimensiones
+			polygon.SetAsBox(halfWidth*0.4, halfHeight*0.1, v, 0);
 				myFixtureDef.shape = &polygon; //defino que es un poligono
-				bodyFixture->SetUserData( (void*)0 );
+				myFixtureDef.density = 1.0f; //le doy masa
 				myFixtureDef.restitution = 0.0f;
-				myFixtureDef.friction=1.0f;
+				myFixtureDef.friction=2.0f;
 				pjB2D->CreateFixture(&myFixtureDef);
+
     // Agrego el sensor para saltos
     polygon.SetAsBox(halfWidth/1.2, 0.15f, b2Vec2(0.0f,1.5f), 0);
 	myFixtureDef.shape = &polygon; //defino que es un poligono
