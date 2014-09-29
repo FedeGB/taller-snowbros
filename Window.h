@@ -4,24 +4,18 @@
 #include <SDL2/SDL.h>
 #include <string>
 
-//#include "control/HandlerDeEventos.h"
-//#include "vista/Escenario.h"
 #include "control/Observador.h"
-//#include "modelo/Personaje.h"
-//#include "modelo/formas/RectanguloDibujable.h"
-//#include "modelo/formas/PoligonoDibujable.h"
-//#include "modelo/formas/CirculoDibujable.h"
-//#include "modelo/interfaces/IDibujable.h"
-//#include "vista/Fondo.h"
 #include "utiles/Logger.h"
 #include "vista/Fondo.h"
+#include "vista/Camera.h"
 
 class Window {
 
 private:
-	SDL_Window* window;
-	SDL_Renderer* wRenderer;
-	Fondo* background;
+	SDL_Window * window;
+	SDL_Renderer * wRenderer;
+	Fondo * background;
+	Camera * camera;
 
 	//Escenario* wEscenario;
 	//HandlerDeEventos wHandlerEventos;
@@ -56,6 +50,7 @@ public:
 	//void handleEvent(SDL_Event&);
 	// Update ventana
 	bool updateWindow(b2World * worldB2D);
+	void setCamera (Camera * c);
 	// Destructor de la clase
 	virtual ~Window();
 };

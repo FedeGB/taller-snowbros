@@ -15,6 +15,7 @@ Window::Window() {
 	SCREEN_HEIGHT = 640;
 	wRatio = hRatio = 1;
 	background = NULL;
+	camera = NULL;
 }
 
 bool Window::init(int width, int height, float wRatio, float hRatio, std::string BGpath)
@@ -56,37 +57,18 @@ bool Window::init(int width, int height, float wRatio, float hRatio, std::string
 bool Window::updateWindow(b2World * worldB2D) {
 	Logger& log = * Logger::Instancia();
 	if(SDL_SetRenderDrawColor(wRenderer, 0x00, 0x00, 0x00, 0x00) != 0) {
-		if (!log.abrirLog(WINDOWLOG)) {
-			std::cout << "Error al abrir archivo de log " << WINDOWLOG << std::endl;
-			return false;
-		}
-		log.escribirLog(ERROR, "Error al settear color de dibujo de renderer 'RenderDrawColor'");
-		log.cerrarLog();
-		error = true;
-		return !error;
+		log.log(WINDOWLOG,ERROR,"Error al settear color de dibujo de renderer: 'RenderDrawColor'");
+		return false;
 	}
+
 	if(SDL_RenderClear(wRenderer) != 0 ) {
-		if (!log.abrirLog(WINDOWLOG)) {
-			std::cout << "Error al abrir archivo de log " << WINDOWLOG << std::endl;
-			return false;
-		}
-		log.escribirLog(ERROR, "Error al querer limpiar el Render 'RenderClear'");
-		log.cerrarLog();
-		error = true;
-		return !error;
+		log.log(WINDOWLOG,ERROR,"Error al querer limpiar el render: 'RenderClear'");
+		return false;
 	}
 
-	b2Body * objeto = worldB2D->GetBodyList();
-	int numObjetos = worldB2D->GetBodyCount();
+	//background->render();
 
-	background->render();
-
-	for( int i = 0; i < numObjetos; i++) {
-		((IDibujable*)objeto->GetUserData())->setAngulo(objeto->GetAngle());
-		((IDibujable*)objeto->GetUserData())->setPosicion(objeto->GetPosition());;
-		((IDibujable*)objeto->GetUserData())->render();
-		objeto = objeto->GetNext();
-	}
+	camera->renderVisibleObjects();
 
 	SDL_RenderPresent(wRenderer);
 
@@ -191,6 +173,10 @@ SDL_Renderer* Window::crearRenderer(SDL_Window* w)
 
 void Window::insertarFigura(IDibujable* figura){
 	figura->setRenderer(wRenderer);
+}
+
+void Window::setCamera (Camera * c){
+	camera = c;
 }
 
 Window::~Window(){

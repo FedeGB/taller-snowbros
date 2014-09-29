@@ -110,3 +110,17 @@ bool Logger::crearLogs()
 
 	return true;
 }
+
+void Logger::log(std::string logFile, std::string tipo, std::string detalle){
+
+	if (!abrirLog(logFile)) {
+		std::cout << "Error al abrir archivo de log " << logFile << ", creando... " << std::endl;
+		crearLogs();
+		if (!abrirLog(MAINLOG))	{
+			std::cout << "No se pudo crear el archivo de log." << std::endl;
+			return;
+		}
+	}
+	escribirLog(tipo, detalle);
+	cerrarLog();
+}

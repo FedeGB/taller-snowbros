@@ -20,6 +20,8 @@ public:
 	virtual void eventoIzquierda() = 0;
 	virtual void eventoSoltoIzquierda() = 0;
 	virtual void eventoRESTART() = 0;
+	virtual void eventoZoomIn() = 0;
+	virtual void eventoZoomOut() = 0;
 };
 
 

@@ -11,6 +11,7 @@
 #include <Box2D/Box2D.h>
 
 #include "utiles/Logger.h"
+#include "utiles/tipos.h"
 #include "parser/parser.h"
 
 #include "modelo/formas/CirculoDibujable.h"

@@ -17,16 +17,16 @@ class ContactListener : public b2ContactListener
 		//check if fixture A was the foot sensor
 		void* fixtureAUserData = contact->GetFixtureA()->GetUserData();
 		void* fixtureBUserData = contact->GetFixtureB()->GetUserData();
-		// TODO: sacar estos '2' y '3' y cambiarlos por constantes.
+		// TODO: sacar estos '2', '3' y '4's y cambiarlos por constantes.
 		if ( *((int*)(&fixtureAUserData)) == 3 ){
-			( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->modifyFootContacts(1);
+			if ( (*((int*)(&fixtureBUserData)) != 4) ) ( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->modifyFootContacts(1);
 			if ( (*((int*)(&fixtureBUserData)) == 2) ) // Check if fixture B is a static object and angle <= 89
 					//contact->GetFixtureB()->GetBody()->GetAngle() <= 89 * DEGTORAD)
 				( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->setNewAngle(contact->GetFixtureB()->GetBody()->GetAngle());
 		}
 		//check if fixture B was the foot sensor
 		if ( *((int*)(&fixtureBUserData)) == 3 ){
-		  ( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->modifyFootContacts(1);
+			if ( (*((int*)(&fixtureAUserData)) != 4) ) ( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->modifyFootContacts(1);
 		  if ( (*((int*)(&fixtureAUserData)) == 2) )  // Check if fixture A is a static object and angle <= 89
 		  					//contact->GetFixtureA()->GetBody()->GetAngle() <= 89 * DEGTORAD)
 			  ( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->setNewAngle(contact->GetFixtureA()->GetBody()->GetAngle());
@@ -35,15 +35,16 @@ class ContactListener : public b2ContactListener
 
       void EndContact(b2Contact* contact) {
           //check if fixture A was the foot sensor
-          void* fixtureUserData = contact->GetFixtureA()->GetUserData();
-          if ( *((int*)(&fixtureUserData)) == 3 ){
-          	  ( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->modifyFootContacts(-1);
+    	  void* fixtureAUserData = contact->GetFixtureA()->GetUserData();
+    	  void* fixtureBUserData = contact->GetFixtureB()->GetUserData();
+          if ( *((int*)(&fixtureAUserData)) == 3 ){
+        	  if ( (*((int*)(&fixtureBUserData)) != 4) ) ( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->modifyFootContacts(-1);
           	  ( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->setNewAngle(0);
           }
           //check if fixture B was the foot sensor
-          fixtureUserData = contact->GetFixtureB()->GetUserData();
-          if ( *((int*)(&fixtureUserData)) == 3 ){
-        	  ( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->modifyFootContacts(-1);
+          fixtureAUserData = contact->GetFixtureB()->GetUserData();
+          if ( *((int*)(&fixtureAUserData)) == 3 ){
+        	  if ( (*((int*)(&fixtureAUserData)) != 4) ) ( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->modifyFootContacts(-1);
           	  ( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->setNewAngle(0);
           }
       }

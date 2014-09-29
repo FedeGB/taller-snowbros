@@ -6,7 +6,7 @@
 #include "../../utiles/Logger.h"
 #include <math.h>
 #include "../interfaces/IDibujable.h"
-#include "../../Window.h"
+#include "../../vista/Camera.h"
 
 class CirculoDibujable: public IDibujable {
 private:
@@ -15,7 +15,7 @@ private:
 
 	int arcoMarca() {
 
-		float32 ratio = ( Window::wRatio < Window::hRatio ? Window::wRatio : Window::hRatio );
+		float32 ratio = ( Camera::WORLDTOWINDOWSCALE < Camera::WORLDTOWINDOWSCALE ? Camera::WORLDTOWINDOWSCALE : Camera::WORLDTOWINDOWSCALE );
 
 		Sint16 radioArco  = (Sint16)(radio*0.4 * ratio);
 		Uint8 newRed = 255 - color.r;
@@ -27,8 +27,8 @@ private:
 		}
 		int32 anguloEnd = anguloInit + 70;
 
-		Sint16 posX = posicion.x * Window::wRatio;
-		Sint16 posY = posicion.y * Window::hRatio;
+		Sint16 posX = posicion.x * Camera::WORLDTOWINDOWSCALE;
+		Sint16 posY = posicion.y * Camera::WORLDTOWINDOWSCALE;
 
 		return arcRGBA(dRenderer, posX, posY, radioArco, anguloInit, anguloEnd, newRed, newGreen, newBlue, color.a);
 	}
@@ -43,10 +43,10 @@ public:
 		// Se redefine distinto, usa el renderer directo
 		int status;
 
-		Sint16 posX = posicion.x * Window::wRatio;
-		Sint16 posY = posicion.y * Window::hRatio;
-		Sint16 radX = radio * Window::wRatio;
-		Sint16 radY = radio * Window::hRatio;
+		Sint16 posX = posicion.x * Camera::WORLDTOWINDOWSCALE;
+		Sint16 posY = posicion.y * Camera::WORLDTOWINDOWSCALE;
+		Sint16 radX = radio * Camera::WORLDTOWINDOWSCALE;
+		Sint16 radY = radio * Camera::WORLDTOWINDOWSCALE;
 
 
 		status = filledEllipseRGBA(dRenderer, posX, posY, radX, radY, color.r, color.g, color.b, color.a);

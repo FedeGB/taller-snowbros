@@ -12,7 +12,7 @@
 #include <SDL2/SDL2_gfxPrimitives.h>
 #include "../interfaces/IDibujable.h"
 //#include "../../control/interfaces/INotificable.h"
-#include "../../Window.h"
+#include "../../vista/Camera.h"
 
 class RectanguloDibujable: public IDibujable {
 
@@ -39,16 +39,16 @@ public:
 		float yaux2 = modulo * sin(thita2);
 
 		Sint16 * vx = new Sint16[4];
-		vx[0] = (posicion.x - xaux) * Window::wRatio;
-		vx[1] = (posicion.x + xaux2) * Window::wRatio;
-		vx[2] = (posicion.x + xaux) * Window::wRatio;
-		vx[3] = (posicion.x - xaux2) * Window::wRatio;
+		vx[0] = (posicion.x - xaux) * Camera::WORLDTOWINDOWSCALE;
+		vx[1] = (posicion.x + xaux2) * Camera::WORLDTOWINDOWSCALE;
+		vx[2] = (posicion.x + xaux) * Camera::WORLDTOWINDOWSCALE;
+		vx[3] = (posicion.x - xaux2) * Camera::WORLDTOWINDOWSCALE;
 
 		Sint16 * vy = new Sint16[4];
-		vy[0] = (posicion.y - yaux) * Window::hRatio;
-		vy[1] = (posicion.y - yaux2) * Window::hRatio;
-		vy[2] = (posicion.y + yaux) * Window::hRatio;
-		vy[3] = (posicion.y + yaux2) * Window::hRatio;
+		vy[0] = (posicion.y - yaux) * Camera::WORLDTOWINDOWSCALE;
+		vy[1] = (posicion.y - yaux2) * Camera::WORLDTOWINDOWSCALE;
+		vy[2] = (posicion.y + yaux) * Camera::WORLDTOWINDOWSCALE;
+		vy[3] = (posicion.y + yaux2) * Camera::WORLDTOWINDOWSCALE;
 
 		status = filledPolygonRGBA(dRenderer, vx, vy, 4, color.r, color.g, color.b, color.a);
 		delete[] vx ; delete[] vy ;
@@ -68,6 +68,14 @@ public:
 		halfHeight = height / 2;
 		halfWidth = width / 2;
 		return true;
+	}
+
+	float32 getHeight(){
+		return halfHeight * 2;
+	}
+
+	float32 getWidth(){
+		return halfWidth * 2;
 	}
 
 };

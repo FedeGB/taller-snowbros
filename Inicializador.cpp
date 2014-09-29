@@ -13,38 +13,13 @@ bool loadInitialValues(std::string configFile, std::string& sConfig) {
 	fstream fConfig;
 	fConfig.open(configFile.c_str(), ios_base::in);
 	if (!fConfig.is_open()) {
-		if (!log.abrirLog(MAINLOG)) {
-			log.crearLogs();
-			std::cout << "Error al abrir archivo de log " << MAINLOG
-					<< ", creando..." << std::endl;
-			if (!log.abrirLog(MAINLOG)) {
-				std::cout << "No se pudo crear el archivo de log.";
-				return false;
-			}
-		}
 
-		log.escribirLog(WARNING,
-				"No se pudo encontrar o abrir el archivo de configuracion. Cargando mapa por defecto.");
-		log.cerrarLog();
-
+		log.log(MAINLOG,WARNING,"No se pudo encontrar o abrir el archivo de configuracion. Cargando mapa por defecto.");
 		fConfig.open("defaultConfig.json", ios_base::in);
 		if (!fConfig.is_open()) {
-			if (!log.abrirLog(MAINLOG)) {
-				log.crearLogs();
-				std::cout << "Error al abrir archivo de log " << MAINLOG
-						<< ", creando..." << std::endl;
-				if (!log.abrirLog(MAINLOG)) {
-					std::cout << "No se pudo crear el archivo de log.";
-					return false;
-				}
-			}
-
-			log.escribirLog(ERROR,
-					"No se pudo encontrar o abrir el archivo de configuracion por defecto.");
-			log.cerrarLog();
+			log.log(MAINLOG,ERROR,"No se pudo encontrar o abrir el archivo de configuracion por defecto.");
 			return false;
 		}
-
 	}
 	std::string newStr((std::istreambuf_iterator<char>(fConfig)),
 			std::istreambuf_iterator<char>());
@@ -52,21 +27,10 @@ bool loadInitialValues(std::string configFile, std::string& sConfig) {
 	fConfig.close();
 
 	if (!parsingOk(sConfig)) {
+		log.log(MAINLOG,WARNING,"Hubo un problema al parsear el archivo de configuracion provisto. Cargando mapa por defecto.");
 		fConfig.open("defaultConfig.json", ios_base::in);
 		if (!fConfig.is_open()) {
-			if (!log.abrirLog(MAINLOG)) {
-				log.crearLogs();
-				std::cout << "Error al abrir archivo de log " << MAINLOG
-						<< ", creando..." << std::endl;
-				if (!log.abrirLog(MAINLOG)) {
-					std::cout << "No se pudo crear el archivo de log.";
-					return false;
-				}
-			}
-
-			log.escribirLog("ERROR",
-					"No se pudo encontrar o abrir el archivo default.json");
-			log.cerrarLog();
+			log.log(MAINLOG,ERROR,"No se pudo encontrar o abrir el archivo de configuracion por defecto.");
 			return false;
 		}
 		std::string newStr((std::istreambuf_iterator<char>(fConfig)),
@@ -80,9 +44,9 @@ bool loadInitialValues(std::string configFile, std::string& sConfig) {
 
 bool windowInit(Window ** w, int widthScreen, int heightScreen, float wRatio,
 		float hRatio, std::string path_fondo) {
+
 	*w = new Window();
-	bool statusOK = (*w)->init(widthScreen, heightScreen, wRatio, hRatio,
-			path_fondo);
+	bool statusOK = (*w)->init(widthScreen, heightScreen, wRatio, hRatio, path_fondo);
 	return statusOK;
 }
 
@@ -90,14 +54,13 @@ void worldInit(b2World ** worldB2D, ContactListener * contactListener) {
 
 	b2Vec2 gravedad(0, 35);
 	*worldB2D = new b2World(gravedad);
-
 	(*worldB2D)->SetContactListener(contactListener);
 
 	return;
 }
 
-void pjInit(Window ** w, b2World ** worldB2D,  HandlerDeEventos * wHandlerEventos, std::string data)
-{
+Personaje * pjInit(Window ** w, b2World ** worldB2D,  HandlerDeEventos * wHandlerEventos, std::string data) {
+
 	Logger& log = *Logger::Instancia();
 
 	b2BodyDef b2dObjDef;
@@ -114,12 +77,7 @@ void pjInit(Window ** w, b2World ** worldB2D,  HandlerDeEventos * wHandlerEvento
 
 	// si la posicion del persona esta fuera del escenario, entonces lo posicionamos en el medio
 	if( (pj_x > anchoMaximo) | (pj_y > altoMaximo) ){
-		if (!log.abrirLog(WINDOWLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
-			return;
-		}
-		log.escribirLog(WARNING, "No se puede inicializar al personaje fuera del escenario. Seteado por default al medio del escenario.");
-		log.cerrarLog();
+		log.log(WINDOWLOG,WARNING,"No se puede inicializar al personaje fuera del escenario. Seteado por default al medio del escenario.");
 		pj_x = ( anchoMaximo * 0.5 ); pj_y = ( altoMaximo * 0.5 );
 	}
 
@@ -133,9 +91,9 @@ void pjInit(Window ** w, b2World ** worldB2D,  HandlerDeEventos * wHandlerEvento
 	b2Body *pjB2D = (*worldB2D)->CreateBody(&b2dObjDef);
 
 	//le doy forma
-	float32 halfHeight = get_node("alto", "personaje", data, 1.4f);
-	float32 halfWidth = get_node("ancho", "personaje", data, 1.2f);
-	polygon.SetAsBox(halfWidth/1.1, halfHeight/1.1); //le doy dimensiones
+	float32 halfHeight = get_node("alto", "personaje", data, 1.4f) / 2;
+	float32 halfWidth = get_node("ancho", "personaje", data, 1.2f) / 2;
+	polygon.SetAsBox(halfWidth, halfHeight); //le doy dimensiones
 	myFixtureDef.shape = &polygon; //defino que es un poligono
 	myFixtureDef.density =  get_node("masa", "personaje", data, 20.0f); //le doy masa
 	myFixtureDef.restitution = 0.0f;
@@ -144,7 +102,7 @@ void pjInit(Window ** w, b2World ** worldB2D,  HandlerDeEventos * wHandlerEvento
 	bodyFixture->SetUserData( (void*)0 );
 
     // Agrego el sensor para saltos
-    polygon.SetAsBox(halfWidth/1.2, 0.15f, b2Vec2(0.0f,1.5f), 0);
+    polygon.SetAsBox(0.8 * halfWidth, 0.3f, b2Vec2(0.0f,halfHeight), 0);
 	myFixtureDef.shape = &polygon; //defino que es un poligono
     myFixtureDef.isSensor = true;
 	myFixtureDef.density = 1.0f; //le doy masa
@@ -154,16 +112,13 @@ void pjInit(Window ** w, b2World ** worldB2D,  HandlerDeEventos * wHandlerEvento
 
 	Personaje * personaje = new Personaje();
 	if(!personaje) {
-		if (!log.abrirLog(WINDOWLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
-			return;
-		}
-		log.escribirLog(ERROR, "No se pudo asignar memoria para al personaje.");
-		log.cerrarLog();
-		return;
+
+		log.log(WINDOWLOG,ERROR, "No se pudo asignar memoria para el personaje.");
+		return NULL;
 	}
 
 	personaje->setDimensiones(halfHeight * 2, halfWidth * 2);
+	personaje->setPosicion(pjB2D->GetPosition());
 
 	pjB2D->SetUserData(personaje);
 	personaje->setB2DBody(pjB2D);
@@ -173,15 +128,12 @@ void pjInit(Window ** w, b2World ** worldB2D,  HandlerDeEventos * wHandlerEvento
 
 	Observador<Personaje>* observadorPersonaje = new Observador<Personaje>( personaje );
 	if(!observadorPersonaje) {
-		if (!log.abrirLog(WINDOWLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
-			return;
-		}
-		log.escribirLog(ERROR, "No se pudo asignar memoria para el observador de personaje");
-		log.cerrarLog();
-		return;
+		log.log(WINDOWLOG,ERROR,"No se pudo asignar memoria para el observador de personaje.");
+		return NULL;
 	}
 	wHandlerEventos->agregarObservador(observadorPersonaje);
+
+	return personaje;
 }
 
 int num_lados(std::string data) {
@@ -195,6 +147,58 @@ int num_lados(std::string data) {
 		return 5;
 	else
 		return 0;
+}
+
+Camera * cameraInit(b2World ** worldB2D, HandlerDeEventos * wHandlerEventos, b2Vec2 position, float32 windowWidth, float32 windowHeight){
+
+	Logger& log = *Logger::Instancia();
+
+	b2BodyDef b2dObjDef;
+	b2FixtureDef myFixtureDef;
+	b2PolygonShape polygon;
+
+	// Parametros iniciales.
+	b2dObjDef.type = b2_dynamicBody;
+	b2dObjDef.gravityScale = 0;
+	float32 cameraX = position.x; //+ (windowWidth / 2) * WINDOWTOWORLDSCALE;
+	float32 cameraY = position.y; //+ (windowHeight / 2) * WINDOWTOWORLDSCALE;
+
+	b2dObjDef.position.Set(cameraX, cameraY);
+	b2dObjDef.angle = 0;
+	b2dObjDef.fixedRotation = true;
+
+	//lo vinculo al mundo
+	b2Body *cameraB2D = (*worldB2D)->CreateBody(&b2dObjDef);
+
+	//le doy forma
+	float32 halfWidth = (windowWidth / 2) * 0.05f;
+	float32 halfHeight = (windowHeight / 2) * 0.05f;
+	polygon.SetAsBox(halfWidth, halfHeight); //le doy dimensiones
+	myFixtureDef.shape = &polygon; //defino que es un poligono
+    myFixtureDef.isSensor = true;
+
+	b2Fixture * bodyFixture = cameraB2D->CreateFixture(&myFixtureDef); //le asigno la forma
+	bodyFixture->SetUserData( (void*)4 );
+
+
+	Camera * camera = new Camera(windowWidth, windowHeight, 0.05f);
+	if(!camera) {
+		log.log(WINDOWLOG,ERROR, "No se pudo asignar memoria para la camara.");
+		return NULL;
+	}
+
+	cameraB2D->SetUserData(camera);
+	camera->setB2DBody(cameraB2D);
+
+	Observador<Camera>* observadorCamera = new Observador<Camera>( camera );
+	if(!observadorCamera) {
+		log.log(WINDOWLOG,ERROR,"No se pudo asignar memoria para el observador de camara.");
+		return NULL;
+	}
+	wHandlerEventos->agregarObservador(observadorCamera);
+
+
+	return camera;
 }
 
 b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
@@ -225,13 +229,9 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 	int lados = num_lados(get_node("tipo", "objetos", data, num, "rect"));
 	//nLados=lados;
 	switch (lados) { //dependiendo del numero de lados
+
 	case 0: //0 es error
-		if (!log.abrirLog(SHAPESLOG)) {
-			std::cout << "Error al abrir archivo de log" << std::endl;
-			return NULL;
-		}
-		log.escribirLog(ERROR, "El tipo de forma '" + get_node("tipo", "objetos", data, num,"rect") + "' no existe.");
-		log.cerrarLog();
+		log.log(SHAPESLOG,ERROR,"El tipo de forma '" + get_node("tipo", "objetos", data, num,"rect") + "' no existe.");
 		(*wB2D)->DestroyBody(_shape);
 		return NULL;
 
@@ -333,8 +333,98 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 	return _shape;
 }
 
+void checkBoundsAndOverlap(b2World ** worldB2D, float32 widthWorld, float32 heightWorld){
+
+	Logger& log = *Logger::Instancia();
+
+	bool overlap;
+	b2Body *b = (*worldB2D)->GetBodyList();
+	while (b){
+		if(b->GetPosition().x > widthWorld || b->GetPosition().y > heightWorld
+				|| b->GetPosition().x < 0.0 || b->GetPosition().y < 0.0){
+
+			ostringstream message;   // stream used for the conversion
+			message << "El objeto en la posicion " << b->GetPosition().x << "," <<
+					b->GetPosition().y << " se encuentra fuera del mapa. Borrado.";
+
+			log.log(WINDOWLOG,WARNING,message.str());
+
+			(*worldB2D)->DestroyBody(b);
+			b = (*worldB2D)->GetBodyList();
+			continue;
+		}
+
+		bool skip = false;
+		for (b2Body *b2 = b->GetNext(); b2; b2 = b2->GetNext()) {
+			overlap = b2TestOverlap(b->GetFixtureList()->GetShape(), 0,
+					b2->GetFixtureList()->GetShape(), 0,
+					b->GetFixtureList()->GetBody()->GetTransform(),
+					b2->GetFixtureList()->GetBody()->GetTransform());
+			if (overlap) {
+
+				ostringstream message;
+				message << "Objeto en la posicion " << b->GetPosition().x << "," <<
+						b->GetPosition().y << " borrado por solapamiento.";
+
+				log.log(WINDOWLOG,WARNING,message.str());
+
+				(*worldB2D)->DestroyBody(b);
+				b = (*worldB2D)->GetBodyList();
+				skip = true;
+				break;
+			}
+		}
+		if (!skip) b = b->GetNext();
+	}
+}
+
+void addWorldBorders(b2World ** worldB2D, float32 widthWorld, float32 heightWorld){
+
+	Logger& log = *Logger::Instancia();
+
+	b2BodyDef b2dObjDef;
+	b2FixtureDef myFixtureDef;
+	b2PolygonShape polygon;
+
+
+	b2dObjDef.type = b2_staticBody;
+
+	b2dObjDef.position.Set(widthWorld / 2, -0.5f);
+	b2dObjDef.angle = 0;
+	b2dObjDef.fixedRotation = true;
+
+	//lo vinculo al mundo
+	b2Body * upperBorderB2D = (*worldB2D)->CreateBody(&b2dObjDef);
+
+	//le doy forma
+	polygon.SetAsBox(widthWorld / 2, 0.5f, b2Vec2(0.0f,0.0f), 0);
+	myFixtureDef.shape = &polygon; //defino que es un poligono
+	myFixtureDef.isSensor = true;
+	b2Fixture* fixture = upperBorderB2D->CreateFixture(&myFixtureDef);
+	fixture->SetUserData( (void*)7 );
+
+	b2dObjDef.position.Set(widthWorld / 2, heightWorld + 0.5f);
+	b2Body * bottomBorderB2D = (*worldB2D)->CreateBody(&b2dObjDef);
+	fixture = bottomBorderB2D->CreateFixture(&myFixtureDef);
+	fixture->SetUserData( (void*)8 );
+
+	b2dObjDef.position.Set(-0.5f, heightWorld / 2);
+	b2Body * leftBorderB2D = (*worldB2D)->CreateBody(&b2dObjDef);
+	polygon.SetAsBox(0.5f, heightWorld / 2, b2Vec2(0.0f,0.0f), 0);
+	myFixtureDef.shape = &polygon;
+	fixture = leftBorderB2D->CreateFixture(&myFixtureDef);
+	fixture->SetUserData( (void*)5 );
+
+	b2dObjDef.position.Set(widthWorld + 0.5f, heightWorld / 2);
+	b2Body * rightBorderB2D = (*worldB2D)->CreateBody(&b2dObjDef);
+	fixture = rightBorderB2D->CreateFixture(&myFixtureDef);
+	fixture->SetUserData( (void*)6 );
+
+}
+
 bool Inicializador::init(std::string configFile, Window ** w, b2World ** worldB2D,
 		ContactListener * contactListener, HandlerDeEventos * wHandlerEventos) {
+
 	Logger& log = *Logger::Instancia();
 	std::string sConfig;
 	bool statusOK = true;
@@ -358,7 +448,7 @@ bool Inicializador::init(std::string configFile, Window ** w, b2World ** worldB2
 
 	worldInit(worldB2D, contactListener);
 
-	pjInit(w, worldB2D, wHandlerEventos, sConfig);
+	Personaje * pj = pjInit(w, worldB2D, wHandlerEventos, sConfig);
 
 	if (!statusOK) {
 		return -1;
@@ -368,108 +458,18 @@ bool Inicializador::init(std::string configFile, Window ** w, b2World ** worldB2
 	for (int i = 0; i < formas; i++) {
 		createObject(sConfig, w, worldB2D, i);
 	}
-	bool overlap;
-	for (b2Body *b = (*worldB2D)->GetBodyList(); b; b = b->GetNext()) {
-		if(b->GetPosition().x>widthWorld ||b->GetPosition().y>heightWorld){
-			if (!log.abrirLog(WINDOWLOG)) {
-								log.crearLogs();
-								std::cout << "Error al abrir archivo de log " << WINDOWLOG
-										<< ", creando..." << std::endl;
-								if (!log.abrirLog(WINDOWLOG)) {
-									std::cout << "No se pudo crear el archivo de log.";
-									(*worldB2D)->DestroyBody(b);
-									b = (*worldB2D)->GetBodyList();
-									break;
-								}
-							}
-			string ss = "";
-							ss += "objeto en la posicion ";
-							ostringstream convert;   // stream used for the conversion
 
-							convert << b->GetPosition().x;
-							ss+= convert.str();
-							ss += ",";
-							convert.str(""); convert.clear();
-							convert << b->GetPosition().y;
-							ss+= convert.str();
-							ss += " fuera del mapa. Borrado";
-							log.escribirLog(WARNING, ss);
-							(*worldB2D)->DestroyBody(b);
-							b = (*worldB2D)->GetBodyList();
-		}
+	checkBoundsAndOverlap(worldB2D, widthWorld, heightWorld);
 
 
-		for (b2Body *b2 = b->GetNext(); b2; b2 = b2->GetNext()) {
-			overlap = b2TestOverlap(b->GetFixtureList()->GetShape(), 0,
-					b2->GetFixtureList()->GetShape(), 0,
-					b->GetFixtureList()->GetBody()->GetTransform(),
-					b2->GetFixtureList()->GetBody()->GetTransform());
-			if (overlap) {
-				if(b->GetPosition().x>widthWorld ||b->GetPosition().y>heightWorld){
-							if (!log.abrirLog(WINDOWLOG)) {
-												log.crearLogs();
-												std::cout << "Error al abrir archivo de log " << WINDOWLOG
-														<< ", creando..." << std::endl;
-												if (!log.abrirLog(WINDOWLOG)) {
-													std::cout << "No se pudo crear el archivo de log.";
-													(*worldB2D)->DestroyBody(b);
-													b = (*worldB2D)->GetBodyList();
-													break;
-												}
-											}
-							string ss = "";
-											ss += "objeto en la posicion ";
-											ostringstream convert;   // stream used for the conversion
 
-											convert << b->GetPosition().x;
-											ss+= convert.str();
-											ss += ",";
-											convert.str(""); convert.clear();
-											convert << b->GetPosition().y;
-											ss+= convert.str();
-											ss += " fuera del mapa. Borrado";
-											log.escribirLog(WARNING, ss);
-											(*worldB2D)->DestroyBody(b);
-											b = (*worldB2D)->GetBodyList();
-						}
-				if (!log.abrirLog(WINDOWLOG)) {
-					log.crearLogs();
-					std::cout << "Error al abrir archivo de log " << WINDOWLOG
-							<< ", creando..." << std::endl;
-					if (!log.abrirLog(WINDOWLOG)) {
-						std::cout << "No se pudo crear el archivo de log.";
-						(*worldB2D)->DestroyBody(b);
-						b = (*worldB2D)->GetBodyList();
-						b2 = b->GetNext();
-						break;
-					}
-				}
-				string ss = "";
-				ss += "objeto en la posicion ";
-				ostringstream convert;   // stream used for the conversion
+	Camera * camera = cameraInit(worldB2D, wHandlerEventos, pj->getPosicion(), widthScreen, heightScreen);
 
-				convert << b->GetPosition().x;
-				ss+= convert.str();
-				ss += ",";
-				convert.str(""); convert.clear();
-				convert << b->GetPosition().y;
-				ss+= convert.str();
-				ss += " borrado por solapamiento";
-				log.escribirLog(WARNING, ss);
-				log.cerrarLog();
-				(*worldB2D)->DestroyBody(b);
-				b = (*worldB2D)->GetBodyList();
-				b2 = b->GetNext();
-			}
-		}
-	}
+	(*w)->setCamera(camera);
 
-	if (!log.abrirLog(MAINLOG)) {
-		std::cout << "Error al abrir archivo de log " << MAINLOG << std::endl;
-		return true;
-	}
-	log.escribirLog(OK, "Se ha inicializado correctamente el mundo.");
-	log.cerrarLog();
+	addWorldBorders(worldB2D, widthWorld, heightWorld);
+
+	log.log(MAINLOG,OK,"Se ha inicializado correctamente el mundo.");
 
 	return true;
 }

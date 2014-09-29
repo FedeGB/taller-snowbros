@@ -30,8 +30,9 @@ void HandlerDeEventos::manejarEventoTeclado(SDL_KeyboardEvent keyEvent)
 			else notificarObservadores(SOLTOIZQUIERDA);
 			break;
 		}
-		//case SDLK_DOWN: notificarObservadores(ABAJO); break;
 		case SDLK_r: notificarObservadores(RESTART); break;
+		case SDLK_KP_PLUS: notificarObservadores(ZOOMIN); break;
+		case SDLK_KP_MINUS: notificarObservadores(ZOOMOUT); break;
 		default: break;
 	}
 }

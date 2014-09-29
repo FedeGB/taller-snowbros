@@ -20,9 +20,7 @@
 const float32 DEGTORAD = 0.0174532925199432957f;
 const float32 RADTODEG = 57.295779513082320876f;
 
-
 typedef std::vector<IObservador*> ListaObservadores;
-//typedef std::vector<IDibujable*> ListaDibujables;
 
 class Tamano {
 public:
@@ -65,7 +63,9 @@ enum TECLAS
 	SOLTOABAJO,
 	SOLTOIZQUIERDA,
 	SOLTODERECHA,
-	RESTART, // RESTART = tecla r
+	RESTART,
+	ZOOMIN,
+	ZOOMOUT,
 };
 
 #endif /* TIPOS_H_ */

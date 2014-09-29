@@ -5,7 +5,7 @@
 #include <SDL2/SDL2_gfxPrimitives.h>
 #include "../../utiles/Logger.h"
 #include "../interfaces/IDibujable.h"
-#include "../../Window.h"
+#include "../../vista/Camera.h"
 
 class PoligonoRegularDibujable: public IDibujable {
 
@@ -28,8 +28,8 @@ public:
 
 		for (int i = 0; i < nVertices; i++) {
 			float thita = (2 * i * PI / nVertices) - (angulo);
-			vx[i] = ( posicion.x + escala * cos(thita) ) * Window::wRatio;
-			vy[i] = ( posicion.y - escala * sin(thita) ) * Window::hRatio;
+			vx[i] = ( posicion.x + escala * cos(thita) ) * Camera::WORLDTOWINDOWSCALE;
+			vy[i] = ( posicion.y - escala * sin(thita) ) * Camera::WORLDTOWINDOWSCALE;
 		}
 
 

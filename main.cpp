@@ -23,29 +23,17 @@ int main(int argc, char *argv[]) {
 
 	Logger& log = *Logger::Instancia();
 
-	if (!log.abrirLog(MAINLOG)) std::cout << "Error al abrir archivo de log " << MAINLOG << std::endl;
-	else {
-		log.escribirLog(OK, "Iniciando SnowBros...");
-		log.cerrarLog();
-	}
+	log.log(MAINLOG,OK,"Iniciando SnowBros...");
 
 	if (argc < 2) {
-		if (!log.abrirLog(MAINLOG)) std::cout << "Error al abrir archivo de log " << MAINLOG << std::endl;
-			else {
-				log.escribirLog(ERROR, "No se proporciono archivo de configuracion. Cargando mapa por defecto.");
-				log.cerrarLog();
-				configFile = "defaultConfig.json";
-			}
+		log.log(MAINLOG,ERROR,"No se proporciono archivo de configuracion. Cargando mapa por defecto.");
+		configFile = "defaultConfig.json";
 	} else configFile = argv[1];
 
 	if (inicializador.init(configFile, &w, &worldB2D, &contactListener, &wHandlerEventos)) loopPrincipal();
 	wClose();
 
-	if (!log.abrirLog(MAINLOG)) std::cout << "Error al abrir archivo de log " << MAINLOG << std::endl;
-	else {
-		log.escribirLog(OK, "SnowBros ha finalizado correctamente.");
-		log.cerrarLog();
-	}
+	log.log(MAINLOG,OK,"SnowBros ha finalizado correctamente.");
 
 	return 0;
 }

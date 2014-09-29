@@ -5,7 +5,7 @@
 #include <SDL2/SDL2_gfxPrimitives.h>
 #include "../../utiles/Logger.h"
 #include "../interfaces/IDibujable.h"
-#include "../../Window.h"
+#include "../../vista/Camera.h"
 
 class PoligonoIrregularDibujable: public IDibujable {
 
@@ -42,14 +42,14 @@ public:
 		float32 thita2 =  atan( (-centroY + altura) / (-centroX + desplazamiento + tapa) ) - angulo;
 		float32 thita3 =  PI - atan( (-centroY + altura) / (centroX - desplazamiento) ) - angulo;
 
-		vx[0] = (posicion.x + modulo0 * cos(thita0) ) * Window::wRatio;
-		vy[0] = (posicion.y - modulo0 * sin(thita0)) * Window::hRatio;
-		vx[1] = (posicion.x + modulo1 * cos(thita1)) * Window::wRatio;
-		vy[1] = (posicion.y - modulo1 * sin(thita1)) * Window::hRatio;
-		vx[2] = (posicion.x + modulo2 * cos(thita2)) * Window::wRatio;
-		vy[2] = (posicion.y - modulo2 * sin(thita2)) * Window::hRatio;
-		vx[3] = (posicion.x + modulo3 * cos(thita3)) * Window::wRatio;
-		vy[3] = (posicion.y - modulo3 * sin(thita3)) * Window::hRatio;
+		vx[0] = (posicion.x + modulo0 * cos(thita0) ) * Camera::WORLDTOWINDOWSCALE;
+		vy[0] = (posicion.y - modulo0 * sin(thita0)) * Camera::WORLDTOWINDOWSCALE;
+		vx[1] = (posicion.x + modulo1 * cos(thita1)) * Camera::WORLDTOWINDOWSCALE;
+		vy[1] = (posicion.y - modulo1 * sin(thita1)) * Camera::WORLDTOWINDOWSCALE;
+		vx[2] = (posicion.x + modulo2 * cos(thita2)) * Camera::WORLDTOWINDOWSCALE;
+		vy[2] = (posicion.y - modulo2 * sin(thita2)) * Camera::WORLDTOWINDOWSCALE;
+		vx[3] = (posicion.x + modulo3 * cos(thita3)) * Camera::WORLDTOWINDOWSCALE;
+		vy[3] = (posicion.y - modulo3 * sin(thita3)) * Camera::WORLDTOWINDOWSCALE;
 
 		int status;
 

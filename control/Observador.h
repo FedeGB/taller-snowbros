@@ -38,6 +38,8 @@ public:
 		case SOLTOIZQUIERDA: puntero_al_objeto_a_notificar->eventoSoltoIzquierda(); break;
 		//case ABAJO: puntero_al_objeto_a_notificar->eventoAbajo(); break;
 		case RESTART: puntero_al_objeto_a_notificar->eventoRESTART(); break;
+		case ZOOMIN: puntero_al_objeto_a_notificar->eventoZoomIn(); break;
+		case ZOOMOUT: puntero_al_objeto_a_notificar->eventoZoomOut(); break;
 		}
 	}
 

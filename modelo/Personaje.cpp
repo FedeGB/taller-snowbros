@@ -48,6 +48,12 @@ void Personaje::eventoSoltoIzquierda(){
 void Personaje::eventoRESTART(){//posicion(100.0 ,100.0);
 }
 
+void Personaje::eventoZoomIn(){
+}
+
+void Personaje::eventoZoomOut(){
+}
+
 void Personaje::setB2DBody(b2Body * pjB2D){
 	bodyB2D = pjB2D;
 }
@@ -197,17 +203,17 @@ void Personaje::render(){
 		 activeSprite = spriteRects[SALTANDOIZQUIERDA5];
 	}
 
-	int X = (posicion.x - halfWidth) * Window::wRatio;
-	int Y = (posicion.y - halfHeight) * Window::hRatio;
-	int width = halfWidth * 2 * Window::wRatio;
-	int height = halfHeight * 2 * Window::hRatio;
+	int X = (posicion.x - halfWidth) * Camera::WORLDTOWINDOWSCALE;
+	int Y = (posicion.y - halfHeight) * Camera::WORLDTOWINDOWSCALE;
+	int width = halfWidth * 2 * Camera::WORLDTOWINDOWSCALE;
+	int height = halfHeight * 2 * Camera::WORLDTOWINDOWSCALE;
 	SDL_Rect pos = {X, Y, width, height};
 
 	SDL_RendererFlip flip;
 	if ((isRightPressed && !wasLeftPressed1st)||!leftOriented) flip = SDL_FLIP_HORIZONTAL;
 	else flip = SDL_FLIP_NONE;
 
-	float32 Yaux = width * sin(angle) * Window::hRatio, Xaux = width * cos(angle) * Window::wRatio;
+	float32 Yaux = width * sin(angle) * Camera::WORLDTOWINDOWSCALE, Xaux = width * cos(angle) * Camera::WORLDTOWINDOWSCALE;
 	float32 modifiedAngle = atan(Yaux/Xaux) * RADTODEG;
 	SDL_RenderCopyEx( dRenderer, dTextura, &activeSprite, &pos, modifiedAngle, NULL, flip);
 }

@@ -10,6 +10,7 @@
 
 #include "../control/interfaces/INotificable.h"
 #include "../modelo/formas/RectanguloDibujable.h"
+#include "../vista/Camera.h"
 
 enum ESTADOS
 {
@@ -37,6 +38,8 @@ public:
 	virtual void eventoIzquierda();
 	virtual void eventoSoltoIzquierda();
 	virtual void eventoRESTART(); // NO HACE NADA
+	virtual void eventoZoomIn();
+	virtual void eventoZoomOut();
 
 	//virtual SDL_Rect * getRecuadroDeDibujo();
 	virtual void render();

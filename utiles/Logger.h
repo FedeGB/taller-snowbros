@@ -39,6 +39,7 @@ public:
 	void cerrarLog();
 	bool crearLogs();
 	bool setMode(std::string mode);
+	void log(std::string logFile, std::string tipo, std::string detalle);
 
 private:
 	Logger(){};  // Constructor privado para que no lo invoquen
