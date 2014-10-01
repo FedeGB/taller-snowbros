@@ -307,7 +307,7 @@ float get_node(string data, string param, string file, float defaultData) {
 	}
 	float result = root[param].get(data, defaultData).asFloat();
 	if(data.compare("x") == 0 || data.compare("y") == 0 || data.compare("masa") == 0
-		|| data.compare("base") == 0 || data.compare("tapa") == 0 || data.compare("desp") == 0
+		|| data.compare("base") == 0 || data.compare("tapa") == 0
 		|| data.compare("alto") == 0 || data.compare("ancho") == 0 || data.compare("friccion") == 0 ) {
 		if(result < 0) {
 			if (!log.abrirLog(PARSERLOG)) {
@@ -375,7 +375,7 @@ float get_node(string data, string param, string file, int field,
 	}
 	float result = root[param][field].get(data, defaultData).asFloat();
 	if(data.compare("x") == 0 || data.compare("y") == 0 || data.compare("masa") == 0
-		|| data.compare("base") == 0 || data.compare("tapa") == 0 || data.compare("desp") == 0
+		|| data.compare("base") == 0 || data.compare("tapa") == 0
 		|| data.compare("alto") == 0 || data.compare("ancho") == 0 || data.compare("friccion") == 0 ) {
 		if(result < 0) {
 			if (!log.abrirLog(PARSERLOG)) {
