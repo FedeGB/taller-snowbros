@@ -92,6 +92,19 @@
 	    "color": "#A42050",
             "friccion": 0.2
         },
+        
+         {
+           "estatico": true,
+           "tipo": "rect",
+           "x": 29.8,
+           "y": 8.4,
+           "rot": 0,
+           "alto": 0.7,
+           "ancho": 2,
+           "masa": 1,
+		   "color": "#FFFF00",
+		   "friccion": 0.1
+       },
 
 	{
             "estatico": false,

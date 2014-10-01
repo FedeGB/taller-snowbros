@@ -14,6 +14,7 @@
 class ContactListener : public b2ContactListener
   {
 	void BeginContact(b2Contact* contact) {
+
 		//check if fixture A was the foot sensor
 		void* fixtureAUserData = contact->GetFixtureA()->GetUserData();
 		void* fixtureBUserData = contact->GetFixtureB()->GetUserData();
