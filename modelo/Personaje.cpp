@@ -135,9 +135,6 @@ void Personaje::render(){
 	if (!isAirborne) bodyB2D->SetTransform(bodyB2D->GetPosition(), 0);
 	else bodyB2D->SetTransform(bodyB2D->GetPosition(), angle);
 
-	std::cout << "esta en el aire: " << isAirborne << " siendo true=" << true << std::endl;
-	std::cout << "el numero de footContacts es " << numFootContacts << std::endl;
-
 	float32 desiredVel = 0, scale = 0;
 
 	// Se mueve a la izquierda.
