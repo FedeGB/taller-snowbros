@@ -155,33 +155,39 @@ void pjInit(Window ** w, b2World ** worldB2D,  HandlerDeEventos * wHandlerEvento
 
 	//costados sin friccion
 	v.x=halfWidth*0.7;
-		polygon.SetAsBox(halfWidth*0.15, halfHeight*0.7,v,0); //le doy dimensiones
-		myFixtureDef.shape = &polygon; //defino que es un poligono
-		bodyFixture->SetUserData( (void*)0 );
-		myFixtureDef.restitution = 0.0f;
-		myFixtureDef.friction=0;
-		pjB2D->CreateFixture(&myFixtureDef);
+	polygon.SetAsBox(halfWidth*0.15, halfHeight*0.7,v,0); //le doy dimensiones
+	myFixtureDef.shape = &polygon; //defino que es un poligono
+	bodyFixture->SetUserData( (void*)0 );
+	myFixtureDef.restitution = 0.0f;
+	myFixtureDef.friction=0;
+	pjB2D->CreateFixture(&myFixtureDef);
 
 
-		//pies
-			v.x=0;
-			v.y=halfHeight*0.8;
-			polygon.SetAsBox(halfWidth*0.4, halfHeight*0.1, v, 0);
-				myFixtureDef.shape = &polygon; //defino que es un poligono
-				myFixtureDef.density = 1.0f; //le doy masa
-				myFixtureDef.restitution = 0.0f;
-				myFixtureDef.friction=2.0f;
-				pjB2D->CreateFixture(&myFixtureDef);
+	//pies
+	v.x=0;
+	v.y=halfHeight*0.8;
+	polygon.SetAsBox(halfWidth*0.4, halfHeight*0.1, v, 0);
+	myFixtureDef.shape = &polygon; //defino que es un poligono
+	myFixtureDef.density = 1.0f; //le doy masa
+	myFixtureDef.restitution = 0.0f;
+	myFixtureDef.friction=2.0f;
+	pjB2D->CreateFixture(&myFixtureDef);
 
     // Agrego el sensor para saltos
-    polygon.SetAsBox(halfWidth/1.2, 0.15f, b2Vec2(0.0f,1.5f), 0);
+    polygon.SetAsBox(halfWidth * 0.6, 0.15f, b2Vec2(0,halfHeight), 0);
 	myFixtureDef.shape = &polygon; //defino que es un poligono
     myFixtureDef.isSensor = true;
 	myFixtureDef.density = 1.0f; //le doy masa
-	myFixtureDef.restitution = 0.0f;
     b2Fixture* footSensorFixture = pjB2D->CreateFixture(&myFixtureDef);
     footSensorFixture->SetUserData( (void*)3 );
 
+    // Agrego el 2do sensor para saltos
+    /*polygon.SetAsBox(halfWidth * 0.1, 0.05f, b2Vec2(halfWidth * 0.7f,halfHeight), 0);
+	myFixtureDef.shape = &polygon; //defino que es un poligono
+    myFixtureDef.isSensor = true;
+	myFixtureDef.density = 1.0f; //le doy masa
+    b2Fixture* footSensorFixture2 = pjB2D->CreateFixture(&myFixtureDef);
+    footSensorFixture2->SetUserData( (void*)3 ); */
 	Personaje * personaje = new Personaje();
 	if(!personaje) {
 		if (!log.abrirLog(WINDOWLOG)) {

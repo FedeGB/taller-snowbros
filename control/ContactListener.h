@@ -20,15 +20,13 @@ class ContactListener : public b2ContactListener
 		// TODO: sacar estos '2' y '3' y cambiarlos por constantes.
 		if ( *((int*)(&fixtureAUserData)) == 3 ){
 			( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->modifyFootContacts(1);
-			if ( (*((int*)(&fixtureBUserData)) == 2) ) // Check if fixture B is a static object and angle <= 89
-					//contact->GetFixtureB()->GetBody()->GetAngle() <= 89 * DEGTORAD)
+			if ( (*((int*)(&fixtureBUserData)) == 2) ) // Check if fixture B is a static object
 				( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->setNewAngle(contact->GetFixtureB()->GetBody()->GetAngle());
 		}
 		//check if fixture B was the foot sensor
 		if ( *((int*)(&fixtureBUserData)) == 3 ){
 		  ( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->modifyFootContacts(1);
-		  if ( (*((int*)(&fixtureAUserData)) == 2) )  // Check if fixture A is a static object and angle <= 89
-		  					//contact->GetFixtureA()->GetBody()->GetAngle() <= 89 * DEGTORAD)
+		  if ( (*((int*)(&fixtureAUserData)) == 2) )  // Check if fixture A is a static object
 			  ( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->setNewAngle(contact->GetFixtureA()->GetBody()->GetAngle());
 		}
 	}

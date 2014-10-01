@@ -51,10 +51,13 @@ private:
 	bool isLeftPressed;
 	bool isUpPressed;
 	bool wasLeftPressed1st;
+	bool leftOriented;
+	bool isJumping;
+	bool isAirborne;
+	bool isMoving;
 	SDL_Rect activeSprite;
 	SDL_Rect spriteRects[10];
 	int animationCounter;
-	bool leftOriented;
 
 	enum SPRITES
 	{
