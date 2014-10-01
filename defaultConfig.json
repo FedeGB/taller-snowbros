@@ -72,7 +72,7 @@
             "tipo": "rect",
             "x": 25,
             "y": 10,
-            "rot": 335,
+            "rot": 155,
             "alto": 0.6,
             "ancho": 7.9,
             "masa": 1,
@@ -85,26 +85,29 @@
             "tipo": "rect",
             "x": 9.75,
             "y": 13,
-            "rot": 35,
+            "rot": 215,
             "alto": 0.6,
             "ancho": 17.9,
             "masa": 1,
-	    "color": "#A42050",
+		    "color": "#A42050",
             "friccion": 0.2
         },
         
-         {
-           "estatico": true,
-           "tipo": "rect",
-           "x": 29.8,
-           "y": 8.4,
-           "rot": 0,
-           "alto": 0.7,
-           "ancho": 2,
-           "masa": 1,
-		   "color": "#FFFF00",
-		   "friccion": 0.1
-       },
+		{
+            "estatico": true,
+            "tipo": "irreg",
+            "x": 30.3,
+            "y": 8.4,
+            "base": 3,
+      		"tapa": 3,
+        	"desp": -0.3,
+            "rot": 180,
+            "alto": 0.7,
+            "ancho": 2,
+            "masa": 1,
+        "color": "#FFFF00",
+        "friccion": 0.1
+        },
 
 	{
             "estatico": false,

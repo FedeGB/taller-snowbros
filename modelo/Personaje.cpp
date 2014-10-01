@@ -132,8 +132,11 @@ void Personaje::render(){
 	if (!isAirborne) isJumping = false;
 
 	// Determina si esta sobre un plano inclinado para ajustar el angulo.
+	if (angle >= 90 * DEGTORAD && angle <= 180 * DEGTORAD) angle +=180 * DEGTORAD;
+	if (angle >= 180 * DEGTORAD && angle <= 270 * DEGTORAD) angle -=180 * DEGTORAD;
 	if (isAirborne) bodyB2D->SetTransform(bodyB2D->GetPosition(), 0);
 	else bodyB2D->SetTransform(bodyB2D->GetPosition(), angle);
+
 
 	float32 desiredVel = 0, scale = 0;
 
