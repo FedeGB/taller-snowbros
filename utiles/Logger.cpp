@@ -35,7 +35,7 @@ Logger* Logger::Instancia()
 }
 
 bool Logger::setMode(string mode){
-	if (mode != ALL || mode != ERRORS_ONLY || mode != NO_ERRORS){
+	if (mode != ALL && mode != ERRORS_ONLY && mode != NO_ERRORS){
 		return false;
 	}
 	this->mode = mode;

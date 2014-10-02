@@ -249,9 +249,19 @@ int get_node(string data, string param, string file, int field,
 		return defaultData;
 	}
 	int result = root[param][field].get(data, defaultData).asInt();
+	if(data.compare("lados")<3 ||data.compare("lados")>8){
+		if (!log.abrirLog(PARSERLOG)) {
+						std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
+						return defaultData;
+					}
+					log.escribirLog(WARNING, "El valor de " + data + " de " + param + " del elemento " + s + " no puede ser menor a 3 o mayor a 8. Cargando datos por defecto.");
+					log.cerrarLog();
+					return defaultData;
+				}
+
 	if(data.compare("x") == 0 || data.compare("y") == 0 || data.compare("masa") == 0
 		|| data.compare("base") == 0 || data.compare("tapa") == 0 || data.compare("desp") == 0
-		|| data.compare("alto") == 0 || data.compare("ancho") == 0 || data.compare("friccion") == 0 ) {
+		|| data.compare("alto") == 0 || data.compare("ancho") == 0 || data.compare("friccion") == 0  ) {
 		if(result < 0) {
 			if (!log.abrirLog(PARSERLOG)) {
 				std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;

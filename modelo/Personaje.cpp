@@ -144,8 +144,8 @@ void Personaje::render(){
 	if (isLeftPressed && wasLeftPressed1st){
 		leftOriented=true;
 		desiredVel = -14;                         //// VERIFICAR QUE CUANDO ESTE SALTANDO NO CAMBIE LA VELOCIDAD EN Y!! ! ! ! ! ! !  11 1 1 1 1 one one one
-		if (angle <= 180 * DEGTORAD) scale = 0.25;
-		else scale = 4;
+		if (angle <= 180 * DEGTORAD) scale = 0.33;
+		else scale = 3;
 		isMoving = true;
 	}
 
@@ -154,8 +154,8 @@ void Personaje::render(){
 		leftOriented=false;
 		desiredVel = 14;
 		scale = 4;
-		if (angle <= 180 * DEGTORAD) scale = 4;
-		else scale = 0.25;
+		if (angle <= 180 * DEGTORAD) scale = 3;
+		else scale = 0.33;
 		isMoving = true;
 	}
 
@@ -264,6 +264,6 @@ void Personaje::render(){
 	float32 modifiedAngle = atan(Yaux/Xaux) * RADTODEG;
 
 	// Renderea.
-	SDL_RenderCopyEx( dRenderer, dTextura, &activeSprite, &pos, modifiedAngle, NULL, flip);
+	SDL_RenderCopyEx( dRenderer, dTextura, &activeSprite, &pos, 0, NULL, flip);
 }
 

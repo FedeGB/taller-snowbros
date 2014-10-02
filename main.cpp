@@ -22,6 +22,7 @@ string configFile;
 int main(int argc, char *argv[]) {
 
 	Logger& log = *Logger::Instancia();
+	//log.setMode(ERRORS_ONLY);
 
 	if (!log.abrirLog(MAINLOG)) std::cout << "Error al abrir archivo de log " << MAINLOG << std::endl;
 	else {
