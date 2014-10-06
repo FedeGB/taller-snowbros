@@ -66,7 +66,7 @@ int main(int argc, char** argv)
         printf("Uso: %s <JSON Mapa> <Puerto> [<IP Opcional>]\n", argv[0]);
         exit(-1);
     }
-    int workers = 1; //Threads que levantan mensajes de la cola.
+    int workers = 2; //Threads que levantan mensajes de la cola.
     int port = atoi(argv[2]); //Puerto en el que escucha alas conexiones.
     string ip; //IP en el que escucha.
     if (argc == 4) {
