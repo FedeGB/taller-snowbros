@@ -22,7 +22,7 @@ void* ConnectionHandler::run() {
 	while ((len = m_stream->receive(input, sizeof(input)-1)) > 0 ){
 		input[len] = NULL;
 		WorkItem* item = new WorkItem(std::string(input));
-		//m_queue.add(item); Error aca nose porque
+		m_queue.add(item); //Error aca nose porque
 		m_stream->send(input, len);
 		printf("thread %lu, echoed '%s' back to the client\n",
 			   (long unsigned int)self(), input);
