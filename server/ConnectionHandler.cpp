@@ -8,28 +8,26 @@
 #include "ConnectionHandler.h"
 #include <stdio.h>
 
-ConnectionHandler::ConnectionHandler(ColaTrabajo<WorkItem*>& queue, TCPStream* stream) : m_queue(queue), m_stream(stream) {}
+ConnectionHandler::ConnectionHandler(ColaTrabajo<Message*>& queue, TCPStream* stream){
+	m_stream = stream;
+	m_receiver = new RecvThread(queue, m_stream);
+	m_writer = new WriteThread(m_toSend, m_stream);
+}
 
-void* ConnectionHandler::run() {
+void ConnectionHandler::start() {
 	// Remove 1 item at a time and process it. Blocks if no items are
 	// available to process.
 	printf("Conexion con: %s:%d establecida.\n", m_stream->getPeerIP().c_str() , m_stream->getPeerPort());
 
-	// Echo messages back the client until the connection is
-	// closed
-	char input[256];
-	int len;
-	while ((len = m_stream->receive(input, sizeof(input)-1)) > 0 ){
-		input[len] = NULL;
-		WorkItem* item = new WorkItem(std::string(input));
-		m_queue.add(item); //Error aca nose porque
-		m_stream->send(input, len);
-		printf("thread %lu, echoed '%s' back to the client\n",
-			   (long unsigned int)self(), input);
-	}
-	delete m_stream;
+	m_receiver->start();
+	m_writer->start();
+}
 
-	printf("Conexion terminada.\n");
-	return NULL;
+std::string ConnectionHandler::getPeerIP(){
+	return m_stream->getPeerIP();
+}
+
+void ConnectionHandler::queueMessage(Message* newItem){
+	m_toSend.add(newItem);
 }
 

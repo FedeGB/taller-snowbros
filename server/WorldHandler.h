@@ -9,14 +9,14 @@
 #define WORLDHANDLER_H_
 
 #include "ColaTrabajo.h"
-#include "WorkItem.h"
+#include "Message.h"
 #include "../Threads/Thread.h"
 
 class WorldHandler: public Thread {
-	ColaTrabajo<WorkItem*>& m_queue;
+	ColaTrabajo<Message*>& m_queue;
 
 public:
-	WorldHandler(ColaTrabajo<WorkItem*>& queue);
+	WorldHandler(ColaTrabajo<Message*>& queue);
 	void* run();
 };
 

@@ -10,11 +10,12 @@
 
 #include <string>
 
-class WorkItem {
+class Message {
 public:
-	WorkItem(std::string message);
-	virtual ~WorkItem();
+	Message(std::string message, std::string from);
+	virtual ~Message();
 	std::string m_message;
+	std::string m_from;
 };
 
 #endif /* WORKITEM_H_ */

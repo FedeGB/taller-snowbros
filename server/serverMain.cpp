@@ -12,8 +12,10 @@
 #include "ColaTrabajo.h"
 #include "TCPAcceptor.h"
 #include "ConnectionHandler.h"
-#include "WorkItem.h"
+#include "Message.h"
 #include "WorldHandler.h"
+#include <list>
+#include "DispatchThread.h"
 
 
 int main(int argc, char** argv)
@@ -32,8 +34,19 @@ int main(int argc, char** argv)
 
     //TODO: Cargar el json y el world.
 
-    // Creo la cola de mensajes para procesar.
-    ColaTrabajo<WorkItem*>  queue;
+    // Creo la cola de mensajes recibidos para procesar.
+    ColaTrabajo<Message*>  queue;
+    //Creo la cola de mensajes a enviar y la lista de conexiones
+    ColaTrabajo<Message*> dispatchQueue;
+    list<ConnectionHandler*> connectionList;
+
+    //Creo el thread que despacha mensajes
+    DispatchThread* dispatcher = new DispatchThread(dispatchQueue, connectionList);
+    if(!dispatcher){
+    	printf("Error creando el dispatch thread. \n");
+    	exit(1);
+    }
+    dispatcher->start();
 
     //Creo el procesador de mensajes
     WorldHandler* world = new WorldHandler(queue);
@@ -68,7 +81,10 @@ int main(int argc, char** argv)
         if (!handler) {
             printf("Could not create ConnectionHandler.\n");
             exit(1);
-        }else handler->start();
+        }else{
+        	connectionList.push_back(handler);
+        	handler->start();
+        }
 
     }
 
