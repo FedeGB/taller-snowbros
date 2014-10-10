@@ -116,7 +116,9 @@
             "ancho": 9,
             "masa": 1,
 	    "color": "#A42050",
-            "friccion": 0.2
+            "friccion": 0.2,
+	    	"textura": "imagenes/ladrillo.png",
+		"tex_escala": 0.8
         },
 
 	{
@@ -155,7 +157,10 @@
             "ancho": 4,
             "masa": 1,
 	    "color": "#A42050",
-            "friccion": 0.2
+            "friccion": 0.2,
+	    	"textura": "imagenes/ladrillo.png",
+		"tex_escala": 0.8
+
         },
 
 
@@ -231,13 +236,15 @@
             "x": 30.75,
             "y": 4,
             "rot": 65,
-	    "escala": 0.95,
+	    "escala": 1.5,
             "alto": 0.5,
             "ancho": 2.0,
-	    "lados": 5,
+	    "lados": 6,
             "masa": 40,
 	    "color": "#1420B2",
-            "friccion": 0.2
+            "friccion": 0.2,
+	    	"textura": "imagenes/sendero.png",
+		"tex_escala": 1.0
         },
 
 	{
@@ -271,11 +278,13 @@
 	    "lados": 5,
             "masa": 100,
 	    "color": "#FF00FF",
-	    "base": 2.4,
+	    "base": 3.4,
 	    "tapa": 5.0,
-	    "desp": 0.7,
-	    "alto": 1.5,
-            "friccion": 0.2
+	    "desp": 2.0,
+	    "alto": 0.9,
+            "friccion": 0.2,
+	    	"textura": "imagenes/sendero.png",
+		"tex_escala": 2.0
         }
    ]
 }

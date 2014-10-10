@@ -114,6 +114,13 @@ public:
 	float32 getAngulo(){ return angulo; }
 	void setAngulo(float32 a){ angulo = a;	}
 
+//	void setTex2(Textura* t){
+//		tex2 = t;
+//	}
+
+	virtual void calcularVertices(float* vx, float* vy, int nVertices, float escala, float angulo, float worldToWindowScale) {};
+	virtual unsigned int getCantidadDeVertices(){ return 0; }
+
 protected:
 	SDL_Texture* dTextura;
 	SDL_Renderer* dRenderer;

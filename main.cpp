@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
 		configFile = "defaultConfig.json";
 	} else configFile = argv[1];
 
-	if (inicializador.init(configFile, &w, &worldB2D, &contactListener, &wHandlerEventos)) loopPrincipal();
+	if (inicializador.init(configFile, &w, &worldB2D, &contactListener, &wHandlerEventos) ) loopPrincipal();
 	wClose();
 
 	log.log(MAINLOG,OK,"SnowBros ha finalizado correctamente.");

@@ -2,6 +2,7 @@
 #define WINDOW_H
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_opengl.h>
 #include <string>
 
 #include "control/Observador.h"
@@ -14,6 +15,7 @@ class Window {
 private:
 	SDL_Window * window;
 	SDL_Renderer * wRenderer;
+	SDL_GLContext ctx;
 	Fondo * background;
 	Camera * camera;
 
@@ -31,6 +33,7 @@ private:
 	SDL_Window* crearVentana();
 	SDL_Renderer* crearRenderer(SDL_Window*);
 	//rEscenario* crearEscenario(std::string BGpath);
+	SDL_GLContext initGL(SDL_Window*);
 
 public:
 

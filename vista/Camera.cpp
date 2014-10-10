@@ -80,8 +80,8 @@ void Camera::eventoZoomIn(){
 		return;
 	}
 
-	std::cout << "Se encontro PJ. " << std::endl;
-	std::cout << "la posicion relativa es: " << posPJCamera.x << ", " << posPJCamera.y << std::endl;
+//	std::cout << "Se encontro PJ. " << std::endl;
+//	std::cout << "la posicion relativa es: " << posPJCamera.x << ", " << posPJCamera.y << std::endl;
 
 	if (WINDOWTOWORLDSCALE < 0.01) return;
 
@@ -202,9 +202,9 @@ void Camera::renderVisibleObjects(){
 			posPJCamera.x += (width / 2) * WINDOWTOWORLDSCALE;
 			posPJCamera.y += (height / 2) * WINDOWTOWORLDSCALE;
 
-			std::cout << " la posicion relativa del PJ es : " << posPJCamera.x / ( width * WINDOWTOWORLDSCALE ) << ", " << posPJCamera.y / ( height * WINDOWTOWORLDSCALE ) << std::endl;
+//			std::cout << " la posicion relativa del PJ es : " << posPJCamera.x / ( width * WINDOWTOWORLDSCALE ) << ", " << posPJCamera.y / ( height * WINDOWTOWORLDSCALE ) << std::endl;
 
-			std::cout << " la posicion del borde inf der es: " << width * WINDOWTOWORLDSCALE << ", " << height * WINDOWTOWORLDSCALE << std::endl;
+//			std::cout << " la posicion del borde inf der es: " << width * WINDOWTOWORLDSCALE << ", " << height * WINDOWTOWORLDSCALE << std::endl;
 
 			// Determino el impulso necesario para mover en X la camara.
 			float32 desiredXVel = 0;

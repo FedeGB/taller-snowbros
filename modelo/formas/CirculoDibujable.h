@@ -76,6 +76,7 @@ public:
 		radio = r;
 	}
 
+	void calcularVertices(float* vx, float* vy, int nVertices) {}
 };
 
 

@@ -209,6 +209,7 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 	b2CircleShape circle;
 	b2PolygonShape poligon;
 	IDibujable * figura;
+	std::string tex_path;
 
 	if (get_node("estatico", "objetos", data, num, false))
 		b2dObjDef.type = b2_staticBody;
@@ -227,6 +228,8 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 
 	//le doy forma
 	int lados = num_lados(get_node("tipo", "objetos", data, num, "rect"));
+
+	int AUX = lados;
 	//nLados=lados;
 	switch (lados) { //dependiendo del numero de lados
 
@@ -256,6 +259,14 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 		// Determina el tipo de figura para poder dibujarla.
 		RectanguloDibujable * rect = new RectanguloDibujable();
 		rect->setDimensiones(halfHeight * 2, halfWidth * 2);
+		tex_path = get_node("textura", "objetos", data, num, "vacia");
+		if( tex_path.compare("vacia") != 0 ){
+			Textura* tex = new Textura();
+			float tex_escala = get_node("tex_escala", "objetos", data, num, 1.0f);
+			tex->generar(tex_path, tex_escala);
+			rect->setTex(tex);
+		}
+
 		figura = rect;
 		break;
 	}
@@ -283,6 +294,13 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 		poli->setTapa(tapa);
 		poli->setAltura(alto);
 		poli->setDesplazamiento(desp);
+		tex_path = get_node("textura", "objetos", data, num, "vacia");
+		if( tex_path.compare("vacia") != 0 ){
+			Textura* tex = new Textura();
+			float tex_escala = get_node("tex_escala", "objetos", data, num, 1.0f);
+			tex->generar(tex_path, tex_escala);
+			poli->setTex(tex);
+		}
 		figura = poli;
 		break;
 	}
@@ -305,6 +323,13 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 		PoligonoRegularDibujable * poli = new PoligonoRegularDibujable();
 		poli->setNumVertices(lados);
 		poli->setEscala(escala);
+		tex_path = get_node("textura", "objetos", data, num, "vacia");
+		if( tex_path.compare("vacia") != 0 ){
+			Textura* tex = new Textura();
+			float tex_escala = get_node("tex_escala", "objetos", data, num, 1.0f);
+			tex->generar(tex_path, tex_escala);
+			poli->setTex(tex);
+		}
 		figura = poli;
 		break;
 

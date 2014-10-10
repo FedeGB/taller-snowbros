@@ -14,14 +14,18 @@
 //#include "../../control/interfaces/INotificable.h"
 #include "../../vista/Camera.h"
 
+#include "../Textura.h"
+
 class RectanguloDibujable: public IDibujable {
 
 protected:
 	float32 halfHeight, halfWidth;
 
+	Textura* _tex;
+
 public:
 
-	RectanguloDibujable() {	halfHeight = 0; halfWidth = 0;}
+	RectanguloDibujable() : _tex(NULL){	halfHeight = 0; halfWidth = 0;}
 	~RectanguloDibujable() { }
 
 	virtual void render() {
@@ -29,29 +33,39 @@ public:
 		// Se redefine distinto, usa el renderer directo
 		int status;
 
+		GLfloat vx[4]; GLfloat vy[4];
 		// Calcula las coordenadas en X e Y segun la posicion, el tamaño, y la rotacion del rectangulo.
-		float modulo = sqrt( pow(halfWidth, 2) + pow(halfHeight, 2) );
-		float thita = angulo + atan( halfHeight / halfWidth );
-		float xaux = modulo * cos(thita);
-		float yaux = modulo * sin(thita);
-		float thita2 = - angulo + atan( halfHeight / halfWidth );
-		float xaux2 = modulo * cos(thita2);
-		float yaux2 = modulo * sin(thita2);
+//		float modulo = sqrt( pow(halfWidth, 2) + pow(halfHeight, 2) );
+//		float thita = angulo + atan( halfHeight / halfWidth );
+//		float xaux = modulo * cos(thita);
+//		float yaux = modulo * sin(thita);
+//		float thita2 = - angulo + atan( halfHeight / halfWidth );
+//		float xaux2 = modulo * cos(thita2);
+//		float yaux2 = modulo * sin(thita2);
+//
+//		Sint16 * vx = new Sint16[4];
+//		vx[0] = (posicion.x - xaux) * Camera::WORLDTOWINDOWSCALE;
+//		vx[1] = (posicion.x + xaux2) * Camera::WORLDTOWINDOWSCALE;
+//		vx[2] = (posicion.x + xaux) * Camera::WORLDTOWINDOWSCALE;
+//		vx[3] = (posicion.x - xaux2) * Camera::WORLDTOWINDOWSCALE;
+//
+//		Sint16 * vy = new Sint16[4];
+//		vy[0] = (posicion.y - yaux) * Camera::WORLDTOWINDOWSCALE;
+//		vy[1] = (posicion.y - yaux2) * Camera::WORLDTOWINDOWSCALE;
+//		vy[2] = (posicion.y + yaux) * Camera::WORLDTOWINDOWSCALE;
+//		vy[3] = (posicion.y + yaux2) * Camera::WORLDTOWINDOWSCALE;
+		calcularVertices(vx, vy, 4, 1.0f, angulo, Camera::WORLDTOWINDOWSCALE);
 
-		Sint16 * vx = new Sint16[4];
-		vx[0] = (posicion.x - xaux) * Camera::WORLDTOWINDOWSCALE;
-		vx[1] = (posicion.x + xaux2) * Camera::WORLDTOWINDOWSCALE;
-		vx[2] = (posicion.x + xaux) * Camera::WORLDTOWINDOWSCALE;
-		vx[3] = (posicion.x - xaux2) * Camera::WORLDTOWINDOWSCALE;
-
-		Sint16 * vy = new Sint16[4];
-		vy[0] = (posicion.y - yaux) * Camera::WORLDTOWINDOWSCALE;
-		vy[1] = (posicion.y - yaux2) * Camera::WORLDTOWINDOWSCALE;
-		vy[2] = (posicion.y + yaux) * Camera::WORLDTOWINDOWSCALE;
-		vy[3] = (posicion.y + yaux2) * Camera::WORLDTOWINDOWSCALE;
-
-		status = filledPolygonRGBA(dRenderer, vx, vy, 4, color.r, color.g, color.b, color.a);
-		delete[] vx ; delete[] vy ;
+		if( _tex != NULL)
+			_tex->dibujar(vx, vy, 4);
+		else{
+			Sint16 i_vx[4]; Sint16 i_vy[4];
+			// convierto los vertices de float a short para que la funcion "filledPolygonRGBA" los tome
+			for( int i = 0; i < 4; i++ ) {
+				i_vx[i] = (short) vx[i]; i_vy[i] = (short) vy[i];
+			}
+			status = filledPolygonRGBA(dRenderer, i_vx, i_vy, 4, color.r, color.g, color.b, color.a);
+		}
 
 		if(status != 0) {
 			Logger& log = * Logger::Instancia();
@@ -78,6 +92,34 @@ public:
 		return halfWidth * 2;
 	}
 
+	void calcularVertices(float* vx, float* vy, int nVertices, float esc, float ang, float worldtowindowscale) {
+		float modulo = sqrt( pow(halfWidth, 2) + pow(halfHeight, 2) );
+		float thita = ang + atan( halfHeight / halfWidth );
+		float xaux = modulo * cos(thita);
+		float yaux = modulo * sin(thita);
+		float thita2 = - ang + atan( halfHeight / halfWidth );
+		float xaux2 = modulo * cos(thita2);
+		float yaux2 = modulo * sin(thita2);
+
+//		Sint16 * vx = new Sint16[4];
+		vx[0] = (posicion.x - xaux) * worldtowindowscale;
+		vx[1] = (posicion.x + xaux2) * worldtowindowscale;
+		vx[2] = (posicion.x + xaux) * worldtowindowscale;
+		vx[3] = (posicion.x - xaux2) * worldtowindowscale;
+
+//		Sint16 * vy = new Sint16[4];
+		vy[0] = (posicion.y - yaux) * worldtowindowscale;
+		vy[1] = (posicion.y - yaux2) * worldtowindowscale;
+		vy[2] = (posicion.y + yaux) * worldtowindowscale;
+		vy[3] = (posicion.y + yaux2) * worldtowindowscale;
+	}
+
+	GLuint getCantidadDeVertices() { return 4; }
+
+	void setTex(Textura* t){
+		_tex = t;
+		_tex->mapearCoordenadas(this);
+	}
 };
 
 #endif /* RECTANGULO_H_ */

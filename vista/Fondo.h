@@ -70,6 +70,8 @@ public:
 		render();
 	};
 
+	void calcularVertices(float* vx, float* vy, int nVertices) {}
+
 private:
 	std::string path;
 	int width, height;
