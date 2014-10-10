@@ -35,26 +35,7 @@ public:
 
 		GLfloat vx[4]; GLfloat vy[4];
 		// Calcula las coordenadas en X e Y segun la posicion, el tamaño, y la rotacion del rectangulo.
-//		float modulo = sqrt( pow(halfWidth, 2) + pow(halfHeight, 2) );
-//		float thita = angulo + atan( halfHeight / halfWidth );
-//		float xaux = modulo * cos(thita);
-//		float yaux = modulo * sin(thita);
-//		float thita2 = - angulo + atan( halfHeight / halfWidth );
-//		float xaux2 = modulo * cos(thita2);
-//		float yaux2 = modulo * sin(thita2);
-//
-//		Sint16 * vx = new Sint16[4];
-//		vx[0] = (posicion.x - xaux) * Camera::WORLDTOWINDOWSCALE;
-//		vx[1] = (posicion.x + xaux2) * Camera::WORLDTOWINDOWSCALE;
-//		vx[2] = (posicion.x + xaux) * Camera::WORLDTOWINDOWSCALE;
-//		vx[3] = (posicion.x - xaux2) * Camera::WORLDTOWINDOWSCALE;
-//
-//		Sint16 * vy = new Sint16[4];
-//		vy[0] = (posicion.y - yaux) * Camera::WORLDTOWINDOWSCALE;
-//		vy[1] = (posicion.y - yaux2) * Camera::WORLDTOWINDOWSCALE;
-//		vy[2] = (posicion.y + yaux) * Camera::WORLDTOWINDOWSCALE;
-//		vy[3] = (posicion.y + yaux2) * Camera::WORLDTOWINDOWSCALE;
-		calcularVertices(vx, vy, 4, 1.0f, angulo, Camera::WORLDTOWINDOWSCALE);
+		calcularVertices(vx, vy, 4, 1.0f, 1.0f, angulo, Camera::WORLDTOWINDOWSCALE);
 
 		if( _tex != NULL)
 			_tex->dibujar(vx, vy, 4);
@@ -92,7 +73,7 @@ public:
 		return halfWidth * 2;
 	}
 
-	void calcularVertices(float* vx, float* vy, int nVertices, float esc, float ang, float worldtowindowscale) {
+	void calcularVertices(float* vx, float* vy, int nVertices, float escX, float escY, float ang, float worldtowindowscale) {
 		float modulo = sqrt( pow(halfWidth, 2) + pow(halfHeight, 2) );
 		float thita = ang + atan( halfHeight / halfWidth );
 		float xaux = modulo * cos(thita);

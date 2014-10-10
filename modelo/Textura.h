@@ -21,11 +21,11 @@ private:
 	GLfloat* s;
 	GLfloat* t;
 
-	GLfloat escala;
+	GLfloat escalaX, escalaY;
 
 public:
 
-	Textura() : _tex(0), s(NULL) , t(NULL) , escala(1.0f){}
+	Textura() : _tex(0), s(NULL) , t(NULL) , escalaX(1.0f), escalaY(1.0f){}
 	virtual ~Textura() {
 		glDeleteTextures(1, &_tex);
 		if ( s != NULL )
@@ -34,9 +34,9 @@ public:
 			delete []t;
 	}
 
-	void generar(std::string path, GLfloat esc) {
+	void generar(std::string path, GLfloat escX, GLfloat escY) {
 
-		escala = esc;
+		escalaX = escX; escalaY = escY;
 
 		SDL_Surface *surface = NULL; // this surface will tell us the details of the image
 		surface = IMG_Load(path.c_str());
@@ -138,7 +138,7 @@ public:
 
 		GLint i;
 		// genero unos vertices cualquiera para calcular las coordenadas
-		figura->calcularVertices(vx, vy, nVertices, escala, 0.0f, 1.0f);
+		figura->calcularVertices(vx, vy, nVertices, escalaX, escalaY, 0.0f, 1.0f);
 
 		GLfloat menorX = vx[0]; GLfloat menorY = vy[0]; GLfloat mayorX = vx[0]; GLfloat mayorY = vy[0];
 
@@ -158,8 +158,8 @@ public:
 
 		// calculo las coordenadas
 		for( i = 0; i < nVertices; i++ ){
-			s[i] = (vx[i] - ceroX) * escala / ancho;
-			t[i] = (vy[i] - ceroY) * escala / largo;
+			s[i] = (vx[i] - ceroX) * escalaX / ancho;
+			t[i] = (vy[i] - ceroY) * escalaY / largo;
 		}
 
 	}

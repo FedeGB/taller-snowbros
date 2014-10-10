@@ -262,8 +262,9 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 		tex_path = get_node("textura", "objetos", data, num, "vacia");
 		if( tex_path.compare("vacia") != 0 ){
 			Textura* tex = new Textura();
-			float tex_escala = get_node("tex_escala", "objetos", data, num, 1.0f);
-			tex->generar(tex_path, tex_escala);
+			float tex_escalaX = get_node("tex_escalaX", "objetos", data, num, 1.0f);
+			float tex_escalaY = get_node("tex_escalaY", "objetos", data, num, 1.0f);
+			tex->generar(tex_path, tex_escalaX, tex_escalaY);
 			rect->setTex(tex);
 		}
 
@@ -297,8 +298,9 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 		tex_path = get_node("textura", "objetos", data, num, "vacia");
 		if( tex_path.compare("vacia") != 0 ){
 			Textura* tex = new Textura();
-			float tex_escala = get_node("tex_escala", "objetos", data, num, 1.0f);
-			tex->generar(tex_path, tex_escala);
+			float tex_escalaX = get_node("tex_escalaX", "objetos", data, num, 1.0f);
+			float tex_escalaY = get_node("tex_escalaY", "objetos", data, num, 1.0f);
+			tex->generar(tex_path, tex_escalaX, tex_escalaY);
 			poli->setTex(tex);
 		}
 		figura = poli;
@@ -326,8 +328,9 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 		tex_path = get_node("textura", "objetos", data, num, "vacia");
 		if( tex_path.compare("vacia") != 0 ){
 			Textura* tex = new Textura();
-			float tex_escala = get_node("tex_escala", "objetos", data, num, 1.0f);
-			tex->generar(tex_path, tex_escala);
+			float tex_escalaX = get_node("tex_escalaX", "objetos", data, num, 1.0f);
+			float tex_escalaY = get_node("tex_escalaY", "objetos", data, num, 1.0f);
+			tex->generar(tex_path, tex_escalaX, tex_escalaY);
 			poli->setTex(tex);
 		}
 		figura = poli;

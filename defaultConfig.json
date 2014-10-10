@@ -118,7 +118,8 @@
 	    "color": "#A42050",
             "friccion": 0.2,
 	    	"textura": "imagenes/ladrillo.png",
-		"tex_escala": 0.8
+		"tex_escalaX": 0.8,
+		"tex_escalaX": 1.8
         },
 
 	{
@@ -159,7 +160,8 @@
 	    "color": "#A42050",
             "friccion": 0.2,
 	    	"textura": "imagenes/ladrillo.png",
-		"tex_escala": 0.8
+		"tex_escalaX": 0.8,
+		"tex_escalaY": 1.8
 
         },
 
@@ -174,7 +176,10 @@
             "ancho": 2,
             "masa": 1,
 	    "color": "#A42050",
-            "friccion": 0.2
+            "friccion": 0.2,
+	    	"textura": "imagenes/ladrillo.png",
+		"tex_escalaX": 0.6,
+		"tex_escalaY": 3.5
         },
 
 	{
@@ -244,7 +249,8 @@
 	    "color": "#1420B2",
             "friccion": 0.2,
 	    	"textura": "imagenes/sendero.png",
-		"tex_escala": 1.0
+		"tex_escalaX": 1.0,
+		"tex_escalaY": 1.0
         },
 
 	{
@@ -284,7 +290,8 @@
 	    "alto": 0.9,
             "friccion": 0.2,
 	    	"textura": "imagenes/sendero.png",
-		"tex_escala": 2.0
+		"tex_escalaX": 1.0,
+		"tex_escalaY": 2.0
         }
    ]
 }

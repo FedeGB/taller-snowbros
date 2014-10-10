@@ -30,7 +30,7 @@ public:
 
 		GLfloat vx[nVertices]; GLfloat vy[nVertices];
 
-		calcularVertices(vx, vy, nVertices, escala, angulo, Camera::WORLDTOWINDOWSCALE);
+		calcularVertices(vx, vy, nVertices, escala, escala, angulo, Camera::WORLDTOWINDOWSCALE);
 
 		int status;
 		if( _tex != NULL )
@@ -68,11 +68,11 @@ public:
 		_tex->mapearCoordenadas(this);
 	}
 
-	void calcularVertices(GLfloat* vx, GLfloat* vy, int nVertices, float esc, float ang, float worldtowindowscale){
+	void calcularVertices(GLfloat* vx, GLfloat* vy, int nVertices, float escX, float escY, float ang, float worldtowindowscale){
 		for (int i = 0; i < nVertices; i++) {
 			float thita = (2 * i * PI / nVertices) - (ang);
-			vx[i] = ( posicion.x + esc * cos(thita) ) * worldtowindowscale;
-			vy[i] = ( posicion.y - esc * sin(thita) ) * worldtowindowscale;
+			vx[i] = ( posicion.x + escX * cos(thita) ) * worldtowindowscale;
+			vy[i] = ( posicion.y - escY * sin(thita) ) * worldtowindowscale;
 		}
 	}
 

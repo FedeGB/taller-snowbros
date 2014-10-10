@@ -34,7 +34,7 @@ public:
 		// Calculo la posicion de los vertices.
 		GLfloat vx[4]; GLfloat vy[4];
 
-		calcularVertices(vx, vy, 4, 1.0f, angulo, Camera::WORLDTOWINDOWSCALE);
+		calcularVertices(vx, vy, 4, 1.0f, 1.0f, angulo, Camera::WORLDTOWINDOWSCALE);
 
 		int status;
 
@@ -71,7 +71,7 @@ public:
 		_tex->mapearCoordenadas(this);
 	}
 
-	void calcularVertices(GLfloat* vx, GLfloat* vy, int nVertices, float esc, float ang, float worldtowindowscale){
+	void calcularVertices(GLfloat* vx, GLfloat* vy, int nVertices, float escX, float escY, float ang, float worldtowindowscale){
 		float32 centroX = ( ( 2 * tapa * desplazamiento + base * desplazamiento + base * tapa + pow(base,2) + pow(tapa,2) ) / (3 * (base + tapa) ) );
 		float32 centroY = ( ( altura * (base + 2 * tapa ) ) / ( 3 * ( base + tapa ) ) );
 

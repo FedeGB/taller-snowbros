@@ -118,7 +118,7 @@ public:
 //		tex2 = t;
 //	}
 
-	virtual void calcularVertices(float* vx, float* vy, int nVertices, float escala, float angulo, float worldToWindowScale) {};
+	virtual void calcularVertices(float* vx, float* vy, int nVertices, float escalaX, float escalaY, float angulo, float worldToWindowScale) {};
 	virtual unsigned int getCantidadDeVertices(){ return 0; }
 
 protected:
