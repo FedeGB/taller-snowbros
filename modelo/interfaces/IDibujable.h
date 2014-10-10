@@ -24,7 +24,7 @@
 
 class IDibujable {
 public:
-	IDibujable() : dTextura(NULL), dRenderer(NULL){
+	IDibujable() : dTextura(NULL), dRenderer(NULL), s(NULL), t(NULL){
 		posicion.Set(0.0,0.0);
 		angulo = 0;
 		color = {255 , 0 , 0 , 255};
@@ -83,6 +83,11 @@ public:
 			SDL_DestroyTexture( dTextura );
 			dTextura = NULL;
 		}
+		if( s != NULL )
+			delete [] s;
+
+		if( t != NULL )
+			delete [] t;
 	}
 
 	// cada elemnto tiene que redefinir este metodo para devolver el recuadro a donde se va a dibujar la imagen
@@ -114,12 +119,11 @@ public:
 	float32 getAngulo(){ return angulo; }
 	void setAngulo(float32 a){ angulo = a;	}
 
-//	void setTex2(Textura* t){
-//		tex2 = t;
-//	}
-
 	virtual void calcularVertices(float* vx, float* vy, int nVertices, float escalaX, float escalaY, float angulo, float worldToWindowScale) {};
 	virtual unsigned int getCantidadDeVertices(){ return 0; }
+
+	virtual void setCoord_s(float* _s){ s = _s; }
+	virtual void setCoord_t(float* _t){ t =_t; }
 
 protected:
 	SDL_Texture* dTextura;
@@ -127,6 +131,9 @@ protected:
 	SDL_Color color;
 	b2Vec2 posicion;
 	float32 angulo;
+
+	float32* s;
+	float32* t;
 };
 
 

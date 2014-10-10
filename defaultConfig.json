@@ -32,13 +32,16 @@
             "estatico": true,
             "tipo": "rect",
             "x": 50,
-            "y": 25.5,
+            "y": 26.0,
             "rot": 0,
-            "alto": 1,
+            "alto": 2,
             "ancho": 100,
             "masa": 1,
-	    "color": "#5DB330",
-            "friccion": 0.5
+	    "color": "#5DB380",
+            "friccion": 0.5,
+	    	"textura": "imagenes/ladrillo.png",
+		"tex_escalaX": 18.8,
+		"tex_escalaY": 0.3
         },
 
 	{
@@ -90,7 +93,10 @@
             "ancho": 17.9,
             "masa": 1,
 	    "color": "#A42050",
-            "friccion": 0.2
+            "friccion": 0.2,
+	    	"textura": "imagenes/ladrillo.png",
+		"tex_escalaX": 3.5,
+		"tex_escalaY": 0.25
         },
 
 	{
@@ -116,10 +122,7 @@
             "ancho": 9,
             "masa": 1,
 	    "color": "#A42050",
-            "friccion": 0.2,
-	    	"textura": "imagenes/ladrillo.png",
-		"tex_escalaX": 0.8,
-		"tex_escalaX": 1.8
+            "friccion": 0.2
         },
 
 	{
@@ -158,10 +161,7 @@
             "ancho": 4,
             "masa": 1,
 	    "color": "#A42050",
-            "friccion": 0.2,
-	    	"textura": "imagenes/ladrillo.png",
-		"tex_escalaX": 0.8,
-		"tex_escalaY": 1.8
+            "friccion": 0.2
 
         },
 
@@ -239,7 +239,7 @@
             "estatico": false,
             "tipo": "poli",
             "x": 30.75,
-            "y": 4,
+            "y": 5,
             "rot": 65,
 	    "escala": 1.5,
             "alto": 0.5,
@@ -284,14 +284,15 @@
 	    "lados": 5,
             "masa": 100,
 	    "color": "#FF00FF",
-	    "base": 3.4,
+	    "base": 7.0,
 	    "tapa": 5.0,
-	    "desp": 2.0,
-	    "alto": 0.9,
+	    "desp": 1.0,
+	    "alto": 1.9,
             "friccion": 0.2,
 	    	"textura": "imagenes/sendero.png",
-		"tex_escalaX": 1.0,
-		"tex_escalaY": 2.0
+		"tex_escalaX": 1.8,
+		"tex_escalaY": 1.0
         }
    ]
 }
+

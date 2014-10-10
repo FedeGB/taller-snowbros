@@ -17,26 +17,19 @@
 class Textura {
 private:
 	GLuint _tex;
+//	GLfloat* s;
+//	GLfloat* t;
 
-	GLfloat* s;
-	GLfloat* t;
-
-	GLfloat escalaX, escalaY;
+//	GLfloat escalaX, escalaY;
 
 public:
 
-	Textura() : _tex(0), s(NULL) , t(NULL) , escalaX(1.0f), escalaY(1.0f){}
+	Textura() : _tex(0) {}
 	virtual ~Textura() {
 		glDeleteTextures(1, &_tex);
-		if ( s != NULL )
-			delete []s;
-		if( t != NULL )
-			delete []t;
 	}
 
-	void generar(std::string path, GLfloat escX, GLfloat escY) {
-
-		escalaX = escX; escalaY = escY;
+	void generar(std::string path) {
 
 		SDL_Surface *surface = NULL; // this surface will tell us the details of the image
 		surface = IMG_Load(path.c_str());
@@ -85,10 +78,10 @@ public:
 		glPixelStorei(GL_UNPACK_ROW_LENGTH, surface->w);
 
 		// Set the texture's stretching properties
-		glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-		glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+		glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
 
 		glTexImage2D(GL_TEXTURE_2D, 0, nofcolors, surface->w, surface->h, 0,
 				texture_format, GL_UNSIGNED_BYTE, surface->pixels);
@@ -101,7 +94,7 @@ public:
 		}
 	}
 
-	void dibujar(GLfloat* vx, GLfloat* vy, int n) {
+	void dibujar(GLfloat* vx, GLfloat* vy, float* s, float* t, int n) {
 
 		glPushMatrix();
 		glEnable(GL_TEXTURE_2D);
@@ -114,6 +107,7 @@ public:
 		glBegin( GL_POLYGON);
 
 		for( int i = 0; i < n; i++ ){
+//			printf("dibujar s[%i]: %0.3f t[%i]: %0.3f\n", i, s[i], i, t[i]);
 			glTexCoord2f(s[i], t[i]);
 			glVertex3f(vx[i], vy[i], 0);
 		}
@@ -127,14 +121,14 @@ public:
 		glPopMatrix();
 	}
 
-	void mapearCoordenadas(IDibujable* figura){
+	void mapearCoordenadas(IDibujable* figura, float escalaX, float escalaY){
 
 		GLint nVertices = figura->getCantidadDeVertices();
 //		printf("nVertices: %i\n", nVertices);
 		GLfloat vx[nVertices]; GLfloat vy[nVertices];
 
-		s = new GLfloat[nVertices];
-		t = new GLfloat[nVertices];
+		float* s = new float[nVertices];
+		float* t = new float[nVertices];
 
 		GLint i;
 		// genero unos vertices cualquiera para calcular las coordenadas
@@ -160,11 +154,10 @@ public:
 		for( i = 0; i < nVertices; i++ ){
 			s[i] = (vx[i] - ceroX) * escalaX / ancho;
 			t[i] = (vy[i] - ceroY) * escalaY / largo;
+//			printf("s[%i]: %0.3f t[%i]: %0.3f\n", i, s[i], i, t[i]);
 		}
-
-	}
-
-	void mapearCoordenadasRect(){
+		figura->setCoord_s(s);
+		figura->setCoord_t(t);
 
 	}
 };

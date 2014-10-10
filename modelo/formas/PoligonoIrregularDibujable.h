@@ -39,7 +39,7 @@ public:
 		int status;
 
 		if( _tex != NULL )
-			_tex->dibujar(vx, vy, 4);
+			_tex->dibujar(vx, vy, s, t, 4);
 		else{
 
 			Sint16 i_vx[4]; Sint16 i_vy[4];
@@ -66,9 +66,9 @@ public:
 	void setAltura(float32 h) {altura = h;}
 	void setDesplazamiento(float32 d) {desplazamiento = d;}
 
-	void setTex(Textura* t){
+	void setTex(Textura* t, float escalaX, float escalaY){
 		_tex = t;
-		_tex->mapearCoordenadas(this);
+		_tex->mapearCoordenadas(this, escalaX, escalaY);
 	}
 
 	void calcularVertices(GLfloat* vx, GLfloat* vy, int nVertices, float escX, float escY, float ang, float worldtowindowscale){

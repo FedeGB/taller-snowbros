@@ -7,6 +7,8 @@
 
 #include "Inicializador.h"
 
+std::map<std::string, Textura*>* texturas = NULL;
+
 bool loadInitialValues(std::string configFile, std::string& sConfig) {
 	Logger& log = *Logger::Instancia();
 	//abre el json y lo carga a un string
@@ -14,10 +16,12 @@ bool loadInitialValues(std::string configFile, std::string& sConfig) {
 	fConfig.open(configFile.c_str(), ios_base::in);
 	if (!fConfig.is_open()) {
 
-		log.log(MAINLOG,WARNING,"No se pudo encontrar o abrir el archivo de configuracion. Cargando mapa por defecto.");
+		log.log(MAINLOG, WARNING,
+				"No se pudo encontrar o abrir el archivo de configuracion. Cargando mapa por defecto.");
 		fConfig.open("defaultConfig.json", ios_base::in);
 		if (!fConfig.is_open()) {
-			log.log(MAINLOG,ERROR,"No se pudo encontrar o abrir el archivo de configuracion por defecto.");
+			log.log(MAINLOG, ERROR,
+					"No se pudo encontrar o abrir el archivo de configuracion por defecto.");
 			return false;
 		}
 	}
@@ -27,10 +31,12 @@ bool loadInitialValues(std::string configFile, std::string& sConfig) {
 	fConfig.close();
 
 	if (!parsingOk(sConfig)) {
-		log.log(MAINLOG,WARNING,"Hubo un problema al parsear el archivo de configuracion provisto. Cargando mapa por defecto.");
+		log.log(MAINLOG, WARNING,
+				"Hubo un problema al parsear el archivo de configuracion provisto. Cargando mapa por defecto.");
 		fConfig.open("defaultConfig.json", ios_base::in);
 		if (!fConfig.is_open()) {
-			log.log(MAINLOG,ERROR,"No se pudo encontrar o abrir el archivo de configuracion por defecto.");
+			log.log(MAINLOG, ERROR,
+					"No se pudo encontrar o abrir el archivo de configuracion por defecto.");
 			return false;
 		}
 		std::string newStr((std::istreambuf_iterator<char>(fConfig)),
@@ -46,7 +52,8 @@ bool windowInit(Window ** w, int widthScreen, int heightScreen, float wRatio,
 		float hRatio, std::string path_fondo) {
 
 	*w = new Window();
-	bool statusOK = (*w)->init(widthScreen, heightScreen, wRatio, hRatio, path_fondo);
+	bool statusOK = (*w)->init(widthScreen, heightScreen, wRatio, hRatio,
+			path_fondo);
 	return statusOK;
 }
 
@@ -59,7 +66,8 @@ void worldInit(b2World ** worldB2D, ContactListener * contactListener) {
 	return;
 }
 
-Personaje * pjInit(Window ** w, b2World ** worldB2D,  HandlerDeEventos * wHandlerEventos, std::string data) {
+Personaje * pjInit(Window ** w, b2World ** worldB2D,
+		HandlerDeEventos * wHandlerEventos, std::string data) {
 
 	Logger& log = *Logger::Instancia();
 
@@ -76,9 +84,11 @@ Personaje * pjInit(Window ** w, b2World ** worldB2D,  HandlerDeEventos * wHandle
 	float32 altoMaximo = get_node("alto-un", "escenario", data, 10.0f);
 
 	// si la posicion del persona esta fuera del escenario, entonces lo posicionamos en el medio
-	if( (pj_x > anchoMaximo) | (pj_y > altoMaximo) ){
-		log.log(WINDOWLOG,WARNING,"No se puede inicializar al personaje fuera del escenario. Seteado por default al medio del escenario.");
-		pj_x = ( anchoMaximo * 0.5 ); pj_y = ( altoMaximo * 0.5 );
+	if ((pj_x > anchoMaximo) | (pj_y > altoMaximo)) {
+		log.log(WINDOWLOG, WARNING,
+				"No se puede inicializar al personaje fuera del escenario. Seteado por default al medio del escenario.");
+		pj_x = (anchoMaximo * 0.5);
+		pj_y = (altoMaximo * 0.5);
 	}
 
 	b2dObjDef.position.Set(pj_x, pj_y);
@@ -95,25 +105,26 @@ Personaje * pjInit(Window ** w, b2World ** worldB2D,  HandlerDeEventos * wHandle
 	float32 halfWidth = get_node("ancho", "personaje", data, 1.2f) / 2;
 	polygon.SetAsBox(halfWidth, halfHeight); //le doy dimensiones
 	myFixtureDef.shape = &polygon; //defino que es un poligono
-	myFixtureDef.density =  get_node("masa", "personaje", data, 20.0f); //le doy masa
+	myFixtureDef.density = get_node("masa", "personaje", data, 20.0f); //le doy masa
 	myFixtureDef.restitution = 0.0f;
-	myFixtureDef.friction=0.0;
+	myFixtureDef.friction = 0.0;
 	b2Fixture * bodyFixture = pjB2D->CreateFixture(&myFixtureDef); //le asigno la forma
-	bodyFixture->SetUserData( (void*)0 );
+	bodyFixture->SetUserData((void*) 0);
 
-    // Agrego el sensor para saltos
-    polygon.SetAsBox(0.8 * halfWidth, 0.3f, b2Vec2(0.0f,halfHeight), 0);
+	// Agrego el sensor para saltos
+	polygon.SetAsBox(0.8 * halfWidth, 0.3f, b2Vec2(0.0f, halfHeight), 0);
 	myFixtureDef.shape = &polygon; //defino que es un poligono
-    myFixtureDef.isSensor = true;
+	myFixtureDef.isSensor = true;
 	myFixtureDef.density = 1.0f; //le doy masa
 	myFixtureDef.restitution = 0.0f;
-    b2Fixture* footSensorFixture = pjB2D->CreateFixture(&myFixtureDef);
-    footSensorFixture->SetUserData( (void*)3 );
+	b2Fixture* footSensorFixture = pjB2D->CreateFixture(&myFixtureDef);
+	footSensorFixture->SetUserData((void*) 3);
 
 	Personaje * personaje = new Personaje();
-	if(!personaje) {
+	if (!personaje) {
 
-		log.log(WINDOWLOG,ERROR, "No se pudo asignar memoria para el personaje.");
+		log.log(WINDOWLOG, ERROR,
+				"No se pudo asignar memoria para el personaje.");
 		return NULL;
 	}
 
@@ -124,11 +135,15 @@ Personaje * pjInit(Window ** w, b2World ** worldB2D,  HandlerDeEventos * wHandle
 	personaje->setB2DBody(pjB2D);
 
 	(*w)->insertarFigura(personaje);
-	personaje->cargarImagen( get_node("sprite-sheet", "personaje", data, "imagenes/playerSpritesheet.png") );
+	personaje->cargarImagen(
+			get_node("sprite-sheet", "personaje", data,
+					"imagenes/playerSpritesheet.png"));
 
-	Observador<Personaje>* observadorPersonaje = new Observador<Personaje>( personaje );
-	if(!observadorPersonaje) {
-		log.log(WINDOWLOG,ERROR,"No se pudo asignar memoria para el observador de personaje.");
+	Observador<Personaje>* observadorPersonaje = new Observador<Personaje>(
+			personaje);
+	if (!observadorPersonaje) {
+		log.log(WINDOWLOG, ERROR,
+				"No se pudo asignar memoria para el observador de personaje.");
 		return NULL;
 	}
 	wHandlerEventos->agregarObservador(observadorPersonaje);
@@ -149,7 +164,8 @@ int num_lados(std::string data) {
 		return 0;
 }
 
-Camera * cameraInit(b2World ** worldB2D, HandlerDeEventos * wHandlerEventos, b2Vec2 position, float32 windowWidth, float32 windowHeight){
+Camera * cameraInit(b2World ** worldB2D, HandlerDeEventos * wHandlerEventos,
+		b2Vec2 position, float32 windowWidth, float32 windowHeight) {
 
 	Logger& log = *Logger::Instancia();
 
@@ -175,28 +191,27 @@ Camera * cameraInit(b2World ** worldB2D, HandlerDeEventos * wHandlerEventos, b2V
 	float32 halfHeight = (windowHeight / 2) * 0.05f;
 	polygon.SetAsBox(halfWidth, halfHeight); //le doy dimensiones
 	myFixtureDef.shape = &polygon; //defino que es un poligono
-    myFixtureDef.isSensor = true;
+	myFixtureDef.isSensor = true;
 
 	b2Fixture * bodyFixture = cameraB2D->CreateFixture(&myFixtureDef); //le asigno la forma
-	bodyFixture->SetUserData( (void*)4 );
-
+	bodyFixture->SetUserData((void*) 4);
 
 	Camera * camera = new Camera(windowWidth, windowHeight, 0.05f);
-	if(!camera) {
-		log.log(WINDOWLOG,ERROR, "No se pudo asignar memoria para la camara.");
+	if (!camera) {
+		log.log(WINDOWLOG, ERROR, "No se pudo asignar memoria para la camara.");
 		return NULL;
 	}
 
 	cameraB2D->SetUserData(camera);
 	camera->setB2DBody(cameraB2D);
 
-	Observador<Camera>* observadorCamera = new Observador<Camera>( camera );
-	if(!observadorCamera) {
-		log.log(WINDOWLOG,ERROR,"No se pudo asignar memoria para el observador de camara.");
+	Observador<Camera>* observadorCamera = new Observador<Camera>(camera);
+	if (!observadorCamera) {
+		log.log(WINDOWLOG, ERROR,
+				"No se pudo asignar memoria para el observador de camara.");
 		return NULL;
 	}
 	wHandlerEventos->agregarObservador(observadorCamera);
-
 
 	return camera;
 }
@@ -209,7 +224,9 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 	b2CircleShape circle;
 	b2PolygonShape poligon;
 	IDibujable * figura;
+
 	std::string tex_path;
+//	std::map<std::string, Textura*>* texturas = new std::map<std::string, Textura*>();
 
 	if (get_node("estatico", "objetos", data, num, false))
 		b2dObjDef.type = b2_staticBody;
@@ -234,7 +251,10 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 	switch (lados) { //dependiendo del numero de lados
 
 	case 0: //0 es error
-		log.log(SHAPESLOG,ERROR,"El tipo de forma '" + get_node("tipo", "objetos", data, num,"rect") + "' no existe.");
+		log.log(SHAPESLOG, ERROR,
+				"El tipo de forma '"
+						+ get_node("tipo", "objetos", data, num, "rect")
+						+ "' no existe.");
 		(*wB2D)->DestroyBody(_shape);
 		return NULL;
 
@@ -259,13 +279,24 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 		// Determina el tipo de figura para poder dibujarla.
 		RectanguloDibujable * rect = new RectanguloDibujable();
 		rect->setDimensiones(halfHeight * 2, halfWidth * 2);
+
 		tex_path = get_node("textura", "objetos", data, num, "vacia");
-		if( tex_path.compare("vacia") != 0 ){
-			Textura* tex = new Textura();
+		Textura* tex = NULL;
+	// chequeo si tiene textura asignada
+		if ( tex_path.compare("vacia") != 0) {
+		// me fijo si ya esta creada en memoria la textura
+			if (texturas->count(tex_path) == 0 ) {
+			// si NO esta creada, la creo y la agrego al map de texturas
+				tex = new Textura;
+				tex->generar(tex_path);
+				(*texturas)[ tex_path ] = tex;
+			}else
+			// si esta creada, se la asigno al nuevo objeto
+				tex = (*texturas)[tex_path];
+
 			float tex_escalaX = get_node("tex_escalaX", "objetos", data, num, 1.0f);
 			float tex_escalaY = get_node("tex_escalaY", "objetos", data, num, 1.0f);
-			tex->generar(tex_path, tex_escalaX, tex_escalaY);
-			rect->setTex(tex);
+			rect->setTex(tex, tex_escalaX, tex_escalaY);
 		}
 
 		figura = rect;
@@ -296,13 +327,25 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 		poli->setAltura(alto);
 		poli->setDesplazamiento(desp);
 		tex_path = get_node("textura", "objetos", data, num, "vacia");
-		if( tex_path.compare("vacia") != 0 ){
-			Textura* tex = new Textura();
+
+		Textura* tex = NULL;
+	// chequeo si tiene textura asignada
+		if ( tex_path.compare("vacia") != 0) {
+		// me fijo si ya esta creada en memoria la textura
+			if (texturas->count(tex_path) == 0 ) {
+			// si NO esta creada, la creo y la agrego al map de texturas
+				tex = new Textura;
+				tex->generar(tex_path);
+				(*texturas)[ tex_path ] = tex;
+			}else
+			// si esta creada, se la asigno al nuevo objeto
+				tex = (*texturas)[tex_path];
+
 			float tex_escalaX = get_node("tex_escalaX", "objetos", data, num, 1.0f);
 			float tex_escalaY = get_node("tex_escalaY", "objetos", data, num, 1.0f);
-			tex->generar(tex_path, tex_escalaX, tex_escalaY);
-			poli->setTex(tex);
+			poli->setTex(tex, tex_escalaX, tex_escalaY);
 		}
+
 		figura = poli;
 		break;
 	}
@@ -326,13 +369,24 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 		poli->setNumVertices(lados);
 		poli->setEscala(escala);
 		tex_path = get_node("textura", "objetos", data, num, "vacia");
-		if( tex_path.compare("vacia") != 0 ){
-			Textura* tex = new Textura();
+		Textura* tex = NULL;
+		// chequeo si tiene textura asignada
+		if ( tex_path.compare("vacia") != 0) {
+		// me fijo si ya esta creada en memoria la textura
+			if (texturas->count(tex_path) == 0 ) {
+			// si NO esta creada, la creo y la agrego al map de texturas
+				tex = new Textura;
+				tex->generar(tex_path);
+				(*texturas)[ tex_path ] = tex;
+			}else
+			// si esta creada, se la asigno al nuevo objeto
+				tex = (*texturas)[tex_path];
+
 			float tex_escalaX = get_node("tex_escalaX", "objetos", data, num, 1.0f);
 			float tex_escalaY = get_node("tex_escalaY", "objetos", data, num, 1.0f);
-			tex->generar(tex_path, tex_escalaX, tex_escalaY);
-			poli->setTex(tex);
+			poli->setTex(tex, tex_escalaX, tex_escalaY);
 		}
+
 		figura = poli;
 		break;
 
@@ -345,8 +399,10 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 	}
 	myFixtureDef.friction = get_node("friccion", "objetos", data, num, 0.3f);
 	b2Fixture * shapeFixture = _shape->CreateFixture(&myFixtureDef); //le asigno la forma
-	if (b2dObjDef.type == b2_dynamicBody) shapeFixture->SetUserData((void*) 1);
-	else shapeFixture->SetUserData((void*) 2);
+	if (b2dObjDef.type == b2_dynamicBody)
+		shapeFixture->SetUserData((void*) 1);
+	else
+		shapeFixture->SetUserData((void*) 2);
 
 	// Determina los parametros basicos de la figura.
 
@@ -361,21 +417,23 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 	return _shape;
 }
 
-void checkBoundsAndOverlap(b2World ** worldB2D, float32 widthWorld, float32 heightWorld){
+void checkBoundsAndOverlap(b2World ** worldB2D, float32 widthWorld,
+		float32 heightWorld) {
 
 	Logger& log = *Logger::Instancia();
 
 	bool overlap;
 	b2Body *b = (*worldB2D)->GetBodyList();
-	while (b){
-		if(b->GetPosition().x > widthWorld || b->GetPosition().y > heightWorld
-				|| b->GetPosition().x < 0.0 || b->GetPosition().y < 0.0){
+	while (b) {
+		if (b->GetPosition().x > widthWorld || b->GetPosition().y > heightWorld
+				|| b->GetPosition().x < 0.0 || b->GetPosition().y < 0.0) {
 
 			ostringstream message;   // stream used for the conversion
-			message << "El objeto en la posicion " << b->GetPosition().x << "," <<
-					b->GetPosition().y << " se encuentra fuera del mapa. Borrado.";
+			message << "El objeto en la posicion " << b->GetPosition().x << ","
+					<< b->GetPosition().y
+					<< " se encuentra fuera del mapa. Borrado.";
 
-			log.log(WINDOWLOG,WARNING,message.str());
+			log.log(WINDOWLOG, WARNING, message.str());
 
 			(*worldB2D)->DestroyBody(b);
 			b = (*worldB2D)->GetBodyList();
@@ -391,10 +449,10 @@ void checkBoundsAndOverlap(b2World ** worldB2D, float32 widthWorld, float32 heig
 			if (overlap) {
 
 				ostringstream message;
-				message << "Objeto en la posicion " << b->GetPosition().x << "," <<
-						b->GetPosition().y << " borrado por solapamiento.";
+				message << "Objeto en la posicion " << b->GetPosition().x << ","
+						<< b->GetPosition().y << " borrado por solapamiento.";
 
-				log.log(WINDOWLOG,WARNING,message.str());
+				log.log(WINDOWLOG, WARNING, message.str());
 
 				(*worldB2D)->DestroyBody(b);
 				b = (*worldB2D)->GetBodyList();
@@ -402,18 +460,19 @@ void checkBoundsAndOverlap(b2World ** worldB2D, float32 widthWorld, float32 heig
 				break;
 			}
 		}
-		if (!skip) b = b->GetNext();
+		if (!skip)
+			b = b->GetNext();
 	}
 }
 
-void addWorldBorders(b2World ** worldB2D, float32 widthWorld, float32 heightWorld){
+void addWorldBorders(b2World ** worldB2D, float32 widthWorld,
+		float32 heightWorld) {
 
 	Logger& log = *Logger::Instancia();
 
 	b2BodyDef b2dObjDef;
 	b2FixtureDef myFixtureDef;
 	b2PolygonShape polygon;
-
 
 	b2dObjDef.type = b2_staticBody;
 
@@ -425,33 +484,40 @@ void addWorldBorders(b2World ** worldB2D, float32 widthWorld, float32 heightWorl
 	b2Body * upperBorderB2D = (*worldB2D)->CreateBody(&b2dObjDef);
 
 	//le doy forma
-	polygon.SetAsBox(widthWorld / 2, 0.5f, b2Vec2(0.0f,0.0f), 0);
+	polygon.SetAsBox(widthWorld / 2, 0.5f, b2Vec2(0.0f, 0.0f), 0);
 	myFixtureDef.shape = &polygon; //defino que es un poligono
 	myFixtureDef.isSensor = true;
 	b2Fixture* fixture = upperBorderB2D->CreateFixture(&myFixtureDef);
-	fixture->SetUserData( (void*)7 );
+	fixture->SetUserData((void*) 7);
 
 	b2dObjDef.position.Set(widthWorld / 2, heightWorld + 0.5f);
 	b2Body * bottomBorderB2D = (*worldB2D)->CreateBody(&b2dObjDef);
 	fixture = bottomBorderB2D->CreateFixture(&myFixtureDef);
-	fixture->SetUserData( (void*)8 );
+	fixture->SetUserData((void*) 8);
 
 	b2dObjDef.position.Set(-0.5f, heightWorld / 2);
 	b2Body * leftBorderB2D = (*worldB2D)->CreateBody(&b2dObjDef);
-	polygon.SetAsBox(0.5f, heightWorld / 2, b2Vec2(0.0f,0.0f), 0);
+	polygon.SetAsBox(0.5f, heightWorld / 2, b2Vec2(0.0f, 0.0f), 0);
 	myFixtureDef.shape = &polygon;
 	fixture = leftBorderB2D->CreateFixture(&myFixtureDef);
-	fixture->SetUserData( (void*)5 );
+	fixture->SetUserData((void*) 5);
 
 	b2dObjDef.position.Set(widthWorld + 0.5f, heightWorld / 2);
 	b2Body * rightBorderB2D = (*worldB2D)->CreateBody(&b2dObjDef);
 	fixture = rightBorderB2D->CreateFixture(&myFixtureDef);
-	fixture->SetUserData( (void*)6 );
+	fixture->SetUserData((void*) 6);
 
 }
 
-bool Inicializador::init(std::string configFile, Window ** w, b2World ** worldB2D,
-		ContactListener * contactListener, HandlerDeEventos * wHandlerEventos) {
+bool Inicializador::init(std::string configFile, Window ** w,
+		b2World ** worldB2D, ContactListener * contactListener,
+		HandlerDeEventos * wHandlerEventos) {
+
+	if ( texturas != NULL ){
+		delete texturas;
+	}
+	texturas = new std::map<std::string, Textura*>();
+
 
 	Logger& log = *Logger::Instancia();
 	std::string sConfig;
@@ -472,7 +538,8 @@ bool Inicializador::init(std::string configFile, Window ** w, b2World ** worldB2
 	float heightRatio = heightScreen / heightWorld;
 	float widthRatio = widthScreen / widthWorld;
 
-	statusOK = windowInit(w, widthScreen, heightScreen, widthRatio, heightRatio, path_fondo);
+	statusOK = windowInit(w, widthScreen, heightScreen, widthRatio, heightRatio,
+			path_fondo);
 
 	worldInit(worldB2D, contactListener);
 
@@ -487,17 +554,18 @@ bool Inicializador::init(std::string configFile, Window ** w, b2World ** worldB2
 		createObject(sConfig, w, worldB2D, i);
 	}
 
+//	printf("texturas creadas: %i\n", texturas->size());
+
 	checkBoundsAndOverlap(worldB2D, widthWorld, heightWorld);
 
-
-
-	Camera * camera = cameraInit(worldB2D, wHandlerEventos, pj->getPosicion(), widthScreen, heightScreen);
+	Camera * camera = cameraInit(worldB2D, wHandlerEventos, pj->getPosicion(),
+			widthScreen, heightScreen);
 
 	(*w)->setCamera(camera);
 
 	addWorldBorders(worldB2D, widthWorld, heightWorld);
 
-	log.log(MAINLOG,OK,"Se ha inicializado correctamente el mundo.");
+	log.log(MAINLOG, OK, "Se ha inicializado correctamente el mundo.");
 
 	return true;
 }

@@ -14,6 +14,7 @@ class PoligonoRegularDibujable: public IDibujable {
 private:
 	int nVertices;
 	float32 escala;
+
 	Textura* _tex;
 
 public:
@@ -34,7 +35,7 @@ public:
 
 		int status;
 		if( _tex != NULL )
-			_tex->dibujar(vx, vy, nVertices);
+			_tex->dibujar(vx, vy, s, t, nVertices);
 		else{
 			Sint16 i_vx[nVertices]; Sint16 i_vy[nVertices];
 			// convierto los vertices de float a short para que la funcion "filledPolygonRGBA" los tome
@@ -63,9 +64,9 @@ public:
 		escala = e;
 	}
 
-	void setTex(Textura* t){
+	void setTex(Textura* t, float escalaX, float escalaY){
 		_tex = t;
-		_tex->mapearCoordenadas(this);
+		_tex->mapearCoordenadas(this, escalaX, escalaY);
 	}
 
 	void calcularVertices(GLfloat* vx, GLfloat* vy, int nVertices, float escX, float escY, float ang, float worldtowindowscale){

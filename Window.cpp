@@ -104,8 +104,6 @@ bool Window::updateWindow(b2World * worldB2D) {
 
 	background->render();
 
-//	textura->dibujar();
-
 	camera->renderVisibleObjects();
 
 	SDL_GL_SwapWindow(window);

@@ -38,7 +38,7 @@ public:
 		calcularVertices(vx, vy, 4, 1.0f, 1.0f, angulo, Camera::WORLDTOWINDOWSCALE);
 
 		if( _tex != NULL)
-			_tex->dibujar(vx, vy, 4);
+			_tex->dibujar(vx, vy, s, t, 4);
 		else{
 			Sint16 i_vx[4]; Sint16 i_vy[4];
 			// convierto los vertices de float a short para que la funcion "filledPolygonRGBA" los tome
@@ -97,9 +97,9 @@ public:
 
 	GLuint getCantidadDeVertices() { return 4; }
 
-	void setTex(Textura* t){
+	void setTex(Textura* t, float escalaX, float escalaY){
 		_tex = t;
-		_tex->mapearCoordenadas(this);
+		_tex->mapearCoordenadas(this, escalaX, escalaY);
 	}
 };
 
