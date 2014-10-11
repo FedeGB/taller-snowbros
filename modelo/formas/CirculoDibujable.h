@@ -8,10 +8,15 @@
 #include "../interfaces/IDibujable.h"
 #include "../../vista/Camera.h"
 
+#include "../Textura.h"
+
 class CirculoDibujable: public IDibujable {
 private:
 
 	float32 radio;
+
+	Textura* _tex;
+	GLuint nVertices; // nivel de detalle del circulo
 
 	int arcoMarca() {
 
@@ -34,14 +39,14 @@ private:
 	}
 
 public:
-	CirculoDibujable() {
+	CirculoDibujable() : _tex(NULL), nVertices(20) {
 		radio = 1.0;
 	}
 	virtual ~CirculoDibujable() {}
 
 	virtual void render() {
 		// Se redefine distinto, usa el renderer directo
-		int status;
+		int status = 0;
 
 		Sint16 posX = posicion.x * Camera::WORLDTOWINDOWSCALE;
 		Sint16 posY = posicion.y * Camera::WORLDTOWINDOWSCALE;
@@ -49,24 +54,33 @@ public:
 		Sint16 radY = radio * Camera::WORLDTOWINDOWSCALE;
 
 
-		status = filledEllipseRGBA(dRenderer, posX, posY, radX, radY, color.r, color.g, color.b, color.a);
-		if(status != 0) {
-			Logger& log = * Logger::Instancia();
-			if(!log.abrirLog(DIBUJABLELOG)) {
-				std::string err(SDL_GetError());
-				log.escribirLog(WARNING, "No se renderizo el circulo "+err);
-				log.cerrarLog();
-				return;
-			}
+		if( _tex != NULL ){
+			GLfloat* vx = new GLfloat[nVertices]; GLfloat* vy = new GLfloat[nVertices];
+
+			calcularVertices(vx, vy, nVertices, radio, radio, angulo, Camera::WORLDTOWINDOWSCALE);
+
+			_tex->dibujar(vx, vy, s, t, nVertices);
 		}
-		status = arcoMarca();
-		if(status != 0) {
-			Logger& log = * Logger::Instancia();
-			if(!log.abrirLog(DIBUJABLELOG)) {
-				std::string err(SDL_GetError());
-				log.escribirLog(WARNING, "No se renderizo la marca del circulo "+err);
-				log.cerrarLog();
-				return;
+		else {
+			status = filledEllipseRGBA(dRenderer, posX, posY, radX, radY, color.r, color.g, color.b, color.a);
+			if(status != 0) {
+				Logger& log = * Logger::Instancia();
+				if(log.abrirLog(DIBUJABLELOG)) {
+					std::string err(SDL_GetError());
+					log.escribirLog(WARNING, "No se renderizo el circulo "+err);
+					log.cerrarLog();
+					return;
+				}
+			}
+			status = arcoMarca();
+			if(status != 0) {
+				Logger& log = * Logger::Instancia();
+				if(log.abrirLog(DIBUJABLELOG)) {
+					std::string err(SDL_GetError());
+					log.escribirLog(WARNING, "No se renderizo la marca del circulo "+err);
+					log.cerrarLog();
+					return;
+				}
 			}
 		}
 
@@ -76,7 +90,20 @@ public:
 		radio = r;
 	}
 
-	void calcularVertices(float* vx, float* vy, int nVertices) {}
+	GLuint getCantidadDeVertices() { return nVertices; }
+
+	void setTex(Textura* t, float escalaX, float escalaY){
+		_tex = t;
+		_tex->mapearCoordenadas(this, escalaX, escalaY);
+	}
+
+	void calcularVertices(float* vx, float* vy, int nVertices, float escX, float escY, float ang, float worldtowindowscale) {
+		for (int i = 0; i < nVertices; i++) {
+			float thita = (2 * i * PI / nVertices) - (ang);
+			vx[i] = ( posicion.x + escX * cos(thita) ) * worldtowindowscale;
+			vy[i] = ( posicion.y - escY * sin(thita) ) * worldtowindowscale;
+		}
+	}
 };
 
 

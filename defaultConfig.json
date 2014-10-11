@@ -41,7 +41,7 @@
             "friccion": 0.5,
 	    	"textura": "imagenes/ladrillo.png",
 		"tex_escalaX": 18.8,
-		"tex_escalaY": 0.3
+		"tex_escalaY": 0.5
         },
 
 	{
@@ -265,11 +265,10 @@
 	    "lados": 5,
             "masa": 4,
 	    "color": "#1420B2",
-	    "base": 2.4,
-	    "tapa": 3.0,
-	    "desp": 0.3,
-	    "alto": 1.5,
-            "friccion": 0.2
+            "friccion": 0.2,
+	    	"textura": "imagenes/pelota.png",
+		"tex_escalaX": 1.0,
+		"tex_escalaY": 1.0
         },
 
 	{
@@ -286,13 +285,12 @@
 	    "color": "#FF00FF",
 	    "base": 7.0,
 	    "tapa": 5.0,
-	    "desp": 1.0,
+	    "desp": 4.0,
 	    "alto": 1.9,
             "friccion": 0.2,
 	    	"textura": "imagenes/sendero.png",
-		"tex_escalaX": 1.8,
+		"tex_escalaX": 2.4,
 		"tex_escalaY": 1.0
         }
    ]
 }
-

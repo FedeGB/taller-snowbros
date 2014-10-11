@@ -29,14 +29,13 @@ public:
 	~RectanguloDibujable() { }
 
 	virtual void render() {
-
 		// Se redefine distinto, usa el renderer directo
-		int status;
 
 		GLfloat vx[4]; GLfloat vy[4];
 		// Calcula las coordenadas en X e Y segun la posicion, el tamaño, y la rotacion del rectangulo.
 		calcularVertices(vx, vy, 4, 1.0f, 1.0f, angulo, Camera::WORLDTOWINDOWSCALE);
 
+		int status = 0;
 		if( _tex != NULL)
 			_tex->dibujar(vx, vy, s, t, 4);
 		else{
@@ -50,7 +49,7 @@ public:
 
 		if(status != 0) {
 			Logger& log = * Logger::Instancia();
-			if(!log.abrirLog(DIBUJABLELOG)) {
+			if(log.abrirLog(DIBUJABLELOG)) {
 				std::string err(SDL_GetError());
 				log.escribirLog(WARNING, "No se renderizo el poligono "+err);
 				log.cerrarLog();
@@ -73,6 +72,11 @@ public:
 		return halfWidth * 2;
 	}
 
+	void setTex(Textura* t, float escalaX, float escalaY){
+		_tex = t;
+		_tex->mapearCoordenadas(this, escalaX, escalaY);
+	}
+
 	void calcularVertices(float* vx, float* vy, int nVertices, float escX, float escY, float ang, float worldtowindowscale) {
 		float modulo = sqrt( pow(halfWidth, 2) + pow(halfHeight, 2) );
 		float thita = ang + atan( halfHeight / halfWidth );
@@ -82,13 +86,11 @@ public:
 		float xaux2 = modulo * cos(thita2);
 		float yaux2 = modulo * sin(thita2);
 
-//		Sint16 * vx = new Sint16[4];
 		vx[0] = (posicion.x - xaux) * worldtowindowscale;
 		vx[1] = (posicion.x + xaux2) * worldtowindowscale;
 		vx[2] = (posicion.x + xaux) * worldtowindowscale;
 		vx[3] = (posicion.x - xaux2) * worldtowindowscale;
 
-//		Sint16 * vy = new Sint16[4];
 		vy[0] = (posicion.y - yaux) * worldtowindowscale;
 		vy[1] = (posicion.y - yaux2) * worldtowindowscale;
 		vy[2] = (posicion.y + yaux) * worldtowindowscale;
@@ -96,11 +98,6 @@ public:
 	}
 
 	GLuint getCantidadDeVertices() { return 4; }
-
-	void setTex(Textura* t, float escalaX, float escalaY){
-		_tex = t;
-		_tex->mapearCoordenadas(this, escalaX, escalaY);
-	}
 };
 
 #endif /* RECTANGULO_H_ */

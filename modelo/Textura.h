@@ -17,10 +17,6 @@
 class Textura {
 private:
 	GLuint _tex;
-//	GLfloat* s;
-//	GLfloat* t;
-
-//	GLfloat escalaX, escalaY;
 
 public:
 
@@ -29,29 +25,26 @@ public:
 		glDeleteTextures(1, &_tex);
 	}
 
-	void generar(std::string path) {
+	bool generar(std::string path) {
 
+		bool exito = true;
 		SDL_Surface *surface = NULL; // this surface will tell us the details of the image
 		surface = IMG_Load(path.c_str());
 
 		if (surface == NULL){
-			printf("SDL could not load image.bmp: %s\n", SDL_GetError());
-			return;
-		}
-
-		// Check that the image's width is a power of 2
-		if ((surface->w & (surface->w - 1)) != 0) {
-			printf("warning: image.bmp's width is not a power of 2\n");
-		}
-
-		// Also check if the height is a power of 2
-		if ((surface->h & (surface->h - 1)) != 0) {
-			printf("warning: image.bmp's height is not a power of 2\n");
+			Logger& log = * Logger::Instancia();
+			if(log.abrirLog(TEXTURALOG)) {
+				std::string err(SDL_GetError());
+				log.escribirLog(WARNING, "No se pudo crear la textura '"+ path+"' : "+err+". Se rellena la figura con color.");
+				log.cerrarLog();
+			}else
+				std::cout << "NO SE PUDO ABRIR EL LOG " << TEXTURALOG << "." << std::endl;
+			return !exito;
 		}
 
 		GLenum texture_format;
 		GLint nofcolors = surface->format->BytesPerPixel;
-		//contains an alpha channel
+		// seteo los parametros para la funcion glTexImage2D
 		if (nofcolors == 4) {
 			if (surface->format->Rmask == 0x000000ff)
 				texture_format = GL_RGBA;
@@ -64,9 +57,14 @@ public:
 			else
 				texture_format = GL_BGR;
 		} else {
-			printf(
-			//TODO escribir error en el log
-					"la imagen no es RGB\n");
+			Logger& log = * Logger::Instancia();
+			if(log.abrirLog(TEXTURALOG)) {
+				std::string err(SDL_GetError());
+				log.escribirLog(WARNING, "La imagen '"+ path+"' no es RGB. No se puede generar la textura. Se rellena la figura con color.");
+				log.cerrarLog();
+			}else
+				std::cout << "NO SE PUDO ABRIR EL LOG " << TEXTURALOG << "." << std::endl;
+			return !exito;
 		}
 
 		// Have OpenGL generate a texture object handle for us
@@ -92,6 +90,8 @@ public:
 		if (surface) {
 			SDL_FreeSurface(surface);
 		}
+
+		return exito;
 	}
 
 	void dibujar(GLfloat* vx, GLfloat* vy, float* s, float* t, int n) {
@@ -107,7 +107,6 @@ public:
 		glBegin( GL_POLYGON);
 
 		for( int i = 0; i < n; i++ ){
-//			printf("dibujar s[%i]: %0.3f t[%i]: %0.3f\n", i, s[i], i, t[i]);
 			glTexCoord2f(s[i], t[i]);
 			glVertex3f(vx[i], vy[i], 0);
 		}
@@ -124,7 +123,6 @@ public:
 	void mapearCoordenadas(IDibujable* figura, float escalaX, float escalaY){
 
 		GLint nVertices = figura->getCantidadDeVertices();
-//		printf("nVertices: %i\n", nVertices);
 		GLfloat vx[nVertices]; GLfloat vy[nVertices];
 
 		float* s = new float[nVertices];
@@ -147,14 +145,10 @@ public:
 		GLfloat ancho = mayorX - menorX;
 		GLfloat largo = mayorY - menorY;
 
-		GLfloat ceroX = vx[0];
-		GLfloat ceroY = vy[0];
-
 		// calculo las coordenadas
 		for( i = 0; i < nVertices; i++ ){
-			s[i] = (vx[i] - ceroX) * escalaX / ancho;
-			t[i] = (vy[i] - ceroY) * escalaY / largo;
-//			printf("s[%i]: %0.3f t[%i]: %0.3f\n", i, s[i], i, t[i]);
+			s[i] =  (vx[i] - menorX)* escalaX / ancho;
+			t[i] =  (vy[i] - menorY)* escalaY / largo;
 		}
 		figura->setCoord_s(s);
 		figura->setCoord_t(t);

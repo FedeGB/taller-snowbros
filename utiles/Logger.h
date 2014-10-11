@@ -20,6 +20,7 @@
 #define PARSERLOG "log/Parser.log"
 #define MAINLOG "log/Main.log"
 #define SHAPESLOG "log/shapes.log"
+#define TEXTURALOG "log/textura.log"
 
 #define WARNING "WAR"
 #define ERROR "ERR"

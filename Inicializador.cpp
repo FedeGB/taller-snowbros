@@ -266,6 +266,27 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 		// Determina el tipo de figura para poder dibujarla.
 		CirculoDibujable * circ = new CirculoDibujable();
 		circ->setRadio(circle.m_radius);
+
+		tex_path = get_node("textura", "objetos", data, num, "vacia");
+		Textura* tex = NULL;
+	// chequeo si tiene textura asignada
+		if ( tex_path.compare("vacia") != 0) {
+		// me fijo si ya esta creada en memoria la textura
+			if (texturas->count(tex_path) == 0 ) {
+			// si NO esta creada, la creo y la agrego al map de texturas
+				tex = new Textura;
+				if ( !tex->generar(tex_path) )
+					tex = NULL;
+				(*texturas)[ tex_path ] = tex;
+			}else
+			// si esta creada, se la asigno al nuevo objeto
+				tex = (*texturas)[tex_path];
+
+			float tex_escalaX = get_node("tex_escalaX", "objetos", data, num, 1.0f);
+			float tex_escalaY = get_node("tex_escalaY", "objetos", data, num, 1.0f);
+			circ->setTex(tex, tex_escalaX, tex_escalaY);
+		}
+
 		figura = circ;
 		break;
 	}
@@ -288,7 +309,8 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 			if (texturas->count(tex_path) == 0 ) {
 			// si NO esta creada, la creo y la agrego al map de texturas
 				tex = new Textura;
-				tex->generar(tex_path);
+				if ( !tex->generar(tex_path) )
+					tex = NULL;
 				(*texturas)[ tex_path ] = tex;
 			}else
 			// si esta creada, se la asigno al nuevo objeto
@@ -335,7 +357,8 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 			if (texturas->count(tex_path) == 0 ) {
 			// si NO esta creada, la creo y la agrego al map de texturas
 				tex = new Textura;
-				tex->generar(tex_path);
+				if ( !tex->generar(tex_path) )
+					tex = NULL;
 				(*texturas)[ tex_path ] = tex;
 			}else
 			// si esta creada, se la asigno al nuevo objeto
@@ -376,7 +399,8 @@ b2Body * createObject(std::string data, Window ** w, b2World ** wB2D, int num) {
 			if (texturas->count(tex_path) == 0 ) {
 			// si NO esta creada, la creo y la agrego al map de texturas
 				tex = new Textura;
-				tex->generar(tex_path);
+				if ( !tex->generar(tex_path) )
+					tex = NULL;
 				(*texturas)[ tex_path ] = tex;
 			}else
 			// si esta creada, se la asigno al nuevo objeto

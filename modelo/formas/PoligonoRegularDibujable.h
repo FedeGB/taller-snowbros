@@ -27,16 +27,16 @@ public:
 
 	virtual void render() {
 
-		// Calculo la posicion de los vertices.
-
 		GLfloat vx[nVertices]; GLfloat vy[nVertices];
 
+		// Calculo la posicion de los vertices.
 		calcularVertices(vx, vy, nVertices, escala, escala, angulo, Camera::WORLDTOWINDOWSCALE);
 
-		int status;
+		int status = 0;
 		if( _tex != NULL )
 			_tex->dibujar(vx, vy, s, t, nVertices);
 		else{
+
 			Sint16 i_vx[nVertices]; Sint16 i_vy[nVertices];
 			// convierto los vertices de float a short para que la funcion "filledPolygonRGBA" los tome
 			for( int i = 0; i < nVertices; i++ ) {
@@ -47,7 +47,7 @@ public:
 
 		if(status != 0) {
 			Logger& log = * Logger::Instancia();
-			if(!log.abrirLog(DIBUJABLELOG)) {
+			if(log.abrirLog(DIBUJABLELOG)) {
 				std::string err(SDL_GetError());
 				log.escribirLog(WARNING, "No se renderizo el poligono "+err);
 				log.cerrarLog();

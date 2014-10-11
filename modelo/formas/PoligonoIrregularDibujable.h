@@ -36,8 +36,7 @@ public:
 
 		calcularVertices(vx, vy, 4, 1.0f, 1.0f, angulo, Camera::WORLDTOWINDOWSCALE);
 
-		int status;
-
+		int status = 0;
 		if( _tex != NULL )
 			_tex->dibujar(vx, vy, s, t, 4);
 		else{
@@ -52,7 +51,7 @@ public:
 
 		if(status != 0) {
 			Logger& log = * Logger::Instancia();
-			if(!log.abrirLog(DIBUJABLELOG)) {
+			if(log.abrirLog(DIBUJABLELOG)) {
 				std::string err(SDL_GetError());
 				log.escribirLog(WARNING, "No se renderizo el poligono "+err);
 				log.cerrarLog();
