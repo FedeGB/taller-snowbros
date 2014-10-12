@@ -21,9 +21,10 @@
 #include "DispatchThread.h"
 #include <iostream>
 
-int isNumber(char* string);
+int isNumber(const char* string);
 bool file_exist( string f);
 bool ipValid(string ip);
+bool isValidIPNumber(string token);
 
 int main(int argc, char** argv)
 {
@@ -166,7 +167,7 @@ int main(int argc, char** argv)
     exit(0);
 }
 
-int isNumber(char* string) {
+int isNumber(const char* string) {
 	std::string var;
 	if(!string) {
 		return 0;
@@ -198,12 +199,21 @@ bool ipValid(string ip){
 	while (token != temp){
 		token = temp.substr(0,temp.find_first_of("."));
 		temp = temp.substr(temp.find_first_of(".") + 1);
-		n=token.length();
-		std::cout<<token;
-		for(int i=0;i<n;i++){
-			if(!isdigit(token[i]))
-				return false;
+		if(!isValidIPNumber(token)) {
+			return false;
 		}
+	}
+	return true;
+}
+
+bool isValidIPNumber(string token) {
+	if(isNumber(token.c_str())) {
+		int number = atoi(token.c_str());
+		if (number < 0 || number > 255) {
+			return false;
+		}
+	} else {
+		return false;
 	}
 	return true;
 }
