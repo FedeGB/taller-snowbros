@@ -32,8 +32,6 @@ int main(int argc, char** argv)
     opt = cflag = pflag = iflag = port = 0;
     std::string path (" "); // path al config
     std::string ip (""); // IP en el que escucha.
-    ip="192.168.0.1";
-        	if(!ipValid(ip))
 
     while( (opt = getopt(argc, argv, "c:p:i:")) != -1 ) {
        	switch(opt) {
@@ -89,7 +87,7 @@ int main(int argc, char** argv)
     if (!cflag) {
      	printf("No se especifico archivo de configuracion\n");
        	// Seteando archivo default
-       	path = "default.conf";
+       	path = "defaultConfig.json";
     }
     if (!file_exist(path)){
       //  printf("no existe el archivo: ",path," de configuracion, el programa terminara\n");
