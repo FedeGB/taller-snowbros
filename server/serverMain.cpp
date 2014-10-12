@@ -25,6 +25,7 @@ int isNumber(const char* string);
 bool file_exist( string f);
 bool ipValid(string ip);
 bool isValidIPNumber(string token);
+bool isValidPort(int puerto);
 
 int main(int argc, char** argv)
 {
@@ -98,12 +99,17 @@ int main(int argc, char** argv)
     if (!pflag) {
        printf("No se especifico puerto con el comando -p\n");
        return -1;
+    } else {
+    	if(!isValidPort(port)) {
+    		printf("El puerto %d no es valido, ingrese un puerto entre 1024 y 49151\n", port);
+    		return -1;
+    	}
     }
 
     if (iflag) {
     	if(!ipValid(ip)){
     		printf("la ip ingresada es invalida\n");
-    		ip="";
+    		return -1;
     	}
     }
 
@@ -192,7 +198,6 @@ bool file_exist(const string  f){
 }
 
 bool ipValid(string ip){
-	int n = 0;
 	if(ip.length()<8 || ip.length()>16)
 		return false;
 	string token ,temp=ip;
@@ -213,6 +218,13 @@ bool isValidIPNumber(string token) {
 			return false;
 		}
 	} else {
+		return false;
+	}
+	return true;
+}
+
+bool isValidPort(int puerto) {
+	if(puerto < 1024 || puerto > 49151) {
 		return false;
 	}
 	return true;
