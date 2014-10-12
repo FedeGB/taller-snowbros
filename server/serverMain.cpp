@@ -100,10 +100,9 @@ int main(int argc, char** argv)
 
     if (iflag) {
     	if(!ipValid(ip)){
-    		printf("la ip ingresada es invalida");
+    		printf("la ip ingresada es invalida\n");
     		ip="";
     	}
-    	// TODO: Verificar formato ip valida
     }
 
     //TODO: Cargar el json y el world.
