@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <ctype.h>
+#include <fstream>
 #include <string>
 #include "../Threads/Thread.h"
 #include "ColaTrabajo.h"
@@ -18,10 +19,10 @@
 #include "WorldHandler.h"
 #include <list>
 #include "DispatchThread.h"
-#include "ctype.h"
+#include <iostream>
 
 int isNumber(char* string);
-bool file_exist(const string f);
+bool file_exist( string f);
 bool ipValid(string ip);
 
 int main(int argc, char** argv)
@@ -31,6 +32,8 @@ int main(int argc, char** argv)
     opt = cflag = pflag = iflag = port = 0;
     std::string path (" "); // path al config
     std::string ip (""); // IP en el que escucha.
+    ip="192.168.0.1";
+        	if(!ipValid(ip))
 
     while( (opt = getopt(argc, argv, "c:p:i:")) != -1 ) {
        	switch(opt) {
@@ -89,7 +92,7 @@ int main(int argc, char** argv)
        	path = "default.conf";
     }
     if (!file_exist(path)){
-        printf("no existe el archivo: ",path," de configuracion, el programa terminara\n");
+      //  printf("no existe el archivo: ",path," de configuracion, el programa terminara\n");
         return -1;
     }
 
@@ -180,7 +183,7 @@ int isNumber(char* string) {
 	return 1;
 }
 
-bool file_exists(const string  f){
+bool file_exist(const string  f){
     ifstream file;
     file.open(f.c_str());
     if(file.fail())
@@ -190,16 +193,18 @@ bool file_exists(const string  f){
 }
 
 bool ipValid(string ip){
+	int n = 0;
 	if(ip.length()<8 || ip.length()>16)
 		return false;
 	string token ,temp=ip;
-	while(token != ip){
+	while (token != temp){
 		token = temp.substr(0,temp.find_first_of("."));
 		temp = temp.substr(temp.find_first_of(".") + 1);
-		int num;
-		num = atoi( temp.c_str() );
-		if (temp == 0 ){
-			return false;
+		n=token.length();
+		std::cout<<token;
+		for(int i=0;i<n;i++){
+			if(!isdigit(token[i]))
+				return false;
 		}
 	}
 	return true;
