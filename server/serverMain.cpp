@@ -18,9 +18,11 @@
 #include "WorldHandler.h"
 #include <list>
 #include "DispatchThread.h"
+#include "ctype.h"
 
 int isNumber(char* string);
 bool file_exist(const string f);
+bool ipValid(string ip);
 
 int main(int argc, char** argv)
 {
@@ -97,6 +99,10 @@ int main(int argc, char** argv)
     }
 
     if (iflag) {
+    	if(!ipValid(ip)){
+    		printf("la ip ingresada es invalida");
+    		ip="";
+    	}
     	// TODO: Verificar formato ip valida
     }
 
@@ -184,3 +190,18 @@ bool file_exists(const string  f){
     return true;
 }
 
+bool ipValid(string ip){
+	if(ip.length()<8 || ip.length()>16)
+		return false;
+	string token ,temp=ip;
+	while(token != ip){
+		token = temp.substr(0,temp.find_first_of("."));
+		temp = temp.substr(temp.find_first_of(".") + 1);
+		int num;
+		num = atoi( temp.c_str() );
+		if (temp == 0 ){
+			return false;
+		}
+	}
+	return true;
+}
