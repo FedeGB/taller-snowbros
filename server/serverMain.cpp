@@ -20,6 +20,7 @@
 #include "DispatchThread.h"
 
 int isNumber(char* string);
+bool file_exist(const string f);
 
 int main(int argc, char** argv)
 {
@@ -82,11 +83,12 @@ int main(int argc, char** argv)
 
     if (!cflag) {
      	printf("No se especifico archivo de configuracion\n");
-       	// TODO: Verificar que este el archivo default
        	// Seteando archivo default
        	path = "default.conf";
-    } else {
-       // TODO: Verificar validez de path a config
+    }
+    if (!file_exist(path)){
+        printf("no existe el archivo: ",path," de configuracion, el programa terminara\n");
+        return -1;
     }
 
     if (!pflag) {
@@ -171,5 +173,14 @@ int isNumber(char* string) {
 		}
 	}
 	return 1;
+}
+
+bool file_exists(const string  f){
+    ifstream file;
+    file.open(f.c_str());
+    if(file.fail())
+        return false;
+    file.close();
+    return true;
 }
 
