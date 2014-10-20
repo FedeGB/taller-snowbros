@@ -11,18 +11,17 @@
 #include <SDL2/SDL_opengl.h>
 #include "../utiles/tipos.h"
 
-#include "interfaces/IDibujable.h"
 #include "../vista/Camera.h"
 
 class Textura {
 private:
-	GLuint _tex;
+	GLuint id_tex;
 
 public:
 
-	Textura() : _tex(0) {}
+	Textura() :id_tex(0) {}
 	virtual ~Textura() {
-		glDeleteTextures(1, &_tex);
+		glDeleteTextures(1, &id_tex);
 	}
 
 	bool generar(std::string path) {
@@ -68,10 +67,10 @@ public:
 		}
 
 		// Have OpenGL generate a texture object handle for us
-		glGenTextures(1, &_tex);
+		glGenTextures(1, &id_tex);
 
 		// Bind the texture object
-		glBindTexture(GL_TEXTURE_2D, _tex);
+		glBindTexture(GL_TEXTURE_2D, id_tex);
 
 		glPixelStorei(GL_UNPACK_ROW_LENGTH, surface->w);
 
@@ -101,7 +100,7 @@ public:
 		glEnable( GL_BLEND );
 
 		// Bind the texture to which subsequent calls refer to
-		glBindTexture( GL_TEXTURE_2D, _tex);
+		glBindTexture( GL_TEXTURE_2D, id_tex);
 
 		glBegin( GL_POLYGON);
 

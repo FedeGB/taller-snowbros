@@ -10,22 +10,20 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL2_gfxPrimitives.h>
-#include "../interfaces/IDibujable.h"
-//#include "../../control/interfaces/INotificable.h"
+//#include "../interfaces/IDibujable.h"
+#include "../interfaces/ITexturizable.h"
 #include "../../vista/Camera.h"
 
 #include "../Textura.h"
 
-class RectanguloDibujable: public IDibujable {
+class RectanguloDibujable: public ITexturizable{
 
 protected:
 	float32 halfHeight, halfWidth;
 
-	Textura* _tex;
-
 public:
 
-	RectanguloDibujable() : _tex(NULL){	halfHeight = 0; halfWidth = 0;}
+	RectanguloDibujable() {	halfHeight = 0; halfWidth = 0;}
 	~RectanguloDibujable() { }
 
 	virtual void render() {
@@ -64,11 +62,6 @@ public:
 
 	float32 getWidth(){
 		return halfWidth * 2;
-	}
-
-	void setTex(Textura* t, float escalaX, float escalaY){
-		_tex = t;
-		_tex->mapearCoordenadas(this, escalaX, escalaY);
 	}
 
 	void calcularVertices(float* vx, float* vy, int nVertices, float escX, float escY, float ang, float worldtowindowscale) {

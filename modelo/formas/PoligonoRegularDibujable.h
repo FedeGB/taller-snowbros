@@ -4,24 +4,22 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL2_gfxPrimitives.h>
 #include "../../utiles/Logger.h"
-#include "../interfaces/IDibujable.h"
+//#include "../interfaces/IDibujable.h"
+#include "../interfaces/ITexturizable.h"
 #include "../../vista/Camera.h"
 
 #include "../Textura.h"
 
-class PoligonoRegularDibujable: public IDibujable {
+class PoligonoRegularDibujable: public ITexturizable{
 
 private:
 	int nVertices;
 	float32 escala;
 
-	Textura* _tex;
-
 public:
 	PoligonoRegularDibujable() {
 		nVertices = 5;
 		escala = 1;
-		_tex = NULL;
 	}
 	~PoligonoRegularDibujable() { }
 
@@ -55,11 +53,6 @@ public:
 
 	void setEscala(float32 e){
 		escala = e;
-	}
-
-	void setTex(Textura* t, float escalaX, float escalaY){
-		_tex = t;
-		_tex->mapearCoordenadas(this, escalaX, escalaY);
 	}
 
 	void calcularVertices(GLfloat* vx, GLfloat* vy, int nVertices, float escX, float escY, float ang, float worldtowindowscale){

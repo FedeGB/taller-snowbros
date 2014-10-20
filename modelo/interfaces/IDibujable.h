@@ -10,7 +10,6 @@
 
 #include <SDL2/SDL.h>
 
-
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
@@ -26,7 +25,7 @@
 
 class IDibujable {
 public:
-	IDibujable() : dTextura(NULL), dRenderer(NULL), s(NULL), t(NULL){
+	IDibujable() : dTextura(NULL), dRenderer(NULL){
 		posicion.Set(0.0,0.0);
 		angulo = 0;
 		color = {255 , 0 , 0 , 255};
@@ -85,11 +84,6 @@ public:
 			SDL_DestroyTexture( dTextura );
 			dTextura = NULL;
 		}
-		if( s != NULL )
-			delete [] s;
-
-		if( t != NULL )
-			delete [] t;
 	}
 
 	// cada elemnto tiene que redefinir este metodo para devolver el recuadro a donde se va a dibujar la imagen
@@ -124,12 +118,11 @@ public:
 	virtual void calcularVertices(float* vx, float* vy, int nVertices, float escalaX, float escalaY, float angulo, float worldToWindowScale) {};
 	virtual unsigned int getCantidadDeVertices(){ return 0; }
 
-	virtual void setCoord_s(float* _s){ s = _s; }
-	virtual void setCoord_t(float* _t){ t =_t; }
+	virtual void setCoord_s(float* _s){}
+	virtual void setCoord_t(float* _t){}
 
 	virtual bool dibujarV(float* vx, float* vy, int n, Uint8 r, Uint8 g, Uint8 b, Uint8 a){
 
-//		printf("holanda\n");
 		glPushMatrix();
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable( GL_BLEND );
@@ -177,9 +170,6 @@ protected:
 	SDL_Color color;
 	b2Vec2 posicion;
 	float32 angulo;
-
-	float32* s;
-	float32* t;
 };
 
 

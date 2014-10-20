@@ -4,12 +4,12 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL2_gfxPrimitives.h>
 #include "../../utiles/Logger.h"
-#include "../interfaces/IDibujable.h"
+#include "../interfaces/ITexturizable.h"
 #include "../../vista/Camera.h"
 
 #include "../Textura.h"
 
-class PoligonoIrregularDibujable: public IDibujable {
+class PoligonoIrregularDibujable: public ITexturizable {
 
 private:
 	float32 base;
@@ -17,15 +17,12 @@ private:
 	float32 altura;
 	float32 desplazamiento;
 
-	Textura* _tex;
-
 public:
 	PoligonoIrregularDibujable() {
 		base = 1;
 		tapa = 1;
 		altura = 1;
 		desplazamiento = 0;
-		_tex = NULL;
 	}
 	~PoligonoIrregularDibujable() { }
 
@@ -57,11 +54,6 @@ public:
 	void setTapa(float32 t) {tapa = t;}
 	void setAltura(float32 h) {altura = h;}
 	void setDesplazamiento(float32 d) {desplazamiento = d;}
-
-	void setTex(Textura* t, float escalaX, float escalaY){
-		_tex = t;
-		_tex->mapearCoordenadas(this, escalaX, escalaY);
-	}
 
 	void calcularVertices(GLfloat* vx, GLfloat* vy, int nVertices, float escX, float escY, float ang, float worldtowindowscale){
 		float32 centroX = ( ( 2 * tapa * desplazamiento + base * desplazamiento + base * tapa + pow(base,2) + pow(tapa,2) ) / (3 * (base + tapa) ) );
