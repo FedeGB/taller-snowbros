@@ -215,6 +215,8 @@ void Personaje::render(){
 
 	float32 Yaux = width * sin(angle) * Camera::WORLDTOWINDOWSCALE, Xaux = width * cos(angle) * Camera::WORLDTOWINDOWSCALE;
 	float32 modifiedAngle = atan(Yaux/Xaux) * RADTODEG;
+
+	glColor3f(1,1,1);
 	SDL_RenderCopyEx( dRenderer, dTextura, &activeSprite, &pos, modifiedAngle, NULL, flip);
 }
 
