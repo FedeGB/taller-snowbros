@@ -95,7 +95,6 @@ public:
 	}
 
 	void dibujar(GLfloat* vx, GLfloat* vy, float* s, float* t, int n) {
-
 		glPushMatrix();
 		glEnable(GL_TEXTURE_2D);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

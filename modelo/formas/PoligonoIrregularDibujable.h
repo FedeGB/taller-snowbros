@@ -39,15 +39,8 @@ public:
 		int status = 0;
 		if( _tex != NULL )
 			_tex->dibujar(vx, vy, s, t, 4);
-		else{
-
-			Sint16 i_vx[4]; Sint16 i_vy[4];
-			// convierto los vertices de float a short para que la funcion "filledPolygonRGBA" los tome
-			for( int i = 0; i < 4; i++ ) {
-				i_vx[i] = (short) vx[i]; i_vy[i] = (short) vy[i];
-			}
-			status = filledPolygonRGBA(dRenderer, i_vx, i_vy, 4, color.r, color.g, color.b, color.a);
-		}
+		else
+			dibujarV(vx, vy, 4, color.r, color.g, color.b, color.a);
 
 		if(status != 0) {
 			Logger& log = * Logger::Instancia();

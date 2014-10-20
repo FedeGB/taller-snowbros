@@ -16,6 +16,8 @@
 
 #include <Box2D/Box2D.h>
 
+#include <SDL2/SDL_opengl.h>
+
 #include <string>
 #include <sstream>
 
@@ -124,6 +126,50 @@ public:
 
 	virtual void setCoord_s(float* _s){ s = _s; }
 	virtual void setCoord_t(float* _t){ t =_t; }
+
+	virtual bool dibujarV(float* vx, float* vy, int n, Uint8 r, Uint8 g, Uint8 b, Uint8 a){
+
+//		printf("holanda\n");
+		glPushMatrix();
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable( GL_BLEND );
+
+		glColor4ub(r, g, b, a);
+
+		glBegin(GL_POLYGON);
+
+		for( int i = 0; i < n; i++ ){
+			glVertex3f(vx[i], vy[i], 0);
+		}
+
+		glEnd();
+		glFlush();
+
+		glDisable( GL_BLEND );
+
+		glPopMatrix();
+	}
+
+	virtual bool dibujarLineas(float* vx, float* vy, int n, Uint8 r, Uint8 g, Uint8 b, Uint8 a){
+		glPushMatrix();
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable( GL_BLEND );
+
+		glColor4ub(r, g, b, a);
+
+		glBegin(GL_LINES);
+
+		for( int i = 0; i < n; i++ ){
+			glVertex3f(vx[i], vy[i], 0);
+		}
+
+		glEnd();
+		glFlush();
+
+		glDisable( GL_BLEND );
+
+		glPopMatrix();
+	}
 
 protected:
 	SDL_Texture* dTextura;

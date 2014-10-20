@@ -2,7 +2,7 @@
 #define CIRCULODIBUJABLE_H_
 
 #include <SDL2/SDL.h>
-#include <SDL2/SDL2_gfxPrimitives.h>
+//#include <SDL2/SDL2_gfxPrimitives.h>
 #include "../../utiles/Logger.h"
 #include <math.h>
 #include "../interfaces/IDibujable.h"
@@ -20,22 +20,22 @@ private:
 
 	int arcoMarca() {
 
-		float32 ratio = ( Camera::WORLDTOWINDOWSCALE < Camera::WORLDTOWINDOWSCALE ? Camera::WORLDTOWINDOWSCALE : Camera::WORLDTOWINDOWSCALE );
-
-		Sint16 radioArco  = (Sint16)(radio*0.4 * ratio);
-		Uint8 newRed = 255 - color.r;
-		Uint8 newGreen = 255 - color.g;
-		Uint8 newBlue = 255 - color.b;
-		int32 anguloInit = RADTODEG * this->angulo;
-		if(anguloInit > 360) {
-			anguloInit -= 360;
-		}
-		int32 anguloEnd = anguloInit + 70;
-
-		Sint16 posX = posicion.x * Camera::WORLDTOWINDOWSCALE;
-		Sint16 posY = posicion.y * Camera::WORLDTOWINDOWSCALE;
-
-		return arcRGBA(dRenderer, posX, posY, radioArco, anguloInit, anguloEnd, newRed, newGreen, newBlue, color.a);
+//		float32 ratio = ( Camera::WORLDTOWINDOWSCALE < Camera::WORLDTOWINDOWSCALE ? Camera::WORLDTOWINDOWSCALE : Camera::WORLDTOWINDOWSCALE );
+//
+//		Sint16 radioArco  = (Sint16)(radio*0.4 * ratio);
+//		Uint8 newRed = 255 - color.r;
+//		Uint8 newGreen = 255 - color.g;
+//		Uint8 newBlue = 255 - color.b;
+//		int32 anguloInit = RADTODEG * this->angulo;
+//		if(anguloInit > 360) {
+//			anguloInit -= 360;
+//		}
+//		int32 anguloEnd = anguloInit + 70;
+//
+//		Sint16 posX = posicion.x * Camera::WORLDTOWINDOWSCALE;
+//		Sint16 posY = posicion.y * Camera::WORLDTOWINDOWSCALE;
+//
+//		return arcRGBA(dRenderer, posX, posY, radioArco, anguloInit, anguloEnd, newRed, newGreen, newBlue, color.a);
 	}
 
 public:
@@ -46,44 +46,23 @@ public:
 
 	virtual void render() {
 		// Se redefine distinto, usa el renderer directo
-		int status = 0;
+		GLfloat vx[nVertices]; GLfloat vy[nVertices];
 
-		Sint16 posX = posicion.x * Camera::WORLDTOWINDOWSCALE;
-		Sint16 posY = posicion.y * Camera::WORLDTOWINDOWSCALE;
-		Sint16 radX = radio * Camera::WORLDTOWINDOWSCALE;
-		Sint16 radY = radio * Camera::WORLDTOWINDOWSCALE;
-
+		calcularVertices(vx, vy, nVertices, radio, radio, angulo, Camera::WORLDTOWINDOWSCALE);
 
 		if( _tex != NULL ){
-			GLfloat* vx = new GLfloat[nVertices]; GLfloat* vy = new GLfloat[nVertices];
-
-			calcularVertices(vx, vy, nVertices, radio, radio, angulo, Camera::WORLDTOWINDOWSCALE);
-
 			_tex->dibujar(vx, vy, s, t, nVertices);
 		}
 		else {
-			status = filledEllipseRGBA(dRenderer, posX, posY, radX, radY, color.r, color.g, color.b, color.a);
-			if(status != 0) {
-				Logger& log = * Logger::Instancia();
-				if(log.abrirLog(DIBUJABLELOG)) {
-					std::string err(SDL_GetError());
-					log.escribirLog(WARNING, "No se renderizo el circulo "+err);
-					log.cerrarLog();
-					return;
-				}
-			}
-			status = arcoMarca();
-			if(status != 0) {
-				Logger& log = * Logger::Instancia();
-				if(log.abrirLog(DIBUJABLELOG)) {
-					std::string err(SDL_GetError());
-					log.escribirLog(WARNING, "No se renderizo la marca del circulo "+err);
-					log.cerrarLog();
-					return;
-				}
-			}
-		}
+			dibujarV(vx, vy, nVertices, color.r, color.g, color.b, color.a);
 
+			GLfloat vx_linea[2]; GLfloat vy_linea[2];
+
+			vx_linea[0] = vx[0]; vy_linea[0] = vy[0];
+			vx_linea[1] = vx[nVertices/2]; vy_linea[1] = vy[nVertices/2];
+
+			dibujarLineas(vx_linea, vy_linea, 2, color.g, color.b, color.r, color.a);
+		}
 	}
 
 	void setRadio(float32 r) {
