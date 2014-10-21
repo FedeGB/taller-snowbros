@@ -9,6 +9,8 @@
 #include "utiles/Logger.h"
 #include "vista/Fondo.h"
 #include "vista/Camera.h"
+#include "modelo/Vidas.h"
+#include "modelo/Puntaje.h"
 
 class Window {
 
@@ -18,6 +20,8 @@ private:
 	SDL_GLContext ctx;
 	Fondo * background;
 	Camera * camera;
+	Vidas* vidas;
+	Puntaje* puntaje;
 
 	//Escenario* wEscenario;
 	//HandlerDeEventos wHandlerEventos;

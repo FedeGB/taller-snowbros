@@ -23,12 +23,15 @@
 #include "../../utiles/Logger.h"
 #include "../../utiles/tipos.h"
 
+
 class IDibujable {
 public:
 	IDibujable() : dTextura(NULL), dRenderer(NULL){
 		posicion.Set(0.0,0.0);
 		angulo = 0;
 		color = {255 , 0 , 0 , 255};
+		fijo = false;
+		escalaFija = 10;
 	};
 	virtual ~IDibujable()
 	{
@@ -164,12 +167,22 @@ public:
 		glPopMatrix();
 	}
 
+	virtual void setFijo(bool f){
+		fijo = f;
+	}
+	virtual void setEscalaCamara(float e){
+		escalaFija = e;
+	}
+
 protected:
 	SDL_Texture* dTextura;
 	SDL_Renderer* dRenderer;
 	SDL_Color color;
 	b2Vec2 posicion;
 	float32 angulo;
+
+	float escalaFija;
+	bool fijo;
 };
 
 

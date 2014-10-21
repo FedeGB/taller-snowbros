@@ -2,13 +2,9 @@
 #define POLIGONODIBUJABLE_H
 
 #include <SDL2/SDL.h>
-#include <SDL2/SDL2_gfxPrimitives.h>
 #include "../../utiles/Logger.h"
-//#include "../interfaces/IDibujable.h"
 #include "../interfaces/ITexturizable.h"
 #include "../../vista/Camera.h"
-
-#include "../Textura.h"
 
 class PoligonoRegularDibujable: public ITexturizable{
 

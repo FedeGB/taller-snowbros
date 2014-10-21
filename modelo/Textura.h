@@ -9,6 +9,7 @@
 #define TEXTURA_H_
 
 #include <SDL2/SDL_opengl.h>
+#include <SDL2/SDL_ttf.h>
 #include "../utiles/tipos.h"
 
 #include "../vista/Camera.h"
@@ -21,6 +22,10 @@ public:
 
 	Textura() :id_tex(0) {}
 	virtual ~Textura() {
+		eliminar();
+	}
+
+	void eliminar(){
 		glDeleteTextures(1, &id_tex);
 	}
 
@@ -29,6 +34,77 @@ public:
 		bool exito = true;
 		SDL_Surface *surface = NULL; // this surface will tell us the details of the image
 		surface = IMG_Load(path.c_str());
+
+		if (surface == NULL){
+			Logger& log = * Logger::Instancia();
+			if(log.abrirLog(TEXTURALOG)) {
+				std::string err(SDL_GetError());
+				log.escribirLog(WARNING, "No se pudo crear la textura '"+ path+"' : "+err+". Se rellena la figura con color.");
+				log.cerrarLog();
+			}else
+				std::cout << "NO SE PUDO ABRIR EL LOG " << TEXTURALOG << "." << std::endl;
+			return !exito;
+		}
+
+		GLenum texture_format;
+		GLint nofcolors = surface->format->BytesPerPixel;
+		// seteo los parametros para la funcion glTexImage2D
+		if (nofcolors == 4) {
+			if (surface->format->Rmask == 0x000000ff)
+				texture_format = GL_RGBA;
+			else
+				texture_format = GL_BGRA;
+		} else if (nofcolors == 3) //no alpha channel
+				{
+			if (surface->format->Rmask == 0x000000ff)
+				texture_format = GL_RGB;
+			else
+				texture_format = GL_BGR;
+		} else {
+			Logger& log = * Logger::Instancia();
+			if(log.abrirLog(TEXTURALOG)) {
+				std::string err(SDL_GetError());
+				log.escribirLog(WARNING, "La imagen '"+ path+"' no es RGB. No se puede generar la textura. Se rellena la figura con color.");
+				log.cerrarLog();
+			}else
+				std::cout << "NO SE PUDO ABRIR EL LOG " << TEXTURALOG << "." << std::endl;
+			return !exito;
+		}
+
+		// Have OpenGL generate a texture object handle for us
+		glGenTextures(1, &id_tex);
+
+		// Bind the texture object
+		glBindTexture(GL_TEXTURE_2D, id_tex);
+
+		glPixelStorei(GL_UNPACK_ROW_LENGTH, surface->w);
+
+		// Set the texture's stretching properties
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+		glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+
+		glTexImage2D(GL_TEXTURE_2D, 0, nofcolors, surface->w, surface->h, 0,
+				texture_format, GL_UNSIGNED_BYTE, surface->pixels);
+
+		glBindTexture( GL_TEXTURE_2D, 0);
+
+		// Free the SDL_Surface only if it was successfully created
+		if (surface) {
+			SDL_FreeSurface(surface);
+		}
+
+		return exito;
+	}
+
+	bool generarTexto(std::string path, int tamanio, std::string txt, SDL_Color color) {
+
+		TTF_Font* fuente = TTF_OpenFont(path.c_str(), tamanio);
+
+		bool exito = true;
+		SDL_Surface *surface = NULL; // this surface will tell us the details of the image
+		surface = TTF_RenderText_Blended(fuente, txt.c_str(), color);
 
 		if (surface == NULL){
 			Logger& log = * Logger::Instancia();

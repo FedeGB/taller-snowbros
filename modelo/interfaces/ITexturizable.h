@@ -34,6 +34,7 @@ public:
 
 protected:
 	Textura* _tex;
+	std::string path;
 
 	float32* s;
 	float32* t;

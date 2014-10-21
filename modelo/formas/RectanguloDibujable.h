@@ -9,12 +9,8 @@
 #define RECTANGULO_H_
 
 #include <SDL2/SDL.h>
-#include <SDL2/SDL2_gfxPrimitives.h>
-//#include "../interfaces/IDibujable.h"
 #include "../interfaces/ITexturizable.h"
 #include "../../vista/Camera.h"
-
-#include "../Textura.h"
 
 class RectanguloDibujable: public ITexturizable{
 
@@ -24,14 +20,17 @@ protected:
 public:
 
 	RectanguloDibujable() {	halfHeight = 0; halfWidth = 0;}
-	~RectanguloDibujable() { }
+	~RectanguloDibujable() {}
 
 	virtual void render() {
 		// Se redefine distinto, usa el renderer directo
 
 		GLfloat vx[4]; GLfloat vy[4];
 		// Calcula las coordenadas en X e Y segun la posicion, el tamaño, y la rotacion del rectangulo.
-		calcularVertices(vx, vy, 4, 1.0f, 1.0f, angulo, Camera::WORLDTOWINDOWSCALE);
+		if( fijo )
+			calcularVertices(vx, vy, 4, 1.0f, 1.0f, angulo, escalaFija);
+		else
+			calcularVertices(vx, vy, 4, 1.0f, 1.0f, angulo, Camera::WORLDTOWINDOWSCALE);
 
 		int status = 0;
 		if( _tex != NULL)

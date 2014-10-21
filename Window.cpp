@@ -5,42 +5,6 @@
 
 float Window::wRatio, Window::hRatio;
 
-void dibujarTEX(unsigned int* tex) {
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_CULL_FACE);
-	glEnable(GL_DEPTH_TEST);
-
-	glPushMatrix();
-
-	static float spin = 0;
-	spin++;
-
-	glTranslatef(300, 300, 0);
-	glRotatef(spin, 0.0, 0.0, 1.0);
-
-	glColor3f(1, 0.6, 0);
-
-	glBindTexture(GL_TEXTURE_2D, *tex);
-	printf("render id: %u direccion: %p spin: %f\n", *tex, tex, spin);
-
-	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);
-	glVertex3f(-200, -100, 0);
-	glTexCoord2f(1, 0);
-	glVertex3f(-100, 100, 0);
-	glTexCoord2f(1, 1);
-	glVertex3f(100, 100, 0);
-	glTexCoord2f(0, 1);
-	glVertex3f(100, -100, 0);
-	glEnd();
-
-	glPopMatrix();
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_CULL_FACE);
-	glDisable(GL_TEXTURE_2D);
-}
-
 Window::Window() {
 	window = NULL;
 	//wEscenario = NULL;
@@ -51,6 +15,7 @@ Window::Window() {
 	wRatio = hRatio = 1;
 	background = NULL;
 	camera = NULL;
+	vidas = NULL;
 	ctx = 0;
 }
 
@@ -74,10 +39,17 @@ bool Window::init(int width, int height, float wRatio, float hRatio,
 			}
 			ctx = initGL(window);
 
+			if( TTF_Init() < 0){
+				printf("error al abrir ttf\n");
+				return !error;
+			}
 
 			background = new Fondo(width, height);
 			background->setRenderer(wRenderer);
 			background->cargarImagen(BGpath);
+
+			vidas = new Vidas();
+			puntaje = new Puntaje();
 		}
 	}
 
@@ -105,6 +77,9 @@ bool Window::updateWindow(b2World * worldB2D) {
 	background->render();
 
 	camera->renderVisibleObjects();
+
+	vidas->render();
+	puntaje->render();
 
 	SDL_GL_SwapWindow(window);
 	SDL_RenderPresent(wRenderer);
@@ -239,8 +214,6 @@ SDL_GLContext Window::initGL(SDL_Window* w) {
 // Set the OpenGL state after creating the context with SDL_SetVideoMode
 	glClearColor(0, 0, 0, 1);
 
-//	glEnable( GL_TEXTURE_2D); // Need this to display a texture
-
 	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	glMatrixMode( GL_PROJECTION);
@@ -250,9 +223,6 @@ SDL_GLContext Window::initGL(SDL_Window* w) {
 	glMatrixMode( GL_MODELVIEW);
 
 	glLoadIdentity();
-
-//	textura = new Textura();
-//	textura->generar("imagenes/sendero.png");
 
 	return c;
 }

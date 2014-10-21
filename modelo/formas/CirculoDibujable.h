@@ -2,13 +2,10 @@
 #define CIRCULODIBUJABLE_H_
 
 #include <SDL2/SDL.h>
-//#include <SDL2/SDL2_gfxPrimitives.h>
 #include "../../utiles/Logger.h"
 #include <math.h>
 #include "../interfaces/ITexturizable.h"
 #include "../../vista/Camera.h"
-
-#include "../Textura.h"
 
 class CirculoDibujable: public ITexturizable {
 private:
