@@ -7,6 +7,7 @@
 
 #include "ConnectionHandler.h"
 #include "../utiles/tipos.h"
+#include "../utiles/Timer.h"
 #include <iostream>
 
 ConnectionHandler::ConnectionHandler(ColaTrabajo<WorkItem*>& queue,
@@ -22,6 +23,13 @@ void* ConnectionHandler::run() {
 	printf("Conexion con: %s:%d establecida.\n", m_stream->getPeerIP().c_str() , m_stream->getPeerPort());
 
 
+	//The frames per second timer
+	Timer fpsTimer;
+	//Start counting frames per second
+	int countedFrames = 0;
+	fpsTimer.start();
+
+
 	// Inicia la comunicacion enviando el numero de cliente.
 	std::string message = SSTR(clientNumber);
 	m_stream->send(message);
@@ -35,7 +43,7 @@ void* ConnectionHandler::run() {
 
 	std::cout << "creado WorkItem NEWPJ" << std::endl;
 
-	int len;
+	ssize_t len;
 	bool quit = false;
 	std::string inMessage, outMessage;
 
@@ -48,11 +56,10 @@ void* ConnectionHandler::run() {
 			len = m_stream->receive(inMessage);
 			if (len <= 0) {
 				quit = true;
-				break;
 				std::cout << "quiteando" << std::endl;
+				break;
 			}
 			if (inMessage != "DONE") {
-				std::cout << inMessage << std::endl;
 				WorkItem * item = new WorkItem;
 				item->type = KEYEVENT;
 				item->PJnum = clientNumber;
@@ -67,10 +74,16 @@ void* ConnectionHandler::run() {
 			}
 		}
 
+		if (quit) break;
+
 		// Envia la escala mundo->ventana.
 		// TODO: HARDCODEADO!!
 		outMessage = SSTR(1/0.05f);
-		m_stream->send(outMessage);
+		len = m_stream->send(outMessage);
+		if (len <= 0) {
+			quit = true;
+			std::cout << "quiteando" << std::endl;
+		}
 
 		// Bloquea la lista para evitar modificaciones mientras se envia.
 		renderList.lock();
@@ -78,17 +91,43 @@ void* ConnectionHandler::run() {
 		// Envia los elementos que deben ser renderizados.
 		for(ThreadSafeList<WorldItem*>::iterator it=renderList.begin(); it != renderList.end(); ++it){
 			outMessage = (*it)->serializar();
-			m_stream->send(outMessage);
+			len = m_stream->send(outMessage);
+			if (len <= 0) {
+				quit = true;
+				std::cout << "quiteando" << std::endl;
+				break;
+			}
 		}
 
 		renderList.unlock();
 
 		// Envia un ultimo mensaje informando que se termino.
 		outMessage = "DONE";
-		m_stream->send(outMessage);
+		len = m_stream->send(outMessage);
+		if (len <= 0) {
+			quit = true;
+			std::cout << "quiteando" << std::endl;
+		}
+
+		float avgFPS = countedFrames / ( fpsTimer.getTicks() / 1000.f );
+		if (avgFPS > 2000) {
+			fpsTimer.stop();
+			fpsTimer.start();
+			countedFrames = 0;
+		}
+
+		std::cout << avgFPS << " FPS avg" << std::endl;
+		++countedFrames;
 
 		cond.signal();
 	}
+
+	WorkItem * item = new WorkItem;
+	item->type = DISCONNECTED;
+	item->PJnum = clientNumber;
+	m_queue.add(item);
+
+	cond.signal();
 
 	delete m_stream;
 

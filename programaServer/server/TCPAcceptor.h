@@ -10,6 +10,7 @@
 
 #include <string>
 #include <netinet/in.h>
+#include <netinet/tcp.h>
 #include "TCPStream.h"
 
 using namespace std;

@@ -14,6 +14,7 @@
 enum TIPOS{
 	NEWPJ,
 	KEYEVENT,
+	DISCONNECTED,
 	NONE,
 };
 

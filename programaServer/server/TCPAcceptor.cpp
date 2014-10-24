@@ -28,7 +28,6 @@ int TCPAcceptor::start()
 
     m_lsd = socket(PF_INET, SOCK_STREAM, 0);
     struct sockaddr_in address;
-
     memset(&address, 0, sizeof(address));
     address.sin_family = PF_INET;
     address.sin_port = htons(m_port);
@@ -40,7 +39,8 @@ int TCPAcceptor::start()
     }
 
     int optval = 1;
-    setsockopt(m_lsd, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof optval);
+    //setsockopt(m_lsd, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof optval);
+    setsockopt(m_lsd, IPPROTO_TCP, TCP_NODELAY, &optval, sizeof optval);
 
     int result = bind(m_lsd, (struct sockaddr*)&address, sizeof(address));
     if (result != 0) {

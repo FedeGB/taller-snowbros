@@ -22,6 +22,7 @@ Personaje::Personaje(){
 	isAirborne = false;
 	isMoving = false;
 	camera = NULL;
+	online = true;
 }
 
 Personaje::~Personaje() {}

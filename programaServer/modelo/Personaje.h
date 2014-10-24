@@ -35,6 +35,7 @@ public:
 	virtual std::string serializar();
 
 	Camera * camera;
+	bool online;
 
 private:
 	//int pEstado;

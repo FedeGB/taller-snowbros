@@ -19,9 +19,9 @@
 class ConnectionHandler : public Thread{
 	ColaTrabajo<WorkItem*>& m_queue;
 	ThreadSafeList<WorldItem*> & renderList;
-	ConditionVariable & cond;
     TCPStream* m_stream;
-    int clientNumber;
+	int clientNumber;
+	ConditionVariable & cond;
 
   public:
     ConnectionHandler(ColaTrabajo<WorkItem*>& queue,

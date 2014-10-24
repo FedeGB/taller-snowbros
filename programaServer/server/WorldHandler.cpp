@@ -31,12 +31,6 @@ void* WorldHandler::run(){
 
 bool WorldHandler::loopPrincipal() {
 
-	//The frames per second timer
-	Timer fpsTimer;
-	//Start counting frames per second
-	int countedFrames = 0;
-	fpsTimer.start();
-
 	// Asigna la cantidad maxima de pjs que puede haber en el mundo.
 	vectorPJ.resize(4, NULL);
 
@@ -48,10 +42,10 @@ bool WorldHandler::loopPrincipal() {
 		std::string configFile = "defaultConfig.json";
 
 		while ( ( item = m_queue.nonLockingRemove() ) != NULL ){
-			//printf("Procesando: %s\n", item->m_message.c_str());
-			//item->parse();
 			switch (item->type){
 			case NEWPJ:
+				printf("Procesando: %d\n", item->PJnum);
+
 				vectorPJ[item->PJnum-1] = inicializador.pjInit(&worldB2D, renderList[item->PJnum-1],
 						configFile, item->PJnum);
 				if (!vectorPJ[item->PJnum-1]) {
@@ -59,6 +53,9 @@ bool WorldHandler::loopPrincipal() {
 					std::cout << "hubo un error al crear el PJ" << std::endl;
 				}
 				numJugadores++;
+				break;
+			case DISCONNECTED:
+				vectorPJ[item->PJnum-1]->online = false;
 				break;
 			case KEYEVENT:
 				switch(item->key){
@@ -92,22 +89,15 @@ bool WorldHandler::loopPrincipal() {
 		}
 
 
-		for (std::vector<Personaje*>::iterator it = vectorPJ.begin() ; it != vectorPJ.end(); ++it)
-			if ((*it) != NULL) (*it)->update();
-
 		for(int i=0;i<10;i++) worldB2D->Step(1.0f/600.0f, 8, 5);
 
 		// TODO: testear esto con 2 maquinas.
-		//for(int i = 0; i < numJugadores; i++) cond[i].wait();
+		for(int i = 0; i < numJugadores; i++)
+			if (vectorPJ[i]->online){
+				vectorPJ[i]->update();
+				cond[i].wait();
+			}
 
-		float avgFPS = countedFrames / ( fpsTimer.getTicks() / 1000.f );
-		if (avgFPS > 2000) {
-			fpsTimer.stop();
-			fpsTimer.start();
-			countedFrames = 0;
-		}
-		std::cout << avgFPS << " FPS avg" << std::endl;
-		++countedFrames;
 
 		usleep(23000);
 

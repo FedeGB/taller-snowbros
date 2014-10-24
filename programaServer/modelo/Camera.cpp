@@ -146,7 +146,6 @@ void Camera::calculateBorderConstraints(){
 	canMoveLeft = canMoveRight = canMoveUp = canMoveDown = true;
 
 	for (b2ContactEdge* ce = cameraB2D->GetContactList(); ce; ce = ce->next) {
-
 		void* fixtureAUserData = ce->contact->GetFixtureA()->GetUserData();
 		void* fixtureBUserData = ce->contact->GetFixtureB()->GetUserData();
 
@@ -245,6 +244,10 @@ void Camera::updateRenderList(){
 		// Saltea los apendices de los personajes.
 		// TODO: sacar estas constantes hardcodeadas.
 		if ( *((int*)(&fixtureAUserData)) == 3 || *((int*)(&fixtureBUserData)) == 3 )
+			continue;
+
+		// Saltea las demas camaras.
+		if ( *((int*)(&fixtureAUserData)) == 4 && *((int*)(&fixtureBUserData)) == 4 )
 			continue;
 
 		// Actualiza la posicion y angulo.
