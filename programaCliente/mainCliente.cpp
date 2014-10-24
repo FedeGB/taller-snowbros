@@ -59,6 +59,7 @@ int main(int argc, char * argv[]){
 
 		// Analiza los eventos que sean relevantes para enviarlos al servidor.
 		while( SDL_PollEvent( &event ) != 0 ) {
+			//continue;
 			outMessage.clear();
 			switch(event.type){
 			case SDL_QUIT:

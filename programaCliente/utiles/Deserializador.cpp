@@ -18,8 +18,6 @@ Deserializador::~Deserializador() {
 
 WorldItem * Deserializador::deserializar(std::string serializado){
 
-	std::cout << "el item serializado es: " << serializado << std::endl;
-
 	WorldItem * item;
 	std::vector<std::string> buff;
 	split(buff, serializado, " ", no_empties);

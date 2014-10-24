@@ -30,15 +30,16 @@ ssize_t TCPStream::send(const std::string & sent){
 
 	char buff[4];
 	sprintf(buff, "%d", (int)sent.length());
-	write(m_sd, buff, 4);
+	int s = write(m_sd, buff, 4);
+	if (s <= 0) return connectionError;
 	uint totalSent = 0;
 	const char * buffer = new char(sent.length());
 	buffer = sent.c_str();
 	while (totalSent < sent.length()){
-		int itSent = write(m_sd, buffer, sent.length() - totalSent);
-		if (itSent <= 0) return connectionError;
-		buffer += itSent;
-		totalSent += itSent;
+		s = write(m_sd, buffer, sent.length() - totalSent);
+		if (s <= 0) return connectionError;
+		buffer += s;
+		totalSent += s;
 	}
     return totalSent;
 }
@@ -47,11 +48,12 @@ ssize_t TCPStream::receive(std::string & received, int timeout){
 
 	received.clear();
 	if (timeout <= 0 || waitForReadEvent(timeout) == true) {
+
     	char buff[5];
     	int r = read(m_sd, buff, 4);
     	if (r <= 0) return connectionError;
     	buff[r] = '\0';
-    	int size = strtol(buff, NULL, 10);
+    	int size = strtol(buff, NULL, 10);// atoi(buff);
     	int totalRead = 0;
     	char buffer[size+1];
     	while (totalRead < size){
@@ -63,9 +65,7 @@ ssize_t TCPStream::receive(std::string & received, int timeout){
     	}
     	return totalRead;
     }
-
     return connectionTimedOut;
-
 }
 
 string TCPStream::getPeerIP()
