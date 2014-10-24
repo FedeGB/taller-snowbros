@@ -1,0 +1,266 @@
+{
+    "escenario": {
+        "alto-px": 640,
+        "ancho-px": 720,
+        "alto-un": 26,
+        "ancho-un": 100,
+        "imagen-fondo": "imagenes/fondo2.png"
+    },
+    "personaje":{
+		"x": 22.0,
+		"y": 12.0,
+		"masa": 20.0,
+		"ancho": 1.2,
+		"alto": 1.6,
+		"sprite-sheet": "imagenes/playerSpritesheet.png"
+    },
+    "objetos": [
+	{
+            "estatico": true,
+            "tipo": "rect",
+            "x": 50,
+            "y": 0,
+            "rot": 0,
+            "alto": 0.1,
+            "ancho": 100,
+            "masa": 1,
+	    "color": "#FFFF00",
+            "friccion": 0.2
+        },
+
+	{
+            "estatico": true,
+            "tipo": "rect",
+            "x": 50,
+            "y": 25.5,
+            "rot": 0,
+            "alto": 1,
+            "ancho": 100,
+            "masa": 1,
+	    "color": "#5DB330",
+            "friccion": 0.5
+        },
+
+	{
+            "estatico": true,
+            "tipo": "rect",
+            "x": 0.2,
+            "y": 12.5,
+            "rot": 0,
+            "alto": 24.65,
+            "ancho": 0.3,
+            "masa": 1,
+	    "color": "#FFFF00",
+	    "friccion": 0.0
+        },
+
+	{
+            "estatico": true,
+            "tipo": "rect",
+            "x": 99.8,
+            "y": 12.5,
+            "rot": 0,
+            "alto": 24.65,
+            "ancho": 0.3,
+            "masa": 1,
+	    "color": "#FFFF00",
+	    "friccion": 0.0
+        },
+
+	{
+            "estatico": true,
+            "tipo": "rect",
+            "x": 25,
+            "y": 10,
+            "rot": 335,
+            "alto": 0.6,
+            "ancho": 7.9,
+            "masa": 1,
+	    "color": "#A42050",
+            "friccion": 0.2
+        },
+
+	{
+            "estatico": true,
+            "tipo": "rect",
+            "x": 9.75,
+            "y": 13,
+            "rot": 35,
+            "alto": 0.6,
+            "ancho": 17.9,
+            "masa": 1,
+	    "color": "#A42050",
+            "friccion": 0.2
+        },
+
+	{
+            "estatico": true,
+            "tipo": "rect",
+            "x": 40,
+            "y": 22,
+            "rot": 0,
+            "alto": 0.6,
+            "ancho": 17.9,
+            "masa": 1,
+	    "color": "#A42050",
+            "friccion": 0.2
+        },
+
+	{
+            "estatico": true,
+            "tipo": "rect",
+            "x": 50,
+            "y": 15,
+            "rot": 315,
+            "alto": 0.6,
+            "ancho": 9,
+            "masa": 1,
+	    "color": "#A42050",
+            "friccion": 0.2
+        },
+
+	{
+            "estatico": true,
+            "tipo": "rect",
+            "x": 58,
+            "y": 10,
+            "rot": 0,
+            "alto": 0.6,
+            "ancho": 5,
+            "masa": 1,
+	    "color": "#A42050",
+            "friccion": 0.2
+        },
+
+	{
+            "estatico": true,
+            "tipo": "rect",
+            "x": 64,
+            "y": 20,
+            "rot": 0,
+            "alto": 0.6,
+            "ancho": 12,
+            "masa": 1,
+	    "color": "#A42050",
+            "friccion": 0.2
+        },
+
+	{
+            "estatico": true,
+            "tipo": "rect",
+            "x": 67,
+            "y": 11,
+            "rot": 0,
+            "alto": 0.6,
+            "ancho": 4,
+            "masa": 1,
+	    "color": "#A42050",
+            "friccion": 0.2
+        },
+
+
+	{
+            "estatico": true,
+            "tipo": "rect",
+            "x": 74,
+            "y": 15.3,
+            "rot": 0,
+            "alto": 19,
+            "ancho": 2,
+            "masa": 1,
+	    "color": "#A42050",
+            "friccion": 0.2
+        },
+
+	{
+            "estatico": true,
+            "tipo": "rect",
+            "x": 84,
+            "y": 11,
+            "rot": 0,
+            "alto": 0.7,
+            "ancho": 5,
+            "masa": 1,
+	    "color": "#A42050",
+            "friccion": 0.2
+        },
+
+	{
+            "estatico": true,
+            "tipo": "rect",
+            "x": 78,
+            "y": 15,
+            "rot": 20,
+            "alto": 0.7,
+            "ancho": 5,
+            "masa": 1,
+	    "color": "#A42050",
+            "friccion": 0.2
+        },
+
+
+	{
+            "estatico": true,
+            "tipo": "rect",
+            "x": 84,
+            "y": 20,
+            "rot": 0,
+            "alto": 0.7,
+            "ancho": 5,
+            "masa": 1,
+	    "color": "#A42050",
+            "friccion": 0.2
+        },
+
+	{
+            "estatico": true,
+            "tipo": "rect",
+            "x": 94,
+            "y": 21,
+            "rot": 335,
+            "alto": 0.7,
+            "ancho": 5,
+            "masa": 1,
+	    "color": "#A42050",
+            "friccion": 0.2
+        },
+
+	{
+            "estatico": false,
+            "tipo": "circ",
+            "x": 3,
+            "y": 4,
+            "rot": 0,
+	    "escala": 1.55,
+            "alto": 0.5,
+            "ancho": 4.0,
+	    "lados": 5,
+            "masa": 4,
+	    "color": "#1420B2",
+	    "base": 2.4,
+	    "tapa": 3.0,
+	    "desp": 0.3,
+	    "alto": 1.5,
+            "friccion": 0.2
+        },
+
+	{
+            "estatico": false,
+            "tipo": "irreg",
+            "x": 28,
+            "y": 2,
+            "rot": 0,
+	    "escala": 1.55,
+            "alto": 0.5,
+            "ancho": 3.0,
+	    "lados": 5,
+            "masa": 100,
+	    "color": "#FF00FF",
+	    "base": 2.4,
+	    "tapa": 5.0,
+	    "desp": 0.7,
+	    "alto": 1.5,
+            "friccion": 0.2
+        }
+   ]
+}
