@@ -48,8 +48,6 @@ int main(int argc, char * argv[]){
 	len = stream->receive(buffer);
 	int clientNumber = atoi(buffer.c_str());
 
-	std::cout << "el num de cliente es: " << clientNumber;
-
     // Loop de recoleccion de eventos y envio de mensajes.
 	SDL_Event event;
 	bool quit = false;
@@ -71,11 +69,15 @@ int main(int argc, char * argv[]){
 				else if (event.key.keysym.sym == SDLK_UP) outMessage = "UPPRESSED";
 				else if (event.key.keysym.sym == SDLK_LEFT) outMessage = "LEFTPRESSED";
 				else if (event.key.keysym.sym == SDLK_RIGHT) outMessage = "RIGHTPRESSED";
+				else if (event.key.keysym.sym == SDLK_KP_PLUS) outMessage = "ZOOMINPRESSED";
+				else if (event.key.keysym.sym == SDLK_KP_MINUS) outMessage = "ZOOMOUTPRESSED";
 				break;
 			case SDL_KEYUP:
 				if (event.key.keysym.sym == SDLK_UP) outMessage = "UPRELEASED";
 				else if (event.key.keysym.sym == SDLK_LEFT) outMessage = "LEFTRELEASED";
 				else if (event.key.keysym.sym == SDLK_RIGHT) outMessage = "RIGHTRELEASED";
+				else if (event.key.keysym.sym == SDLK_KP_PLUS) outMessage = "ZOOMINRELEASED";
+				else if (event.key.keysym.sym == SDLK_KP_MINUS) outMessage = "ZOOMOUTRELEASED";
 				break;
 			}
 
@@ -86,10 +88,15 @@ int main(int argc, char * argv[]){
 		outMessage = "DONE";
 		stream->send(outMessage);
 
-		// Obtiene la escala de coordenadas mundo->ventana.
+		// Obtiene la metadata necesaria:
 		inMessage.clear();
 		len = stream->receive(inMessage);
-		float escala = (float)atof(inMessage.c_str());
+		// Saltea si se recibe directamente DONE, ya que indica que todavia
+		// no se cargo el PJ en el servidor.
+		if (inMessage == "DONE") continue;
+		WorldItem * item = Deserializador::deserializar(inMessage);
+		// Escala de coordenadas mundo->ventana.
+		float escala = ((Metadata*)item)->escala;
 
 		// Recibe los mensajes correspondientes a lo que se debe dibujar.
 		inMessage = "NOTDONE";
@@ -101,7 +108,7 @@ int main(int argc, char * argv[]){
 				break;
 			}
 			if(inMessage != "DONE") {
-				WorldItem * item = Deserializador::deserializar(inMessage);
+				item = Deserializador::deserializar(inMessage);
 				itemList.push_back(item);
 			}
 		}

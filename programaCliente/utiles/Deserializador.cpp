@@ -25,9 +25,15 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 
 	switch (type){
 
+	// Deserializa metadata.
+	case METADATA:{
+		Metadata * metadata = new Metadata();
+		metadata->escala = (float)atof(buff[1].c_str());
+		return metadata;
+	}
+
 	// Deserializa el circulo.
-	case CIRCULO:
-	{
+	case CIRCULO:{
 		Circulo * circulo = new Circulo();
 		circulo->radio = (float)atof(buff[4].c_str());
 
@@ -36,8 +42,7 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 	}
 
 	// Deserializa el cuadrilatero.
-	case CUADRILATERO:
-	{
+	case CUADRILATERO:{
 		Cuadrilatero * cuadrilatero = new Cuadrilatero();
 		cuadrilatero->baseMayor =  (float)atof(buff[4].c_str());
 		cuadrilatero->baseMenor =  (float)atof(buff[5].c_str());
@@ -49,8 +54,7 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 	}
 
 	// Deserializa el poligono.
-	case POLIGONOREGULAR:
-	{
+	case POLIGONOREGULAR:{
 		PoligonoRegular * poligono = new PoligonoRegular();
 		poligono->radio =  (float)atof(buff[4].c_str());
 		poligono->nLados =  strtol(buff[5].c_str(),NULL,10);
@@ -60,18 +64,13 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 	}
 
 	// Deserializa el PJ.
-	case PJ:
-	{
-		std::cout << "llego un PJ para dibujar" << std::endl;
+	case PJ:{
 		Personaje * pj = new Personaje();
 		pj->baseMayor =  (float)atof(buff[4].c_str());
 		pj->altura =  (float)atof(buff[5].c_str());
 
 		pj->activeSprite = (sprite_t) strtol(buff[6].c_str(),NULL,10);
 		pj->orientation = (Personaje::orientation_t) strtol(buff[7].c_str(),NULL,10);
-
-		std::cout << "la orientacion es: " << ((pj->orientation == Personaje::LEFT)? "izq" : "der") << std::endl;
-		std::cout << "el sprite es: " << pj->activeSprite << std::endl;
 
 		item = pj;
 		break;

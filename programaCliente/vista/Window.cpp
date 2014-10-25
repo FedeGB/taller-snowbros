@@ -174,6 +174,7 @@ void Window::insertarFigura(IDibujable* figura){
 
 Window::~Window(){
 
+	std::cout << "destruyendo ventana" << std::endl;
 	if(wRenderer) {
 		SDL_DestroyRenderer(wRenderer);
 		wRenderer = NULL;

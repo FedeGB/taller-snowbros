@@ -10,6 +10,7 @@
 
 #include <string>
 #include "../modelo/WorldItem.h"
+#include "../modelo/Metadata.h"
 #include "../modelo/Personaje.h"
 #include "../modelo/formas/Circulo.h"
 #include "../modelo/formas/Cuadrilatero.h"
