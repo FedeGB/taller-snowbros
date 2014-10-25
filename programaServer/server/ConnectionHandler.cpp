@@ -66,24 +66,19 @@ void* ConnectionHandler::run() {
 				if (inMessage == "UPPRESSED") item->key = ARRIBA;
 				else if (inMessage == "LEFTPRESSED") item->key = IZQUIERDA;
 				else if (inMessage == "RIGHTPRESSED") item->key = DERECHA;
+				else if (inMessage == "ZOOMINPRESSED") item->key = ZOOMIN;
+				else if (inMessage == "ZOOMOUTPRESSED") item->key = ZOOMOUT;
 				else if (inMessage == "UPRELEASED") item->key = SOLTOARRIBA;
 				else if (inMessage == "LEFTRELEASED") item->key = SOLTOIZQUIERDA;
 				else if (inMessage == "RIGHTRELEASED") item->key = SOLTODERECHA;
+				else if (inMessage == "ZOOMINRELEASED") item->key = SOLTOZOOMIN;
+				else if (inMessage == "ZOOMOUTRELEASED") item->key = SOLTOZOOMOUT;
 
 				m_queue.add(item);
 			}
 		}
 
 		if (quit) break;
-
-		// Envia la escala mundo->ventana.
-		// TODO: HARDCODEADO!!
-		outMessage = SSTR(1/0.05f);
-		len = m_stream->send(outMessage);
-		if (len <= 0) {
-			quit = true;
-			std::cout << "quiteando" << std::endl;
-		}
 
 		// Bloquea la lista para evitar modificaciones mientras se envia.
 		renderList.lock();

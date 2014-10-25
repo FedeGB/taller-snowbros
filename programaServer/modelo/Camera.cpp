@@ -25,56 +25,22 @@ Camera::~Camera() {
 	// TODO Auto-generated destructor stub
 }
 
-void Camera::eventoArriba(){}
-void Camera::eventoSoltoArriba(){}
-void Camera::eventoDerecha(){}
-void Camera::eventoSoltoDerecha(){}
-void Camera::eventoIzquierda(){}
-void Camera::eventoSoltoIzquierda(){}
-void Camera::eventoRESTART(){}
-
 void Camera::eventoZoomIn(){
 
 	b2Vec2 posPJCamera;
-	b2Body * body;
 
 	static int count = -1;
 	count++;
-	if (count % 4 != 0) return;
+	//if (count % 4 != 0) return;
 
-	bool contactFound = false;
-	// Hallo la posicion relativa del personaje respecto a la camara, para mantenerla luego de zoomear.
-	for (b2ContactEdge* ce = cameraB2D->GetContactList(); ce; ce = ce->next) {
-		void* fixtureAUserData = ce->contact->GetFixtureA()->GetUserData();
-		void* fixtureBUserData = ce->contact->GetFixtureB()->GetUserData();
-
-		if ( *((int*)(&fixtureAUserData)) == 3 || *((int*)(&fixtureBUserData)) == 3 ) {
-			if ( *((int*)(&fixtureAUserData)) == 3 ) body = ce->contact->GetFixtureA()->GetBody();
-			else body = ce->contact->GetFixtureB()->GetBody();
-
-			// Determino la posicion del PJ relativo al origen de coordenadas de la camara.
-			posPJCamera = body->GetPosition() - cameraB2D->GetPosition();
-			posPJCamera.x += (width / 2) * WINDOWTOWORLDSCALE;
-			posPJCamera.y += (height / 2) * WINDOWTOWORLDSCALE + 1.3f;//( (Personaje *) body->GetUserData() )->getHeight() / 2;
-			posPJCamera.x = posPJCamera.x / (width * WINDOWTOWORLDSCALE);
-			posPJCamera.y = posPJCamera.y / (height * WINDOWTOWORLDSCALE);
-
-			contactFound = true;
-			break;
-		}
-	}
-
-	if (!contactFound) {
-		std::cout << "no se encontro PJ. " << std::endl;
-		eventoZoomOut();
-		return;
-	}
-
-	std::cout << "Se encontro PJ. " << std::endl;
-	std::cout << "la posicion relativa es: " << posPJCamera.x << ", " << posPJCamera.y << std::endl;
+	// Determino la posicion del PJ relativo al origen de coordenadas de la camara.
+	posPJCamera = PJ->GetPosition() - cameraB2D->GetPosition();
+	posPJCamera.x += (width / 2) * WINDOWTOWORLDSCALE;
+	posPJCamera.y += (height / 2) * WINDOWTOWORLDSCALE + 1.3f;//( (Personaje *) body->GetUserData() )->getHeight() / 2;
+	posPJCamera.x = posPJCamera.x / (width * WINDOWTOWORLDSCALE);
+	posPJCamera.y = posPJCamera.y / (height * WINDOWTOWORLDSCALE);
 
 	if (WINDOWTOWORLDSCALE < 0.01) return;
-
 
 	WINDOWTOWORLDSCALE -= 0.001f;
 	WORLDTOWINDOWSCALE = 1.0f / WINDOWTOWORLDSCALE;
@@ -96,12 +62,13 @@ void Camera::eventoZoomIn(){
 
 	// Recalculo la posicion de la camara para mantener la posicion relativa del personaje.
 	b2Vec2 newPosCamera;
-	newPosCamera.x = body->GetPosition().x - posPJCamera.x * (width * WINDOWTOWORLDSCALE) + (width / 2) * WINDOWTOWORLDSCALE;
-	newPosCamera.y = body->GetPosition().y + + 1.3f //( (Personaje *) body->GetUserData() )->getHeight() / 2
+	newPosCamera.x = PJ->GetPosition().x - posPJCamera.x * (width * WINDOWTOWORLDSCALE) + (width / 2) * WINDOWTOWORLDSCALE;
+	newPosCamera.y = PJ->GetPosition().y + + 1.3f //( (Personaje *) body->GetUserData() )->getHeight() / 2
 			- posPJCamera.y * (height * WINDOWTOWORLDSCALE) + (height / 2) * WINDOWTOWORLDSCALE;
 
 	cameraB2D->SetTransform(newPosCamera, 0);
 }
+
 void Camera::eventoZoomOut(){
 
 	calculateBorderConstraints();
@@ -214,7 +181,10 @@ void Camera::updateRenderList(){
 
 	// Vacia la lista.
 	renderList.clear();
-	//while (!renderList.empty())	renderList.pop_back();
+
+	Metadata * metadata = new Metadata();
+	metadata->escala = WORLDTOWINDOWSCALE;
+	renderList.push_back(metadata);
 
 	// Itera sobre todos los objetos que esten en contacto con la camara,
 	// obteniendo sus modelos y agregandolos a la lista de objetos a renderear
@@ -251,10 +221,9 @@ void Camera::updateRenderList(){
 			continue;
 
 		// Actualiza la posicion y angulo.
-		// TODO: ESCALA HARDCODEADA!!!
 		b2Vec2 pos = body->GetPosition() - cameraB2D->GetPosition();
-		pos.x += (width / 2) * 0.05f;
-		pos.y += (height / 2) * 0.05f;
+		pos.x += (width / 2) * WINDOWTOWORLDSCALE;
+		pos.y += (height / 2) * WINDOWTOWORLDSCALE;
 		((WorldItem*)body->GetUserData())->posicion = pos;
 		((WorldItem*)body->GetUserData())->angulo = body->GetAngle();
 

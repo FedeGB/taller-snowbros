@@ -12,6 +12,7 @@
 #include "WorldItem.h"
 #include "../Threads/ThreadSafeList.h"
 #include "../modelo/WorldItem.h"
+#include "../modelo/Metadata.h"
 
 class Camera{
 public:
@@ -26,14 +27,6 @@ public:
 	void setWINDOWTOWORLDSCALE(float32 windowToWorld);
 	void update();
 
-	//Interfaz notificable
-	virtual void eventoArriba();
-	virtual void eventoSoltoArriba();
-	virtual void eventoDerecha();
-	virtual void eventoSoltoDerecha();
-	virtual void eventoIzquierda();
-	virtual void eventoSoltoIzquierda();
-	virtual void eventoRESTART();
 	virtual void eventoZoomIn();
 	virtual void eventoZoomOut();
 

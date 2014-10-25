@@ -81,6 +81,16 @@ bool WorldHandler::loopPrincipal() {
 				case SOLTODERECHA:
 					vectorPJ[item->PJnum-1]->eventoSoltoDerecha();
 					break;
+				case ZOOMIN:
+					vectorPJ[item->PJnum-1]->camera->eventoZoomIn();
+					break;
+				case ZOOMOUT:
+					vectorPJ[item->PJnum-1]->camera->eventoZoomOut();
+					break;
+				case SOLTOZOOMIN:
+					break;
+				case SOLTOZOOMOUT:
+					break;
 				}
 				break;
 			}
