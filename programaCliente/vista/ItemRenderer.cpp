@@ -150,10 +150,13 @@ void ItemRenderer::renderPJ(SDL_Renderer* renderer, Personaje * item, float esca
 
 	// Obtiene la textura y su correspondiente rect para renderear.
 	TexAndRect TaR = textureMap[item->activeSprite];
-	SDL_SetTextureAlphaMod(TaR.tex,10);// cambio el color
-	// Renderea.
+
+	//si esta no esta conectado le cambia el color a gris
 	if(!item->online)
-		SDL_RenderCopyEx( renderer, TaR.tex, TaR.rect, &pos, 0, NULL, flip);
+		SDL_SetTextureAlphaMod(TaR.tex,10);// cambio el color
+
+	// Renderea.
+	SDL_RenderCopyEx( renderer, TaR.tex, TaR.rect, &pos, 0, NULL, flip);
 
 }
 
