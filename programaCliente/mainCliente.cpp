@@ -96,10 +96,10 @@ int main(int argc, char * argv[]){
 		if (len <= 0) {
 			quit = true;
 		}
-		std::cout << "se recibio: " << inMessage << std::endl;
-		// Saltea si se recibe directamente DONE, ya que indica que todavia
+
+		// Saltea si se recibe un mensaje vacio, ya que indica que todavia
 		// no se cargo el PJ en el servidor.
-		if (inMessage == "DONE") continue;
+		if (inMessage == "EMPTY") continue;
 
 		// Separa todos los elementos para deserializarlos uno por uno.
 		std::vector<std::string> buff;
