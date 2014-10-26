@@ -28,7 +28,7 @@ bool ConnectionHandler::logIn(std::string username){
 		if(user->online) {
 			return false;
 		} else {
-			user->online = true;
+			user->setOnline(true);
 		}
 
 	// En caso contrario, si hay lugares vacantes en el escenario, lo agrega
