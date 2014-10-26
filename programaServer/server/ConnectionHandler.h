@@ -17,6 +17,10 @@
 #include "../threads/ConditionVariable.h"
 #include "../ControladorUsuarios.h"
 
+#define OK 0
+#define SERVERFULL 1
+#define USERONLINE 2
+
 class ConnectionHandler : public Thread{
 private:
 	ControladorUsuarios & controlador;
@@ -27,7 +31,7 @@ private:
     // ya estaba en la partida y se habia desconectado, o alguien nuevo.
     // username: el usuario a intentar conectarse.
     // return: true si la conexion fue exitosa, false en caso contrario.
-    bool logIn(std::string username);
+    int logIn(std::string username);
 
 public:
     ConnectionHandler(ControladorUsuarios & c, TCPStream * stream);

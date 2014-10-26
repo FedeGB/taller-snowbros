@@ -20,13 +20,13 @@ ConnectionHandler::ConnectionHandler(ControladorUsuarios & c, TCPStream * stream
 
 }*/
 
-bool ConnectionHandler::logIn(std::string username){
+int ConnectionHandler::logIn(std::string username){
 
 	// Si el usuario ya se habia loggeado durante la partida, lo reconecta.
 	if (controlador.usuarioExiste(username)){
 		Usuario* user = controlador.obtenerUsuario(username);
 		if(user->online) {
-			return false;
+			return USERONLINE;
 		} else {
 			user->setOnline(true);
 		}
@@ -34,10 +34,10 @@ bool ConnectionHandler::logIn(std::string username){
 	// En caso contrario, si hay lugares vacantes en el escenario, lo agrega
 	// como un nuevo PJ.
 	} else {
-		if (controlador.escenarioLleno()) return false;
+		if (controlador.escenarioLleno()) return SERVERFULL;
 		controlador.registrarUsuario(username);
 	}
-	return true;
+	return OK;
 }
 
 void* ConnectionHandler::run() {
@@ -53,13 +53,22 @@ void* ConnectionHandler::run() {
 
 	// Inicia la comunicacion recibiendo el nombre de usuario e intentando conectarlo.
 	m_stream->receive(username);
-	if (!logIn(username)) {
-		std::string outMsg = "RECHAZADA";
+	int result = logIn(username);
+
+	if (result == SERVERFULL) {
+		std::string outMsg = "RECHAZADA-FULL";
 		size_t len = m_stream->send(outMsg);
-		printf ("Conexion rechazada %s:%d \n", m_stream->getPeerIP().c_str(), m_stream->getPeerPort());
-		//delete m_stream;
+		printf ("Conexion rechazada, conexiones llenas. %s:%d \n", m_stream->getPeerIP().c_str(), m_stream->getPeerPort());
+		delete m_stream;
 		return NULL;
-	}else{
+	}else if( result == USERONLINE){
+		std::string outMsg = "RECHAZADA-USR";
+		size_t len = m_stream->send(outMsg);
+		printf ("Conexion rechazada, user esta online. %s:%d \n", m_stream->getPeerIP().c_str(), m_stream->getPeerPort());
+		delete m_stream;
+		return NULL;
+	}
+	else{
 		std::string outMsg = "OK";
 		size_t len = m_stream->send(outMsg);
 		printf ("Conexion aceptada %s:%d \n", m_stream->getPeerIP().c_str(), m_stream->getPeerPort());

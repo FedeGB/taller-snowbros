@@ -122,9 +122,16 @@ int main(int argc, char * argv[]){
 	//Espero por mesnaje de OK o RECHAZO.
 	std::string inMessage;
 	len = stream->receive(inMessage);
-	if (inMessage == "RECHAZADA"){
+	if (inMessage == "RECHAZADA-FULL"){
 		printf ("Conexion rechazada por el servidor.\n");
+		printf ("Numero de conexiones maximas alcanzadas.\n");
 		return 0;
+	}else if (inMessage == "RECHAZADA-USR"){
+		printf ("Conexion rechazada por el servidor.\n");
+		printf ("El usuario elegido esta online.\n");
+		return 0;
+	}else if (inMessage == "OK"){
+		printf ("Conexion con el server establecida.\n");
 	}
 
     // Loop de recoleccion de eventos y envio de mensajes.
