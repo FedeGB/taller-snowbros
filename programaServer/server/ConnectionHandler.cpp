@@ -24,7 +24,12 @@ bool ConnectionHandler::logIn(std::string username){
 
 	// Si el usuario ya se habia loggeado durante la partida, lo reconecta.
 	if (controlador.usuarioExiste(username)){
-		controlador.obtenerUsuario(username)->online = true;
+		Usuario* user = controlador.obtenerUsuario(username);
+		if(user->online) {
+			return false;
+		} else {
+			user->online = true;
+		}
 
 	// En caso contrario, si hay lugares vacantes en el escenario, lo agrega
 	// como un nuevo PJ.
