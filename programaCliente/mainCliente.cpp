@@ -177,6 +177,8 @@ int main(int argc, char * argv[]){
 		len = stream->receive(inMessage);
 		if (len <= 0) {
 			quit = true;
+			std::cout<<"conexion perdida con el servidor";
+			continue;
 		}
 
 		// Saltea si se recibe un mensaje vacio, ya que indica que todavia
@@ -210,7 +212,6 @@ int main(int argc, char * argv[]){
 		++countedFrames;
 
 	}
-
 	return 0;
 }
 
