@@ -143,7 +143,7 @@ Camera * cameraInit(b2World ** worldB2D, b2Body * pj, ThreadSafeList<WorldItem*>
 }
 
 Personaje * Inicializador::pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*> & rList,
-		std::string configFile, int num){
+		std::string configFile){
 	Logger& log = *Logger::Instancia();
 	std::string data;
 	bool statusOK = true;

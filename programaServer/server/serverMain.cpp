@@ -8,16 +8,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
-#include "../Threads/Thread.h"
-#include "../Threads/ThreadSafeList.h"
-#include "../Threads/ConditionVariable.h"
-#include "ColaTrabajo.h"
+#include "../threads/Thread.h"
+#include "../threads/ThreadSafeList.h"
+#include "../threads/ConditionVariable.h"
+#include "../threads/ColaTrabajo.h"
 #include "TCPAcceptor.h"
 #include "ConnectionHandler.h"
 #include "WorkItem.h"
 #include "WorldHandler.h"
 #include "../modelo/WorldItem.h"
-
+#include "../ControladorUsuarios.h"
 
 int isNumber(const char* string);
 bool file_exist( string f);
@@ -112,20 +112,13 @@ int main(int argc, char** argv){
     	}
     }
 
+    // Creo el controlador de usuarios. Este contiene toda la informacion
+    // necesaria para la comunicacion entre el handler de simulacion y el de
+    // conexion.
+    ControladorUsuarios controlador;
 
-    // Creo la cola de mensajes para procesar.
-    ColaTrabajo<WorkItem*>  taskQueue;
-
-    // Creo la cola para renderear la pantalla de cada jugador.
-    // (Maximo 4 jugadores, por enunciado)
-    ThreadSafeList<WorldItem *> renderList[4];
-
-    // Creo las condiciones. El worldHandler espera estas condiciones
-    // una vez de simular, antes de pasar a la siguiente iteracion.
-    ConditionVariable cond[4];
-
-    //Creo el procesador de mensajes
-    WorldHandler* world = new WorldHandler(taskQueue, renderList, cond);
+    //Creo el handler de simulacion.
+    WorldHandler* world = new WorldHandler(controlador);
     if (!world){
     	printf("No se pudo crear el connection handler.\n");
     	exit(1);
@@ -145,25 +138,27 @@ int main(int argc, char** argv){
         exit(1);
     }
 
+    //ConnectionHandler * connections[4];
+
     //Loop infinito esperando conexiones.
-    int connectionNumber = 1;
-    while (1) {
+    while (true) {
         TCPStream* connection = connectionAcceptor->accept();
         if (!connection) {
             printf("Could not accept a connection\n");
             continue;
         }
 
-        ConnectionHandler* handler = new ConnectionHandler(taskQueue, renderList[connectionNumber - 1],
-        		connection, cond[connectionNumber - 1], connectionNumber);
+        ConnectionHandler* handler = new ConnectionHandler(controlador, connection);
         if (!handler) {
             printf("Could not create ConnectionHandler.\n");
-            exit(1);
+            //exit(1);
         }else handler->start();
-        connectionNumber++;
     }
 
-    // Should never get here
+    // Espera que finalicen todas las conexiones antes de finalizar.
+    //for (std::list<Thread*>::iterator it = threadList.begin(); it != threadList.end(); it++)
+    //	(*it)->join();
+
     exit(0);
 }
 

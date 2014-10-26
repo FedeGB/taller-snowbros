@@ -23,12 +23,14 @@
 #include "modelo/Personaje.h"
 #include "modelo/Camera.h"
 
+#include "threads/ThreadSafeList.h"
+
 class Inicializador {
 
 public:
 
 	bool init(std::string configFile, b2World ** worldB2D, ContactListener * contactListener);
-	Personaje * pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*> & rList, std::string configFile, int num);
+	Personaje * pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*> & rList, std::string configFile);
 
 };
 

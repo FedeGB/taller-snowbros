@@ -9,26 +9,28 @@
 #define CONNECTIONHANDLER_H_
 
 #include "TCPStream.h"
-#include "ColaTrabajo.h"
+#include "../threads/ColaTrabajo.h"
 #include "WorkItem.h"
 #include "../modelo/WorldItem.h"
-#include "../Threads/Thread.h"
-#include "../Threads/ThreadSafeList.h"
-#include "../Threads/ConditionVariable.h"
+#include "../threads/Thread.h"
+#include "../threads/ThreadSafeList.h"
+#include "../threads/ConditionVariable.h"
+#include "../ControladorUsuarios.h"
 
 class ConnectionHandler : public Thread{
-	ColaTrabajo<WorkItem*>& m_queue;
-	ThreadSafeList<WorldItem*> & renderList;
-    TCPStream* m_stream;
-	int clientNumber;
-	ConditionVariable & cond;
+private:
+	ControladorUsuarios & controlador;
+    TCPStream * m_stream;
+    std::string username;
 
-  public:
-    ConnectionHandler(ColaTrabajo<WorkItem*>& queue,
-    		ThreadSafeList<WorldItem*> & rList,
-    		TCPStream* item,
-    		ConditionVariable & c,
-    		int num);
+    // Intenta conectar un usuario al servidor, ya sea alguien que
+    // ya estaba en la partida y se habia desconectado, o alguien nuevo.
+    // username: el usuario a intentar conectarse.
+    // return: true si la conexion fue exitosa, false en caso contrario.
+    bool logIn(std::string username);
+
+public:
+    ConnectionHandler(ControladorUsuarios & c, TCPStream * stream);
     void* run();
 };
 

@@ -10,7 +10,7 @@
 
 #include <Box2D/Box2D.h>
 #include "WorldItem.h"
-#include "../Threads/ThreadSafeList.h"
+#include "../threads/ThreadSafeList.h"
 #include "../modelo/WorldItem.h"
 #include "../modelo/Metadata.h"
 

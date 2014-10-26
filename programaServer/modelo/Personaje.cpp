@@ -42,7 +42,6 @@ void Personaje::eventoSoltoDerecha(){
 }
 
 void Personaje::eventoIzquierda(){
-	std::cout << "se detecto un evento izquierda" << std::endl;
 	isLeftPressed = true;
 	if (!isRightPressed) wasLeftPressed1st = true;
 }
