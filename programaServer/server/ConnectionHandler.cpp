@@ -62,7 +62,7 @@ void* ConnectionHandler::run() {
 	}else{
 		std::string outMsg = "OK";
 		size_t len = m_stream->send(outMsg);
-		printf ("Conexion aceptada %s:%d \n", m_stream->getPeerIP().c_str(), m_stream->getPeerPort())
+		printf ("Conexion aceptada %s:%d \n", m_stream->getPeerIP().c_str(), m_stream->getPeerPort());
 	}
 
 	ssize_t len;

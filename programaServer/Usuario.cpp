@@ -130,5 +130,5 @@ void Usuario::actualizarPJ(){
 
 void Usuario::setOnline(bool estado){
 	this->online= estado;
-	this->PJ.online= estado;
+	this->PJ->online= estado;
 }
