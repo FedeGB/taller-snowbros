@@ -60,6 +60,8 @@ public:
 	// Actualiza el estado del PJ y su camara asociada.
 	void actualizarPJ();
 
+	void setOnline(bool estado);
+
 private:
 	ColaTrabajo<WorkItem*>  colaNotificaciones;
 	ConditionVariable c;

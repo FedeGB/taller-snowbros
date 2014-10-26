@@ -127,3 +127,8 @@ void Usuario::inicializarPJ(b2World * worldB2D){
 void Usuario::actualizarPJ(){
 	PJ->update();
 }
+
+void Usuario::setOnline(bool estado){
+	this->online= estado;
+	this->PJ.online= estado;
+}
