@@ -110,7 +110,7 @@ void* ConnectionHandler::run() {
 		controlador.obtenerUsuario(username)->enviarSenial();
 	}
 
-	controlador.obtenerUsuario(username)->online = false;
+	controlador.obtenerUsuario(username)->setOnline(false);
 	controlador.obtenerUsuario(username)->enviarSenial();
 
 	printf("Conexion con: %s:%d terminada.\n", m_stream->getPeerIP().c_str() , m_stream->getPeerPort());
