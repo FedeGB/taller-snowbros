@@ -31,7 +31,7 @@ bool WorldHandler::loopPrincipal() {
 	bool quit = false;
 	while(!quit){
 		// Simula.
-		for(int i=0;i<10;i++) worldB2D->Step(1.0f/600.0f, 8, 5);
+		for(int i=0;i<10;i++) worldB2D->Step(1.0f/300.0f, 8, 5);
 
 		// Procesa uno por uno todos los usuarios, inicializandolos, moviendo sus
 		// PJs o camaras, o ignorandolos si estan desconectados.
