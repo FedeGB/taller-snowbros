@@ -11,13 +11,80 @@
 #include "utiles/tipos.h"
 #include "utiles/Timer.h"
 
-
+int isNumber(const char* string);
+bool ipValid(string ip);
+bool isValidIPNumber(string token);
+bool isValidPort(int puerto);
 
 Window * window;
 std::list<WorldItem*> itemList;
 
 int main(int argc, char * argv[]){
 
+	if ( argc != 7 ) {
+		printf("Uso: %s -u <username> -p <Puerto> -i <IP>\n", argv[0]);
+		return -1;
+	}
+
+ // Process command line arguments
+	int opt, uflag, pflag, iflag, port;
+	opt = uflag = pflag = iflag = port = 0;
+	std::string username (" "); // username
+	std::string ip (""); // IP en el que escucha.
+
+	while( (opt = getopt(argc, argv, "u:p:i:")) != -1 ) {
+		switch(opt) {
+		case 'u':
+			uflag = 1;
+			username = std::string(optarg);
+			break;
+		case 'p':
+			if(!isNumber(optarg)) {
+				printf("El puerto %s especificado debe ser un numero\n", optarg);
+				return -1;
+			}
+			pflag = 1;
+			port = atoi(optarg); // Puerto en el que escucha a las conexiones.
+			break;
+		case 'i':
+			iflag = 1;
+			ip = std::string(optarg);
+			break;
+		case '?':
+			if(optopt == 'u') {
+				printf("Al parametro -u le falta el username\n");
+			}
+			else if(optopt == 'p') {
+				printf("Al parametro -p le falta especificar el puerto\n");
+			}
+			else if(optopt == 'i') {
+				printf("Al parametro -i le faltaria especificar una ip, si no quiere especificar una, no utilice el argumento -i\n");
+			}
+			else {
+				printf("Parametro -%c no reconocido\n", optopt);
+			}
+			return -1;
+		default:
+			printf("Error no esperado en el procesamiento de comandos\n");
+			exit(-1);
+		}
+   }
+	if (!pflag) {
+	   printf("No se especifico puerto con el comando -p\n");
+	   return -1;
+	} else {
+		if(!isValidPort(port)) {
+			printf("El puerto %d no es valido, ingrese un puerto entre 1024 y 49151\n", port);
+			return -1;
+		}
+	}
+
+	if (iflag) {
+		if(!ipValid(ip)){
+			printf("la ip ingresada es invalida\n");
+			return -1;
+		}
+	}
 
 	//The frames per second timer
 	Timer fpsTimer;
@@ -36,13 +103,13 @@ int main(int argc, char * argv[]){
 
 	// Conecto al servidor.
     TCPConnector * connector = new TCPConnector();
-    TCPStream * stream =  connector->connect("192.168.0.109", 2020);
+    TCPStream * stream =  connector->connect(ip.c_str(), port);
     if (!stream){
     	std::cout << "Hubo un problema al conectar al servidor" << std::endl;
     	return -1;
     }
 
-    std::string username = argv[1];
+
     int len;
 	// Inicia la comunicacion enviando el nombre de usuario.
 	len = stream->send(username);
@@ -130,4 +197,52 @@ int main(int argc, char * argv[]){
 	}
 
 	return 0;
+}
+
+int isNumber(const char* string) {
+	std::string var;
+	if(!string) {
+		return 0;
+	} else {
+		var  = string;
+	}
+	for(unsigned int i = 0; i < var.length(); i++) {
+		if(!isdigit(var[i])) {
+			return 0;
+		}
+	}
+	return 1;
+}
+
+bool ipValid(string ip){
+	if(ip.length()<8 || ip.length()>16)
+		return false;
+	string token ,temp=ip;
+	while (token != temp){
+		token = temp.substr(0,temp.find_first_of("."));
+		temp = temp.substr(temp.find_first_of(".") + 1);
+		if(!isValidIPNumber(token)) {
+			return false;
+		}
+	}
+	return true;
+}
+
+bool isValidIPNumber(string token) {
+	if(isNumber(token.c_str())) {
+		int number = atoi(token.c_str());
+		if (number < 0 || number > 255) {
+			return false;
+		}
+	} else {
+		return false;
+	}
+	return true;
+}
+
+bool isValidPort(int puerto) {
+	if(puerto < 1024 || puerto > 49151) {
+		return false;
+	}
+	return true;
 }
