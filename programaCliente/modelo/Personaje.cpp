@@ -11,7 +11,7 @@ Personaje::Personaje(){
 	orientation = LEFT;
 	activeSprite = PARADOIZQUIERDA;
 	angulo = 0;
- 	online=0;
+ 	online= true;
 }
 
 Personaje::~Personaje() {}

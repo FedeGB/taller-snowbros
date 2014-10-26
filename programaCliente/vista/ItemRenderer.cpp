@@ -154,6 +154,8 @@ void ItemRenderer::renderPJ(SDL_Renderer* renderer, Personaje * item, float esca
 	//si esta no esta conectado le cambia el color a gris
 	if(!item->online)
 		SDL_SetTextureAlphaMod(TaR.tex,10);// cambio el color
+	else
+		SDL_SetTextureAlphaMod(TaR.tex,255);
 
 	// Renderea.
 	SDL_RenderCopyEx( renderer, TaR.tex, TaR.rect, &pos, 0, NULL, flip);
