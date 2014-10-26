@@ -36,7 +36,7 @@ public:
 	bool escenarioLleno();
 
 private:
-	int tamanioMaximo;
+	unsigned int tamanioMaximo;
 };
 
 #endif /* CONTROLADORUSUARIOS_H_ */
