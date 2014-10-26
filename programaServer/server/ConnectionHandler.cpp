@@ -54,8 +54,15 @@ void* ConnectionHandler::run() {
 	// Inicia la comunicacion recibiendo el nombre de usuario e intentando conectarlo.
 	m_stream->receive(username);
 	if (!logIn(username)) {
-		printf ("Conexion rechazada\n");
+		std::string outMsg = "RECHAZADA";
+		size_t len = m_stream->send(outMsg);
+		printf ("Conexion rechazada %s:%d \n", m_stream->getPeerIP().c_str(), m_stream->getPeerPort());
+		//delete m_stream;
 		return NULL;
+	}else{
+		std::string outMsg = "OK";
+		size_t len = m_stream->send(outMsg);
+		printf ("Conexion aceptada %s:%d \n", m_stream->getPeerIP().c_str(), m_stream->getPeerPort())
 	}
 
 	ssize_t len;
@@ -106,9 +113,10 @@ void* ConnectionHandler::run() {
 	controlador.obtenerUsuario(username)->online = false;
 	controlador.obtenerUsuario(username)->enviarSenial();
 
+	printf("Conexion con: %s:%d terminada.\n", m_stream->getPeerIP().c_str() , m_stream->getPeerPort());
+
 	delete m_stream;
 
-	printf("Conexion terminada.\n");
 	return NULL;
 }
 

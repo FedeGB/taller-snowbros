@@ -119,10 +119,18 @@ int main(int argc, char * argv[]){
 		return 1;
 	}
 
+	//Espero por mesnaje de OK o RECHAZO.
+	std::string inMessage;
+	len = stream->receive(inMessage);
+	if (inMessage == "RECHAZADA"){
+		printf ("Conexion rechazada por el servidor.\n");
+		return 0;
+	}
+
     // Loop de recoleccion de eventos y envio de mensajes.
 	SDL_Event event;
 	bool quit = false;
-	std::string outMessage, inMessage;
+	std::string outMessage;
 
 	while( !quit ){
 

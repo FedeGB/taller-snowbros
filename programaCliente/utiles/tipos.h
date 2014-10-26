@@ -108,6 +108,7 @@ enum WORLDITEMS{
 	CUADRILATERO,
 	POLIGONOREGULAR,
 	PJ,
+	STRINGMSG,
 };
 
 enum sprite_t{
