@@ -75,6 +75,7 @@ void* ConnectionHandler::run() {
 		outMessage =
 				controlador.obtenerUsuario(username)->obtenerPantallaSerializada();
 
+		if (outMessage.empty()) outMessage = "EMPTY";
 		len = m_stream->send(outMessage);
 		if (len <= 0) {
 			quit = true;
