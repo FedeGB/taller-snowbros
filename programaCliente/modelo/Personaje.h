@@ -29,6 +29,7 @@ public:
 
 	sprite_t activeSprite;
 
+	bool online;
 };
 
 #endif /* PERSONAJE_H_ */

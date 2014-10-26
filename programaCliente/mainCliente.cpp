@@ -36,7 +36,7 @@ int main(int argc, char * argv[]){
 
 	// Conecto al servidor.
     TCPConnector * connector = new TCPConnector();
-    TCPStream * stream =  connector->connect("127.0.0.1", 2020);
+    TCPStream * stream =  connector->connect("192.168.0.109", 2020);
     if (!stream){
     	std::cout << "Hubo un problema al conectar al servidor" << std::endl;
     	return -1;
