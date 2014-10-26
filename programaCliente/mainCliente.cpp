@@ -42,11 +42,15 @@ int main(int argc, char * argv[]){
     	return -1;
     }
 
-    std::string buffer;
+    std::string username = argv[1];
     int len;
-	// Recibo mi numero de cliente
-	len = stream->receive(buffer);
-	int clientNumber = atoi(buffer.c_str());
+	// Inicia la comunicacion enviando el nombre de usuario.
+	len = stream->send(username);
+	if (len <= 0) {
+		//TODO: error handling
+		std::cout << "error al enviar username" << std::endl;
+		return 1;
+	}
 
     // Loop de recoleccion de eventos y envio de mensajes.
 	SDL_Event event;
@@ -66,18 +70,16 @@ int main(int argc, char * argv[]){
 			case SDL_KEYDOWN:
 				if (event.key.keysym.sym  == SDLK_r) ;
 				else if (event.key.keysym.sym == SDLK_ESCAPE) quit = true;
-				else if (event.key.keysym.sym == SDLK_UP) outMessage = "UPPRESSED";
-				else if (event.key.keysym.sym == SDLK_LEFT) outMessage = "LEFTPRESSED";
-				else if (event.key.keysym.sym == SDLK_RIGHT) outMessage = "RIGHTPRESSED";
-				else if (event.key.keysym.sym == SDLK_KP_PLUS) outMessage = "ZOOMINPRESSED";
-				else if (event.key.keysym.sym == SDLK_KP_MINUS) outMessage = "ZOOMOUTPRESSED";
+				else if (event.key.keysym.sym == SDLK_UP) outMessage = SSTR(ARRIBA);
+				else if (event.key.keysym.sym == SDLK_LEFT) outMessage = SSTR(IZQUIERDA);
+				else if (event.key.keysym.sym == SDLK_RIGHT) outMessage = SSTR(DERECHA);
+				else if (event.key.keysym.sym == SDLK_KP_PLUS) outMessage = SSTR(ZOOMIN);
+				else if (event.key.keysym.sym == SDLK_KP_MINUS) outMessage = SSTR(ZOOMOUT);
 				break;
 			case SDL_KEYUP:
-				if (event.key.keysym.sym == SDLK_UP) outMessage = "UPRELEASED";
-				else if (event.key.keysym.sym == SDLK_LEFT) outMessage = "LEFTRELEASED";
-				else if (event.key.keysym.sym == SDLK_RIGHT) outMessage = "RIGHTRELEASED";
-				else if (event.key.keysym.sym == SDLK_KP_PLUS) outMessage = "ZOOMINRELEASED";
-				else if (event.key.keysym.sym == SDLK_KP_MINUS) outMessage = "ZOOMOUTRELEASED";
+				if (event.key.keysym.sym == SDLK_UP) outMessage = SSTR(SOLTOARRIBA);
+				else if (event.key.keysym.sym == SDLK_LEFT) outMessage = SSTR(SOLTOIZQUIERDA);
+				else if (event.key.keysym.sym == SDLK_RIGHT) outMessage = SSTR(SOLTODERECHA);
 				break;
 			}
 
@@ -88,29 +90,30 @@ int main(int argc, char * argv[]){
 		outMessage = "DONE";
 		stream->send(outMessage);
 
-		// Obtiene la metadata necesaria:
+		// Obtiene la pantalla serializada, con cada elemento separado por %.
 		inMessage.clear();
 		len = stream->receive(inMessage);
+		if (len <= 0) {
+			quit = true;
+		}
+		std::cout << "se recibio: " << inMessage << std::endl;
 		// Saltea si se recibe directamente DONE, ya que indica que todavia
 		// no se cargo el PJ en el servidor.
 		if (inMessage == "DONE") continue;
-		WorldItem * item = Deserializador::deserializar(inMessage);
+
+		// Separa todos los elementos para deserializarlos uno por uno.
+		std::vector<std::string> buff;
+		split(buff, inMessage, "%", no_empties);
+
+		// El primer elemento es metadata.
+		WorldItem * item = Deserializador::deserializar(buff[0]);
 		// Escala de coordenadas mundo->ventana.
 		float escala = ((Metadata*)item)->escala;
 
-		// Recibe los mensajes correspondientes a lo que se debe dibujar.
-		inMessage = "NOTDONE";
-		while (inMessage != "DONE"){
-			inMessage.clear();
-			len = stream->receive(inMessage);
-			if (len <= 0) {
-				quit = true;
-				break;
-			}
-			if(inMessage != "DONE") {
-				item = Deserializador::deserializar(inMessage);
-				itemList.push_back(item);
-			}
+		// Itera sobre todos los elementos restantes.
+		for (std::vector<std::string>::iterator it = buff.begin(); it != buff.end(); it++){
+			item = Deserializador::deserializar((*it));
+			itemList.push_back(item);
 		}
 
 		window->updateWindow(itemList, escala);

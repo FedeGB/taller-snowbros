@@ -86,7 +86,7 @@ private:
 	int tAlto, tAncho;
 };
 
-enum TECLAS{
+enum teclas_t{
 	ARRIBA,
 	ABAJO,
 	IZQUIERDA,
