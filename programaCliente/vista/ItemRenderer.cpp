@@ -18,55 +18,33 @@ ItemRenderer::~ItemRenderer() {
 	// TODO Auto-generated destructor stub
 }
 
-// Dibuja la marca de un circulo, para poder ver su rotacion.
-int renderMarca(SDL_Renderer* renderer, Circulo * item, float escala) {
-
-	Sint16 radioArco  = (Sint16)(item->radio*0.4 * escala);
-	// TODO: HARDCODEADO!!!
-	Uint8 newRed = 255 - 255;
-	Uint8 newGreen = 255 - 0;
-	Uint8 newBlue = 255 - 0;
-	int32 anguloInit = RADTODEG * item->angulo;
-	if(anguloInit > 360) {
-		anguloInit -= 360;
-	}
-	int32 anguloEnd = anguloInit + 70;
-
-	Sint16 posX = item->posicion.x * escala;
-	Sint16 posY = item->posicion.y * escala;
-
-	return arcRGBA(renderer, posX, posY, radioArco, anguloInit, anguloEnd, newRed, newGreen, newBlue, 255);
-}
-
 // Dibuja un circulo.
-void ItemRenderer::renderCirculo(SDL_Renderer* renderer, Circulo * item, float escala){
+void ItemRenderer::renderCirculo(Circulo * item, float escala){
 
-	// Calculo posicion y radio.
-	Sint16 posX = item->posicion.x * escala;
-	Sint16 posY = item->posicion.y * escala;
-	Sint16 rad = item->radio * escala;
+	// Convierte los parametros de B2D en los necesarios para renderear el sprite.
+	// Obtiene la seccion de la pantalla a renderear.
+	GLfloat vx[20];
+	GLfloat vy[20];
 
-	// Rendereo el circulo.
-	// TODO: (255,0,0,255) color HARDCODEADO!!
-	int status = filledCircleRGBA(renderer, posX, posY, rad, 255, 0, 0, 255);
-	if(status != 0) {
-		Logger& log = * Logger::Instancia();
-		std::string err(SDL_GetError());
-		log.log(DIBUJABLELOG, WARNING, "No se renderizo el circulo "+err);
+	for (int i = 0; i < 20; i++) {
+		float thita = (2 * i * PI / 20) - (item->angulo);
+		vx[i] = ( item->posicion.x + item->radio * cos(thita) ) * escala;
+		vy[i] = ( item->posicion.y - item->radio * sin(thita) ) * escala;
 	}
 
-	status = renderMarca(renderer, item, escala);
-	if(status != 0) {
-		Logger& log = * Logger::Instancia();
-		std::string err(SDL_GetError());
-		log.log(DIBUJABLELOG, WARNING, "No se renderizo la marca del circulo "+err);
-	}
+	// Obtiene la textura y su correspondiente rect para renderear.
+	TexAndVertexes * TaV = textureMap[CIRCULO1];
+
+	// Renderea.
+	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 20);
+
 }
 
 // Dibuja un cuadrilatero.
-void ItemRenderer::renderCuadrilatero(SDL_Renderer* renderer, Cuadrilatero * item, float escala){
+void ItemRenderer::renderCuadrilatero(Cuadrilatero * item, float escala){
 
-	Sint16 vx[4]; Sint16 vy[4];
+	float vx[4]; float vy[4];
+	float vxTex[4]; float vyTex[4];
 
 	// Calculo la posicion del centro.
 	float32 centroX = ( ( 2 * item->baseMenor * item->desplazamiento +
@@ -102,14 +80,18 @@ void ItemRenderer::renderCuadrilatero(SDL_Renderer* renderer, Cuadrilatero * ite
 	vx[3] = (item->posicion.x + modulo3 * cos(thita3)) * escala;
 	vy[3] = (item->posicion.y - modulo3 * sin(thita3)) * escala;
 
-	// Rendereo.
-	// TODO: (255,0,0,255) color HARDCODEADO!!
-	int status = filledPolygonRGBA(renderer, vx, vy, 4, 255, 0, 0, 255);
-	if(status != 0) {
-		Logger& log = * Logger::Instancia();
-		std::string err(SDL_GetError());
-		log.log(DIBUJABLELOG, WARNING, "No se renderizo el cuadrilatero "+err);
-	}
+
+	// Calculo los vertices de la textura.
+	vxTex[0] = vxTex[3] = 0.0f;
+	vyTex[0] = vyTex[1] = 0.0f;
+	vxTex[1] = vxTex[2] = item->baseMayor * escala / 128.0f;
+	vyTex[2] = vyTex[3] = item->altura * escala / 128.0f;
+
+	// Obtiene la textura y su correspondiente rect para renderear.
+	TexAndVertexes * TaV = textureMap[CUADRILATERO1];
+
+	// Renderea.
+	TaV->tex->dibujar(vx, vy, vxTex, vyTex, 4);
 }
 
 // Dibuja un poligono regular.
@@ -134,55 +116,58 @@ void ItemRenderer::renderPoligono(SDL_Renderer* renderer, PoligonoRegular * item
 }
 
 // Dibuja un PJ.
-void ItemRenderer::renderPJ(SDL_Renderer* renderer, Personaje * item, float escala){
+void ItemRenderer::renderPJ(Personaje * item, float escala){
 	// Convierte los parametros de B2D en los necesarios para renderear el sprite.
 	// Obtiene la seccion de la pantalla a renderear.
-	int X = (item->posicion.x - item->baseMayor / 2) * escala;
-	int Y = (item->posicion.y - item->altura / 2) * escala;
-	int width = item->baseMayor * escala;
-	int height = item->altura * escala;
-	SDL_Rect pos = {X, Y, width, height};
+	GLfloat vx[4];
+	GLfloat vy[4];
 
-	// Verifica si tiene que espejar la imagen (si esta mirando hacia la derecha, se espeja).
-	SDL_RendererFlip flip;
-	if (item->orientation == Personaje::RIGHT) flip = SDL_FLIP_HORIZONTAL;
-	else flip = SDL_FLIP_NONE;
+	// Flippea la imagen si es necesario.
+	if (item->orientation == Personaje::LEFT){
+		vx[0] = vx[3] = (item->posicion.x - item->baseMayor / 2) * escala;
+		vy[0] = vy[1] = (item->posicion.y - item->altura / 2) * escala;
+		vx[1] = vx[2] = vx[0] + item->baseMayor * escala;
+		vy[2] = vy[3] = vy[0] + item->altura * escala;
+	} else {
+		vx[1] = vx[2] = (item->posicion.x - item->baseMayor / 2) * escala;
+		vy[0] = vy[1] = (item->posicion.y - item->altura / 2) * escala;
+		vx[0] = vx[3] = vx[1] + item->baseMayor * escala;
+		vy[2] = vy[3] = vy[0] + item->altura * escala;
+	}
 
 	// Obtiene la textura y su correspondiente rect para renderear.
-	TexAndRect TaR = textureMap[item->activeSprite];
+	TexAndVertexes * TaV = textureMap[item->activeSprite];
 
-	//si esta no esta conectado le cambia el color a gris
-	if(!item->online)
-		SDL_SetTextureAlphaMod(TaR.tex,10);// cambio el color
+	// Si esta no esta conectado, se cambia el color a gris.
+/*	if(!item->online)
+		SDL_SetTextureAlphaMod(TaV.tex,150);// cambio el color
 	else
-		SDL_SetTextureAlphaMod(TaR.tex,255);
+		SDL_SetTextureAlphaMod(TaV.tex,255);
+*/
 
 	// Renderea.
-	SDL_RenderCopyEx( renderer, TaR.tex, TaR.rect, &pos, 0, NULL, flip);
+	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
 
 }
 
 // Dibuja un item del mundo.
 void ItemRenderer::render(SDL_Renderer* wRenderer, WorldItem * item, float escala){
 
-	if (!textureMap.yaInicializado()) {
-		std::cout << "inicializando mapa de texturas" << std::endl;
-		textureMap.init(wRenderer);
-	}
+	if (!textureMap.yaInicializado()) textureMap.init();
 
 	switch(item->tipo){
 	case CIRCULO:
-		renderCirculo(wRenderer, (Circulo*)item, escala);
+		renderCirculo((Circulo*)item, escala);
 		break;
 	case CUADRILATERO:
-		renderCuadrilatero(wRenderer, (Cuadrilatero*)item, escala);
+		renderCuadrilatero((Cuadrilatero*)item, escala);
 		break;
 	case POLIGONOREGULAR:
 		renderPoligono(wRenderer, (PoligonoRegular*)item, escala);
 		break;
 	case PJ:
-			renderPJ(wRenderer, (Personaje*)item, escala);
-			break;
+		renderPJ((Personaje*)item, escala);
+		break;
 	}
 }
 

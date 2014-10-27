@@ -109,7 +109,6 @@ int main(int argc, char * argv[]){
     	return -1;
     }
 
-
     int len;
 	// Inicia la comunicacion enviando el nombre de usuario.
 	len = stream->send(username);
@@ -119,7 +118,7 @@ int main(int argc, char * argv[]){
 		return 1;
 	}
 
-	//Espero por mesnaje de OK o RECHAZO.
+	// Espero por mensaje de OK o RECHAZO.
 	std::string inMessage;
 	len = stream->receive(inMessage);
 	if (inMessage == "RECHAZADA-FULL"){
@@ -150,8 +149,7 @@ int main(int argc, char * argv[]){
 				quit = true;
 				break;
 			case SDL_KEYDOWN:
-				if (event.key.keysym.sym  == SDLK_r) ;
-				else if (event.key.keysym.sym == SDLK_ESCAPE) quit = true;
+				if (event.key.keysym.sym == SDLK_ESCAPE) quit = true;
 				else if (event.key.keysym.sym == SDLK_UP) outMessage = SSTR(ARRIBA);
 				else if (event.key.keysym.sym == SDLK_LEFT) outMessage = SSTR(IZQUIERDA);
 				else if (event.key.keysym.sym == SDLK_RIGHT) outMessage = SSTR(DERECHA);
@@ -177,7 +175,7 @@ int main(int argc, char * argv[]){
 		len = stream->receive(inMessage);
 		if (len <= 0) {
 			quit = true;
-			std::cout<<"conexion perdida con el servidor";
+			std::cout << "conexion perdida con el servidor" << std::endl;
 			continue;
 		}
 

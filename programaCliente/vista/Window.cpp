@@ -26,6 +26,7 @@ bool Window::init(int width, int height, std::string BGpath){
 		return !error;
 	}
 	else{
+		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 		 window = crearVentana();
 		if( !window ){
 			 return !error;
@@ -36,6 +37,14 @@ bool Window::init(int width, int height, std::string BGpath){
 				error = true;
 				return !error;
 			}
+
+			ctx = initGL(window);
+
+			if( TTF_Init() < 0){
+				printf("error al abrir ttf\n");
+				return !error;
+			}
+
 			background = new Fondo(width, height);
 			background->setRenderer(wRenderer);
 			background->cargarImagen(BGpath);
@@ -57,6 +66,8 @@ bool Window::updateWindow(std::list<WorldItem*> & itemList, float escala){
 		return false;
 	}
 
+	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+
 	//background->render();
 
 	// Dibuja uno por uno los elementos en la lista.
@@ -65,6 +76,8 @@ bool Window::updateWindow(std::list<WorldItem*> & itemList, float escala){
 		itemList.pop_front();
 		ItemRenderer::render(wRenderer, item, escala);
 	}
+
+	SDL_GL_SwapWindow(window);
 
 	SDL_RenderPresent(wRenderer);
 
@@ -133,7 +146,9 @@ bool Window::iniciarSDL()
 SDL_Window* Window::crearVentana()
 {
 	Logger& log = * Logger::Instancia();
-	SDL_Window* w = SDL_CreateWindow("Snow Bros", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	SDL_Window* w = SDL_CreateWindow("Snow Bros", SDL_WINDOWPOS_UNDEFINED,
+			SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT,
+			SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 	if(!w) {
 		if (!log.abrirLog(WINDOWLOG)) {
 			std::cout << "Error al abrir archivo de log " << WINDOWLOG << std::endl;
@@ -184,4 +199,27 @@ Window::~Window(){
 		window = NULL;
 	}
 	SDL_Quit();
+}
+
+SDL_GLContext Window::initGL(SDL_Window* w) {
+
+	SDL_GLContext c = SDL_GL_CreateContext(w);
+	SDL_GL_MakeCurrent(w, c);
+
+	SDL_GL_SetSwapInterval(1);
+
+// Set the OpenGL state after creating the context with SDL_SetVideoMode
+	glClearColor(0, 0, 0, 1);
+
+	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+	glMatrixMode( GL_PROJECTION);
+	glLoadIdentity();
+
+	glOrtho(0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, -1, 1);
+	glMatrixMode( GL_MODELVIEW);
+
+	glLoadIdentity();
+
+	return c;
 }

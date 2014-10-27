@@ -8,37 +8,6 @@
 #include "TextureMap.h"
 
 
-
-SDL_Texture * cargarImagen(SDL_Renderer* renderer, std::string path) {
-	Logger& log = * Logger::Instancia();
-
-	// textura final
-	SDL_Texture * texturaNueva = NULL;
-	//cargamos imagen
-	SDL_Surface* surfaceCargada = IMG_Load( path.c_str() );
-	if( surfaceCargada  == NULL ){
-		log.log(DIBUJABLELOG, ERROR, "Imposible cargar la imagen " +path+ " " + IMG_GetError());
-		return NULL;
-	}
-	else
-	{ 	//Setear color transparente
-		//SDL_SetColorKey( surfaceCargada , SDL_TRUE, SDL_MapRGB( surfaceCargada ->format, 0, 0xFF, 0xFF ) );
-		//crea nueva textura de la surface
-		texturaNueva = SDL_CreateTextureFromSurface( renderer, surfaceCargada  );
-		if( texturaNueva == NULL ){
-			log.log(DIBUJABLELOG,ERROR, "Imposible crear textura desde "+path);
-			return NULL;
-		}
-		//eliminamos la vieja surface
-		SDL_FreeSurface( surfaceCargada );
-	}
-	//devuelve el valor de exito
-	return texturaNueva;
-}
-
-
-
-
 TextureMap::TextureMap() {
 	inicializado = false;
 }
@@ -47,111 +16,162 @@ bool TextureMap::yaInicializado(){
 	return inicializado;
 }
 
-bool TextureMap::init(SDL_Renderer* renderer){
+bool TextureMap::init(){
 
-	if (!loadPJTexAndRects(renderer)) return false;
+	if (inicializado) return false;
+	if (!loadPJTex()) return false;
+	if (!loadCircleTex()) return false;
+	if (!loadCuadTex()) return false;
 	inicializado = true;
 	return true;
 }
 
-bool TextureMap::loadPJTexAndRects(SDL_Renderer* renderer){
+bool TextureMap::loadPJTex(){
 
 	// TODO: sacar hardcodeo del path de imagen.
-	SDL_Texture *  tex = cargarImagen(renderer, "imagenes/playerSpritesheet.png");
+	Textura * tex = new Textura();
 	if (!tex) {
 		std::cout << "no se cargo la imagen" << std::endl;
 		return false;
 	}
+	tex->generar("imagenes/playerSpritesheet1.png");
 
-	TexAndRect temp; // = (*this)[PARADOIZQUIERDA];
-	temp.rect = new SDL_Rect();
-	temp.rect->x =   7;
-	temp.rect->y =   9;
-	temp.rect->w =  23;
-	temp.rect->h = 26;
-	temp.tex = tex;
+	TexAndVertexes * temp = new TexAndVertexes;
+	temp->vertexes = new Vertexes(4);
+	temp->vertexes->x[0] = temp->vertexes->x[3] = 7 / 432.0f;
+	temp->vertexes->y[0] = temp->vertexes->y[1] = 9 / 320.0f;
+	temp->vertexes->x[1] = temp->vertexes->x[2] = 30 / 432.0f;
+	temp->vertexes->y[2] = temp->vertexes->y[3] = 35 / 320.0f;
+	temp->tex = tex;
 	(*this)[PARADOIZQUIERDA] = temp;
 
-	//temp = (*this)[MOVIENDOIZQUIERDA1];
-	temp.rect = new SDL_Rect();
-	temp.rect->x =  37;
-	temp.rect->y =   9;
-	temp.rect->w =  23;
-	temp.rect->h = 26;
-	temp.tex = tex;
+	temp = new TexAndVertexes;
+	temp->vertexes = new Vertexes(4);
+	temp->vertexes->x[0] = temp->vertexes->x[3] = 37 / 432.0f;
+	temp->vertexes->y[0] = temp->vertexes->y[1] = 9 / 320.0f;
+	temp->vertexes->x[1] = temp->vertexes->x[2] = 60 / 432.0f;
+	temp->vertexes->y[2] = temp->vertexes->y[3] = 35 / 320.0f;
+	temp->tex = tex;
 	(*this)[MOVIENDOIZQUIERDA1] = temp;
 
-	//temp = (*this)[MOVIENDOIZQUIERDA2];
-	temp.rect = new SDL_Rect();
-	temp.rect->x = 62;
-	temp.rect->y =   9;
-	temp.rect->w =  23;
-	temp.rect->h = 26;
-	temp.tex = tex;
+	temp = new TexAndVertexes;
+	temp->vertexes = new Vertexes(4);
+	temp->vertexes->x[0] = temp->vertexes->x[3] = 62 / 432.0f;
+	temp->vertexes->y[0] = temp->vertexes->y[1] = 9 / 320.0f;
+	temp->vertexes->x[1] = temp->vertexes->x[2] = 85 / 432.0f;
+	temp->vertexes->y[2] = temp->vertexes->y[3] = 35 / 320.0f;
+	temp->tex = tex;
 	(*this)[MOVIENDOIZQUIERDA2] = temp;
 
-	//temp = (*this)[MOVIENDOIZQUIERDA3];
-	temp.rect = new SDL_Rect();
-	temp.rect->x = 92;
-	temp.rect->y =   9;
-	temp.rect->w =  23;
-	temp.rect->h = 26;
-	temp.tex = tex;
+	temp = new TexAndVertexes;
+	temp->vertexes = new Vertexes(4);
+	temp->vertexes->x[0] = temp->vertexes->x[3] = 92 / 432.0f;
+	temp->vertexes->y[0] = temp->vertexes->y[1] = 9 / 320.0f;
+	temp->vertexes->x[1] = temp->vertexes->x[2] = 115 / 432.0f;
+	temp->vertexes->y[2] = temp->vertexes->y[3] = 35 / 320.0f;
+	temp->tex = tex;
 	(*this)[MOVIENDOIZQUIERDA3] = temp;
 
-	//temp = (*this)[MOVIENDOIZQUIERDA4];
-	temp.rect = new SDL_Rect();
-	temp.rect->x = 62;
-	temp.rect->y =   9;
-	temp.rect->w =  23;
-	temp.rect->h = 26;
-	temp.tex = tex;
+	temp = new TexAndVertexes;
+	temp->vertexes = new Vertexes(4);
+	temp->vertexes->x[0] = temp->vertexes->x[3] = 62 / 432.0f;
+	temp->vertexes->y[0] = temp->vertexes->y[1] = 9 / 320.0f;
+	temp->vertexes->x[1] = temp->vertexes->x[2] = 85 / 432.0f;
+	temp->vertexes->y[2] = temp->vertexes->y[3] = 35 / 320.0f;
+	temp->tex = tex;
 	(*this)[MOVIENDOIZQUIERDA4] = temp;
 
-	//temp = (*this)[SALTANDOIZQUIERDA1];
-	temp.rect = new SDL_Rect();
-	temp.rect->x = 152;
-	temp.rect->y =   6;
-	temp.rect->w =  23;
-	temp.rect->h = 29;
-	temp.tex = tex;
+	temp = new TexAndVertexes;
+	temp->vertexes = new Vertexes(4);
+	temp->vertexes->x[0] = temp->vertexes->x[3] = 152 / 432.0f;
+	temp->vertexes->y[0] = temp->vertexes->y[1] = 6 / 320.0f;
+	temp->vertexes->x[1] = temp->vertexes->x[2] = 175 / 432.0f;
+	temp->vertexes->y[2] = temp->vertexes->y[3] = 35 / 320.0f;
+	temp->tex = tex;
 	(*this)[SALTANDOIZQUIERDA1] = temp;
 
-	//temp = (*this)[SALTANDOIZQUIERDA2];
-	temp.rect = new SDL_Rect();
-	temp.rect->x = 184;
-	temp.rect->y =   6;
-	temp.rect->w =  23;
-	temp.rect->h = 29;
-	temp.tex = tex;
+	temp = new TexAndVertexes;
+	temp->vertexes = new Vertexes(4);
+	temp->vertexes->x[0] = temp->vertexes->x[3] = 184 / 432.0f;
+	temp->vertexes->y[0] = temp->vertexes->y[1] = 6 / 320.0f;
+	temp->vertexes->x[1] = temp->vertexes->x[2] = 207 / 432.0f;
+	temp->vertexes->y[2] = temp->vertexes->y[3] = 35 / 320.0f;
+	temp->tex = tex;
 	(*this)[SALTANDOIZQUIERDA2] = temp;
 
-	//temp = (*this)[SALTANDOIZQUIERDA3];
-	temp.rect = new SDL_Rect();
-	temp.rect->x = 215;
-	temp.rect->y =   6;
-	temp.rect->w =  23;
-	temp.rect->h = 29;
-	temp.tex = tex;
+	temp = new TexAndVertexes;
+	temp->vertexes = new Vertexes(4);
+	temp->vertexes->x[0] = temp->vertexes->x[3] = 215 / 432.0f;
+	temp->vertexes->y[0] = temp->vertexes->y[1] = 6 / 320.0f;
+	temp->vertexes->x[1] = temp->vertexes->x[2] = 238 / 432.0f;
+	temp->vertexes->y[2] = temp->vertexes->y[3] = 35 / 320.0f;
+	temp->tex = tex;
 	(*this)[SALTANDOIZQUIERDA3] = temp;
 
-	//temp = (*this)[SALTANDOIZQUIERDA4];
-	temp.rect = new SDL_Rect();
-	temp.rect->x = 249;
-	temp.rect->y =   6;
-	temp.rect->w =  23;
-	temp.rect->h = 29;
-	temp.tex = tex;
+	temp = new TexAndVertexes;
+	temp->vertexes = new Vertexes(4);
+	temp->vertexes->x[0] = temp->vertexes->x[3] = 249 / 432.0f;
+	temp->vertexes->y[0] = temp->vertexes->y[1] = 6 / 320.0f;
+	temp->vertexes->x[1] = temp->vertexes->x[2] = 272 / 432.0f;
+	temp->vertexes->y[2] = temp->vertexes->y[3] = 35 / 320.0f;
+	temp->tex = tex;
 	(*this)[SALTANDOIZQUIERDA4] = temp;
 
-	//temp = (*this)[SALTANDOIZQUIERDA5];
-	temp.rect = new SDL_Rect();
-	temp.rect->x = 118;
-	temp.rect->y =   6;
-	temp.rect->w =  23;
-	temp.rect->h = 29;
-	temp.tex = tex;
+	temp = new TexAndVertexes;
+	temp->vertexes = new Vertexes(4);
+	temp->vertexes->x[0] = temp->vertexes->x[3] = 118 / 432.0f;
+	temp->vertexes->y[0] = temp->vertexes->y[1] = 6 / 320.0f;
+	temp->vertexes->x[1] = temp->vertexes->x[2] = 141 / 432.0f;
+	temp->vertexes->y[2] = temp->vertexes->y[3] = 35 / 320.0f;
+	temp->tex = tex;
 	(*this)[SALTANDOIZQUIERDA5] = temp;
+
+	return true;
+}
+
+bool TextureMap::loadCircleTex(){
+
+	// TODO: sacar hardcodeo del path de imagen.
+	Textura * tex = new Textura();
+	if (!tex) {
+		std::cout << "no se cargo la imagen" << std::endl;
+		return false;
+	}
+	tex->generar("imagenes/pelota.png");
+
+	TexAndVertexes * temp = new TexAndVertexes;
+	temp->vertexes = new Vertexes(20);
+
+	for (int i = 0; i < 20; i++) {
+		float thita = (2 * i * PI / 20);
+		temp->vertexes->x[i] = ( 128 + 128 * cos(thita) ) / 256.0f;
+		temp->vertexes->y[i] = ( 128 - 128 * sin(thita) ) / 256.0f;
+	}
+	temp->tex = tex;
+	(*this)[CIRCULO1] = temp;
+
+	return true;
+}
+
+bool TextureMap::loadCuadTex(){
+
+	// TODO: sacar hardcodeo del path de imagen.
+	Textura * tex = new Textura();
+	if (!tex) {
+		std::cout << "no se cargo la imagen" << std::endl;
+		return false;
+	}
+	tex->generar("imagenes/ladrillo.png");
+
+	TexAndVertexes * temp = new TexAndVertexes;
+	temp->vertexes = new Vertexes(4);
+	temp->vertexes->x[0] = temp->vertexes->x[3] = 0.0f;
+	temp->vertexes->y[0] = temp->vertexes->y[1] = 0.0f;
+	temp->vertexes->x[1] = temp->vertexes->x[2] = 1.0f;
+	temp->vertexes->y[2] = temp->vertexes->y[3] = 1.0f;
+
+	temp->tex = tex;
+	(*this)[CUADRILATERO1] = temp;
 
 	return true;
 }

@@ -27,10 +27,10 @@ public:
 
 private:
 	static TextureMap textureMap;
-	static void renderCirculo(SDL_Renderer* renderer, Circulo * item, float escala);
-	static void renderCuadrilatero(SDL_Renderer* renderer, Cuadrilatero * item, float escala);
+	static void renderCirculo(Circulo * item, float escala);
+	static void renderCuadrilatero(Cuadrilatero * item, float escala);
 	static void renderPoligono(SDL_Renderer* renderer, PoligonoRegular * item, float escala);
-	static void renderPJ(SDL_Renderer* renderer, Personaje * item, float escala);
+	static void renderPJ(Personaje * item, float escala);
 };
 
 #endif /* ITEMRENDERER_H_ */

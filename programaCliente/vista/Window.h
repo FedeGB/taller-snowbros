@@ -2,6 +2,8 @@
 #define WINDOW_H
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_opengl.h>
 #include <string>
 #include <list>
 
@@ -13,6 +15,7 @@ class Window {
 private:
 	SDL_Window* window;
 	SDL_Renderer* wRenderer;
+	SDL_GLContext ctx;
 	Fondo* background;
 
 	//Escenario* wEscenario;
@@ -28,7 +31,7 @@ private:
 	bool iniciarSDL();
 	SDL_Window* crearVentana();
 	SDL_Renderer* crearRenderer(SDL_Window*);
-	//rEscenario* crearEscenario(std::string BGpath);
+	SDL_GLContext initGL(SDL_Window* w);
 
 public:
 

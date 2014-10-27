@@ -13,25 +13,51 @@
 #include <SDL2/SDL_image.h>
 #include "../utiles/Logger.h"
 #include "../utiles/tipos.h"
+#include "Textura.h"
 
-class TexAndRect{
+class Vertexes{
 public:
-	SDL_Texture * tex;
-	SDL_Rect * rect;
-	TexAndRect(){ tex = NULL; rect = NULL;}
-	virtual ~TexAndRect(){}
+	float * x;
+	float * y;
+	Vertexes(int numVertexes){
+		x = new float[numVertexes];
+		y = new float[numVertexes];
+	}
+	~Vertexes(){
+		delete[] x;
+		delete[] y;
+	}
 };
 
-class TextureMap: public std::map<sprite_t, TexAndRect> {
+class TexAndVertexes{
+public:
+	Textura * tex;
+	Vertexes * vertexes;
+	TexAndVertexes(){ tex = NULL; vertexes = NULL;}
+	virtual ~TexAndVertexes(){
+		if (tex) {
+			delete tex;
+			tex = NULL;
+		}
+		if (vertexes) {
+			delete vertexes;
+			vertexes = NULL;
+		}
+	}
+};
+
+class TextureMap: public std::map<sprite_t, TexAndVertexes*> {
 public:
 	TextureMap();
 	virtual ~TextureMap();
 
 	bool yaInicializado();
-	bool init(SDL_Renderer* renderer);
+	bool init();
 
 private:
-	bool loadPJTexAndRects(SDL_Renderer* renderer);
+	bool loadPJTex();
+	bool loadCircleTex();
+	bool loadCuadTex();
 	bool inicializado;
 };
 
