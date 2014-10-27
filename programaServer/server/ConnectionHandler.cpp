@@ -41,8 +41,7 @@ int ConnectionHandler::logIn(std::string username){
 }
 
 void* ConnectionHandler::run() {
-	// Remove 1 item at a time and process it. Blocks if no items are
-	// available to process.
+
 	printf("Conexion con: %s:%d establecida.\n", m_stream->getPeerIP().c_str() , m_stream->getPeerPort());
 
 	//The frames per second timer
