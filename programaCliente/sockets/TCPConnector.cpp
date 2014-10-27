@@ -24,6 +24,19 @@ TCPStream* TCPConnector::connect(const char* server, int port)
         inet_pton(PF_INET, server, &(address.sin_addr));
     }
     int sd = socket(AF_INET, SOCK_STREAM, 0);
+    // Timeout setting
+    struct timeval timeout;
+	timeout.tv_sec = 20;
+	timeout.tv_usec = 0;
+
+	if (setsockopt (sd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout,
+				sizeof(timeout)) < 0)
+		printf("setsockopt failed\n");
+
+	if (setsockopt (sd, SOL_SOCKET, SO_SNDTIMEO, (char *)&timeout,
+				sizeof(timeout)) < 0)
+		printf("setsockopt failed\n");
+
     if (::connect(sd, (struct sockaddr*)&address, sizeof(address)) != 0) {
         perror("connect() failed");
         return NULL;
