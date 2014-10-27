@@ -202,7 +202,7 @@ Personaje * Inicializador::pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*
 	myFixtureDef.restitution = 0.0f;
 	myFixtureDef.friction=0;
 	b2Fixture* fixture = pjB2D->CreateFixture(&myFixtureDef);
-	fixture->SetUserData( (void*)3 );
+	fixture->SetUserData( (void*)4 );
 
 	//costados sin friccion
 	v.x=halfWidth*0.7;
@@ -212,7 +212,7 @@ Personaje * Inicializador::pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*
 	myFixtureDef.restitution = 0.0f;
 	myFixtureDef.friction=0;
 	fixture = pjB2D->CreateFixture(&myFixtureDef);
-	fixture->SetUserData( (void*)3 );
+	fixture->SetUserData( (void*)4 );
 
 	//pies
 	v.x=0;
