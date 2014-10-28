@@ -146,6 +146,11 @@ bool Textura::generarTexto(std::string path, int tamanio, std::string txt, SDL_C
 	// Free the SDL_Surface only if it was successfully created
 	if (surface) {
 		SDL_FreeSurface(surface);
+		surface = NULL;
+	}
+	if (fuente) {
+		TTF_CloseFont(fuente);
+		fuente = NULL;
 	}
 
 	return exito;
