@@ -197,7 +197,7 @@ int main(int argc, char * argv[]){
 		// Itera sobre todos los elementos restantes.
 		for (std::vector<std::string>::iterator it = buff.begin(); it != buff.end(); it++){
 			item = Deserializador::deserializar((*it));
-			itemList.push_front(item);
+			itemList.push_back(item);
 		}
 
 		window->updateWindow(itemList, escala);

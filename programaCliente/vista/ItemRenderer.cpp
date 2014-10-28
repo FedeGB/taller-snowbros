@@ -14,7 +14,6 @@ ItemRenderer::ItemRenderer() {
 }
 
 ItemRenderer::~ItemRenderer() {
-	// TODO Auto-generated destructor stub
 }
 
 // Dibuja un circulo.
@@ -78,7 +77,6 @@ void ItemRenderer::renderCuadrilatero(Cuadrilatero * item, float escala){
 	vy[2] = (item->posicion.y - modulo2 * sin(thita2)) * escala;
 	vx[3] = (item->posicion.x + modulo3 * cos(thita3)) * escala;
 	vy[3] = (item->posicion.y - modulo3 * sin(thita3)) * escala;
-
 
 	// Calculo los vertices de la textura.
 	vxTex[0] = vxTex[3] = 0.0f;
@@ -149,12 +147,33 @@ void ItemRenderer::renderPJ(Personaje * item, float escala){
 	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
 }
 
+// Dibuja la metadata del juego: las vidas, puntaje, y el fondo.
 void ItemRenderer::renderMetadata(Metadata * item){
 
 	GLfloat vx[4]; GLfloat vy[4];
 
-	// Obtiene la textura y su correspondiente rect para renderear.
-	TexAndVertexes * TaV = textureMap[VIDAS1];
+	// Calcula la posicion del fondo
+	// TODO: HARDCODEO!!!
+	vx[0] = vx[3] = 0;
+	vy[0] = vy[1] = 0;
+	vx[1] = vx[2] = 720;
+	vy[2] = vy[3] = 640;
+
+	float vxTex[4]; float vyTex[4];
+
+	// Calculo los vertices de la textura.
+	vxTex[0] = vxTex[3] = item->posXCamara;
+	vyTex[0] = vyTex[1] = item->posYCamara;
+	vxTex[1] = vxTex[2] = item->posXCamara + item->anchoCamara;
+	vyTex[2] = vyTex[3] = item->posYCamara + item->altoCamara;
+
+	TexAndVertexes * TaV = textureMap[FONDO1];
+
+	// Renderea fondo.
+	TaV->tex->dibujar(vx, vy, vxTex, vyTex, 4);
+
+	// Obtiene la textura y su correspondiente rect para renderear las vidas.
+	TaV = textureMap[VIDAS1];
 
 	for (int i = 0; i < item->vidas; i++){
 
@@ -164,7 +183,7 @@ void ItemRenderer::renderMetadata(Metadata * item){
 		vx[1] = vx[2] = 68 + i * 54;
 		vy[2] = vy[3] = 68;
 
-		// Renderea.
+		// Renderea vidas.
 		TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
 	}
 
@@ -178,11 +197,11 @@ void ItemRenderer::renderMetadata(Metadata * item){
 	TaV->tex->eliminar();
 	SDL_Color c = {255, 160, 100, 255};
 	std::string puntaje = SSTR("Puntaje: " << item->puntaje);
-	std::cout << "el puntaje es: " << puntaje << " en int: " << item->puntaje << std::endl;
 	TaV->tex->generarTexto("fuentes/Ubuntu-B.ttf", 30, puntaje, c);
 
-	// Renderea.
+	// Renderea puntaje.
 	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
+
 }
 
 // Dibuja un item del mundo.

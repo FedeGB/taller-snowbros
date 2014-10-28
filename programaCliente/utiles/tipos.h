@@ -126,5 +126,6 @@ enum sprite_t{
 	CUADRILATERO1,
 	VIDAS1,
 	PUNTAJE1,
+	FONDO1,
 };
 #endif /* TIPOS_H_ */

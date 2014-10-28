@@ -64,6 +64,22 @@ bool TextureMap::loadMetadataTex(){
 	temp->tex = tex;
 	(*this)[PUNTAJE1] = temp;
 
+	tex = new Textura();
+	if (!tex) {
+		std::cout << "no se cargo la imagen" << std::endl;
+		return false;
+	}
+	tex->generar("imagenes/fondo2.png");
+
+	temp = new TexAndVertexes;
+	temp->vertexes = new Vertexes(4);
+	temp->vertexes->x[0] = temp->vertexes->x[3] = 0.0f;
+	temp->vertexes->y[0] = temp->vertexes->y[1] = 0.0f;
+	temp->vertexes->x[1] = temp->vertexes->x[2] = 1.0f;
+	temp->vertexes->y[2] = temp->vertexes->y[3] = 1.0f;
+	temp->tex = tex;
+	(*this)[FONDO1] = temp;
+
 	return true;
 }
 
