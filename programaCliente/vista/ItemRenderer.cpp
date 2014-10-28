@@ -8,10 +8,9 @@
 #include "ItemRenderer.h"
 
 TextureMap ItemRenderer::textureMap;
+float ItemRenderer::escalaPorDefecto = 20;
 
 ItemRenderer::ItemRenderer() {
-	// TODO Auto-generated constructor stub
-
 }
 
 ItemRenderer::~ItemRenderer() {
@@ -84,8 +83,8 @@ void ItemRenderer::renderCuadrilatero(Cuadrilatero * item, float escala){
 	// Calculo los vertices de la textura.
 	vxTex[0] = vxTex[3] = 0.0f;
 	vyTex[0] = vyTex[1] = 0.0f;
-	vxTex[1] = vxTex[2] = item->baseMayor * escala / 128.0f;
-	vyTex[2] = vyTex[3] = item->altura * escala / 128.0f;
+	vxTex[1] = vxTex[2] = item->baseMayor * escalaPorDefecto / 128.0f;
+	vyTex[2] = vyTex[3] = item->altura * escalaPorDefecto / 128.0f;
 
 	// Obtiene la textura y su correspondiente rect para renderear.
 	TexAndVertexes * TaV = textureMap[CUADRILATERO1];

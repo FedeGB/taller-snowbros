@@ -179,6 +179,8 @@ int main(int argc, char * argv[]){
 			continue;
 		}
 
+		//std::cout << "se recibio la siguiente pantalla serializada: " << inMessage << std::endl;
+
 		// Saltea si se recibe un mensaje vacio, ya que indica que todavia
 		// no se cargo el PJ en el servidor.
 		if (inMessage == "EMPTY") continue;
@@ -206,7 +208,7 @@ int main(int argc, char * argv[]){
 			fpsTimer.start();
 			countedFrames = 0;
 		}
-		std::cout << avgFPS << " FPS avg" << std::endl;
+		//std::cout << avgFPS << " FPS avg" << std::endl;
 		++countedFrames;
 
 	}

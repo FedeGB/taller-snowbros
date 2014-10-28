@@ -24,8 +24,10 @@ public:
 	ItemRenderer();
 	virtual ~ItemRenderer();
 	static void render(SDL_Renderer* wRenderer, WorldItem * item, float escala);
+	static float escalaPorDefecto;
 
 private:
+
 	static TextureMap textureMap;
 	static void renderCirculo(Circulo * item, float escala);
 	static void renderCuadrilatero(Cuadrilatero * item, float escala);
