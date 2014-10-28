@@ -17,6 +17,8 @@ public:
 	virtual std::string serializar();
 
 	float escala;
+	int vidas;
+	int puntaje;
 };
 
 #endif /* METADATA_H_ */

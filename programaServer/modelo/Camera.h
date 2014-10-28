@@ -17,9 +17,6 @@
 class Camera{
 public:
 
-	static float WORLDTOWINDOWSCALE;
-	static float WINDOWTOWORLDSCALE;
-
 	Camera(ThreadSafeList<WorldItem*> & rList, int windowWidth, int windowHeight, float32 windowToWorldScale);
 	virtual ~Camera();
 	void setB2DBody(b2Body * cB2D);
@@ -31,6 +28,9 @@ public:
 	virtual void eventoZoomOut();
 
 private:
+
+	float WORLDTOWINDOWSCALE;
+	float WINDOWTOWORLDSCALE;
 
 	b2Body * cameraB2D;
 	b2Body * PJ;

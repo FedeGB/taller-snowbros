@@ -8,7 +8,7 @@
 #include "Camera.h"
 #include <iostream>
 
-float Camera::WINDOWTOWORLDSCALE, Camera::WORLDTOWINDOWSCALE;
+//float Camera::WINDOWTOWORLDSCALE, Camera::WORLDTOWINDOWSCALE;
 
 Camera::Camera(ThreadSafeList<WorldItem*> & rList, int windowWidth, int windowHeight,
 		float32 windowToWorldScale): renderList(rList){
@@ -190,6 +190,9 @@ void Camera::updateRenderList(){
 
 	Metadata * metadata = new Metadata();
 	metadata->escala = WORLDTOWINDOWSCALE;
+	metadata->vidas = 5;
+	static int i= 0; i++;
+	metadata->puntaje = i;
 	renderList.push_back(metadata);
 
 	// Itera sobre todos los objetos que esten en contacto con la camara,
