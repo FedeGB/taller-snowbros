@@ -9,6 +9,8 @@
 
 Metadata::Metadata() {
 	escala = 0.05;
+	vidas = 3;
+	puntaje = 0;
 }
 
 Metadata::~Metadata() {
@@ -16,6 +18,6 @@ Metadata::~Metadata() {
 
 std::string Metadata::serializar(){
 	std::string buffer;
-	buffer = SSTR(METADATA << " " << escala);
+	buffer = SSTR(METADATA << " " << escala << " " << vidas << " " << puntaje);
 	return buffer;
 }

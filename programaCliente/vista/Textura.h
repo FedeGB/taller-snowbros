@@ -29,11 +29,9 @@ public:
 
 	bool generar(std::string path);
 
-	//bool generarTexto(std::string path, int tamanio, std::string txt, SDL_Color color);
+	bool generarTexto(std::string path, int tamanio, std::string txt, SDL_Color color);
 
 	void dibujar(GLfloat* vx, GLfloat* vy, float* s, float* t, int n);
-
-	//void mapearCoordenadas(IDibujable* figura, float escalaX, float escalaY);
 
 };
 

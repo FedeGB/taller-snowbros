@@ -28,7 +28,10 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 	// Deserializa metadata.
 	case METADATA:{
 		Metadata * metadata = new Metadata();
+		metadata->tipo = type;
 		metadata->escala = (float)atof(buff[1].c_str());
+		metadata->vidas = strtol(buff[2].c_str(),NULL,10);
+		metadata->puntaje = strtol(buff[3].c_str(),NULL,10);
 		return metadata;
 	}
 

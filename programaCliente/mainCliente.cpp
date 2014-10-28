@@ -179,7 +179,7 @@ int main(int argc, char * argv[]){
 			continue;
 		}
 
-		//std::cout << "se recibio la siguiente pantalla serializada: " << inMessage << std::endl;
+		//std::cout << "se recibio el siguiente escenario: " << inMessage << std::endl;
 
 		// Saltea si se recibe un mensaje vacio, ya que indica que todavia
 		// no se cargo el PJ en el servidor.
@@ -197,7 +197,7 @@ int main(int argc, char * argv[]){
 		// Itera sobre todos los elementos restantes.
 		for (std::vector<std::string>::iterator it = buff.begin(); it != buff.end(); it++){
 			item = Deserializador::deserializar((*it));
-			itemList.push_back(item);
+			itemList.push_front(item);
 		}
 
 		window->updateWindow(itemList, escala);

@@ -8,6 +8,7 @@
 #include <list>
 
 #include "../modelo/WorldItem.h"
+//#include "modelo/Vidas.h"
 #include "Fondo.h"
 
 class Window {
@@ -16,7 +17,8 @@ private:
 	SDL_Window* window;
 	SDL_Renderer* wRenderer;
 	SDL_GLContext ctx;
-	Fondo* background;
+	Fondo * background;
+	//Vidas * vidas;
 
 	//Escenario* wEscenario;
 	//HandlerDeEventos wHandlerEventos;

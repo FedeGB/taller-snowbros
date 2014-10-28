@@ -10,6 +10,7 @@
 
 #include "../modelo/WorldItem.h"
 #include "../modelo/Personaje.h"
+#include "../modelo/Metadata.h"
 #include "../modelo/formas/Circulo.h"
 #include "../modelo/formas/Cuadrilatero.h"
 #include "../modelo/formas/PoligonoRegular.h"
@@ -33,6 +34,7 @@ private:
 	static void renderCuadrilatero(Cuadrilatero * item, float escala);
 	static void renderPoligono(SDL_Renderer* renderer, PoligonoRegular * item, float escala);
 	static void renderPJ(Personaje * item, float escala);
+	static void renderMetadata(Metadata * item);
 };
 
 #endif /* ITEMRENDERER_H_ */

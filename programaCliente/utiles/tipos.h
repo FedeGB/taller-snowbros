@@ -124,5 +124,7 @@ enum sprite_t{
 	SALTANDOIZQUIERDA5,
 	CIRCULO1,
 	CUADRILATERO1,
+	VIDAS1,
+	PUNTAJE1,
 };
 #endif /* TIPOS_H_ */

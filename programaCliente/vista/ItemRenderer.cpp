@@ -116,6 +116,7 @@ void ItemRenderer::renderPoligono(SDL_Renderer* renderer, PoligonoRegular * item
 
 // Dibuja un PJ.
 void ItemRenderer::renderPJ(Personaje * item, float escala){
+
 	// Convierte los parametros de B2D en los necesarios para renderear el sprite.
 	// Obtiene la seccion de la pantalla a renderear.
 	GLfloat vx[4];
@@ -146,7 +147,42 @@ void ItemRenderer::renderPJ(Personaje * item, float escala){
 
 	// Renderea.
 	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
+}
 
+void ItemRenderer::renderMetadata(Metadata * item){
+
+	GLfloat vx[4]; GLfloat vy[4];
+
+	// Obtiene la textura y su correspondiente rect para renderear.
+	TexAndVertexes * TaV = textureMap[VIDAS1];
+
+	for (int i = 0; i < item->vidas; i++){
+
+		// Calcula la posicion de los corazones de vida.
+		vx[0] = vx[3] = 20 + i * 54;
+		vy[0] = vy[1] = 20;
+		vx[1] = vx[2] = 68 + i * 54;
+		vy[2] = vy[3] = 68;
+
+		// Renderea.
+		TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
+	}
+
+	// Calcula la posicion del puntaje
+	vx[0] = vx[3] = 600;
+	vy[0] = vy[1] = 25;
+	vx[1] = vx[2] = 700;
+	vy[2] = vy[3] = 50;
+
+	TaV = textureMap[PUNTAJE1];
+	TaV->tex->eliminar();
+	SDL_Color c = {255, 160, 100, 255};
+	std::string puntaje = SSTR("Puntaje: " << item->puntaje);
+	std::cout << "el puntaje es: " << puntaje << " en int: " << item->puntaje << std::endl;
+	TaV->tex->generarTexto("fuentes/Ubuntu-B.ttf", 30, puntaje, c);
+
+	// Renderea.
+	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
 }
 
 // Dibuja un item del mundo.
@@ -166,6 +202,9 @@ void ItemRenderer::render(SDL_Renderer* wRenderer, WorldItem * item, float escal
 		break;
 	case PJ:
 		renderPJ((Personaje*)item, escala);
+		break;
+	case METADATA:
+		renderMetadata((Metadata*)item);
 		break;
 	}
 }

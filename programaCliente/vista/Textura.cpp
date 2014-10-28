@@ -80,7 +80,7 @@ bool Textura::generar(std::string path) {
 	return exito;
 }
 
-/*
+
 bool Textura::generarTexto(std::string path, int tamanio, std::string txt, SDL_Color color) {
 
 	TTF_Font* fuente = TTF_OpenFont(path.c_str(), tamanio);
@@ -150,7 +150,7 @@ bool Textura::generarTexto(std::string path, int tamanio, std::string txt, SDL_C
 
 	return exito;
 }
-*/
+
 
 void Textura::dibujar(GLfloat* vx, GLfloat* vy, float* s, float* t, int n) {
 	glPushMatrix();
@@ -176,40 +176,3 @@ void Textura::dibujar(GLfloat* vx, GLfloat* vy, float* s, float* t, int n) {
 
 	glPopMatrix();
 }
-
-/*
-void Textura::mapearCoordenadas(IDibujable* figura, float escalaX, float escalaY){
-
-	GLint nVertices = figura->getCantidadDeVertices();
-	GLfloat vx[nVertices]; GLfloat vy[nVertices];
-
-	float* s = new float[nVertices];
-	float* t = new float[nVertices];
-
-	GLint i;
-	// genero unos vertices cualquiera para calcular las coordenadas
-	figura->calcularVertices(vx, vy, nVertices, escalaX, escalaY, 0.0f, 1.0f);
-
-	GLfloat menorX = vx[0]; GLfloat menorY = vy[0]; GLfloat mayorX = vx[0]; GLfloat mayorY = vy[0];
-
-	// calculo los menores y mayores de X e Y para calcular el ancho y largo de la textura
-	for( i = 1; i<nVertices ; i++){
-		if( vx[i] < menorX ) menorX = vx[i];
-		if( vy[i] < menorY ) menorY = vy[i];
-		if( vx[i] > mayorX ) mayorX = vx[i];
-		if( vy[i] > mayorY ) mayorY = vy[i];
-	}
-
-	GLfloat ancho = mayorX - menorX;
-	GLfloat largo = mayorY - menorY;
-
-	// calculo las coordenadas
-	for( i = 0; i < nVertices; i++ ){
-		s[i] =  (vx[i] - menorX)* escalaX / ancho;
-		t[i] =  (vy[i] - menorY)* escalaY / largo;
-	}
-	figura->setCoord_s(s);
-	figura->setCoord_t(t);
-
-}
-*/
