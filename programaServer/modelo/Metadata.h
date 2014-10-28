@@ -19,6 +19,10 @@ public:
 	float escala;
 	int vidas;
 	int puntaje;
+	float posXCamara;
+	float posYCamara;
+	float anchoCamara;
+	float altoCamara;
 };
 
 #endif /* METADATA_H_ */

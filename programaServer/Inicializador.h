@@ -32,6 +32,12 @@ public:
 	bool init(std::string configFile, b2World ** worldB2D, ContactListener * contactListener);
 	Personaje * pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*> & rList, std::string configFile);
 
+private:
+
+	Camera * cameraInit(b2World ** worldB2D, b2Body * pj, ThreadSafeList<WorldItem*> & rList,
+			float32 windowWidth, float32 windowHeight);
+	static float widthWorld;
+	static float heightWorld;
 };
 
 

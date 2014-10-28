@@ -11,7 +11,8 @@
 //float Camera::WINDOWTOWORLDSCALE, Camera::WORLDTOWINDOWSCALE;
 
 Camera::Camera(ThreadSafeList<WorldItem*> & rList, int windowWidth, int windowHeight,
-		float32 windowToWorldScale): renderList(rList){
+		float worldW, float worldH, float32 windowToWorldScale):
+		renderList(rList){
 	cameraB2D = NULL;
 	width = windowWidth;
 	height = windowHeight;
@@ -20,6 +21,8 @@ Camera::Camera(ThreadSafeList<WorldItem*> & rList, int windowWidth, int windowHe
 	canMoveLeft = canMoveRight = canMoveUp = canMoveDown = true;
 	PJ = NULL;
 	zoomChanged = false;
+	worldWidth = worldW;
+	worldHeight = worldH;
 }
 
 Camera::~Camera() {
@@ -190,6 +193,13 @@ void Camera::updateRenderList(){
 
 	Metadata * metadata = new Metadata();
 	metadata->escala = WORLDTOWINDOWSCALE;
+	std::cout << "posXCamara = " << cameraB2D->GetPosition().x << std::endl;
+	std::cout << "worldWidth = " << worldWidth << std::endl;
+	std::cout << "posXCamaraRelativa = " << cameraB2D->GetPosition().x / worldWidth << std::endl;
+	metadata->posXCamara = (cameraB2D->GetPosition().x - width * WINDOWTOWORLDSCALE / 2) / worldWidth;
+	metadata->posYCamara = (cameraB2D->GetPosition().y - height * WINDOWTOWORLDSCALE / 2) / worldHeight;
+	metadata->anchoCamara = width * WINDOWTOWORLDSCALE / worldWidth;
+	metadata->altoCamara = height * WINDOWTOWORLDSCALE / worldHeight;
 	metadata->vidas = 5;
 	static int i= 0; i++;
 	metadata->puntaje = i;

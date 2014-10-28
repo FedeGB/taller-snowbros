@@ -17,7 +17,8 @@
 class Camera{
 public:
 
-	Camera(ThreadSafeList<WorldItem*> & rList, int windowWidth, int windowHeight, float32 windowToWorldScale);
+	Camera(ThreadSafeList<WorldItem*> & rList, int windowWidth, int windowHeight,
+			float worldW, float worldH, float32 windowToWorldScale);
 	virtual ~Camera();
 	void setB2DBody(b2Body * cB2D);
 	void setPJ(b2Body * pjB2D);
@@ -37,6 +38,7 @@ private:
 	b2Vec2 posPJCamera;
 	ThreadSafeList<WorldItem*> & renderList;
 	int width, height;
+	int worldWidth, worldHeight;
 	bool canMoveLeft, canMoveRight, canMoveUp, canMoveDown;
 	bool zoomChanged;
 

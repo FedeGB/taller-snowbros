@@ -7,6 +7,9 @@
 
 #include "Inicializador.h"
 
+float Inicializador::widthWorld;
+float Inicializador::heightWorld;
+
 bool loadInitialValues(std::string configFile, std::string& sConfig) {
 	Logger& log = *Logger::Instancia();
 	//abre el json y lo carga a un string
@@ -97,7 +100,7 @@ void worldInit(b2World ** worldB2D, ContactListener * contactListener) {
 	return;
 }
 
-Camera * cameraInit(b2World ** worldB2D, b2Body * pj, ThreadSafeList<WorldItem*> & rList,
+Camera * Inicializador::cameraInit(b2World ** worldB2D, b2Body * pj, ThreadSafeList<WorldItem*> & rList,
 		float32 windowWidth, float32 windowHeight){
 
 	Logger& log = *Logger::Instancia();
@@ -129,7 +132,7 @@ Camera * cameraInit(b2World ** worldB2D, b2Body * pj, ThreadSafeList<WorldItem*>
 	bodyFixture->SetUserData( (void*)4 );
 
 	// 0.05f = windowToWorldScale. HARDCODEADO!!!
-	Camera * camera = new Camera(rList, windowWidth, windowHeight, 0.05f);
+	Camera * camera = new Camera(rList, 720, 640, widthWorld, heightWorld, 0.05f);
 	if(!camera) {
 		log.log(WINDOWLOG,ERROR, "No se pudo asignar memoria para la camara.");
 		return NULL;
@@ -504,8 +507,8 @@ bool Inicializador::init(std::string configFile, b2World ** worldB2D,
 	int heightScreen = get_node("alto-px", "escenario", sConfig, 480);
 	int widthScreen = get_node("ancho-px", "escenario", sConfig, 640);
 
-	float heightWorld = get_node("alto-un", "escenario", sConfig, 10.0f);
-	float widthWorld = get_node("ancho-un", "escenario", sConfig, 10.0f);
+	heightWorld = get_node("alto-un", "escenario", sConfig, 10.0f);
+	widthWorld = get_node("ancho-un", "escenario", sConfig, 10.0f);
 
 	std::string path_fondo = get_node("imagen-fondo", "escenario", sConfig,
 			"imagenes/fondo2.png");
