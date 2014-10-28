@@ -10,7 +10,7 @@
 		"x": 22.0,
 		"y": 12.0,
 		"masa": 20.0,
-		"ancho": 1.2,
+		"ancho": 1.1,
 		"alto": 1.6,
 		"sprite-sheet": "imagenes/playerSpritesheet.png"
     },

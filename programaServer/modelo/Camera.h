@@ -34,11 +34,15 @@ private:
 
 	b2Body * cameraB2D;
 	b2Body * PJ;
+	b2Vec2 posPJCamera;
 	ThreadSafeList<WorldItem*> & renderList;
 	int width, height;
 	bool canMoveLeft, canMoveRight, canMoveUp, canMoveDown;
+	bool zoomChanged;
 
 	void calculateBorderConstraints();
+	void calcularPosRelativaPJ();
+	void updateZoom();
 	void updatePosition();
 	void updateRenderList();
 };
