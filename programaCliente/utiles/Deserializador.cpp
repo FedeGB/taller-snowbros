@@ -29,17 +29,16 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 	// Deserializa metadata.
 	case METADATAHUD:{
 
-		std::cout << "se detecto metadataHUD" << std::endl;
 		Metadata * metadata = new Metadata();
 		metadata->tipo = type;
 		metadata->vidas = strtol(buff[6].c_str(),NULL,10);
 		metadata->puntaje = strtol(buff[7].c_str(),NULL,10);
+		metadata->mensaje = buff[10];
 		return metadata;
 	}
 
 	case METADATAFONDO:{
 
-		std::cout << "se detecto metadataFondo" << std::endl;
 		Metadata * metadata = new Metadata();
 		metadata->tipo = type;
 		metadata->posXCamara = (float)atof(buff[1].c_str());

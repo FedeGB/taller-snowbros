@@ -263,7 +263,6 @@ void ItemRenderer::renderMetadataFondo(Metadata * item){
 void ItemRenderer::renderMetadataHUD(Metadata * item){
 
 	GLfloat vx[4]; GLfloat vy[4];
-	float vxTex[4]; float vyTex[4];
 
 	// Obtiene la textura y su correspondiente rect para renderear las vidas.
 	TexAndVertexes * TaV = textureMap[VIDAS1];
@@ -280,20 +279,47 @@ void ItemRenderer::renderMetadataHUD(Metadata * item){
 		TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
 	}
 
+	std::string puntaje = SSTR("Puntaje: " << item->puntaje);
+
 	// Calcula la posicion del puntaje
 	vx[0] = vx[3] = 600;
 	vy[0] = vy[1] = 25;
-	vx[1] = vx[2] = 700;
+	vx[1] = vx[2] = 600 + 8 * puntaje.size();
 	vy[2] = vy[3] = 50;
 
 	TaV = textureMap[PUNTAJE1];
 	TaV->tex->eliminar();
-	SDL_Color c = {255, 160, 100, 255};
-	std::string puntaje = SSTR("Puntaje: " << item->puntaje);
+	SDL_Color c = {0, 0, 0, 255};
 	TaV->tex->generarTexto("fuentes/Ubuntu-B.ttf", 30, puntaje, c);
 
 	// Renderea puntaje.
 	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
+
+	// Analiza el mensaje.
+	if (item->mensaje == "NOMESSAGE") return;
+
+	//
+	item->mensaje.replace(0, 9, "");
+	std::replace( item->mensaje.begin(), item->mensaje.end(), '-', ' ');
+
+	std::vector<std::string> buff;
+	split(buff, item->mensaje, "&", no_empties);
+
+	for (unsigned int i = 0; i < buff.size(); i++){
+
+		// Calcula posicion mensaje.
+		vx[0] = vx[3] = 50;
+		vy[0] = vy[1] = 510 + i * 30;
+		vx[1] = vx[2] = 50 + 8 * buff[i].size();
+		vy[2] = vy[3] = 540 + i * 30;
+
+		TaV = textureMap[PUNTAJE1];
+		TaV->tex->eliminar();
+		TaV->tex->generarTexto("fuentes/Ubuntu-B.ttf", 30, buff[i], c);
+
+		// Renderea mensaje.
+		TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
+	}
 
 }
 
@@ -320,7 +346,6 @@ void ItemRenderer::render(WorldItem * item, float escala){
 		renderPJ((Personaje*)item, escala);
 		break;
 	case METADATAFONDO:
-		std::cout << "voy a renderear METADATAFONDO" << std::endl;
 		tamanioMundo.x = ((Metadata*)item)->tamanioXMundo;
 		tamanioMundo.y = ((Metadata*)item)->tamanioYMundo;
 		posicionCamara.x = ((Metadata*)item)->posXCamara * tamanioMundo.x;
@@ -328,10 +353,8 @@ void ItemRenderer::render(WorldItem * item, float escala){
 		renderMetadataFondo((Metadata*)item);
 		break;
 	case METADATAHUD:
-		std::cout << "voy a renderear METADATAHUD" << std::endl;
 		renderMetadataHUD((Metadata*)item);
 		break;
 	}
-
 }
 
