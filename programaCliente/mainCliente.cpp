@@ -26,7 +26,7 @@ int main(int argc, char * argv[]){
 		return -1;
 	}
 
- // Process command line arguments
+	// Process command line arguments
 	int opt, uflag, pflag, iflag, port;
 	opt = uflag = pflag = iflag = port = 0;
 	std::string username (" "); // username
@@ -214,7 +214,9 @@ int main(int argc, char * argv[]){
 		++countedFrames;
 
 	}
+
 	delete window;
+
 	return 0;
 }
 

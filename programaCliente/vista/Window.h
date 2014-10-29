@@ -15,13 +15,8 @@ class Window {
 
 private:
 	SDL_Window* window;
-	SDL_Renderer* wRenderer;
+	//SDL_Renderer* wRenderer;
 	SDL_GLContext ctx;
-	Fondo * background;
-	//Vidas * vidas;
-
-	//Escenario* wEscenario;
-	//HandlerDeEventos wHandlerEventos;
 
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
@@ -32,7 +27,6 @@ private:
 	bool validarAnchoYAlto(int ancho, int alto);
 	bool iniciarSDL();
 	SDL_Window* crearVentana();
-	SDL_Renderer* crearRenderer(SDL_Window*);
 	SDL_GLContext initGL(SDL_Window* w);
 
 public:

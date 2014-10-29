@@ -24,7 +24,7 @@ class ItemRenderer {
 public:
 	ItemRenderer();
 	virtual ~ItemRenderer();
-	static void render(SDL_Renderer* wRenderer, WorldItem * item, float escala);
+	static void render(WorldItem * item, float escala);
 	static float escalaPorDefecto;
 
 private:
@@ -32,7 +32,7 @@ private:
 	static TextureMap textureMap;
 	static void renderCirculo(Circulo * item, float escala);
 	static void renderCuadrilatero(Cuadrilatero * item, float escala);
-	static void renderPoligono(SDL_Renderer* renderer, PoligonoRegular * item, float escala);
+	static void renderPoligono(PoligonoRegular * item, float escala);
 	static void renderPJ(Personaje * item, float escala);
 	static void renderMetadata(Metadata * item);
 };

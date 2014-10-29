@@ -92,23 +92,23 @@ void ItemRenderer::renderCuadrilatero(Cuadrilatero * item, float escala){
 }
 
 // Dibuja un poligono regular.
-void ItemRenderer::renderPoligono(SDL_Renderer* renderer, PoligonoRegular * item, float escala){
+void ItemRenderer::renderPoligono(PoligonoRegular * item, float escala){
 	// Calculo la posicion de los vertices.
-	Sint16 vx[item->nLados]; Sint16 vy[item->nLados];
+	float vx[item->nLados]; float vy[item->nLados];
+	float vxTex[item->nLados]; float vyTex[item->nLados];
 	for (int i = 0; i < item->nLados; i++) {
 		float thita = (2 * i * PI / item->nLados) - (item->angulo);
-		vx[i] = ( item->posicion.x + escala * cos(thita) ) * escala;
-		vy[i] = ( item->posicion.y - escala * sin(thita) ) * escala;
+		vx[i] = ( item->posicion.x + item->radio * cos(thita) ) * escala;
+		vy[i] = ( item->posicion.y - item->radio * sin(thita) ) * escala;
+		vxTex[i] = ( item->radio +  item->radio * cos(thita) ) * escalaPorDefecto / 128.0f;
+		vyTex[i] = ( item->radio - item->radio * sin(thita) ) * escalaPorDefecto / 128.0f;
 	}
 
-	// Rendereo.
-	// TODO: (255,0,0,255) color HARDCODEADO!!
-	int status = filledPolygonRGBA(renderer, vx, vy, item->nLados, 255, 0, 0, 255);
-	if(status != 0) {
-		Logger& log = * Logger::Instancia();
-		std::string err(SDL_GetError());
-		log.log(DIBUJABLELOG, WARNING, "No se renderizo el poligono "+err);
-	}
+	// Obtiene la textura y su correspondiente rect para renderear.
+	TexAndVertexes * TaV = textureMap[CUADRILATERO1];
+
+	// Renderea.
+	TaV->tex->dibujar(vx, vy, vxTex, vyTex, item->nLados);
 
 }
 
@@ -205,7 +205,7 @@ void ItemRenderer::renderMetadata(Metadata * item){
 }
 
 // Dibuja un item del mundo.
-void ItemRenderer::render(SDL_Renderer* wRenderer, WorldItem * item, float escala){
+void ItemRenderer::render(WorldItem * item, float escala){
 
 	if (!textureMap.yaInicializado()) textureMap.init();
 
@@ -217,7 +217,7 @@ void ItemRenderer::render(SDL_Renderer* wRenderer, WorldItem * item, float escal
 		renderCuadrilatero((Cuadrilatero*)item, escala);
 		break;
 	case POLIGONOREGULAR:
-		renderPoligono(wRenderer, (PoligonoRegular*)item, escala);
+		renderPoligono((PoligonoRegular*)item, escala);
 		break;
 	case PJ:
 		renderPJ((Personaje*)item, escala);
