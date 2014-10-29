@@ -202,6 +202,7 @@ void Camera::updateRenderList(){
 	renderList.clear();
 
 	Metadata * metadata = new Metadata();
+	metadata->tipo = METADATAFONDO;
 	metadata->escala = WORLDTOWINDOWSCALE;
 	metadata->posXCamara = (cameraB2D->GetPosition().x - width * WINDOWTOWORLDSCALE / 2) / worldWidth;
 	metadata->posYCamara = (cameraB2D->GetPosition().y - height * WINDOWTOWORLDSCALE / 2) / worldHeight;
@@ -209,9 +210,6 @@ void Camera::updateRenderList(){
 	metadata->altoCamara = height * WINDOWTOWORLDSCALE / worldHeight;
 	metadata->tamanioXMundo = worldWidth;
 	metadata->tamanioYMundo = worldHeight;
-	metadata->vidas = 5;
-	static int i= 0; i++;
-	metadata->puntaje = i;
 	renderList.push_back(metadata);
 
 	// Itera sobre todos los objetos que esten en contacto con la camara,

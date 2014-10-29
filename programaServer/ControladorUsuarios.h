@@ -35,6 +35,13 @@ public:
 	// return: true si no pueden ingresar mas usuarios, false si aun hay lugar.
 	bool escenarioLleno();
 
+	// Obtiene una version serializada de lo que se ve en pantalla del usuario
+	// pedido, para ser enviada al cliente para renderear.
+	// username:el nombre de usuario para el que se quiere obtener la pantalla
+	// serializada.
+	// return: la pantalla serializada para username.
+	std::string obtenerPantallaSerializada(std::string username);
+
 private:
 	unsigned int tamanioMaximo;
 };

@@ -96,7 +96,7 @@ void* ConnectionHandler::run() {
 
 		// Obtiene la representacion serializada de la pantalla, y la envia.
 		outMessage =
-				controlador.obtenerUsuario(username)->obtenerPantallaSerializada();
+				controlador.obtenerPantallaSerializada(username);
 
 		if (outMessage.empty()) outMessage = "EMPTY";
 		len = m_stream->send(outMessage);

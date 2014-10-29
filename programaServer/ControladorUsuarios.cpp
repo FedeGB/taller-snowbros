@@ -49,3 +49,15 @@ Usuario * ControladorUsuarios::obtenerUsuario(std::string username){
 bool ControladorUsuarios::escenarioLleno(){
 	return this->size() < tamanioMaximo ? false :true;
 }
+
+// Obtiene una version serializada de lo que se ve en pantalla del usuario
+// pedido, para ser enviada al cliente para renderear.
+// username:el nombre de usuario para el que se quiere obtener la pantalla
+// serializada.
+// return: la pantalla serializada para username.
+std::string ControladorUsuarios::obtenerPantallaSerializada(std::string username){
+
+	std::string buffer = (*this)[username]->obtenerPantallaSerializada();
+
+	return buffer;
+}

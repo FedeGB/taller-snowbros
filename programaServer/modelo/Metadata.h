@@ -25,6 +25,7 @@ public:
 	float tamanioYMundo;
 	float anchoCamara;
 	float altoCamara;
+	worlditem_t tipo;
 };
 
 #endif /* METADATA_H_ */

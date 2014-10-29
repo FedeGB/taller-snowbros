@@ -98,6 +98,15 @@ std::string Usuario::obtenerPantallaSerializada(){
 
 	listaVisibles.unlock();
 
+	Metadata * metadata = new Metadata();
+
+	metadata->tipo = METADATAHUD;
+	metadata->vidas = 5;
+	static int i= 0; i++;
+	metadata->puntaje = i;
+	pantallaSerializada += "%";
+	pantallaSerializada += metadata->serializar();
+
 	pantallaSerializada += "%USERNAME ";
 	pantallaSerializada += username;
 	return pantallaSerializada;
