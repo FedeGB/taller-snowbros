@@ -234,6 +234,13 @@ bool TextureMap::loadCuadTex(){
 }
 
 TextureMap::~TextureMap() {
-	// TODO Auto-generated destructor stub
+
+	 for (TextureMap::iterator it = this->begin(); it != this->end(); it++){
+		 if ((*it).second) {
+			 delete (*it).second;
+			 (*it).second = NULL;
+		 }
+	 }
+
 }
 
