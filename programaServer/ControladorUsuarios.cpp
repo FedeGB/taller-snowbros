@@ -25,6 +25,7 @@ bool ControladorUsuarios::registrarUsuario(std::string username){
 
 	// En caso contrario, se lo agrega.
 	(*this)[username] = new Usuario();
+	(*this)[username]->username = username;
 	return true;
 }
 

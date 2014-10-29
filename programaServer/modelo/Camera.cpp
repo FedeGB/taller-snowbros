@@ -56,6 +56,7 @@ void Camera::eventoZoomOut(){
 	if(!canMoveUp || !canMoveDown) minZoomReached = true;
 
 	if (minZoomReached) return;
+
 	calcularPosRelativaPJ();
 	WINDOWTOWORLDSCALE += 0.001f;
 	WORLDTOWINDOWSCALE = 1.0f / WINDOWTOWORLDSCALE;
@@ -192,6 +193,8 @@ void Camera::updatePosition(){
 
 void Camera::updateRenderList(){
 
+	std::cout << "updateando render list" << std::endl;
+
 	// Bloquea renderList, para evitar que se modifique mientras se la esta cargando.
 	renderList.lock();
 
@@ -204,6 +207,8 @@ void Camera::updateRenderList(){
 	metadata->posYCamara = (cameraB2D->GetPosition().y - height * WINDOWTOWORLDSCALE / 2) / worldHeight;
 	metadata->anchoCamara = width * WINDOWTOWORLDSCALE / worldWidth;
 	metadata->altoCamara = height * WINDOWTOWORLDSCALE / worldHeight;
+	metadata->tamanioXMundo = worldWidth;
+	metadata->tamanioYMundo = worldHeight;
 	metadata->vidas = 5;
 	static int i= 0; i++;
 	metadata->puntaje = i;
@@ -235,10 +240,8 @@ void Camera::updateRenderList(){
 			continue;
 
 		// Actualiza la posicion y angulo.
-		b2Vec2 pos = body->GetPosition() - cameraB2D->GetPosition();
-		pos.x += (width / 2) * WINDOWTOWORLDSCALE;
-		pos.y += (height / 2) * WINDOWTOWORLDSCALE;
-		((WorldItem*)body->GetUserData())->posicion = pos;
+
+		((WorldItem*)body->GetUserData())->posicion = body->GetPosition();
 		((WorldItem*)body->GetUserData())->angulo = body->GetAngle();
 
 		// Agrega a la lista de cosas a renderear.

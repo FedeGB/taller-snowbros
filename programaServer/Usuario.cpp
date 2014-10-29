@@ -84,6 +84,8 @@ std::string Usuario::obtenerPantallaSerializada(){
 	std::string pantallaSerializada;
 	pantallaSerializada.clear();
 
+	std::cout << "obteniendo pantalla serializada" << std::endl;
+
 	// Bloquea la lista para evitar modificaciones mientras se serializa.
 	listaVisibles.lock();
 
@@ -96,6 +98,8 @@ std::string Usuario::obtenerPantallaSerializada(){
 
 	listaVisibles.unlock();
 
+	pantallaSerializada += "%USERNAME ";
+	pantallaSerializada += username;
 	return pantallaSerializada;
 }
 

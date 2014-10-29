@@ -25,6 +25,8 @@ public:
 
 	bool online;
 	bool inicializado;
+	std::string username;
+
 
 	// Agrega una nueva notificacion por parte del handler de conexion para
 	// ser recuperada por el handler de la simulacion B2D.
