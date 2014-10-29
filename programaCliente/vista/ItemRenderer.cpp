@@ -232,8 +232,8 @@ void ItemRenderer::renderPJ(Personaje * item, float escala){
 	delete vert;
 }
 
-// Dibuja la metadata del juego: las vidas, puntaje, y el fondo.
-void ItemRenderer::renderMetadata(Metadata * item){
+// Dibuja la metadata del juego: fondo.
+void ItemRenderer::renderMetadataFondo(Metadata * item){
 
 	GLfloat vx[4]; GLfloat vy[4];
 
@@ -257,8 +257,16 @@ void ItemRenderer::renderMetadata(Metadata * item){
 	// Renderea fondo.
 	TaV->tex->dibujar(vx, vy, vxTex, vyTex, 4);
 
+}
+
+// Dibuja la metadata del juego: las vidas, puntaje, mensajes del servidor.
+void ItemRenderer::renderMetadataHUD(Metadata * item){
+
+	GLfloat vx[4]; GLfloat vy[4];
+	float vxTex[4]; float vyTex[4];
+
 	// Obtiene la textura y su correspondiente rect para renderear las vidas.
-	TaV = textureMap[VIDAS1];
+	TexAndVertexes * TaV = textureMap[VIDAS1];
 
 	for (int i = 0; i < item->vidas; i++){
 
@@ -296,6 +304,8 @@ void ItemRenderer::render(WorldItem * item, float escala){
 
 	item->aCoordenadasLocales(posicionCamara);
 
+	std::cout << "el tipo es: " << item->tipo << std::endl;
+
 	switch(item->tipo){
 	case CIRCULO:
 		renderCirculo((Circulo*)item, escala);
@@ -309,13 +319,19 @@ void ItemRenderer::render(WorldItem * item, float escala){
 	case PJ:
 		renderPJ((Personaje*)item, escala);
 		break;
-	case METADATA:
+	case METADATAFONDO:
+		std::cout << "voy a renderear METADATAFONDO" << std::endl;
 		tamanioMundo.x = ((Metadata*)item)->tamanioXMundo;
 		tamanioMundo.y = ((Metadata*)item)->tamanioYMundo;
 		posicionCamara.x = ((Metadata*)item)->posXCamara * tamanioMundo.x;
 		posicionCamara.y = ((Metadata*)item)->posYCamara * tamanioMundo.y;
-		renderMetadata((Metadata*)item);
+		renderMetadataFondo((Metadata*)item);
+		break;
+	case METADATAHUD:
+		std::cout << "voy a renderear METADATAHUD" << std::endl;
+		renderMetadataHUD((Metadata*)item);
 		break;
 	}
+
 }
 

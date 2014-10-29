@@ -17,6 +17,7 @@ Metadata::Metadata() {
 	anchoCamara = 0.5f;
 	altoCamara = 0.3f;
 	tamanioXMundo = tamanioYMundo = 1;
+	tipo = METADATAHUD;
 
 }
 
@@ -25,7 +26,7 @@ Metadata::~Metadata() {
 
 std::string Metadata::serializar(){
 	std::string buffer;
-	buffer = SSTR(METADATA << " " << posXCamara << " " << posYCamara << " "
+	buffer = SSTR(tipo << " " << posXCamara << " " << posYCamara << " "
 			<< altoCamara << " " << anchoCamara << " " << escala << " "
 			<< vidas << " " << puntaje << " " << tamanioXMundo << " " << tamanioYMundo);
 	return buffer;

@@ -24,7 +24,7 @@ public:
 
 	b2Vec2 posicion;
 	float angulo;
-	int tipo;
+	worlditem_t tipo;
 
 };
 

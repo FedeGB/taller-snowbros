@@ -36,7 +36,8 @@ private:
 	static void renderCuadrilatero(Cuadrilatero * item, float escala);
 	static void renderPoligono(PoligonoRegular * item, float escala);
 	static void renderPJ(Personaje * item, float escala);
-	static void renderMetadata(Metadata * item);
+	static void renderMetadataFondo(Metadata * item);
+	static void renderMetadataHUD(Metadata * item);
 };
 
 #endif /* ITEMRENDERER_H_ */

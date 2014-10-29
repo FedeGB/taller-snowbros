@@ -22,25 +22,31 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 	std::vector<std::string> buff;
 	split(buff, serializado, " ", no_empties);
 	if (buff[0] == "USERNAME") return NULL;
-	int type = strtol(buff[0].c_str(),NULL,10);
+	worlditem_t type = (worlditem_t) strtol(buff[0].c_str(),NULL,10);
 
 	switch (type){
 
 	// Deserializa metadata.
-	case METADATA:{
+	case METADATAHUD:{
+
+		std::cout << "se detecto metadataHUD" << std::endl;
+		Metadata * metadata = new Metadata();
+		metadata->tipo = type;
+		metadata->vidas = strtol(buff[6].c_str(),NULL,10);
+		metadata->puntaje = strtol(buff[7].c_str(),NULL,10);
+		return metadata;
+	}
+
+	case METADATAFONDO:{
+
+		std::cout << "se detecto metadataFondo" << std::endl;
 		Metadata * metadata = new Metadata();
 		metadata->tipo = type;
 		metadata->posXCamara = (float)atof(buff[1].c_str());
 		metadata->posYCamara = (float)atof(buff[2].c_str());
 		metadata->altoCamara = (float)atof(buff[3].c_str());
 		metadata->anchoCamara = (float)atof(buff[4].c_str());
-		std::cout << "posXCamara: " << metadata->posXCamara << std::endl;
-		std::cout << "posYCamara: " << metadata->posYCamara << std::endl;
-		std::cout << "anchoCamara: " << metadata->anchoCamara << std::endl;
-		std::cout << "altoCamara: " << metadata->altoCamara << std::endl;
 		metadata->escala = (float)atof(buff[5].c_str());
-		metadata->vidas = strtol(buff[6].c_str(),NULL,10);
-		metadata->puntaje = strtol(buff[7].c_str(),NULL,10);
 		metadata->tamanioXMundo = (float)atof(buff[8].c_str());
 		metadata->tamanioYMundo = (float)atof(buff[9].c_str());
 		return metadata;
