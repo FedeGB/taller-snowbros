@@ -201,7 +201,7 @@ int get_node(string data, string param, string file, int defaultData) {
 							std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
 							return defaultData;
 						}
-						log.escribirLog(WARNING, "El valor de " + data + " de " + param + " no puede ser negativo. Cargando datos por defecto.");
+						log.escribirLog(WARNING, "El valor de " + data + " de " + param + " no puede ser menor a 1 o mayor a 4. Cargando datos por defecto.");
 						log.cerrarLog();
 						return defaultData;
 		}

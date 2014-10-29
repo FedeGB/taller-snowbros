@@ -11,6 +11,10 @@ ControladorUsuarios::ControladorUsuarios() {
 	tamanioMaximo = 4;
 }
 
+void ControladorUsuarios::setConnectionLimit(int max) {
+	tamanioMaximo = max;
+}
+
 ControladorUsuarios::~ControladorUsuarios() {
 	// TODO Auto-generated destructor stub
 }

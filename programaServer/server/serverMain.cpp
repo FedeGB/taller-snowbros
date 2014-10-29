@@ -115,8 +115,15 @@ int main(int argc, char** argv){
     // Creo el controlador de usuarios. Este contiene toda la informacion
     // necesaria para la comunicacion entre el handler de simulacion y el de
     // conexion.
-    ControladorUsuarios controlador;
+    fstream fConfig;
+	fConfig.open(path.c_str(), ios_base::in);
+	std::string newStr((std::istreambuf_iterator<char>(fConfig)),
+				std::istreambuf_iterator<char>());
+	fConfig.close();
 
+    int maxplayer=get_node("maxplayer","escenario", newStr,4);
+    ControladorUsuarios controlador;
+    controlador.setConnectionLimit(maxplayer);
     //Creo el handler de simulacion.
     WorldHandler* world = new WorldHandler(controlador);
     if (!world){
