@@ -452,7 +452,7 @@ void checkBoundsAndOverlap(b2World ** worldB2D, float32 widthWorld, float32 heig
 		if (!skip) b = b->GetNext();
 	}
 }
-
+/*
 void addWorldBorders(b2World ** worldB2D, float32 widthWorld, float32 heightWorld){
 
 	b2BodyDef b2dObjDef;
@@ -493,7 +493,7 @@ void addWorldBorders(b2World ** worldB2D, float32 widthWorld, float32 heightWorl
 	b2Body * rightBorderB2D = (*worldB2D)->CreateBody(&b2dObjDef);
 	fixture = rightBorderB2D->CreateFixture(&myFixtureDef);
 	fixture->SetUserData( (void*)6 );
-}
+}*/
 
 bool Inicializador::init(std::string configFile, b2World ** worldB2D,
 		ContactListener * contactListener) {
@@ -526,7 +526,7 @@ bool Inicializador::init(std::string configFile, b2World ** worldB2D,
 	checkBoundsAndOverlap(worldB2D, widthWorld, heightWorld);
 
 	// Agrega los limites del mundo para propositos del movimiento de las camaras.
-	addWorldBorders(worldB2D, widthWorld, heightWorld);
+	//addWorldBorders(worldB2D, widthWorld, heightWorld);
 
 	log.log(MAINLOG,OK,"Se ha inicializado correctamente el mundo.");
 

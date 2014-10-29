@@ -79,28 +79,38 @@ void Camera::calculateBorderConstraints(){
 
 	canMoveLeft = canMoveRight = canMoveUp = canMoveDown = true;
 
-	for (b2ContactEdge* ce = cameraB2D->GetContactList(); ce; ce = ce->next) {
-		void* fixtureAUserData = ce->contact->GetFixtureA()->GetUserData();
-		void* fixtureBUserData = ce->contact->GetFixtureB()->GetUserData();
-
-		b2Vec2 pos;
-		// World left border.
-		if ( *((int*)(&fixtureAUserData)) == 5 || *((int*)(&fixtureBUserData)) == 5 ) {
-			canMoveLeft = false;
-		}
-		// World right border.
-		else if ( *((int*)(&fixtureAUserData)) == 6 || *((int*)(&fixtureBUserData)) == 6 ) {
-			canMoveRight = false;
-		}
-		// World upper border.
-		else if ( *((int*)(&fixtureAUserData)) == 7 || *((int*)(&fixtureBUserData)) == 7 ) {
-			canMoveUp = false;
-		}
-		// World bottom border.
-		else if ( *((int*)(&fixtureAUserData)) == 8 || *((int*)(&fixtureBUserData)) == 8 ) {
-			canMoveDown = false;
-		}
+	if (cameraB2D->GetPosition().x - (width * WINDOWTOWORLDSCALE / 2) <= 0) {
+		canMoveLeft = false;
+		b2Vec2 vec;
+		vec.x = (width * WINDOWTOWORLDSCALE / 2);
+		vec.y = cameraB2D->GetPosition().y;
+		cameraB2D->SetTransform(vec, 0);
 	}
+	if (cameraB2D->GetPosition().x + (width * WINDOWTOWORLDSCALE / 2) >= worldWidth) {
+		canMoveRight = false;
+		b2Vec2 vec;
+		vec.x = worldWidth - (width * WINDOWTOWORLDSCALE / 2);
+		vec.y = cameraB2D->GetPosition().y;
+		cameraB2D->SetTransform(vec, 0);
+	}
+	if (cameraB2D->GetPosition().y - (height* WINDOWTOWORLDSCALE / 2) <= 0) {
+		canMoveUp = false;
+		b2Vec2 vec;
+		vec.x = cameraB2D->GetPosition().x;
+		vec.y = (height * WINDOWTOWORLDSCALE / 2);
+		cameraB2D->SetTransform(vec, 0);
+	}
+	if (cameraB2D->GetPosition().y + (height * WINDOWTOWORLDSCALE / 2) >= worldHeight) {
+		canMoveDown = false;
+		b2Vec2 vec;
+		vec.x = cameraB2D->GetPosition().x;
+		vec.y = worldHeight - (height * WINDOWTOWORLDSCALE / 2);
+		cameraB2D->SetTransform(vec, 0);
+	}
+
+	if (!canMoveLeft && !canMoveRight) eventoZoomIn();
+	if (!canMoveUp && !canMoveDown) eventoZoomIn();
+
 }
 
 void Camera::updateZoom(){
@@ -132,9 +142,6 @@ void Camera::updateZoom(){
 }
 
 void Camera::updatePosition(){
-
-	// Calcula en que direcciones es posible mover la camara.
-	calculateBorderConstraints();
 
 	// Determino la posicion del PJ relativo al origen de coordenadas de la camara.
 	b2Vec2 posPJCamera = PJ->GetPosition() - cameraB2D->GetPosition();
@@ -262,6 +269,9 @@ void Camera::update(){
 
 	// Actualiza el zoom.
 	if (zoomChanged) updateZoom();
+
+	// Calcula en que direcciones es posible mover la camara.
+	calculateBorderConstraints();
 
 	// Mueve la camara segun la posicion del PJ al que esta asociada.
 	updatePosition();
