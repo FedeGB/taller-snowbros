@@ -200,9 +200,6 @@ void Camera::updateRenderList(){
 
 	Metadata * metadata = new Metadata();
 	metadata->escala = WORLDTOWINDOWSCALE;
-	std::cout << "posXCamara = " << cameraB2D->GetPosition().x << std::endl;
-	std::cout << "worldWidth = " << worldWidth << std::endl;
-	std::cout << "posXCamaraRelativa = " << cameraB2D->GetPosition().x / worldWidth << std::endl;
 	metadata->posXCamara = (cameraB2D->GetPosition().x - width * WINDOWTOWORLDSCALE / 2) / worldWidth;
 	metadata->posYCamara = (cameraB2D->GetPosition().y - height * WINDOWTOWORLDSCALE / 2) / worldHeight;
 	metadata->anchoCamara = width * WINDOWTOWORLDSCALE / worldWidth;
@@ -227,15 +224,6 @@ void Camera::updateRenderList(){
 		// TODO: sacar estas constantes hardcodeadas.
 		if ( *((int*)(&fixtureAUserData)) != 4 ) body = ce->contact->GetFixtureA()->GetBody();
 		else body = ce->contact->GetFixtureB()->GetBody();
-
-		// Saltea los bordes del mundo.
-		// TODO: sacar estas constantes hardcodeadas.
-		if ( *((int*)(&fixtureAUserData)) == 5 || *((int*)(&fixtureAUserData)) == 6 ||
-				*((int*)(&fixtureAUserData)) == 7 || *((int*)(&fixtureAUserData)) == 8)
-			continue;
-		else if ( *((int*)(&fixtureBUserData)) == 5 || *((int*)(&fixtureBUserData)) == 6 ||
-				*((int*)(&fixtureBUserData)) == 7 || *((int*)(&fixtureBUserData)) == 8)
-			continue;
 
 		// Saltea los apendices de los personajes.
 		// TODO: sacar estas constantes hardcodeadas.

@@ -117,8 +117,8 @@ void Usuario::inicializarPJ(b2World * worldB2D){
 	Inicializador inicializador;
 	PJ = inicializador.pjInit(&worldB2D, listaVisibles, configFile);
 	if (!PJ){
-	// TODO: Error handling.
-	std::cout << "hubo un error al crear el PJ" << std::endl;
+		// TODO: Error handling.
+		std::cout << "hubo un error al crear el PJ" << std::endl;
 	}
 	inicializado = true;
 }
