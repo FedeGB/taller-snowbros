@@ -35,15 +35,17 @@ public:
 	Vertexes * vertexes;
 	TexAndVertexes(){ tex = NULL; vertexes = NULL;}
 	virtual ~TexAndVertexes(){
-		if (tex) {
+
+		if (tex){
 			delete tex;
 			tex = NULL;
 		}
-		if (vertexes) {
+		if (vertexes != NULL) {
 			delete vertexes;
 			vertexes = NULL;
 		}
 	}
+
 };
 
 class TextureMap: public std::map<sprite_t, TexAndVertexes*> {

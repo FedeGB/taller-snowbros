@@ -113,6 +113,84 @@ void ItemRenderer::renderPoligono(PoligonoRegular * item, float escala){
 
 }
 
+// Obtiene la posicion de los vertices para el sprite pedido.
+Vertexes * obtenerVerticesPJ(sprite_t activeSprite){
+
+	Vertexes * vertexes = new Vertexes(4);
+
+	if (activeSprite == PARADOIZQUIERDA){
+		vertexes->x[0] = vertexes->x[3] = 7 / 432.0f;
+		vertexes->y[0] = vertexes->y[1] = 9 / 320.0f;
+		vertexes->x[1] = vertexes->x[2] = 30 / 432.0f;
+		vertexes->y[2] = vertexes->y[3] = 35 / 320.0f;
+	}
+
+	if (activeSprite == MOVIENDOIZQUIERDA1){
+		vertexes->x[0] = vertexes->x[3] = 37 / 432.0f;
+		vertexes->y[0] = vertexes->y[1] = 9 / 320.0f;
+		vertexes->x[1] = vertexes->x[2] = 60 / 432.0f;
+		vertexes->y[2] = vertexes->y[3] = 35 / 320.0f;
+	}
+
+	if (activeSprite == MOVIENDOIZQUIERDA2){
+		vertexes->x[0] = vertexes->x[3] = 62 / 432.0f;
+		vertexes->y[0] = vertexes->y[1] = 9 / 320.0f;
+		vertexes->x[1] = vertexes->x[2] = 85 / 432.0f;
+		vertexes->y[2] = vertexes->y[3] = 35 / 320.0f;
+	}
+
+	if (activeSprite == MOVIENDOIZQUIERDA3){
+		vertexes->x[0] = vertexes->x[3] = 92 / 432.0f;
+		vertexes->y[0] = vertexes->y[1] = 9 / 320.0f;
+		vertexes->x[1] = vertexes->x[2] = 115 / 432.0f;
+		vertexes->y[2] = vertexes->y[3] = 35 / 320.0f;
+	}
+
+	if (activeSprite == MOVIENDOIZQUIERDA4){
+		vertexes->x[0] = vertexes->x[3] = 62 / 432.0f;
+		vertexes->y[0] = vertexes->y[1] = 9 / 320.0f;
+		vertexes->x[1] = vertexes->x[2] = 85 / 432.0f;
+		vertexes->y[2] = vertexes->y[3] = 35 / 320.0f;
+	}
+
+	if (activeSprite == SALTANDOIZQUIERDA1){
+		vertexes->x[0] = vertexes->x[3] = 152 / 432.0f;
+		vertexes->y[0] = vertexes->y[1] = 6 / 320.0f;
+		vertexes->x[1] = vertexes->x[2] = 175 / 432.0f;
+		vertexes->y[2] = vertexes->y[3] = 35 / 320.0f;
+	}
+
+	if (activeSprite == SALTANDOIZQUIERDA2){
+		vertexes->x[0] = vertexes->x[3] = 184 / 432.0f;
+		vertexes->y[0] = vertexes->y[1] = 6 / 320.0f;
+		vertexes->x[1] = vertexes->x[2] = 207 / 432.0f;
+		vertexes->y[2] = vertexes->y[3] = 35 / 320.0f;
+	}
+
+	if (activeSprite == SALTANDOIZQUIERDA3){
+		vertexes->x[0] = vertexes->x[3] = 215 / 432.0f;
+		vertexes->y[0] = vertexes->y[1] = 6 / 320.0f;
+		vertexes->x[1] = vertexes->x[2] = 238 / 432.0f;
+		vertexes->y[2] = vertexes->y[3] = 35 / 320.0f;
+	}
+
+	if (activeSprite == SALTANDOIZQUIERDA4){
+		vertexes->x[0] = vertexes->x[3] = 249 / 432.0f;
+		vertexes->y[0] = vertexes->y[1] = 6 / 320.0f;
+		vertexes->x[1] = vertexes->x[2] = 272 / 432.0f;
+		vertexes->y[2] = vertexes->y[3] = 35 / 320.0f;
+	}
+
+	if (activeSprite == SALTANDOIZQUIERDA5){
+		vertexes->x[0] = vertexes->x[3] = 118 / 432.0f;
+		vertexes->y[0] = vertexes->y[1] = 6 / 320.0f;
+		vertexes->x[1] = vertexes->x[2] = 141 / 432.0f;
+		vertexes->y[2] = vertexes->y[3] = 35 / 320.0f;
+	}
+
+	return vertexes;
+}
+
 // Dibuja un PJ.
 void ItemRenderer::renderPJ(Personaje * item, float escala){
 
@@ -134,15 +212,20 @@ void ItemRenderer::renderPJ(Personaje * item, float escala){
 		vy[2] = vy[3] = vy[0] + item->altura * escala;
 	}
 
+	// Obtiene los vertices del sprite.
+	Vertexes * vert = obtenerVerticesPJ(item->activeSprite);
+
 	// Obtiene la textura y su correspondiente rect para renderear.
-	TexAndVertexes * TaV = textureMap[item->activeSprite];
+	TexAndVertexes * TaV = textureMap[PJ1];
 
 	// Si esta no esta conectado, se cambia el color a gris.
 	if(!item->online)
-		TaV->tex->dibujarOscuro(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);// cambio el color
+		TaV->tex->dibujarOscuro(vx, vy, vert->x, vert->y, 4);// cambio el color
 	else
 	// Renderea.
-	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
+	TaV->tex->dibujar(vx, vy, vert->x, vert->y, 4);
+
+	delete vert;
 }
 
 // Dibuja la metadata del juego: las vidas, puntaje, y el fondo.
