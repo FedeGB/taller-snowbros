@@ -9,8 +9,12 @@
 
 TextureMap ItemRenderer::textureMap;
 float ItemRenderer::escalaPorDefecto = 20;
+b2Vec2 ItemRenderer::tamanioMundo;
+b2Vec2 ItemRenderer::posicionCamara;
 
 ItemRenderer::ItemRenderer() {
+	posicionCamara.x = 0;
+	posicionCamara.y = 0;
 }
 
 ItemRenderer::~ItemRenderer() {
@@ -290,6 +294,8 @@ void ItemRenderer::render(WorldItem * item, float escala){
 
 	if (!textureMap.yaInicializado()) textureMap.init();
 
+	item->aCoordenadasLocales(posicionCamara);
+
 	switch(item->tipo){
 	case CIRCULO:
 		renderCirculo((Circulo*)item, escala);
@@ -304,6 +310,11 @@ void ItemRenderer::render(WorldItem * item, float escala){
 		renderPJ((Personaje*)item, escala);
 		break;
 	case METADATA:
+		tamanioMundo.x = ((Metadata*)item)->tamanioXMundo;
+		tamanioMundo.y = ((Metadata*)item)->tamanioYMundo;
+		posicionCamara.x = ((Metadata*)item)->posXCamara * tamanioMundo.x;
+		posicionCamara.y = ((Metadata*)item)->posYCamara * tamanioMundo.y;
+		std::cout << "la posicion de la camara es: " << posicionCamara.x << ", " << posicionCamara.y << std::endl;
 		renderMetadata((Metadata*)item);
 		break;
 	}

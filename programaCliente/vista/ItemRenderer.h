@@ -29,6 +29,8 @@ public:
 
 private:
 
+	static b2Vec2 tamanioMundo;
+	static b2Vec2 posicionCamara;
 	static TextureMap textureMap;
 	static void renderCirculo(Circulo * item, float escala);
 	static void renderCuadrilatero(Cuadrilatero * item, float escala);

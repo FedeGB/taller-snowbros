@@ -21,6 +21,8 @@ public:
 	int puntaje;
 	float posXCamara;
 	float posYCamara;
+	float tamanioXMundo;
+	float tamanioYMundo;
 	float anchoCamara;
 	float altoCamara;
 };

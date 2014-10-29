@@ -20,6 +20,8 @@ public:
 	virtual ~WorldItem();
 	virtual std::string serializar()=0;
 
+	void aCoordenadasLocales(b2Vec2 posicionCamara);
+
 	b2Vec2 posicion;
 	float angulo;
 	int tipo;

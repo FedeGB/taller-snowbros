@@ -21,13 +21,13 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 	WorldItem * item;
 	std::vector<std::string> buff;
 	split(buff, serializado, " ", no_empties);
+	if (buff[0] == "USERNAME") return NULL;
 	int type = strtol(buff[0].c_str(),NULL,10);
 
 	switch (type){
 
 	// Deserializa metadata.
 	case METADATA:{
-		std::cout << "la metadata es: " << serializado << std::endl;
 		Metadata * metadata = new Metadata();
 		metadata->tipo = type;
 		metadata->posXCamara = (float)atof(buff[1].c_str());
@@ -39,6 +39,8 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 		metadata->escala = (float)atof(buff[5].c_str());
 		metadata->vidas = strtol(buff[6].c_str(),NULL,10);
 		metadata->puntaje = strtol(buff[7].c_str(),NULL,10);
+		metadata->tamanioXMundo = (float)atof(buff[8].c_str());
+		metadata->tamanioYMundo = (float)atof(buff[9].c_str());
 		return metadata;
 	}
 
@@ -85,6 +87,8 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 		item = pj;
 		break;
 	}
+
+	default: return NULL;
 
 	}
 

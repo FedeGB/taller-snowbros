@@ -8,10 +8,14 @@
 #include "WorldItem.h"
 
 WorldItem::WorldItem() {
-	// TODO Auto-generated constructor stub
 	angulo = 0;
+	tipo = CUADRILATERO;
 }
 
 WorldItem::~WorldItem() {
-	// TODO Auto-generated destructor stub
+
+}
+
+void WorldItem::aCoordenadasLocales(b2Vec2 posicionCamara){
+	posicion = posicion - posicionCamara;
 }
