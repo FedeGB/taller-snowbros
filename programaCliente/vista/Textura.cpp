@@ -181,3 +181,28 @@ void Textura::dibujar(GLfloat* vx, GLfloat* vy, float* s, float* t, int n) {
 
 	glPopMatrix();
 }
+
+void Textura::dibujarOscuro(GLfloat* vx, GLfloat* vy, float* s, float* t, int n) {
+	glPushMatrix();
+	glEnable(GL_TEXTURE_2D);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR);
+	glEnable( GL_BLEND );
+
+	// Bind the texture to which subsequent calls refer to
+	glBindTexture( GL_TEXTURE_2D, id_tex);
+
+	glBegin( GL_POLYGON);
+
+	for( int i = 0; i < n; i++ ){
+		glTexCoord2f(s[i], t[i]);
+		glVertex3f(vx[i], vy[i], 0);
+	}
+
+	glEnd();
+	glFlush();
+
+	glDisable( GL_BLEND );
+	glDisable(GL_TEXTURE_2D);
+
+	glPopMatrix();
+}

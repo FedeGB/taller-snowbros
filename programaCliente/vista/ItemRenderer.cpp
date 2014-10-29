@@ -138,12 +138,9 @@ void ItemRenderer::renderPJ(Personaje * item, float escala){
 	TexAndVertexes * TaV = textureMap[item->activeSprite];
 
 	// Si esta no esta conectado, se cambia el color a gris.
-/*	if(!item->online)
-		SDL_SetTextureAlphaMod(TaV.tex,150);// cambio el color
+	if(!item->online)
+		TaV->tex->dibujarOscuro(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);// cambio el color
 	else
-		SDL_SetTextureAlphaMod(TaV.tex,255);
-*/
-
 	// Renderea.
 	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
 }
