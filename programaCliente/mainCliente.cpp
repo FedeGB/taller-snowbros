@@ -234,6 +234,7 @@ int isNumber(const char* string) {
 }
 
 bool ipValid(string ip){
+	if(ip == "localhost") return true;
 	if(ip.length()<8 || ip.length()>16)
 		return false;
 	string token ,temp=ip;
