@@ -52,7 +52,6 @@ bool Window::updateWindow(std::list<WorldItem*> & itemList, float escala){
 		itemList.pop_front();
 		ItemRenderer::render(item, escala);
 		delete item;
-		delete item;
 		item = NULL;
 	}
 
