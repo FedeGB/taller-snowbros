@@ -97,11 +97,12 @@ void ItemRenderer::renderPoligono(PoligonoRegular * item, float escala){
 	float vx[item->nLados]; float vy[item->nLados];
 	float vxTex[item->nLados]; float vyTex[item->nLados];
 	for (int i = 0; i < item->nLados; i++) {
-		float thita = (2 * i * PI / item->nLados) - (item->angulo);
-		vx[i] = ( item->posicion.x + item->radio * cos(thita) ) * escala;
-		vy[i] = ( item->posicion.y - item->radio * sin(thita) ) * escala;
-		vxTex[i] = ( item->radio +  item->radio * cos(thita) ) * escalaPorDefecto / 128.0f;
-		vyTex[i] = ( item->radio - item->radio * sin(thita) ) * escalaPorDefecto / 128.0f;
+		float thita1 = (2 * i * PI / item->nLados) - (item->angulo);
+		float thita2 = (2 * i * PI / item->nLados);
+		vx[i] = ( item->posicion.x + item->radio * cos(thita1) ) * escala;
+		vy[i] = ( item->posicion.y - item->radio * sin(thita1) ) * escala;
+		vxTex[i] = ( item->radio +  item->radio * cos(thita2) ) * escalaPorDefecto / 128.0f;
+		vyTex[i] = ( item->radio - item->radio * sin(thita2) ) * escalaPorDefecto / 128.0f;
 	}
 
 	// Obtiene la textura y su correspondiente rect para renderear.
