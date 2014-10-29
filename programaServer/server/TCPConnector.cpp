@@ -24,6 +24,17 @@ TCPStream* TCPConnector::connect(const char* server, int port)
         inet_pton(PF_INET, server, &(address.sin_addr));
     }
     int sd = socket(AF_INET, SOCK_STREAM, 0);
+    struct timeval tv;
+        	tv.tv_sec = 1;
+        	tv.tv_usec = 0;
+
+        	if (setsockopt (sd, SOL_SOCKET, SO_RCVTIMEO, (char *)&tv,
+        				sizeof(tv)) < 0)
+        		printf("setsockopt failed\n");
+
+        	if (setsockopt (sd, SOL_SOCKET, SO_SNDTIMEO, (char *)&tv,
+        				sizeof(tv)) < 0)
+        		printf("setsockopt failed\n");
     if (::connect(sd, (struct sockaddr*)&address, sizeof(address)) != 0) {
         perror("connect() failed");
         return NULL;
@@ -44,11 +55,23 @@ TCPStream* TCPConnector::connect(const char* server, int port, int timeout)
         inet_pton(PF_INET, server, &(address.sin_addr));
     }
 
+
     long arg;
     fd_set sdset;
-    struct timeval tv;
     socklen_t len;
     int result = -1, valopt, sd = socket(AF_INET, SOCK_STREAM, 0);
+
+    struct timeval tv;
+    	tv.tv_sec = 1;
+    	tv.tv_usec = 0;
+
+    	if (setsockopt (sd, SOL_SOCKET, SO_RCVTIMEO, (char *)&tv,
+    				sizeof(tv)) < 0)
+    		printf("setsockopt failed\n");
+
+    	if (setsockopt (sd, SOL_SOCKET, SO_SNDTIMEO, (char *)&tv,
+    				sizeof(tv)) < 0)
+    		printf("setsockopt failed\n");
 
     // Set socket to non-blocking
     arg = fcntl(sd, F_GETFL, NULL);

@@ -41,7 +41,7 @@ int ConnectionHandler::logIn(std::string username){
 }
 
 void* ConnectionHandler::run() {
-
+	bool quit = false;
 	printf("Conexion con: %s:%d establecida.\n", m_stream->getPeerIP().c_str() , m_stream->getPeerPort());
 
 	//The frames per second timer
@@ -57,12 +57,18 @@ void* ConnectionHandler::run() {
 	if (result == SERVERFULL) {
 		std::string outMsg = "RECHAZADA-FULL";
 		size_t len = m_stream->send(outMsg);
+		if(len<=0){
+					quit=true;
+				}
 		printf ("Conexion rechazada, conexiones llenas. %s:%d \n", m_stream->getPeerIP().c_str(), m_stream->getPeerPort());
 		delete m_stream;
 		return NULL;
 	}else if( result == USERONLINE){
 		std::string outMsg = "RECHAZADA-USR";
 		size_t len = m_stream->send(outMsg);
+		if(len<=0){
+					quit=true;
+				}
 		printf ("Conexion rechazada, user esta online. %s:%d \n", m_stream->getPeerIP().c_str(), m_stream->getPeerPort());
 		delete m_stream;
 		return NULL;
@@ -70,18 +76,22 @@ void* ConnectionHandler::run() {
 	else{
 		std::string outMsg = "OK";
 		size_t len = m_stream->send(outMsg);
+		if(len<=0){
+			quit=true;
+		}
 		printf ("Conexion aceptada %s:%d \n", m_stream->getPeerIP().c_str(), m_stream->getPeerPort());
 	}
 
 	ssize_t len;
-	bool quit = false;
+
 	std::string inMessage, outMessage;
 
-	while (!quit){
+	while (!quit ){
 
 		// Recibe todos los eventos sucedidos en el cliente.
 		inMessage = "NOTDONE";
 		while (inMessage != "DONE"){
+			cout<<"aa";
 			len = m_stream->receive(inMessage);
 			if (len <= 0) {
 				quit = true;

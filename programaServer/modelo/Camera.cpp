@@ -50,6 +50,7 @@ void Camera::eventoZoomIn(){
 
 void Camera::eventoZoomOut(){
 
+	if(posPJCamera.x<0||posPJCamera.x>1|| posPJCamera.y<0||posPJCamera.y>1) return;
 	calculateBorderConstraints();
 	bool minZoomReached = false;
 	if(!canMoveRight && !canMoveLeft) minZoomReached = true;
