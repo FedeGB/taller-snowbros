@@ -22,6 +22,7 @@ public:
 
 	b2Vec2 posicion;
 	float angulo;
+	worlditem_t tipo;
 
 };
 

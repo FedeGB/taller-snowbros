@@ -25,7 +25,7 @@ public:
 	float tamanioYMundo;
 	float anchoCamara;
 	float altoCamara;
-	worlditem_t tipo;
+	std::string mensaje;
 };
 
 #endif /* METADATA_H_ */

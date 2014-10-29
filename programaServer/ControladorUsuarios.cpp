@@ -63,5 +63,21 @@ std::string ControladorUsuarios::obtenerPantallaSerializada(std::string username
 
 	std::string buffer = (*this)[username]->obtenerPantallaSerializada();
 
+	Metadata * metadata = new Metadata();
+
+	metadata->tipo = METADATAHUD;
+	metadata->vidas = 5;
+	static int i= 0; i++;
+	metadata->puntaje = i;
+	for (ControladorUsuarios::iterator it=(*this).begin(); it!=(*this).end(); ++it){
+		if (!(*it).second->online) {
+			metadata->mensaje += (*it).second->username;
+			metadata->mensaje += "-ha-perdido-conexion-al-juego.&";;
+		}
+	}
+
+	buffer += "%";
+	buffer += metadata->serializar();
+
 	return buffer;
 }
