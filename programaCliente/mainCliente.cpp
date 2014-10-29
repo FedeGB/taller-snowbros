@@ -193,6 +193,8 @@ int main(int argc, char * argv[]){
 		WorldItem * item = Deserializador::deserializar(buff[0]);
 		// Escala de coordenadas mundo->ventana.
 		float escala = ((Metadata*)item)->escala;
+		delete item;
+		item = NULL;
 
 		// Itera sobre todos los elementos restantes.
 		for (std::vector<std::string>::iterator it = buff.begin(); it != buff.end(); it++){
@@ -212,6 +214,7 @@ int main(int argc, char * argv[]){
 		++countedFrames;
 
 	}
+	delete window;
 	return 0;
 }
 

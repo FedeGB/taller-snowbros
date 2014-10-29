@@ -75,6 +75,8 @@ bool Window::updateWindow(std::list<WorldItem*> & itemList, float escala){
 		WorldItem * item = itemList.front();
 		itemList.pop_front();
 		ItemRenderer::render(wRenderer, item, escala);
+		delete item;
+		item = NULL;
 	}
 
 	SDL_GL_SwapWindow(window);
@@ -194,6 +196,8 @@ Window::~Window(){
 		SDL_DestroyRenderer(wRenderer);
 		wRenderer = NULL;
 	}
+	if(ctx)
+		SDL_GL_DeleteContext(ctx);
 	if(window) {
 		SDL_DestroyWindow(window);
 		window = NULL;
