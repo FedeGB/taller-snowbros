@@ -31,11 +31,13 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 		Metadata * metadata = new Metadata();
 		metadata->tipo = type;
 		metadata->posXCamara = (float)atof(buff[1].c_str());
-		std::cout << "posXCamara es: " << metadata->posXCamara << std::endl;
 		metadata->posYCamara = (float)atof(buff[2].c_str());
-		std::cout << "posYCamara es: " << metadata->posYCamara << std::endl;
-		metadata->anchoCamara = (float)atof(buff[3].c_str());
-		metadata->altoCamara = (float)atof(buff[4].c_str());
+		metadata->altoCamara = (float)atof(buff[3].c_str());
+		metadata->anchoCamara = (float)atof(buff[4].c_str());
+		std::cout << "posXCamara: " << metadata->posXCamara << std::endl;
+		std::cout << "posYCamara: " << metadata->posYCamara << std::endl;
+		std::cout << "anchoCamara: " << metadata->anchoCamara << std::endl;
+		std::cout << "altoCamara: " << metadata->altoCamara << std::endl;
 		metadata->escala = (float)atof(buff[5].c_str());
 		metadata->vidas = strtol(buff[6].c_str(),NULL,10);
 		metadata->puntaje = strtol(buff[7].c_str(),NULL,10);

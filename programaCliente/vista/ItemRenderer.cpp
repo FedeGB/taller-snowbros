@@ -314,7 +314,6 @@ void ItemRenderer::render(WorldItem * item, float escala){
 		tamanioMundo.y = ((Metadata*)item)->tamanioYMundo;
 		posicionCamara.x = ((Metadata*)item)->posXCamara * tamanioMundo.x;
 		posicionCamara.y = ((Metadata*)item)->posYCamara * tamanioMundo.y;
-		std::cout << "la posicion de la camara es: " << posicionCamara.x << ", " << posicionCamara.y << std::endl;
 		renderMetadata((Metadata*)item);
 		break;
 	}

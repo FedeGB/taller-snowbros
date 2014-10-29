@@ -179,7 +179,7 @@ int main(int argc, char * argv[]){
 			continue;
 		}
 
-		std::cout << "se recibio el siguiente escenario: " << inMessage << std::endl;
+		//std::cout << "se recibio el siguiente escenario: " << inMessage << std::endl;
 
 		// Saltea si se recibe un mensaje vacio, ya que indica que todavia
 		// no se cargo el PJ en el servidor.
