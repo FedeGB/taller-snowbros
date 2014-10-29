@@ -194,6 +194,19 @@ int get_node(string data, string param, string file, int defaultData) {
 			return defaultData;
 		}
 	}
+
+	if(data.compare("maxplayer") == 0){
+		if(result<1||result>4){
+			if (!log.abrirLog(PARSERLOG)) {
+							std::cout << "Error al abrir archivo de log " << PARSERLOG << std::endl;
+							return defaultData;
+						}
+						log.escribirLog(WARNING, "El valor de " + data + " de " + param + " no puede ser negativo. Cargando datos por defecto.");
+						log.cerrarLog();
+						return defaultData;
+		}
+	}
+
 	if(data.compare("rot") == 0) {
 		result = ajustarAngulo(result);
 	}
