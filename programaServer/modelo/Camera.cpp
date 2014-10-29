@@ -52,8 +52,8 @@ void Camera::eventoZoomOut(){
 
 	calculateBorderConstraints();
 	bool minZoomReached = false;
-	if(!canMoveRight || !canMoveLeft) minZoomReached = true;
-	if(!canMoveUp || !canMoveDown) minZoomReached = true;
+	if(!canMoveRight && !canMoveLeft) minZoomReached = true;
+	if(!canMoveUp && !canMoveDown) minZoomReached = true;
 
 	if (minZoomReached) return;
 
