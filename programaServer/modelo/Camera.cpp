@@ -152,7 +152,7 @@ void Camera::updatePosition(){
 
 	//static bool moving = false;
 	static int movingCounter = -1;
-	if ( 0 <= movingCounter && movingCounter < 2) movingCounter++;
+	if ( 0 <= movingCounter && movingCounter < 8) movingCounter++;
 	else movingCounter = -1;
 
 	// Determino el impulso necesario para mover en X la camara.

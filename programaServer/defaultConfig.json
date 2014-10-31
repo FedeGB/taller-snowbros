@@ -254,25 +254,6 @@
 		"tex_escalaY": 1.0
         },
 
-
-	{
-            "estatico": false,
-            "tipo": "poli",
-            "x": 37.75,
-            "y": 9,
-            "rot": 65,
-	    "escala": 6.5,
-            "alto": 0.5,
-            "ancho": 2.0,
-	    "lados": 6,
-            "masa": 40,
-	    "color": "#1420B2",
-            "friccion": 0.2,
-	    	"textura": "imagenes/sendero.png",
-		"tex_escalaX": 1.0,
-		"tex_escalaY": 1.0
-        },
-
 	{
             "estatico": false,
             "tipo": "circ",
@@ -288,28 +269,6 @@
             "friccion": 0.2,
 	    	"textura": "imagenes/pelota.png",
 		"tex_escalaX": 1.0,
-		"tex_escalaY": 1.0
-        },
-
-	{
-            "estatico": false,
-            "tipo": "irreg",
-            "x": 28,
-            "y": 2,
-            "rot": 0,
-	    "escala": 1.55,
-            "alto": 0.5,
-            "ancho": 3.0,
-	    "lados": 5,
-            "masa": 100,
-	    "color": "#FF00FF",
-	    "base": 7.0,
-	    "tapa": 5.0,
-	    "desp": 4.0,
-	    "alto": 1.9,
-            "friccion": 0.2,
-	    	"textura": "imagenes/sendero.png",
-		"tex_escalaX": 2.4,
 		"tex_escalaY": 1.0
         }
    ]
