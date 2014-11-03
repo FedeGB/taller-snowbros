@@ -35,7 +35,7 @@ bool TextureMap::loadMetadataTex(){
 		std::cout << "no se cargo la imagen" << std::endl;
 		return false;
 	}
-	tex->generar("imagenes/vida.png");
+	tex->generar(TEXTURA_VIDA);
 
 	TexAndVertexes * temp = new TexAndVertexes;
 	temp->vertexes = new Vertexes(4);
@@ -53,7 +53,7 @@ bool TextureMap::loadMetadataTex(){
 	}
 
 	SDL_Color c = {255, 160, 100, 255};
-	tex->generarTexto("fuentes/Ubuntu-B.ttf", 30, "Puntaje: 0", c);
+	tex->generarTexto(FONT_TTF, 30, "Puntaje: 0", c);
 
 	temp = new TexAndVertexes;
 	temp->vertexes = new Vertexes(4);
@@ -69,7 +69,7 @@ bool TextureMap::loadMetadataTex(){
 		std::cout << "no se cargo la imagen" << std::endl;
 		return false;
 	}
-	tex->generar("imagenes/fondo2.png");
+	tex->generar(IMAGEN_FONDO);
 
 	temp = new TexAndVertexes;
 	temp->vertexes = new Vertexes(4);
@@ -91,7 +91,7 @@ bool TextureMap::loadPJTex(){
 		std::cout << "no se cargo la imagen" << std::endl;
 		return false;
 	}
-	tex->generar("imagenes/playerSpritesheet1.png");
+	tex->generar(SPRITE_SHEET);
 
 	TexAndVertexes * temp = new TexAndVertexes;
 	temp->vertexes = new Vertexes(4);
@@ -113,7 +113,7 @@ bool TextureMap::loadCircleTex(){
 		std::cout << "no se cargo la imagen" << std::endl;
 		return false;
 	}
-	tex->generar("imagenes/pelota.png");
+	tex->generar(TEXTURA_PELOTA);
 
 	TexAndVertexes * temp = new TexAndVertexes;
 	temp->vertexes = new Vertexes(20);
@@ -137,7 +137,7 @@ bool TextureMap::loadCuadTex(){
 		std::cout << "no se cargo la imagen" << std::endl;
 		return false;
 	}
-	tex->generar("imagenes/ladrillo.png");
+	tex->generar(TEXTURA_LADRILLO);
 
 	TexAndVertexes * temp = new TexAndVertexes;
 	temp->vertexes = new Vertexes(4);

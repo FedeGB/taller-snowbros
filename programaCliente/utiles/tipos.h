@@ -15,6 +15,15 @@
 #include <vector>
 #include <sstream>
 
+#define TEXTURA_LADRILLO "imagenes/ladrillo.png"
+#define TEXTURA_PELOTA "imagenes/pelota.png"
+#define TEXTURA_HIELO "imagenes/hielo.png"
+#define SPRITE_SHEET "imagenes/playerSpritesheet1.png"
+#define TEXTURA_VIDA "imagenes/vida.png"
+#define FONT_TTF "fuentes/Ubuntu-B.ttf"
+#define IMAGEN_FONDO "imagenes/fondo2.png"
+
+
 #define PI 3.14159265
 const float32 DEGTORAD = 0.0174532925199432957f;
 const float32 RADTODEG = 57.295779513082320876f;
