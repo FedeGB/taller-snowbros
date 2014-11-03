@@ -17,7 +17,7 @@
 
 #define TEXTURA_LADRILLO "imagenes/ladrillo.png"
 #define TEXTURA_PELOTA "imagenes/pelota.png"
-#define TEXTURA_HIELO "imagenes/hielo.png"
+#define TEXTURA_HIELO "imagenes/hielo.PNG"
 #define SPRITE_SHEET "imagenes/playerSpritesheet1.png"
 #define TEXTURA_VIDA "imagenes/vida.png"
 #define FONT_TTF "fuentes/Ubuntu-B.ttf"
