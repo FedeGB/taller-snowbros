@@ -88,8 +88,12 @@ void ItemRenderer::renderCuadrilatero(Cuadrilatero * item, float escala){
 	vxTex[1] = vxTex[2] = item->baseMayor * escalaPorDefecto / 128.0f;
 	vyTex[2] = vyTex[3] = item->altura * escalaPorDefecto / 128.0f;
 
+	TexAndVertexes * TaV;
 	// Obtiene la textura y su correspondiente rect para renderear.
-	TexAndVertexes * TaV = textureMap[CUADRILATERO1];
+	if(item->hielo==false)
+			  TaV = textureMap[CUADRILATERO1];
+		else
+			  TaV = textureMap[CUADRILATERO2];
 
 	// Renderea.
 	TaV->tex->dibujar(vx, vy, vxTex, vyTex, 4);

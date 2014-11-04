@@ -10,6 +10,7 @@
 WorldItem::WorldItem() {
 	angulo = 0;
 	tipo = CUADRILATERO;
+	hielo = false;
 }
 
 WorldItem::~WorldItem() {

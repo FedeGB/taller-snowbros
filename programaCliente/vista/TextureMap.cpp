@@ -149,6 +149,17 @@ bool TextureMap::loadCuadTex(){
 	temp->tex = tex;
 	(*this)[CUADRILATERO1] = temp;
 
+	tex= new Textura();
+	 temp = new TexAndVertexes;
+		temp->vertexes = new Vertexes(4);
+		temp->vertexes->x[0] = temp->vertexes->x[3] = 0.0f;
+		temp->vertexes->y[0] = temp->vertexes->y[1] = 0.0f;
+		temp->vertexes->x[1] = temp->vertexes->x[2] = 1.0f;
+		temp->vertexes->y[2] = temp->vertexes->y[3] = 1.0f;
+	tex->generar(TEXTURA_HIELO);
+	temp->tex =tex;
+	(*this)[CUADRILATERO2] = temp;
+
 	return true;
 }
 

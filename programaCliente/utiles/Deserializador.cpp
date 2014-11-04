@@ -67,7 +67,7 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 		cuadrilatero->baseMenor =  (float)atof(buff[5].c_str());
 		cuadrilatero->altura =  (float)atof(buff[6].c_str());
 		cuadrilatero->desplazamiento =  (float)atof(buff[7].c_str());
-
+		cuadrilatero->hielo=(bool)atoi(buff[8].c_str());
 		item = cuadrilatero;
 		break;
 	}

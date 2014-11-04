@@ -34,7 +34,7 @@ public:
 		std::string buffer;
 		buffer = SSTR(CUADRILATERO << " " << posicion.x << " " << posicion.y << " "
 				<< angulo << "  " << baseMayor << " " << baseMenor << " "
-				<< altura << " " << desplazamiento);
+				<< altura << " " << desplazamiento<<" "<<hielo);
 		return buffer;
 	}
 
