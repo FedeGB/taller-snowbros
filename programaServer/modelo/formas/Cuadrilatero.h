@@ -21,7 +21,6 @@ public:
 	float32 baseMenor;
 	float32 altura;
 	float32 desplazamiento;
-
 	Cuadrilatero() {
 		baseMayor = 1;
 		baseMenor = 1;
@@ -34,7 +33,7 @@ public:
 		std::string buffer;
 		buffer = SSTR(CUADRILATERO << " " << posicion.x << " " << posicion.y << " "
 				<< angulo << "  " << baseMayor << " " << baseMenor << " "
-				<< altura << " " << desplazamiento);
+				<< altura << " " << desplazamiento<<" "<<hielo);
 		return buffer;
 	}
 

@@ -10,6 +10,7 @@
 WorldItem::WorldItem() {
 	// TODO Auto-generated constructor stub
 	angulo = 0;
+	hielo = false;
 }
 
 WorldItem::~WorldItem() {

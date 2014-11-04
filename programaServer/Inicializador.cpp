@@ -395,6 +395,10 @@ b2Body * createObject(std::string data, b2World ** wB2D, int num) {
 	}
 
 	myFixtureDef.friction = get_node("friccion", "objetos", data, num, 0.3f);
+
+	if(b2dObjDef.type == b2_staticBody)
+		if(myFixtureDef.friction == 0)
+			figura->hielo=true;
 	b2Fixture * shapeFixture = _shape->CreateFixture(&myFixtureDef); //le asigno la forma
 	if (b2dObjDef.type == b2_dynamicBody) shapeFixture->SetUserData((void*) 1);
 	else shapeFixture->SetUserData((void*) 2);
