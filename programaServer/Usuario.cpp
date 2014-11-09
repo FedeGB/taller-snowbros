@@ -116,8 +116,7 @@ void Usuario::esperarSenial(){
 }
 
 // Inicializa el PJ asociado a este usuario, con su correspondiente camara.
-void Usuario::inicializarPJ(b2World * worldB2D){
-	std::string configFile = "defaultConfig.json";
+void Usuario::inicializarPJ(b2World * worldB2D, std::string configFile){
 	Inicializador inicializador;
 	PJ = inicializador.pjInit(&worldB2D, listaVisibles, configFile);
 	if (!PJ){

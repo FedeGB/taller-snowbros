@@ -17,6 +17,7 @@
 #include "../control/ContactListener.h"
 #include "../Inicializador.h"
 #include "../ControladorUsuarios.h"
+#include "ControladorEnemigos.h"
 #include <Box2D/Box2D.h>
 
 
@@ -26,11 +27,13 @@ class WorldHandler: public Thread {
 	b2World *worldB2D;
 	Inicializador inicializador;
 	ContactListener contactListener;
+	ControladorEnemigos & army;
+	std::string configFile;
 
 	bool loopPrincipal();
 
 public:
-	WorldHandler(ControladorUsuarios & c);
+	WorldHandler(ControladorUsuarios & c, ControladorEnemigos & en, std::string);
 	void* run();
 };
 

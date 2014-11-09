@@ -15,6 +15,16 @@
 		"alto": 1.5,
 		"sprite-sheet": "imagenes/playerSpritesheet.png"
     },
+    "enemigos": [
+    {
+    		"tipo": "est",
+    		"x": 22.0,
+			"y": 12.0,
+			"masa": 20.0,
+			"ancho": 1.2,
+			"alto": 1.5
+    }
+    ],
     "objetos": [
 	{
             "estatico": true,

@@ -30,6 +30,8 @@ public:
 	virtual void eventoSoltoDerecha();
 	virtual void eventoIzquierda();
 	virtual void eventoSoltoIzquierda();
+	virtual void eventoSpace();
+	virtual void eventoSoltoSpace();
 
 	virtual void update();
 	virtual std::string serializar();
@@ -37,8 +39,7 @@ public:
 	Camera * camera;
 	bool online;
 
-private:
-	//int pEstado;
+protected:
 	b2Body * bodyB2D;
 
 	int numFootContacts;
@@ -60,6 +61,9 @@ private:
 
 	sprite_t activeSprite;
 
+private:
+	bool isSpacePressed;
+	bool canKick;
 };
 
 #endif /* PERSONAJE_H_ */

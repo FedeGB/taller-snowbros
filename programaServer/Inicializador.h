@@ -22,15 +22,19 @@
 
 #include "modelo/Personaje.h"
 #include "modelo/Camera.h"
+#include "modelo/EnemigoEstandar.h"
+#include "server/ControladorEnemigos.h"
 
 #include "threads/ThreadSafeList.h"
+
 
 class Inicializador {
 
 public:
 
-	bool init(std::string configFile, b2World ** worldB2D, ContactListener * contactListener);
+	bool init(std::string configFile, b2World ** worldB2D, ContactListener * contactListener, ControladorEnemigos & army);
 	Personaje * pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*> & rList, std::string configFile);
+	void enemysInit(b2World ** worldB2D, std::string configFile, ControladorEnemigos & army);
 
 private:
 
@@ -40,6 +44,7 @@ private:
 	static float heightWorld;
 };
 
+EnemigoEstandar * createEnemy(std::string data, b2World ** wB2D, int num);
 
 
 #endif /* INICIALIZADOR_H_ */

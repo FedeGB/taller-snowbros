@@ -57,7 +57,7 @@ public:
 	void esperarSenial();
 
 	// Inicializa el PJ asociado a este usuario, con su correspondiente camara.
-	void inicializarPJ(b2World * worldB2D);
+	void inicializarPJ(b2World * worldB2D, std::string);
 
 	// Actualiza el estado del PJ y su camara asociada.
 	void actualizarPJ();

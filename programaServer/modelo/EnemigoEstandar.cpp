@@ -1,13 +1,14 @@
 /*
- * Personaje.cpp
+ * EnemigoEstandar.cpp
  *
- *  Created on: 3/9/2014
- *      Author: manuel
+ *  Created on: Nov 4, 2014
+ *      Author: fedevm
  */
 
-#include "Personaje.h"
+#include "EnemigoEstandar.h"
+#include "../utiles/tipos.h"
 
-Personaje::Personaje(){
+EnemigoEstandar::EnemigoEstandar(int number){
 	bodyB2D = NULL;
 	numFootContacts = 0;
 	isUpPressed = false;
@@ -23,84 +24,26 @@ Personaje::Personaje(){
 	isMoving = false;
 	camera = NULL;
 	online = true;
+	enemyNumber = number;
 }
 
-Personaje::~Personaje() {}
+EnemigoEstandar::~EnemigoEstandar() {};
 
-void Personaje::eventoArriba(){	isUpPressed = true;}
-
-void Personaje::eventoSoltoArriba(){isUpPressed = false;}
-
-void Personaje::eventoDerecha(){
-	isRightPressed = true;
-	if (!isLeftPressed) wasLeftPressed1st = false;
-}
-
-void Personaje::eventoSoltoDerecha(){
-	isRightPressed = false;
-	if (isLeftPressed) wasLeftPressed1st = true;
-}
-
-void Personaje::eventoIzquierda(){
-	isLeftPressed = true;
-	if (!isRightPressed) wasLeftPressed1st = true;
-}
-
-void Personaje::eventoSoltoIzquierda(){
-	isLeftPressed = false;
-	if (isRightPressed) wasLeftPressed1st = false;
-}
-
-void Personaje::eventoSpace() {
-	isSpacePressed = true;
-}
-
-void Personaje::eventoSoltoSpace() {
-	isSpacePressed = false;
-}
-
-void Personaje::setB2DBody(b2Body * pjB2D){
-	bodyB2D = pjB2D;
-}
-
-void Personaje::modifyFootContacts(int i){
-	numFootContacts += i;
-}
-
-void Personaje::setNewAngle(float32 a){
-	angulo = a;
-}
-
-std::string Personaje::serializar(){
+std::string EnemigoEstandar::serializar(){
 
 	std::string buffer;
-	buffer = SSTR(PJ << " " << posicion.x << " " << posicion.y << " "
+	buffer = SSTR(ENEMIGOESTANDAR << " " << posicion.x << " " << posicion.y << " "
 			<< angulo << "  " << baseMayor << " " << altura << " "
-			<< activeSprite << " " << orientation<<" "<< online);
+			<< activeSprite << " " << orientation);
 	return buffer;
 }
 
-void Personaje::update(){
-
-	//std::cout << "estoy updateando el PJ" << std::endl;
-	//std::cout << "su posicion es: " << bodyB2D->GetPosition().x << ", " << bodyB2D->GetPosition().y << std::endl;
-	camera->update();
-
-	// Determina si el PJ esta en el aire.
+void EnemigoEstandar::update(){
+	// Determina si esta en el aire.
 	isAirborne = numFootContacts <= 0 ? true : false;
 
-	//std::cout << "esta en el aire? " << (isAirborne == true ? "si" : "no") << std::endl;
-	//std::cout << "la cantidad de contactos es: " << numFootContacts << std::endl;
-
-	// Determina, si el PJ esta saltando, si ya termino el salto.
+	// Determina, si esta saltando, si ya termino el salto.
 	if (!isAirborne) isJumping = false;
-
-	// Determina si esta sobre un plano inclinado para ajustar el angulo.
-	//if (angulo >= 90 * DEGTORAD && angulo <= 180 * DEGTORAD) angulo +=180 * DEGTORAD;
-	//if (angulo >= 180 * DEGTORAD && angulo <= 270 * DEGTORAD) angulo -=180 * DEGTORAD;
-	//if (isAirborne) bodyB2D->SetTransform(bodyB2D->GetPosition(), 0);
-	//else bodyB2D->SetTransform(bodyB2D->GetPosition(), angulo);
-
 
 	float32 desiredVel = 0, scale = 0;
 
@@ -130,7 +73,7 @@ void Personaje::update(){
 	if ( angulo != 0 ) velYChange =  scale * desiredVel * sin(angulo) - vel.y ;
 
 
-	// Si ninguna tecla de direccion esta presionada, el PJ se debe quedar quieto.
+	// Sin ninguna direccion indicada, se debe quedar quieto.
 	if (!isRightPressed && !isLeftPressed ){
 		velXChange = -vel.x; // I want the PJ to stop moving in the X axis.
 		if (isAirborne) velYChange = 0; // I want the PJ to keep moving normally in the Y axis if it is falling.
@@ -144,7 +87,7 @@ void Personaje::update(){
 	bodyB2D->ApplyLinearImpulse( b2Vec2(impulseX, impulseY), bodyB2D->GetWorldCenter(), true);
 
 
-	// Si se apreto UP y el personaje esta en el piso, salta.
+	// Si se recibio UP y el personaje esta en el piso, salta.
 	if (isUpPressed && (!isAirborne)){
 		b2Vec2 vel = bodyB2D->GetLinearVelocity();
 		float desiredVel = -20;
@@ -210,5 +153,4 @@ void Personaje::update(){
 	}
 
 }
-
 

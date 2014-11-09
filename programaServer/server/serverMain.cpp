@@ -18,6 +18,7 @@
 #include "WorldHandler.h"
 #include "../modelo/WorldItem.h"
 #include "../ControladorUsuarios.h"
+//#include "ControladorEnemigos.h"
 
 int isNumber(const char* string);
 bool file_exist( string f);
@@ -123,9 +124,10 @@ int main(int argc, char** argv){
 
     int maxplayer=get_node("maxplayer","escenario", newStr,4);
     ControladorUsuarios controlador;
+    ControladorEnemigos enemigos;
     controlador.setConnectionLimit(maxplayer);
     //Creo el handler de simulacion.
-    WorldHandler* world = new WorldHandler(controlador);
+    WorldHandler* world = new WorldHandler(controlador, enemigos, newStr);
     if (!world){
     	printf("No se pudo crear el connection handler.\n");
     	exit(1);

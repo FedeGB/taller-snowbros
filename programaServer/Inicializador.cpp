@@ -145,8 +145,23 @@ Camera * Inicializador::cameraInit(b2World ** worldB2D, b2Body * pj, ThreadSafeL
 	return camera;
 }
 
+void Inicializador::enemysInit(b2World ** worldB2D,
+		std::string configFile, ControladorEnemigos & army) {
+
+	int cant = get_size("enemigos", configFile);
+	for (int i = 0; i < cant; i++) {
+		EnemigoEstandar* enemy = createEnemy(configFile, worldB2D, i);
+		if(enemy) {
+			army.controlUnit(enemy);
+		} else {
+			std::cout << "No se agrego un enemigo" << std::endl;
+		}
+	}
+	return;
+}
+
 Personaje * Inicializador::pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*> & rList,
-		std::string configFile){
+	std::string configFile){
 	Logger& log = *Logger::Instancia();
 	std::string data;
 	bool statusOK = true;
@@ -180,7 +195,6 @@ Personaje * Inicializador::pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*
 	b2dObjDef.angle = 0;
 	b2dObjDef.fixedRotation = true;
 	b2dObjDef.bullet = true;
-	//b2dObjDef.linearDamping = 0.1;
 
 	//lo vinculo al mundo
 	b2Body *pjB2D = (*worldB2D)->CreateBody(&b2dObjDef);
@@ -412,6 +426,109 @@ b2Body * createObject(std::string data, b2World ** wB2D, int num) {
 	return _shape;
 }
 
+EnemigoEstandar * createEnemy(std::string data, b2World ** wB2D, int num) {
+	Logger& log = *Logger::Instancia();
+	std::string tipo = get_node("tipo", "enemigos", data, num, "est");
+	b2BodyDef b2dObjDef;
+	b2FixtureDef myFixtureDef;
+	b2PolygonShape polygon;
+	b2dObjDef.type = b2_dynamicBody;
+	float32 halfHeight = get_node("alto", "enemigos", data, num, 1.4f);
+	float32 halfWidth = get_node("ancho", "enemigos", data, num, 1.2f);
+	float32 en_x = get_node("x", "enemigos", data, num, 5.0f);
+	float32 en_y = get_node("y", "enemigos", data, num, 10.0f);
+	b2Body* enB2D = NULL;
+	worlditem_t type = ENEMIGOESTANDAR;
+	if (tipo == "est") {
+		float32 anchoMaximo = get_node("ancho-un", "escenario", data, 10.0f);
+		float32 altoMaximo = get_node("alto-un", "escenario", data, 10.0f);
+		if( (en_x > anchoMaximo) | (en_y > altoMaximo) ){
+			if (!log.abrirLog(WINDOWLOG)) {
+				std::cout << "Error al abrir archivo de log" << std::endl;
+				return NULL;
+			}
+			log.escribirLog(WARNING, "No se puede inicializar al personaje fuera del escenario. Seteado por default al medio del escenario.");
+			log.cerrarLog();
+			en_x = ( anchoMaximo * 0.5 ); en_y = ( altoMaximo * 0.5 );
+		}
+		b2dObjDef.position.Set(en_x, en_y);
+		b2dObjDef.angle = 0;
+		b2dObjDef.fixedRotation = true;
+		b2dObjDef.bullet = true;
+		//lo vinculo al mundo
+		enB2D = (*wB2D)->CreateBody(&b2dObjDef);
+		//le doy forma
+		b2Vec2 v(0,(halfHeight*-0.1));
+
+		polygon.SetAsBox(halfWidth*0.7, halfHeight*0.7,v,0); //le doy dimensiones
+		myFixtureDef.shape = &polygon; //defino que es un poligono
+		myFixtureDef.density =  get_node("masa", "enemigos", data, num, 20.0f); //le doy masa
+		myFixtureDef.restitution = 0.0f;
+		myFixtureDef.friction=0.2;
+		b2Fixture * bodyFixture = enB2D->CreateFixture(&myFixtureDef); //le asigno la forma
+
+		//costados sin friccion
+		v.x=-halfWidth*0.7;
+		polygon.SetAsBox(halfWidth*0.15, halfHeight*0.7,v,0); //le doy dimensiones
+		myFixtureDef.shape = &polygon; //defino que es un poligono
+		bodyFixture->SetUserData( (void*)0 );
+		myFixtureDef.density=0;
+		myFixtureDef.restitution = 0.0f;
+		myFixtureDef.friction=0;
+		b2Fixture* fixture = enB2D->CreateFixture(&myFixtureDef);
+		fixture->SetUserData( (void*)2 ); // CAMBIAR ESTA DATA POR NUMEROS UNICOS POR CADA ENEMIGO NUEVO (ATRIBUTO DE CLASE)
+
+		//costados sin friccion
+		v.x=halfWidth*0.7;
+		polygon.SetAsBox(halfWidth*0.15, halfHeight*0.7,v,0); //le doy dimensiones
+		myFixtureDef.shape = &polygon; //defino que es un poligono
+		bodyFixture->SetUserData( (void*)0 );
+		myFixtureDef.restitution = 0.0f;
+		myFixtureDef.friction=0;
+		fixture = enB2D->CreateFixture(&myFixtureDef);
+		fixture->SetUserData( (void*)2 );
+
+		//pies
+		v.x=0;
+		v.y=halfHeight*0.8;
+		polygon.SetAsBox(halfWidth*0.4, halfHeight*0.1, v, 0);
+		myFixtureDef.shape = &polygon; //defino que es un poligono
+		myFixtureDef.density = 1.0f; //le doy masa
+		myFixtureDef.restitution = 0.0f;
+		myFixtureDef.friction=2.0f;
+		fixture = enB2D->CreateFixture(&myFixtureDef);
+		fixture->SetUserData( (void*)3 );
+
+		// Agrego el sensor para saltos
+	    polygon.SetAsBox(halfWidth * 0.3, 0.15f, b2Vec2(0,halfHeight), 0);
+		myFixtureDef.shape = &polygon; //defino que es un poligono
+	    myFixtureDef.isSensor = true;
+		myFixtureDef.density = 1.0f; //le doy masa
+	    b2Fixture* footSensorFixture = enB2D->CreateFixture(&myFixtureDef);
+	    footSensorFixture->SetUserData( (void*)3 );
+	    type = ENEMIGOESTANDAR;
+	} else {
+		std::cout << "No es un tipo reconocible" << std::endl;
+		// TODO: No deberia entrar, pero hay que contemplarlo
+	}
+    // Crea la representacion del enemigo fuera del mundo de B2D, para manejar su movimiento
+    // y datos necesarios para renderizarlo en el cliente.
+    EnemigoEstandar * en = new EnemigoEstandar(num);
+
+    en->setB2DBody(enB2D);
+    en->baseMayor = halfWidth * 2;
+    en->baseMenor= halfWidth * 2;
+    en->altura = halfHeight * 2;
+    en->desplazamiento = 0;
+    en->posicion.x = en_x;
+    en->posicion.y = en_y;
+    en->tipo = type;
+    enB2D->SetUserData(en);
+
+    return en;
+
+}
+
 void checkBoundsAndOverlap(b2World ** worldB2D, float32 widthWorld, float32 heightWorld){
 
 	Logger& log = *Logger::Instancia();
@@ -500,7 +617,7 @@ void addWorldBorders(b2World ** worldB2D, float32 widthWorld, float32 heightWorl
 }*/
 
 bool Inicializador::init(std::string configFile, b2World ** worldB2D,
-		ContactListener * contactListener) {
+	ContactListener * contactListener, ControladorEnemigos & army) {
 	Logger& log = *Logger::Instancia();
 	std::string sConfig;
 	bool statusOK = true;
@@ -525,6 +642,9 @@ bool Inicializador::init(std::string configFile, b2World ** worldB2D,
 	for (int i = 0; i < formas; i++) {
 		createObject(sConfig, worldB2D, i);
 	}
+
+	// Carga los enemigos
+	this->enemysInit(worldB2D, sConfig, army);
 
 	// Remueve los objetos superpuestos.
 	checkBoundsAndOverlap(worldB2D, widthWorld, heightWorld);
