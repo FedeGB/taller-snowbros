@@ -95,6 +95,18 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 		break;
 	}
 
+	case ENEMIGOESTANDAR:{
+		EnemigoEstandar * en = new EnemigoEstandar();
+		en->baseMayor =  (float)atof(buff[4].c_str());
+		en->altura =  (float)atof(buff[5].c_str());
+
+		en->activeSprite = (sprite_t) strtol(buff[6].c_str(),NULL,10);
+		en->orientation = (Personaje::orientation_t) strtol(buff[7].c_str(),NULL,10);
+		item = en;
+		break;
+
+	}
+
 	default: return NULL;
 
 	}

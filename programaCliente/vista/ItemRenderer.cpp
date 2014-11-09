@@ -236,6 +236,37 @@ void ItemRenderer::renderPJ(Personaje * item, float escala){
 	delete vert;
 }
 
+void ItemRenderer::renderENES(EnemigoEstandar * item, float escala) {
+	// Convierte los parametros de B2D en los necesarios para renderear el sprite.
+	// Obtiene la seccion de la pantalla a renderear.
+	GLfloat vx[4];
+	GLfloat vy[4];
+
+	// Flippea la imagen si es necesario.
+	if (item->orientation == Personaje::LEFT){
+		vx[0] = vx[3] = (item->posicion.x - item->baseMayor / 2) * escala;
+		vy[0] = vy[1] = (item->posicion.y - item->altura / 2) * escala;
+		vx[1] = vx[2] = vx[0] + item->baseMayor * escala;
+		vy[2] = vy[3] = vy[0] + item->altura * escala;
+	} else {
+		vx[1] = vx[2] = (item->posicion.x - item->baseMayor / 2) * escala;
+		vy[0] = vy[1] = (item->posicion.y - item->altura / 2) * escala;
+		vx[0] = vx[3] = vx[1] + item->baseMayor * escala;
+		vy[2] = vy[3] = vy[0] + item->altura * escala;
+	}
+
+	// Obtiene los vertices del sprite.
+	Vertexes * vert = obtenerVerticesPJ(item->activeSprite);
+
+	// Obtiene la textura y su correspondiente rect para renderear.
+	TexAndVertexes * TaV = textureMap[ENES];
+
+	// Renderea.
+	TaV->tex->dibujar(vx, vy, vert->x, vert->y, 4);
+
+	delete vert;
+}
+
 // Dibuja la metadata del juego: fondo.
 void ItemRenderer::renderMetadataFondo(Metadata * item){
 
@@ -348,6 +379,9 @@ void ItemRenderer::render(WorldItem * item, float escala){
 		break;
 	case PJ:
 		renderPJ((Personaje*)item, escala);
+		break;
+	case ENEMIGOESTANDAR:
+		renderENES((EnemigoEstandar*)item, escala);
 		break;
 	case METADATAFONDO:
 		tamanioMundo.x = ((Metadata*)item)->tamanioXMundo;

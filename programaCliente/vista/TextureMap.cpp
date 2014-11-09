@@ -21,6 +21,7 @@ bool TextureMap::init(){
 	if (inicializado) return false;
 	if (!loadMetadataTex()) return false;
 	if (!loadPJTex()) return false;
+	if (!loadENESTex()) return false;
 	if (!loadCircleTex()) return false;
 	if (!loadCuadTex()) return false;
 	inicializado = true;
@@ -101,6 +102,29 @@ bool TextureMap::loadPJTex(){
 	temp->vertexes->y[2] = temp->vertexes->y[3] = 35 / 320.0f;
 	temp->tex = tex;
 	(*this)[PJ1] = temp;
+
+	return true;
+}
+
+bool TextureMap::loadENESTex(){
+
+	// TODO: sacar hardcodeo del path de imagen.
+	Textura * tex = new Textura();
+	if (!tex) {
+		std::cout << "no se cargo la imagen" << std::endl;
+		return false;
+	}
+	// TODO: Otra textura para enemigo
+	tex->generar(SPRITE_SHEET);
+
+	TexAndVertexes * temp = new TexAndVertexes;
+	temp->vertexes = new Vertexes(4);
+	temp->vertexes->x[0] = temp->vertexes->x[3] = 7 / 432.0f;
+	temp->vertexes->y[0] = temp->vertexes->y[1] = 9 / 320.0f;
+	temp->vertexes->x[1] = temp->vertexes->x[2] = 30 / 432.0f;
+	temp->vertexes->y[2] = temp->vertexes->y[3] = 35 / 320.0f;
+	temp->tex = tex;
+	(*this)[ENES] = temp;
 
 	return true;
 }

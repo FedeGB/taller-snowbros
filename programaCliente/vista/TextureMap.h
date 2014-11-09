@@ -59,6 +59,7 @@ public:
 private:
 	bool loadMetadataTex();
 	bool loadPJTex();
+	bool loadENESTex();
 	bool loadCircleTex();
 	bool loadCuadTex();
 	bool inicializado;
