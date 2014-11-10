@@ -12,6 +12,8 @@ float ItemRenderer::escalaPorDefecto = 20;
 b2Vec2 ItemRenderer::tamanioMundo;
 b2Vec2 ItemRenderer::posicionCamara;
 
+SonidosMap ItemRenderer::sonidosMap;
+
 ItemRenderer::ItemRenderer() {
 	posicionCamara.x = 0;
 	posicionCamara.y = 0;
@@ -358,14 +360,28 @@ void ItemRenderer::renderMetadataHUD(Metadata * item){
 
 }
 
+void ItemRenderer::renderSonido(Sonido * item){
+
+	sonidosMap[item->sonido]->actualizarEstado();
+
+	if( sonidosMap[item->sonido]->estaSonando()  )
+		sonidosMap[item->sonido]->apagar();
+
+	sonidosMap[item->sonido]->reproducir();
+}
+
 // Dibuja un item del mundo.
 void ItemRenderer::render(WorldItem * item, float escala){
 
 	if (!textureMap.yaInicializado()) textureMap.init();
 
+	if(!sonidosMap.yaInicializado()) sonidosMap.init();
+
+	sonidosMap.actualizarEstados();
+
 	item->aCoordenadasLocales(posicionCamara);
 
-	std::cout << "el tipo es: " << item->tipo << std::endl;
+//	std::cout << "el tipo es: " << item->tipo << std::endl;
 
 	switch(item->tipo){
 	case CIRCULO:
@@ -393,6 +409,8 @@ void ItemRenderer::render(WorldItem * item, float escala){
 	case METADATAHUD:
 		renderMetadataHUD((Metadata*)item);
 		break;
+	case SONIDO:
+		renderSonido((Sonido*) item);
 	}
 }
 

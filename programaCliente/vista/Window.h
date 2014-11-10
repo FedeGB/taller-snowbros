@@ -4,6 +4,9 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_opengl.h>
+#include <AL/al.h>
+#include <AL/alc.h>
+#include <AL/alut.h>
 #include <string>
 #include <list>
 
@@ -17,6 +20,9 @@ private:
 	SDL_Window* window;
 	//SDL_Renderer* wRenderer;
 	SDL_GLContext ctx;
+
+	ALCdevice *device = NULL;
+	ALCcontext *ALctx = NULL;
 
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;

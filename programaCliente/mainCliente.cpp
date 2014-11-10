@@ -45,6 +45,7 @@ int main(int argc, char * argv[]){
 			}
 			pflag = 1;
 			port = atoi(optarg); // Puerto en el que escucha a las conexiones.
+			printf("puerto ingresado: %i\n", port);
 			break;
 		case 'i':
 			iflag = 1;
@@ -153,8 +154,8 @@ int main(int argc, char * argv[]){
 				else if (event.key.keysym.sym == SDLK_UP) outMessage = SSTR(ARRIBA);
 				else if (event.key.keysym.sym == SDLK_LEFT) outMessage = SSTR(IZQUIERDA);
 				else if (event.key.keysym.sym == SDLK_RIGHT) outMessage = SSTR(DERECHA);
-				else if (event.key.keysym.sym == SDLK_KP_PLUS) outMessage = SSTR(ZOOMIN);
-				else if (event.key.keysym.sym == SDLK_KP_MINUS) outMessage = SSTR(ZOOMOUT);
+				else if (event.key.keysym.sym == SDLK_PAGEUP) outMessage = SSTR(ZOOMIN);
+				else if (event.key.keysym.sym == SDLK_PAGEDOWN) outMessage = SSTR(ZOOMOUT);
 				break;
 			case SDL_KEYUP:
 				if (event.key.keysym.sym == SDLK_UP) outMessage = SSTR(SOLTOARRIBA);

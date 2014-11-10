@@ -23,6 +23,7 @@
 #define FONT_TTF "fuentes/Ubuntu-B.ttf"
 #define IMAGEN_FONDO "imagenes/fondo2.png"
 
+#define SONIDO_SALTO "sonidos/salto.wav"
 
 #define PI 3.14159265
 const float32 DEGTORAD = 0.0174532925199432957f;
@@ -121,6 +122,7 @@ enum worlditem_t{
 	POLIGONOREGULAR,
 	PJ,
 	STRINGMSG,
+	SONIDO,
 	ENEMIGOESTANDAR,
 };
 
@@ -143,6 +145,13 @@ enum sprite_t{
 	FONDO1,
 	PUNTAJE1,
 	VIDAS1,
+};
+
+
+enum sonidos_t{
+	VACIO,
+	SALTO,
+	EXPLOSION,
 };
 
 #endif /* TIPOS_H_ */

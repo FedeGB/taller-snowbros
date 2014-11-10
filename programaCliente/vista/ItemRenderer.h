@@ -19,7 +19,8 @@
 #include "../utiles/Logger.h"
 #include "TextureMap.h"
 #include <SDL2/SDL.h>
-#include <SDL2/SDL2_gfxPrimitives.h>
+
+#include "SonidosMap.h"
 
 class ItemRenderer {
 public:
@@ -40,6 +41,9 @@ private:
 	static void renderENES(EnemigoEstandar * item, float escala);
 	static void renderMetadataFondo(Metadata * item);
 	static void renderMetadataHUD(Metadata * item);
+
+	static SonidosMap sonidosMap;
+	static void renderSonido(Sonido * item);
 };
 
 #endif /* ITEMRENDERER_H_ */

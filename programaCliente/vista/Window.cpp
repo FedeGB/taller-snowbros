@@ -36,6 +36,15 @@ bool Window::init(int width, int height, std::string BGpath){
 				printf("error al abrir ttf\n");
 				return !error;
 			}
+
+			alutInitWithoutContext(NULL, NULL);
+
+			// creo y abro contexto y dispositivo
+			device = alcOpenDevice(NULL);
+			ALctx = alcCreateContext(device, NULL);
+			alcMakeContextCurrent(ALctx);
+
+			alDistanceModel(AL_LINEAR_DISTANCE_CLAMPED);
 		}
 	}
 
@@ -120,6 +129,12 @@ SDL_Window* Window::crearVentana()
 
 
 Window::~Window(){
+
+	alcMakeContextCurrent(NULL);
+	alcDestroyContext(ALctx);
+	alcCloseDevice(device);
+
+	alutExit();
 
 	if (TTF_WasInit()) TTF_Quit();
 

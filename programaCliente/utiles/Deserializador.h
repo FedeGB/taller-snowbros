@@ -17,6 +17,8 @@
 #include "../modelo/formas/Cuadrilatero.h"
 #include "../modelo/formas/PoligonoRegular.h"
 
+#include "../modelo/Sonido.h"
+
 class Deserializador {
 public:
 	Deserializador();
