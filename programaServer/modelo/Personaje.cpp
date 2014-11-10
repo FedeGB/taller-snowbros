@@ -80,7 +80,7 @@ std::string Personaje::serializar(){
 	return buffer;
 }
 
-void Personaje::update(){
+void Personaje::update(Sonido* sonido){
 
 	//std::cout << "estoy updateando el PJ" << std::endl;
 	//std::cout << "su posicion es: " << bodyB2D->GetPosition().x << ", " << bodyB2D->GetPosition().y << std::endl;
@@ -152,6 +152,7 @@ void Personaje::update(){
 		float impulse = bodyB2D->GetMass() * velChange;
 		bodyB2D->ApplyLinearImpulse( b2Vec2(0,impulse), bodyB2D->GetWorldCenter(), true);
 		isJumping = true;
+		sonido->sonido=SALTO;
 	}
 
 	// DETERMINA EL SPRITE QUE CORRESPONDE AL ESTADO DEL PJ.

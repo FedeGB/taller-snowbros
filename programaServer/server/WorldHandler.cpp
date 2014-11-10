@@ -30,6 +30,7 @@ bool WorldHandler::loopPrincipal() {
 		float freq =600.0f;
 		for (ControladorUsuarios::iterator it=controlador.begin(); it!=controlador.end(); ++it){
 			if ((*it).second && (*it).second->online) {
+				//std::cout << "HOLLAA";
 				count++;
 			}
 		}
@@ -46,7 +47,7 @@ bool WorldHandler::loopPrincipal() {
 				freq = 9000.0f;
 		if(count == 4)
 				freq = 6000.0f;
-		// Simula.
+		//std::cout << "freq: " << freq << '\n';		// Simula.
 		for(int i=0;i<10;i++) worldB2D->Step(1.0f/freq, 8, 5);
 
 		// Updatea enemigos

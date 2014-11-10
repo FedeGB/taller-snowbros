@@ -91,7 +91,7 @@ void* ConnectionHandler::run() {
 		// Recibe todos los eventos sucedidos en el cliente.
 		inMessage = "NOTDONE";
 		while (inMessage != "DONE"){
-			cout<<"aa";
+//			cout<<"aa";
 			len = m_stream->receive(inMessage);
 			if (len <= 0) {
 				quit = true;
@@ -122,7 +122,7 @@ void* ConnectionHandler::run() {
 			fpsTimer.start();
 			countedFrames = 0;
 		}
-		std::cout << avgFPS << " FPS avg" << std::endl;
+//		std::cout << avgFPS << " FPS avg" << std::endl;
 		++countedFrames;
 
 		controlador.obtenerUsuario(username)->enviarSenial();

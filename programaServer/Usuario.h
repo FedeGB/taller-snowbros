@@ -18,6 +18,8 @@
 #include "Inicializador.h"
 #include <Box2D/Box2D.h>
 
+#include "modelo/Sonido.h"
+
 class Usuario {
 public:
 	Usuario();
@@ -69,6 +71,8 @@ private:
 	ConditionVariable c;
 	Personaje * PJ;
 	ThreadSafeList<WorldItem*> listaVisibles;
+
+	Sonido* sonidoPJ;
 };
 
 #endif /* USUARIO_H_ */

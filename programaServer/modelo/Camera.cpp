@@ -194,7 +194,7 @@ void Camera::updatePosition(){
 
 void Camera::updateRenderList(){
 
-	//std::cout << "updateando render list" << std::endl;
+//	std::cout << "updateando render list" << std::endl;
 
 	// Bloquea renderList, para evitar que se modifique mientras se la esta cargando.
 	renderList.lock();

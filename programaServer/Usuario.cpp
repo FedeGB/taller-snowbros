@@ -11,6 +11,7 @@ Usuario::Usuario() {
 	online = true;
 	inicializado = false;
 	PJ = NULL;
+	sonidoPJ = NULL;
 }
 
 Usuario::~Usuario() {
@@ -84,7 +85,7 @@ std::string Usuario::obtenerPantallaSerializada(){
 	std::string pantallaSerializada;
 	pantallaSerializada.clear();
 
-	std::cout << "obteniendo pantalla serializada" << std::endl;
+//	std::cout << "obteniendo pantalla serializada" << std::endl;
 
 	// Bloquea la lista para evitar modificaciones mientras se serializa.
 	listaVisibles.lock();
@@ -97,6 +98,14 @@ std::string Usuario::obtenerPantallaSerializada(){
 	}
 
 	listaVisibles.unlock();
+
+	if( sonidoPJ->sonido != VACIO ){
+		//printf("sonido: %s\n", sonidoPJ->sonido.c_str());
+		pantallaSerializada += "%";
+		pantallaSerializada += sonidoPJ->serializar();
+		//std::cout << "pantalla: " << sonidoPJ->serializar() << '\n';
+		sonidoPJ->sonido = VACIO;
+	}
 
 	pantallaSerializada += "%USERNAME ";
 	pantallaSerializada += username;
@@ -123,12 +132,13 @@ void Usuario::inicializarPJ(b2World * worldB2D, std::string configFile){
 		// TODO: Error handling.
 		std::cout << "hubo un error al crear el PJ" << std::endl;
 	}
+	sonidoPJ = new Sonido();
 	inicializado = true;
 }
 
 // Actualiza el estado del PJ y su camara asociada.
 void Usuario::actualizarPJ(){
-	PJ->update();
+	PJ->update(sonidoPJ);
 }
 
 void Usuario::setOnline(bool estado){

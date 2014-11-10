@@ -113,6 +113,7 @@ enum worlditem_t{
 	POLIGONOREGULAR,
 	PJ,
 	STRINGMSG,
+	SONIDO,
 	ENEMIGOESTANDAR,
 };
 
@@ -133,6 +134,12 @@ enum sprite_t{
 	FONDO1,
 	PUNTAJE1,
 	VIDAS1,
+};
+
+enum sonidos_t{
+	VACIO,
+	SALTO,
+	EXPLOSION,
 };
 
 #endif /* TIPOS_H_ */

@@ -13,6 +13,8 @@
 #include <SDL2/SDL.h>
 #include "../utiles/tipos.h"
 
+#include "../modelo/Sonido.h"
+
 
 class Personaje : public Cuadrilatero {
 public:
@@ -33,7 +35,7 @@ public:
 	virtual void eventoSpace();
 	virtual void eventoSoltoSpace();
 
-	virtual void update();
+	virtual void update(Sonido*);
 	virtual std::string serializar();
 
 	Camera * camera;

@@ -72,7 +72,7 @@ std::string ControladorUsuarios::obtenerPantallaSerializada(std::string username
 	for (ControladorUsuarios::iterator it=(*this).begin(); it!=(*this).end(); ++it){
 		if (!(*it).second->online) {
 			metadata->mensaje += (*it).second->username;
-			metadata->mensaje += "-ha-perdido-conexion-al-juego.&";;
+			metadata->mensaje += "-ha-perdido-conexion-al-juego.&";
 		}
 	}
 
