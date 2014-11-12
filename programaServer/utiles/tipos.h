@@ -142,4 +142,10 @@ enum sonidos_t{
 	EXPLOSION,
 };
 
+enum sensor_t{
+	PLATAFORMA=0,
+	PIESPJ=3,
+	CAMARA=4,
+};
+
 #endif /* TIPOS_H_ */

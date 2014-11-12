@@ -18,13 +18,13 @@ class ContactListener : public b2ContactListener
 		void* fixtureAUserData = contact->GetFixtureA()->GetUserData();
 		void* fixtureBUserData = contact->GetFixtureB()->GetUserData();
 		// TODO: sacar estos '3' y '4's y cambiarlos por constantes.
-		if ( *((int*)(&fixtureAUserData)) == 3 ){
-			if ( (*((int*)(&fixtureBUserData)) != 4) )
+		if ( *((int*)(&fixtureAUserData)) == PIESPJ ){
+			if ( (*((int*)(&fixtureBUserData)) != CAMARA) )
 				( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->modifyFootContacts(1);
 		}
 		//check if fixture B was the foot sensor
-		if ( *((int*)(&fixtureBUserData)) == 3 ){
-			if ( (*((int*)(&fixtureAUserData)) != 4) )
+		if ( *((int*)(&fixtureBUserData)) == PIESPJ ){
+			if ( (*((int*)(&fixtureAUserData)) != CAMARA) )
 				( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->modifyFootContacts(1);
 		}
 	}
@@ -33,13 +33,13 @@ class ContactListener : public b2ContactListener
           //check if fixture A was the foot sensor
     	  void* fixtureAUserData = contact->GetFixtureA()->GetUserData();
     	  void* fixtureBUserData = contact->GetFixtureB()->GetUserData();
-          if ( *((int*)(&fixtureAUserData)) == 3 ){
-        	  if ( (*((int*)(&fixtureBUserData)) != 4) )
+          if ( *((int*)(&fixtureAUserData)) == PIESPJ ){
+        	  if ( (*((int*)(&fixtureBUserData)) != CAMARA) )
         		  ( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->modifyFootContacts(-1);
           }
           //check if fixture B was the foot sensor
-          if ( *((int*)(&fixtureBUserData)) == 3 ){
-        	  if ( (*((int*)(&fixtureAUserData)) != 4) )
+          if ( *((int*)(&fixtureBUserData)) == PIESPJ ){
+        	  if ( (*((int*)(&fixtureAUserData)) != CAMARA) )
         		  ( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->modifyFootContacts(-1);
           }
       }
