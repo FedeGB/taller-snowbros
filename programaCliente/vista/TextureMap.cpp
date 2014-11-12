@@ -115,12 +115,12 @@ bool TextureMap::loadENESTex(){
 		return false;
 	}
 	// TODO: Otra textura para enemigo
-	tex->generar(SPRITE_SHEET);
+	tex->generar(ENEMIES_SHEET);
 
 	TexAndVertexes * temp = new TexAndVertexes;
 	temp->vertexes = new Vertexes(4);
-	temp->vertexes->x[0] = temp->vertexes->x[3] = 7 / 432.0f;
-	temp->vertexes->y[0] = temp->vertexes->y[1] = 9 / 320.0f;
+	temp->vertexes->x[0] = temp->vertexes->x[3] = 5 / 432.0f;
+	temp->vertexes->y[0] = temp->vertexes->y[1] = 7 / 320.0f;
 	temp->vertexes->x[1] = temp->vertexes->x[2] = 30 / 432.0f;
 	temp->vertexes->y[2] = temp->vertexes->y[3] = 35 / 320.0f;
 	temp->tex = tex;

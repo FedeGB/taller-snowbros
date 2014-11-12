@@ -19,6 +19,7 @@
 #define TEXTURA_PELOTA "imagenes/pelota.png"
 #define TEXTURA_HIELO "imagenes/hielo.PNG"
 #define SPRITE_SHEET "imagenes/playerSpritesheet1.png"
+#define ENEMIES_SHEET "imagenes/SnowBros.png"
 #define TEXTURA_VIDA "imagenes/vida.png"
 #define FONT_TTF "fuentes/Ubuntu-B.ttf"
 #define IMAGEN_FONDO "imagenes/fondo2.png"
@@ -152,6 +153,12 @@ enum sonidos_t{
 	VACIO,
 	SALTO,
 	EXPLOSION,
+};
+
+enum sensor_t{
+	PLATAFORMA=0,
+	PIESPJ=3,
+	CAMARA=4,
 };
 
 #endif /* TIPOS_H_ */

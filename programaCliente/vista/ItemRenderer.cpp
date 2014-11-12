@@ -201,6 +201,83 @@ Vertexes * obtenerVerticesPJ(sprite_t activeSprite){
 	return vertexes;
 }
 
+Vertexes * obtenerVerticesEnemigo1(sprite_t activeSprite){
+
+	Vertexes * vertexes = new Vertexes(4);
+
+	if (activeSprite == PARADOIZQUIERDA){
+		vertexes->x[0] = vertexes->x[3] = 0;
+		vertexes->y[0] = vertexes->y[1] = 0;
+		vertexes->x[1] = vertexes->x[2] = 20 / 432.0f;
+		vertexes->y[2] = vertexes->y[3] = 20 / 320.0f;
+	}
+
+	if (activeSprite == MOVIENDOIZQUIERDA1){
+		vertexes->x[0] = vertexes->x[3] = 20 / 432.0f;
+		vertexes->y[0] = vertexes->y[1] = 0/ 320.0f;
+		vertexes->x[1] = vertexes->x[2] = 40 / 432.0f;
+		vertexes->y[2] = vertexes->y[3] = 20 / 320.0f;
+	}
+
+	if (activeSprite == MOVIENDOIZQUIERDA2){
+		vertexes->x[0] = vertexes->x[3] = 62 / 432.0f;
+		vertexes->y[0] = vertexes->y[1] = 9 / 320.0f;
+		vertexes->x[1] = vertexes->x[2] = 85 / 432.0f;
+		vertexes->y[2] = vertexes->y[3] = 35 / 320.0f;
+	}
+
+	if (activeSprite == MOVIENDOIZQUIERDA3){
+		vertexes->x[0] = vertexes->x[3] = 92 / 432.0f;
+		vertexes->y[0] = vertexes->y[1] = 9 / 320.0f;
+		vertexes->x[1] = vertexes->x[2] = 115 / 432.0f;
+		vertexes->y[2] = vertexes->y[3] = 35 / 320.0f;
+	}
+
+	if (activeSprite == MOVIENDOIZQUIERDA4){
+		vertexes->x[0] = vertexes->x[3] = 62 / 432.0f;
+		vertexes->y[0] = vertexes->y[1] = 9 / 320.0f;
+		vertexes->x[1] = vertexes->x[2] = 85 / 432.0f;
+		vertexes->y[2] = vertexes->y[3] = 35 / 320.0f;
+	}
+
+	if (activeSprite == SALTANDOIZQUIERDA1){
+		vertexes->x[0] = vertexes->x[3] = 40 / 432.0f;
+		vertexes->y[0] = vertexes->y[1] = 20 / 320.0f;
+		vertexes->x[1] = vertexes->x[2] = 60 / 432.0f;
+		vertexes->y[2] = vertexes->y[3] = 40 / 320.0f;
+	}
+
+	if (activeSprite == SALTANDOIZQUIERDA2){
+		vertexes->x[0] = vertexes->x[3] = 40 / 432.0f;
+		vertexes->y[0] = vertexes->y[1] = 20 / 320.0f;
+		vertexes->x[1] = vertexes->x[2] = 60 / 432.0f;
+		vertexes->y[2] = vertexes->y[3] = 40 / 320.0f;
+	}
+
+	if (activeSprite == SALTANDOIZQUIERDA3){
+		vertexes->x[0] = vertexes->x[3] = 40 / 432.0f;
+		vertexes->y[0] = vertexes->y[1] = 20 / 320.0f;
+		vertexes->x[1] = vertexes->x[2] = 60 / 432.0f;
+		vertexes->y[2] = vertexes->y[3] = 40 / 320.0f;
+	}
+
+	if (activeSprite == SALTANDOIZQUIERDA4){
+		vertexes->x[0] = vertexes->x[3] = 44 / 432.0f;
+		vertexes->y[0] = vertexes->y[1] = 15 / 320.0f;
+		vertexes->x[1] = vertexes->x[2] = 60 / 432.0f;
+		vertexes->y[2] = vertexes->y[3] = 34 / 320.0f;
+	}
+
+	if (activeSprite == SALTANDOIZQUIERDA5){
+		vertexes->x[0] = vertexes->x[3] = 44 / 432.0f;
+		vertexes->y[0] = vertexes->y[1] = 34.5 / 320.0f;
+		vertexes->x[1] = vertexes->x[2] = 61 / 432.0f;
+		vertexes->y[2] = vertexes->y[3] = 52 / 320.0f;
+	}
+
+	return vertexes;
+}
+
 // Dibuja un PJ.
 void ItemRenderer::renderPJ(Personaje * item, float escala){
 
@@ -258,7 +335,7 @@ void ItemRenderer::renderENES(EnemigoEstandar * item, float escala) {
 	}
 
 	// Obtiene los vertices del sprite.
-	Vertexes * vert = obtenerVerticesPJ(item->activeSprite);
+	Vertexes * vert = obtenerVerticesEnemigo1(item->activeSprite);
 
 	// Obtiene la textura y su correspondiente rect para renderear.
 	TexAndVertexes * TaV = textureMap[ENES];
