@@ -206,64 +206,64 @@ Vertexes * obtenerVerticesEnemigo1(sprite_t activeSprite){
 	Vertexes * vertexes = new Vertexes(4);
 
 	if (activeSprite == PARADOIZQUIERDA){
-		vertexes->x[0] = vertexes->x[3] = 0;
+		vertexes->x[0] = vertexes->x[3] = 40 / 428.0f;
 		vertexes->y[0] = vertexes->y[1] = 0;
-		vertexes->x[1] = vertexes->x[2] = 20 / 432.0f;
-		vertexes->y[2] = vertexes->y[3] = 20 / 320.0f;
+		vertexes->x[1] = vertexes->x[2] = 60 / 428.0f;
+		vertexes->y[2] = vertexes->y[3] = 18 / 365.0f;
 	}
 
 	if (activeSprite == MOVIENDOIZQUIERDA1){
-		vertexes->x[0] = vertexes->x[3] = 20 / 432.0f;
-		vertexes->y[0] = vertexes->y[1] = 0/ 320.0f;
-		vertexes->x[1] = vertexes->x[2] = 40 / 432.0f;
-		vertexes->y[2] = vertexes->y[3] = 20 / 320.0f;
+		vertexes->x[0] = vertexes->x[3] = 20 / 428.0f;
+		vertexes->y[0] = vertexes->y[1] = 0/ 365.0f;
+		vertexes->x[1] = vertexes->x[2] = 40 / 428.0f;
+		vertexes->y[2] = vertexes->y[3] = 18 / 365.0f;
 	}
 
 	if (activeSprite == MOVIENDOIZQUIERDA2){
-		vertexes->x[0] = vertexes->x[3] = 62 / 432.0f;
-		vertexes->y[0] = vertexes->y[1] = 9 / 320.0f;
-		vertexes->x[1] = vertexes->x[2] = 85 / 432.0f;
-		vertexes->y[2] = vertexes->y[3] = 35 / 320.0f;
+		vertexes->x[0] = vertexes->x[3] = 0;
+				vertexes->y[0] = vertexes->y[1] = 0;
+				vertexes->x[1] = vertexes->x[2] = 20 / 428.0f;
+				vertexes->y[2] = vertexes->y[3] = 18 / 365.0f;
 	}
 
 	if (activeSprite == MOVIENDOIZQUIERDA3){
-		vertexes->x[0] = vertexes->x[3] = 92 / 432.0f;
-		vertexes->y[0] = vertexes->y[1] = 9 / 320.0f;
-		vertexes->x[1] = vertexes->x[2] = 115 / 432.0f;
-		vertexes->y[2] = vertexes->y[3] = 35 / 320.0f;
+		vertexes->x[0] = vertexes->x[3] = 20 / 428.0f;
+				vertexes->y[0] = vertexes->y[1] = 0/ 365.0f;
+				vertexes->x[1] = vertexes->x[2] = 40 / 428.0f;
+				vertexes->y[2] = vertexes->y[3] = 18 / 365.0f;
 	}
 
 	if (activeSprite == MOVIENDOIZQUIERDA4){
-		vertexes->x[0] = vertexes->x[3] = 62 / 432.0f;
-		vertexes->y[0] = vertexes->y[1] = 9 / 320.0f;
-		vertexes->x[1] = vertexes->x[2] = 85 / 432.0f;
-		vertexes->y[2] = vertexes->y[3] = 35 / 320.0f;
+		vertexes->x[0] = vertexes->x[3] = 0;
+				vertexes->y[0] = vertexes->y[1] = 0;
+				vertexes->x[1] = vertexes->x[2] = 20 / 428.0f;
+				vertexes->y[2] = vertexes->y[3] = 18 / 365.0f;
 	}
 
 	if (activeSprite == SALTANDOIZQUIERDA1){
-		vertexes->x[0] = vertexes->x[3] = 40 / 432.0f;
-		vertexes->y[0] = vertexes->y[1] = 20 / 320.0f;
+		vertexes->x[0] = vertexes->x[3] = 44 / 432.0f;
+		vertexes->y[0] = vertexes->y[1] = 15.5 / 320.0f;
 		vertexes->x[1] = vertexes->x[2] = 60 / 432.0f;
-		vertexes->y[2] = vertexes->y[3] = 40 / 320.0f;
+		vertexes->y[2] = vertexes->y[3] = 34 / 320.0f;
 	}
 
 	if (activeSprite == SALTANDOIZQUIERDA2){
-		vertexes->x[0] = vertexes->x[3] = 40 / 432.0f;
-		vertexes->y[0] = vertexes->y[1] = 20 / 320.0f;
+		vertexes->x[0] = vertexes->x[3] = 44 / 432.0f;
+		vertexes->y[0] = vertexes->y[1] = 15.5 / 320.0f;
 		vertexes->x[1] = vertexes->x[2] = 60 / 432.0f;
-		vertexes->y[2] = vertexes->y[3] = 40 / 320.0f;
+		vertexes->y[2] = vertexes->y[3] = 34 / 320.0f;
 	}
 
 	if (activeSprite == SALTANDOIZQUIERDA3){
-		vertexes->x[0] = vertexes->x[3] = 40 / 432.0f;
-		vertexes->y[0] = vertexes->y[1] = 20 / 320.0f;
+		vertexes->x[0] = vertexes->x[3] = 44 / 432.0f;
+		vertexes->y[0] = vertexes->y[1] = 15.5 / 320.0f;
 		vertexes->x[1] = vertexes->x[2] = 60 / 432.0f;
-		vertexes->y[2] = vertexes->y[3] = 40 / 320.0f;
+		vertexes->y[2] = vertexes->y[3] = 34 / 320.0f;
 	}
 
 	if (activeSprite == SALTANDOIZQUIERDA4){
 		vertexes->x[0] = vertexes->x[3] = 44 / 432.0f;
-		vertexes->y[0] = vertexes->y[1] = 15 / 320.0f;
+		vertexes->y[0] = vertexes->y[1] = 15.5 / 320.0f;
 		vertexes->x[1] = vertexes->x[2] = 60 / 432.0f;
 		vertexes->y[2] = vertexes->y[3] = 34 / 320.0f;
 	}
