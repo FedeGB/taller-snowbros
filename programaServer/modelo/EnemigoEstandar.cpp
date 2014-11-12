@@ -99,7 +99,7 @@ void EnemigoEstandar::update(){
 
 	// DETERMINA EL SPRITE QUE CORRESPONDE AL ESTADO DEL PJ.
 	animationCounter++;
-	switch ((animationCounter/8)){
+	switch ((animationCounter/128)){
 	case 0:
 		if (isAirborne){  // Si esta en el aire:
 			if (isJumping) activeSprite = SALTANDOIZQUIERDA1; // Salta.
