@@ -24,6 +24,7 @@ bool TextureMap::init(){
 	if (!loadENESTex()) return false;
 	if (!loadCircleTex()) return false;
 	if (!loadCuadTex()) return false;
+	if (!loadSnowBallTex()) return false;
 	inicializado = true;
 	return true;
 }
@@ -127,6 +128,27 @@ bool TextureMap::loadENESTex(){
 	(*this)[ENES] = temp;
 
 	return true;
+}
+
+bool TextureMap::loadSnowBallTex(){
+	// TODO: sacar hardcodeo del path de imagen.
+		Textura * tex = new Textura();
+		if (!tex) {
+			std::cout << "no se cargo la imagen" << std::endl;
+			return false;
+		}
+		tex->generar(SPRITE_SHEET);
+
+		TexAndVertexes * temp = new TexAndVertexes;
+		temp->vertexes = new Vertexes(4);
+		temp->vertexes->x[0] = temp->vertexes->x[3] = 290 / 432.0f;
+		temp->vertexes->y[0] = temp->vertexes->y[1] = 215 / 320.0f;
+		temp->vertexes->x[1] = temp->vertexes->x[2] = 300 / 432.0f;
+		temp->vertexes->y[2] = temp->vertexes->y[3] = 230 / 320.0f;
+		temp->tex = tex;
+		(*this)[PODER1] = temp;
+
+		return true;
 }
 
 bool TextureMap::loadCircleTex(){

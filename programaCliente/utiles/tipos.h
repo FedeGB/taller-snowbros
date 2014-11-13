@@ -123,6 +123,7 @@ enum worlditem_t{
 	POLIGONOREGULAR,
 	PJ,
 	STRINGMSG,
+	PODERES,
 	SONIDO,
 	ENEMIGOESTANDAR,
 };
@@ -146,6 +147,7 @@ enum sprite_t{
 	FONDO1,
 	PUNTAJE1,
 	VIDAS1,
+	PODER1,
 };
 
 
@@ -159,6 +161,7 @@ enum sensor_t{
 	PLATAFORMA=0,
 	PIESPJ=3,
 	CAMARA=4,
+	PODERHIELO,
 };
 
 #endif /* TIPOS_H_ */

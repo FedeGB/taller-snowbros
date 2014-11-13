@@ -12,6 +12,7 @@
 #include "../modelo/WorldItem.h"
 #include "../modelo/Metadata.h"
 #include "../modelo/Personaje.h"
+#include "../modelo/poder.h"
 #include "../modelo/EnemigoEstandar.h"
 #include "../modelo/formas/Circulo.h"
 #include "../modelo/formas/Cuadrilatero.h"

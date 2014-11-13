@@ -200,7 +200,17 @@ Vertexes * obtenerVerticesPJ(sprite_t activeSprite){
 
 	return vertexes;
 }
+Vertexes * obtenerVerticesPoder(sprite_t activeSprite){
+	Vertexes * vertexes = new Vertexes(4);
 
+		if (activeSprite == PODER1){
+			vertexes->x[0] = vertexes->x[3] = 288 / 432.0f;
+			vertexes->y[0] = vertexes->y[1] = 212 / 320.0f;
+			vertexes->x[1] = vertexes->x[2] = 302 / 432.0f;
+			vertexes->y[2] = vertexes->y[3] = 230 / 320.0f;
+		}
+		return vertexes;
+}
 Vertexes * obtenerVerticesEnemigo1(sprite_t activeSprite){
 
 	Vertexes * vertexes = new Vertexes(4);
@@ -346,6 +356,38 @@ void ItemRenderer::renderENES(EnemigoEstandar * item, float escala) {
 	delete vert;
 }
 
+void ItemRenderer::renderPoder(poder * item,float escala){
+
+		GLfloat vx[4];
+		GLfloat vy[4];
+
+		// Flippea la imagen si es necesario.
+		if (item->orientation == Personaje::LEFT){
+			vx[0] = vx[3] = (item->posicion.x - item->baseMayor / 2) * escala;
+			vy[0] = vy[1] = (item->posicion.y - item->altura / 2) * escala;
+			vx[1] = vx[2] = vx[0] + item->baseMayor * escala;
+			vy[2] = vy[3] = vy[0] + item->altura * escala;
+		} else {
+			vx[1] = vx[2] = (item->posicion.x - item->baseMayor / 2) * escala;
+			vy[0] = vy[1] = (item->posicion.y - item->altura / 2) * escala;
+			vx[0] = vx[3] = vx[1] + item->baseMayor * escala;
+			vy[2] = vy[3] = vy[0] + item->altura * escala;
+		}
+
+		// Obtiene los vertices del sprite.
+		Vertexes * vert = obtenerVerticesPoder(item->activeSprite);
+
+		// Obtiene la textura y su correspondiente rect para renderear.
+		TexAndVertexes * TaV = textureMap[PODER1];
+
+		// Si esta no esta conectado, se cambia el color a gris.
+		// Renderea.
+		TaV->tex->dibujar(vx, vy, vert->x, vert->y, 4);
+
+		delete vert;
+
+}
+
 // Dibuja la metadata del juego: fondo.
 void ItemRenderer::renderMetadataFondo(Metadata * item){
 
@@ -461,6 +503,9 @@ void ItemRenderer::render(WorldItem * item, float escala){
 //	std::cout << "el tipo es: " << item->tipo << std::endl;
 
 	switch(item->tipo){
+	case PODERES:
+		renderPoder((poder*)item,escala);
+		break;
 	case CIRCULO:
 		renderCirculo((Circulo*)item, escala);
 		break;

@@ -156,11 +156,13 @@ int main(int argc, char * argv[]){
 				else if (event.key.keysym.sym == SDLK_RIGHT) outMessage = SSTR(DERECHA);
 				else if (event.key.keysym.sym == SDLK_PAGEUP) outMessage = SSTR(ZOOMIN);
 				else if (event.key.keysym.sym == SDLK_PAGEDOWN) outMessage = SSTR(ZOOMOUT);
+				else if (event.key.keysym.sym == SDLK_SPACE) outMessage = SSTR(SPACE);
 				break;
 			case SDL_KEYUP:
 				if (event.key.keysym.sym == SDLK_UP) outMessage = SSTR(SOLTOARRIBA);
 				else if (event.key.keysym.sym == SDLK_LEFT) outMessage = SSTR(SOLTOIZQUIERDA);
 				else if (event.key.keysym.sym == SDLK_RIGHT) outMessage = SSTR(SOLTODERECHA);
+				else if (event.key.keysym.sym == SDLK_SPACE) outMessage = SSTR(SOLTOSPACE);
 				break;
 			}
 

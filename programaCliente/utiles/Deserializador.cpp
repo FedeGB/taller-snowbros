@@ -23,7 +23,7 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 	split(buff, serializado, " ", no_empties);
 	if (buff[0] == "USERNAME") return NULL;
 	worlditem_t type = (worlditem_t) strtol(buff[0].c_str(),NULL,10);
-
+	std::cout<<type;
 	switch (type){
 
 	// Deserializa metadata.
@@ -103,6 +103,17 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 		if( s->sonido == VACIO ) return NULL;
 		std::cout << "sonido recibido: " << s->sonido << '\n';
 		return s;
+	}
+
+	case PODERES:{
+		poder * poderes = new poder();
+		poderes->baseMayor =  (float)atof(buff[4].c_str());
+		//poderes->baseMenor =  (float)atof(buff[5].c_str());
+		poderes->altura =  (float)atof(buff[5].c_str());
+		poderes->activeSprite =  PODER1;
+		item = poderes;
+		break;
+
 	}
 
 	case ENEMIGOESTANDAR:{

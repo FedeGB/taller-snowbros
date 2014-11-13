@@ -63,6 +63,7 @@ private:
 	bool loadCircleTex();
 	bool loadCuadTex();
 	bool inicializado;
+	bool loadSnowBallTex();
 };
 
 #endif /* TEXTUREMAP_H_ */
