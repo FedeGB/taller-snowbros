@@ -226,16 +226,16 @@ void Camera::updateRenderList(){
 
 		// Obtiene la informacion del cuerpo que esta en contacto con la camara.
 		// TODO: sacar estas constantes hardcodeadas.
-		if ( *((int*)(&fixtureAUserData)) != 4 ) body = ce->contact->GetFixtureA()->GetBody();
+		if ( *((int*)(&fixtureAUserData)) != CAMARA ) body = ce->contact->GetFixtureA()->GetBody();
 		else body = ce->contact->GetFixtureB()->GetBody();
 
 		// Saltea los apendices de los personajes.
 		// TODO: sacar estas constantes hardcodeadas.
-		if ( *((int*)(&fixtureAUserData)) == 3 || *((int*)(&fixtureBUserData)) == 3 )
+		if ( *((int*)(&fixtureAUserData)) == PIESPJ || *((int*)(&fixtureBUserData)) == PIESPJ )
 			continue;
 
 		// Saltea las demas camaras.
-		if ( *((int*)(&fixtureAUserData)) == 4 && *((int*)(&fixtureBUserData)) == 4 )
+		if ( *((int*)(&fixtureAUserData)) == CAMARA && *((int*)(&fixtureBUserData)) == CAMARA )
 			continue;
 
 		// Actualiza la posicion y angulo.

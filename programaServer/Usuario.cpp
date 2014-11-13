@@ -46,6 +46,12 @@ void Usuario::procesarNotificaciones(){
 	while ( ( item = desencolarNotificacion() ) != NULL ){
 
 		switch(item->key){
+		case SOLTOSPACE:
+			PJ->eventoSoltoSpace();
+			break;
+		case SPACE:
+			PJ->eventoSpace();
+			break;
 		case ARRIBA:
 			PJ->eventoArriba();
 			break;

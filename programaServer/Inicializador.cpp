@@ -129,7 +129,7 @@ Camera * Inicializador::cameraInit(b2World ** worldB2D, b2Body * pj, ThreadSafeL
     myFixtureDef.isSensor = true;
 
 	b2Fixture * bodyFixture = cameraB2D->CreateFixture(&myFixtureDef);
-	bodyFixture->SetUserData( (void*)4 );
+	bodyFixture->SetUserData( (void*)CAMARA );
 
 	// 0.05f = windowToWorldScale. HARDCODEADO!!!
 	Camera * camera = new Camera(rList, 720, 640, widthWorld, heightWorld, 0.05f);
@@ -213,23 +213,22 @@ Personaje * Inicializador::pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*
 	//costados sin friccion
 	v.x=-halfWidth*0.7;
 	polygon.SetAsBox(halfWidth*0.15, halfHeight*0.7,v,0); //le doy dimensiones
-	myFixtureDef.shape = &polygon; //defino que es un poligono
-	bodyFixture->SetUserData( (void*)0 );
+	myFixtureDef.shape = &polygon; //defino que es un poligono;
 	myFixtureDef.density=0;
 	myFixtureDef.restitution = 0.0f;
 	myFixtureDef.friction=0;
 	b2Fixture* fixture = pjB2D->CreateFixture(&myFixtureDef);
-	fixture->SetUserData( (void*)2 );
+	fixture->SetUserData( (void*)PERSONAJE );
 
 	//costados sin friccion
 	v.x=halfWidth*0.7;
 	polygon.SetAsBox(halfWidth*0.15, halfHeight*0.7,v,0); //le doy dimensiones
 	myFixtureDef.shape = &polygon; //defino que es un poligono
-	bodyFixture->SetUserData( (void*)0 );
+	bodyFixture->SetUserData( (void*)PERSONAJE );
 	myFixtureDef.restitution = 0.0f;
 	myFixtureDef.friction=0;
 	fixture = pjB2D->CreateFixture(&myFixtureDef);
-	fixture->SetUserData( (void*)2 );
+	fixture->SetUserData( (void*)PERSONAJE );
 
 	//pies
 	v.x=0;
@@ -240,7 +239,7 @@ Personaje * Inicializador::pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*
 	myFixtureDef.restitution = 0.0f;
 	myFixtureDef.friction=2.0f;
 	fixture = pjB2D->CreateFixture(&myFixtureDef);
-	fixture->SetUserData( (void*)3 );
+	fixture->SetUserData( (void*)PERSONAJE );
 
     // Agrego el sensor para saltos
     polygon.SetAsBox(halfWidth * 0.3, 0.15f, b2Vec2(0,halfHeight), 0);
@@ -248,7 +247,7 @@ Personaje * Inicializador::pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*
     myFixtureDef.isSensor = true;
 	myFixtureDef.density = 1.0f; //le doy masa
     b2Fixture* footSensorFixture = pjB2D->CreateFixture(&myFixtureDef);
-    footSensorFixture->SetUserData( (void*)3 );
+    footSensorFixture->SetUserData( (void*)PIESPJ );
 
     // Crea la representacion del PJ fuera del mundo de B2D, para manejar su movimiento
     // y datos necesarios para renderizarlo en el cliente.
@@ -414,8 +413,8 @@ b2Body * createObject(std::string data, b2World ** wB2D, int num) {
 		if(myFixtureDef.friction == 0)
 			figura->hielo=true;
 	b2Fixture * shapeFixture = _shape->CreateFixture(&myFixtureDef); //le asigno la forma
-	if (b2dObjDef.type == b2_dynamicBody) shapeFixture->SetUserData((void*) 1);
-	else shapeFixture->SetUserData((void*) 2);
+	if (b2dObjDef.type == b2_dynamicBody) shapeFixture->SetUserData((void*) DINAMICO);
+	else shapeFixture->SetUserData((void*) ESTATICO);
 
 	// Setea los ultimos parametros de la figura y vincula al bodyB2D.
 	figura->posicion.x = b2dObjDef.position.x;
@@ -471,12 +470,12 @@ EnemigoEstandar * createEnemy(std::string data, b2World ** wB2D, int num) {
 		v.x=-halfWidth*0.7;
 		polygon.SetAsBox(halfWidth*0.15, halfHeight*0.7,v,0); //le doy dimensiones
 		myFixtureDef.shape = &polygon; //defino que es un poligono
-		bodyFixture->SetUserData( (void*)0 );
+		bodyFixture->SetUserData( (void*)ENEMIGO );
 		myFixtureDef.density=0;
 		myFixtureDef.restitution = 0.0f;
 		myFixtureDef.friction=0;
 		b2Fixture* fixture = enB2D->CreateFixture(&myFixtureDef);
-		fixture->SetUserData( (void*)2 ); // CAMBIAR ESTA DATA POR NUMEROS UNICOS POR CADA ENEMIGO NUEVO (ATRIBUTO DE CLASE)
+		fixture->SetUserData( (void*)ENEMIGO ); // CAMBIAR ESTA DATA POR NUMEROS UNICOS POR CADA ENEMIGO NUEVO (ATRIBUTO DE CLASE)
 
 		//costados sin friccion
 		v.x=halfWidth*0.7;
@@ -486,7 +485,7 @@ EnemigoEstandar * createEnemy(std::string data, b2World ** wB2D, int num) {
 		myFixtureDef.restitution = 0.0f;
 		myFixtureDef.friction=0;
 		fixture = enB2D->CreateFixture(&myFixtureDef);
-		fixture->SetUserData( (void*)2 );
+		fixture->SetUserData( (void*)ENEMIGO );
 
 		//pies
 		v.x=0;
@@ -497,7 +496,7 @@ EnemigoEstandar * createEnemy(std::string data, b2World ** wB2D, int num) {
 		myFixtureDef.restitution = 0.0f;
 		myFixtureDef.friction=2.0f;
 		fixture = enB2D->CreateFixture(&myFixtureDef);
-		fixture->SetUserData( (void*)3 );
+		fixture->SetUserData( (void*)ENEMIGO );
 
 		// Agrego el sensor para saltos
 	    polygon.SetAsBox(halfWidth * 0.3, 0.15f, b2Vec2(0,halfHeight), 0);
@@ -505,7 +504,7 @@ EnemigoEstandar * createEnemy(std::string data, b2World ** wB2D, int num) {
 	    myFixtureDef.isSensor = true;
 		myFixtureDef.density = 1.0f; //le doy masa
 	    b2Fixture* footSensorFixture = enB2D->CreateFixture(&myFixtureDef);
-	    footSensorFixture->SetUserData( (void*)3 );
+	    footSensorFixture->SetUserData( (void*)PIESPJ );
 	    type = ENEMIGOESTANDAR;
 	} else {
 		std::cout << "No es un tipo reconocible" << std::endl;

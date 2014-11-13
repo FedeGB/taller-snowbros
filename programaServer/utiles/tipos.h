@@ -113,6 +113,7 @@ enum worlditem_t{
 	POLIGONOREGULAR,
 	PJ,
 	STRINGMSG,
+	PODERES,
 	SONIDO,
 	ENEMIGOESTANDAR,
 };
@@ -134,6 +135,7 @@ enum sprite_t{
 	FONDO1,
 	PUNTAJE1,
 	VIDAS1,
+	BOLANIEVE1,
 };
 
 enum sonidos_t{
@@ -144,8 +146,14 @@ enum sonidos_t{
 
 enum sensor_t{
 	PLATAFORMA=0,
+	DINAMICO=1,
+	SOLIDO=2,
 	PIESPJ=3,
 	CAMARA=4,
+	PODERHIELO,
+	ENEMIGO=16,
+	ESTATICO=17,
+	PERSONAJE=18,
 };
 
 #endif /* TIPOS_H_ */

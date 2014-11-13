@@ -12,6 +12,7 @@
 #include "Camera.h"
 #include <SDL2/SDL.h>
 #include "../utiles/tipos.h"
+#include "../modelo/snowball.h"
 
 #include "../modelo/Sonido.h"
 
@@ -44,6 +45,7 @@ public:
 protected:
 	b2Body * bodyB2D;
 
+	int maxpower;
 	int numFootContacts;
 	int animationCounter;
 	bool isRightPressed;

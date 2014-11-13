@@ -86,6 +86,16 @@ void Personaje::update(Sonido* sonido){
 	//std::cout << "su posicion es: " << bodyB2D->GetPosition().x << ", " << bodyB2D->GetPosition().y << std::endl;
 	camera->update();
 
+	if(isSpacePressed && !isAirborne){
+		//TODO : ataque
+		if(maxpower>500){
+			snowball *sw= new snowball(bodyB2D->GetPosition().x,bodyB2D->GetPosition().y,(int)orientation,bodyB2D->GetWorld());
+			maxpower=0;
+		}
+
+	}
+		maxpower++;
+
 	// Determina si el PJ esta en el aire.
 	isAirborne = numFootContacts <= 0 ? true : false;
 

@@ -19,14 +19,24 @@ class ContactListener : public b2ContactListener
 		void* fixtureBUserData = contact->GetFixtureB()->GetUserData();
 		// TODO: sacar estos '3' y '4's y cambiarlos por constantes.
 		if ( *((int*)(&fixtureAUserData)) == PIESPJ ){
-			if ( (*((int*)(&fixtureBUserData)) != CAMARA) )
+			if ( (*((int*)(&fixtureBUserData)) != CAMARA)&&(*((int*)(&fixtureBUserData)) != PODERHIELO) )
 				( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->modifyFootContacts(1);
 		}
 		//check if fixture B was the foot sensor
 		if ( *((int*)(&fixtureBUserData)) == PIESPJ ){
-			if ( (*((int*)(&fixtureAUserData)) != CAMARA) )
+			if ( (*((int*)(&fixtureAUserData)) != CAMARA)&& (*((int*)(&fixtureAUserData)) != PODERHIELO) )
 				( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->modifyFootContacts(1);
 		}
+
+
+		if( *((int*)(&fixtureBUserData)) == PODERHIELO ){
+			if ( *((int*)(&fixtureAUserData)) == ESTATICO  )
+			delete (snowball*) contact->GetFixtureB()->GetBody()->GetUserData();
+		}
+		if( *((int*)(&fixtureAUserData)) == PODERHIELO ){
+			if ( *((int*)(&fixtureBUserData)) == ESTATICO  )
+					delete (snowball*) contact->GetFixtureA()->GetBody()->GetUserData();
+				}
 	}
 
       void EndContact(b2Contact* contact) {
@@ -34,12 +44,12 @@ class ContactListener : public b2ContactListener
     	  void* fixtureAUserData = contact->GetFixtureA()->GetUserData();
     	  void* fixtureBUserData = contact->GetFixtureB()->GetUserData();
           if ( *((int*)(&fixtureAUserData)) == PIESPJ ){
-        	  if ( (*((int*)(&fixtureBUserData)) != CAMARA) )
+        	  if ((*((int*)(&fixtureBUserData)) != CAMARA)&&(*((int*)(&fixtureBUserData)) != PODERHIELO))
         		  ( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->modifyFootContacts(-1);
           }
           //check if fixture B was the foot sensor
           if ( *((int*)(&fixtureBUserData)) == PIESPJ ){
-        	  if ( (*((int*)(&fixtureAUserData)) != CAMARA) )
+        	  if ( (*((int*)(&fixtureAUserData)) != CAMARA)&&(*((int*)(&fixtureAUserData)) != PODERHIELO))
         		  ( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->modifyFootContacts(-1);
           }
       }
