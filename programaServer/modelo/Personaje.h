@@ -55,6 +55,7 @@ protected:
 	bool isJumping;
 	bool isAirborne;
 	bool isMoving;
+	bool isThrowing;
 
 	enum orientation_t{
 		LEFT,
