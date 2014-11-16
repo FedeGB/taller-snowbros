@@ -198,6 +198,26 @@ Vertexes * obtenerVerticesPJ(sprite_t activeSprite){
 		vertexes->y[2] = vertexes->y[3] = 35 / 320.0f;
 	}
 
+	if (activeSprite == TIRANDOIZQUIERDA1){
+			vertexes->x[0] = vertexes->x[3] = 8 / 432.0f;
+			vertexes->y[0] = vertexes->y[1] = 51 / 320.0f;
+			vertexes->x[1] = vertexes->x[2] = 30 / 432.0f;
+			vertexes->y[2] = vertexes->y[3] = 80 / 320.0f;
+		}
+
+	if (activeSprite == TIRANDOIZQUIERDA2){
+				vertexes->x[0] = vertexes->x[3] = 37 / 432.0f;
+				vertexes->y[0] = vertexes->y[1] = 46 / 320.0f;
+				vertexes->x[1] = vertexes->x[2] = 60 / 432.0f;
+				vertexes->y[2] = vertexes->y[3] = 76 / 320.0f;
+			}
+
+	if (activeSprite == TIRANDOIZQUIERDA3){
+				vertexes->x[0] = vertexes->x[3] = 72 / 432.0f;
+				vertexes->y[0] = vertexes->y[1] = 49 / 320.0f;
+				vertexes->x[1] = vertexes->x[2] = 101 / 432.0f;
+				vertexes->y[2] = vertexes->y[3] = 76 / 320.0f;
+			}
 	return vertexes;
 }
 Vertexes * obtenerVerticesPoder(sprite_t activeSprite){
