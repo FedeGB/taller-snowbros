@@ -30,14 +30,13 @@ bool WorldHandler::loopPrincipal() {
 		float freq =600.0f;
 		for (ControladorUsuarios::iterator it=controlador.begin(); it!=controlador.end(); ++it){
 			if ((*it).second && (*it).second->online) {
-				//std::cout << "HOLLAA";
 				count++;
 			}
 		}
 		if(count > 0) {
-			army.strategy(true);
+			army.strategy(worldB2D, controlador);
 		} else {
-			army.strategy(false);
+			army.strategy(NULL, controlador);
 		}
 		if(count == 1)
 			freq = 20000.0f;
@@ -65,11 +64,13 @@ bool WorldHandler::loopPrincipal() {
 			// Saltea al usuario si este no esta conectado.
 			if (!(*it).second->online) continue;
 
+
 			// Inicializa al PJ del usuario si este todavia no lo fue.
 			if (!(*it).second->inicializado) (*it).second->inicializarPJ(worldB2D, configFile);
-
-			(*it).second->procesarNotificaciones();
-			(*it).second->actualizarPJ();
+			if( (*it).second->isPJAlive()) {
+				(*it).second->procesarNotificaciones();
+				(*it).second->actualizarPJ();
+			}
 			//(*it).second->esperarSenial();
 			//usleep(20000);
 		}

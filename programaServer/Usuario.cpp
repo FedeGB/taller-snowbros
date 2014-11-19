@@ -6,6 +6,7 @@
  */
 
 #include "Usuario.h"
+#include "Inicializador.h"
 
 Usuario::Usuario() {
 	online = true;
@@ -150,4 +151,12 @@ void Usuario::actualizarPJ(){
 void Usuario::setOnline(bool estado){
 	this->online= estado;
 	this->PJ->online= estado;
+}
+
+b2Vec2 Usuario::getPosition() {
+	return this->PJ->posicion;
+}
+
+bool Usuario::isPJAlive() {
+	return this->PJ->isAlive();
 }

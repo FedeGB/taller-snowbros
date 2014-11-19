@@ -481,7 +481,7 @@ EnemigoEstandar * createEnemy(std::string data, b2World ** wB2D, int num) {
 		v.x=halfWidth*0.7;
 		polygon.SetAsBox(halfWidth*0.15, halfHeight*0.7,v,0); //le doy dimensiones
 		myFixtureDef.shape = &polygon; //defino que es un poligono
-		bodyFixture->SetUserData( (void*)0 );
+		bodyFixture->SetUserData( (void*)ENEMIGO );
 		myFixtureDef.restitution = 0.0f;
 		myFixtureDef.friction=0;
 		fixture = enB2D->CreateFixture(&myFixtureDef);
@@ -496,7 +496,7 @@ EnemigoEstandar * createEnemy(std::string data, b2World ** wB2D, int num) {
 		myFixtureDef.restitution = 0.0f;
 		myFixtureDef.friction=2.0f;
 		fixture = enB2D->CreateFixture(&myFixtureDef);
-		fixture->SetUserData( (void*)ENEMIGO );
+		fixture->SetUserData( (void*)PIESEN  );
 
 		// Agrego el sensor para saltos
 	    polygon.SetAsBox(halfWidth * 0.3, 0.15f, b2Vec2(0,halfHeight), 0);
@@ -504,7 +504,7 @@ EnemigoEstandar * createEnemy(std::string data, b2World ** wB2D, int num) {
 	    myFixtureDef.isSensor = true;
 		myFixtureDef.density = 1.0f; //le doy masa
 	    b2Fixture* footSensorFixture = enB2D->CreateFixture(&myFixtureDef);
-	    footSensorFixture->SetUserData( (void*)PIESPJ );
+	    footSensorFixture->SetUserData( (void*)PIESEN );
 	    type = ENEMIGOESTANDAR;
 	} else {
 		std::cout << "No es un tipo reconocible" << std::endl;

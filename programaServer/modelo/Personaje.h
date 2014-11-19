@@ -25,6 +25,8 @@ public:
 	void setB2DBody(b2Body * pjB2D);
 	void modifyFootContacts(int i);
 	void setNewAngle(float32 a);
+	virtual bool isAlive();
+	virtual void applyDamage(float);
 
 	// metodos de INotificable
 	virtual void eventoArriba();
@@ -56,6 +58,8 @@ protected:
 	bool isAirborne;
 	bool isMoving;
 	bool isThrowing;
+	bool isSpacePressed;
+	float vida;
 
 	enum orientation_t{
 		LEFT,
@@ -67,7 +71,6 @@ protected:
 	sprite_t activeSprite;
 
 private:
-	bool isSpacePressed;
 	bool canKick;
 };
 

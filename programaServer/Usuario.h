@@ -15,7 +15,6 @@
 #include "modelo/WorldItem.h"
 #include "modelo/Personaje.h"
 #include "utiles/tipos.h"
-#include "Inicializador.h"
 #include <Box2D/Box2D.h>
 
 #include "modelo/Sonido.h"
@@ -65,6 +64,10 @@ public:
 	void actualizarPJ();
 
 	void setOnline(bool estado);
+
+	b2Vec2 getPosition();
+
+	bool isPJAlive();
 
 private:
 	ColaTrabajo<WorkItem*>  colaNotificaciones;

@@ -24,6 +24,7 @@ Personaje::Personaje(){
 	isThrowing = false;
 	camera = NULL;
 	online = true;
+	vida = 5;
 }
 
 Personaje::~Personaje() {}
@@ -83,8 +84,7 @@ std::string Personaje::serializar(){
 
 void Personaje::update(Sonido* sonido){
 
-	//std::cout << "estoy updateando el PJ" << std::endl;
-	//std::cout << "su posicion es: " << bodyB2D->GetPosition().x << ", " << bodyB2D->GetPosition().y << std::endl;
+
 	camera->update();
 	if(isSpacePressed && !isAirborne){
 		//TODO : ataque
@@ -97,6 +97,9 @@ void Personaje::update(Sonido* sonido){
 	}
 		maxpower++;
 
+	if(!this->isAlive()) {
+		activeSprite = PARADOIZQUIERDA;
+	}
 	// Determina si el PJ esta en el aire.
 	isAirborne = numFootContacts <= 0 ? true : false;
 
@@ -233,7 +236,14 @@ void Personaje::update(Sonido* sonido){
 	if(bodyB2D->GetLinearVelocity().y>1 && numFootContacts < 1 ){
 		 activeSprite = SALTANDOIZQUIERDA5;
 	}
+}
 
+bool Personaje::isAlive() {
+	return (vida > 0.0f);
+}
+
+void Personaje::applyDamage(float dmg) {
+	vida -= dmg;
 }
 
 

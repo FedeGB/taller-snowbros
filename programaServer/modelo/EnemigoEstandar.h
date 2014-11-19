@@ -16,7 +16,16 @@ public:
 	virtual ~EnemigoEstandar();
 	virtual std::string serializar();
 	virtual void update();
+	virtual void eventoAbajo();
+	virtual void eventoSoltoAbajo();
+	virtual bool isRestricted(teclas_t);
+
 	int enemyNumber;
+
+protected:
+	bool isDownPressed;
+	bool isOnPlataform;
+
 };
 
 

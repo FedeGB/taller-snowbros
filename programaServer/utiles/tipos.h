@@ -159,6 +159,7 @@ enum sensor_t{
 	ENEMIGO=16,
 	ESTATICO=17,
 	PERSONAJE=18,
+	PIESEN,
 };
 
 #endif /* TIPOS_H_ */

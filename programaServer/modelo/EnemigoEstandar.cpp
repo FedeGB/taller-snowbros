@@ -12,6 +12,7 @@ EnemigoEstandar::EnemigoEstandar(int number){
 	bodyB2D = NULL;
 	numFootContacts = 0;
 	isUpPressed = false;
+	isDownPressed = false;
 	isLeftPressed = false;
 	isRightPressed = false;
 	wasLeftPressed1st = false;
@@ -22,9 +23,11 @@ EnemigoEstandar::EnemigoEstandar(int number){
 	isJumping = 0;
 	isAirborne = false;
 	isMoving = false;
+	isOnPlataform = false;
 	camera = NULL;
 	online = true;
 	enemyNumber = number;
+	vida = 10;
 }
 
 EnemigoEstandar::~EnemigoEstandar() {};
@@ -43,14 +46,20 @@ void EnemigoEstandar::update(){
 	isAirborne = numFootContacts <= 0 ? true : false;
 
 	// Determina, si esta saltando, si ya termino el salto.
-	if (!isAirborne) isJumping = false;
+	if (!isAirborne) {
+		isJumping = false;
+		if(isDownPressed /*&& isOnPlataform*/) {
+			// TODO: En ContactListener falta contacto con plataformas
+			bodyB2D->SetType(b2_kinematicBody);
+		}
+	}
 
 	float32 desiredVel = 0, scale = 0;
 
 	// Se mueve a la izquierda.
 	if (isLeftPressed && wasLeftPressed1st){
 		orientation = LEFT;
-		desiredVel = -14;                         //// VERIFICAR QUE CUANDO ESTE SALTANDO NO CAMBIE LA VELOCIDAD EN Y!! ! ! ! ! ! !  11 1 1 1 1 one one one
+		desiredVel = -7;                         //// VERIFICAR QUE CUANDO ESTE SALTANDO NO CAMBIE LA VELOCIDAD EN Y!! ! ! ! ! ! !  11 1 1 1 1 one one one
 		if (angulo <= 180 * DEGTORAD) scale = 0.33;
 		else scale = 3;
 		isMoving = true;
@@ -59,7 +68,7 @@ void EnemigoEstandar::update(){
 	// Se mueve a la derecha.
 	if (isRightPressed && !wasLeftPressed1st){
 		orientation = RIGHT;
-		desiredVel = 14;
+		desiredVel = 7;
 		scale = 4;
 		if (angulo <= 180 * DEGTORAD) scale = 3;
 		else scale = 0.33;
@@ -90,7 +99,7 @@ void EnemigoEstandar::update(){
 	// Si se recibio UP y el personaje esta en el piso, salta.
 	if (isUpPressed && (!isAirborne)){
 		b2Vec2 vel = bodyB2D->GetLinearVelocity();
-		float desiredVel = -20;
+		float desiredVel = -19;
 		float velChange = desiredVel - vel.y;
 		float impulse = bodyB2D->GetMass() * velChange;
 		bodyB2D->ApplyLinearImpulse( b2Vec2(0,impulse), bodyB2D->GetWorldCenter(), true);
@@ -152,5 +161,31 @@ void EnemigoEstandar::update(){
 		 activeSprite = SALTANDOIZQUIERDA5;
 	}
 
+}
+
+
+void EnemigoEstandar::eventoAbajo() {
+	isDownPressed = true;
+}
+
+void EnemigoEstandar::eventoSoltoAbajo() {
+	isDownPressed = false;
+}
+
+bool EnemigoEstandar::isRestricted(teclas_t action) {
+	if(action == ARRIBA) {
+		if(isDownPressed || isAirborne) {
+			return true;
+		}
+		return false;
+	}
+	if(action == ABAJO) {
+		if(isUpPressed || isAirborne) {
+			return true;
+		}
+		return false;
+	}
+	// TODO: More restrictions
+	return false;
 }
 

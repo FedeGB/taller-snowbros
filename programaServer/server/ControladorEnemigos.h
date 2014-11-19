@@ -8,21 +8,25 @@
 #ifndef CONTROLADORENEMIGOS_H_
 #define CONTROLADORENEMIGOS_H_
 
-#include <map>
+#define RADMIN 50.0f
+
 #include "../modelo/EnemigoEstandar.h"
-#include "../utiles/tipos.h"
-#include "../threads/ColaTrabajo.h"
+#include "../ControladorUsuarios.h"
+
 
 class ControladorEnemigos: public map <int, EnemigoEstandar*> {
 public:
 	ControladorEnemigos();
 	~ControladorEnemigos();
 	void controlUnit(EnemigoEstandar*);
-	void strategy(bool);
+	void strategy(b2World*, ControladorUsuarios PJs);
+
 	void update(bool);
 
 private:
-	void standarStrategy(EnemigoEstandar*);
+	void standarStrategy(EnemigoEstandar* unit, b2World* world, ControladorUsuarios PJs);
+	b2Vec2 closerPJ(b2World* world, b2Vec2 unit, ControladorUsuarios PJs);
+	teclas_t getAction(b2Vec2 unit, b2Vec2 enemy, b2World* world);
 };
 
 
