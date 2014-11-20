@@ -157,6 +157,7 @@ int main(int argc, char * argv[]){
 				else if (event.key.keysym.sym == SDLK_PAGEUP) outMessage = SSTR(ZOOMIN);
 				else if (event.key.keysym.sym == SDLK_PAGEDOWN) outMessage = SSTR(ZOOMOUT);
 				else if (event.key.keysym.sym == SDLK_SPACE) outMessage = SSTR(SPACE);
+				else if (event.key.keysym.sym == SDLK_a) outMessage = SSTR(a);
 				break;
 			case SDL_KEYUP:
 				if (event.key.keysym.sym == SDLK_UP) outMessage = SSTR(SOLTOARRIBA);

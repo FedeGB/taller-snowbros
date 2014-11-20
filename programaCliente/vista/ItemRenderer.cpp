@@ -231,6 +231,19 @@ Vertexes * obtenerVerticesPoder(sprite_t activeSprite){
 		}
 		return vertexes;
 }
+
+Vertexes * obtenerVerticesSorpresa(sprite_t activeSprite){
+	Vertexes * vertexes = new Vertexes(4);
+
+		if (activeSprite == SORPRESA1){
+			vertexes->x[0] = vertexes->x[3] = 175 / 428.0f;
+			vertexes->y[0] = vertexes->y[1] = 275 / 365.0f;
+			vertexes->x[1] = vertexes->x[2] = 182 / 428.0f;
+			vertexes->y[2] = vertexes->y[3] = 287 / 365.0f;
+		}
+		return vertexes;
+}
+
 Vertexes * obtenerVerticesEnemigo1(sprite_t activeSprite){
 
 	Vertexes * vertexes = new Vertexes(4);
@@ -405,7 +418,38 @@ void ItemRenderer::renderPoder(poder * item,float escala){
 		TaV->tex->dibujar(vx, vy, vert->x, vert->y, 4);
 
 		delete vert;
+}
 
+void ItemRenderer::renderSorpresa(Sorpresa * item,float escala){
+
+		GLfloat vx[4];
+		GLfloat vy[4];
+
+		// Flippea la imagen si es necesario.
+//		if (item->orientation == Personaje::LEFT){
+//			vx[0] = vx[3] = (item->posicion.x - item->baseMayor / 2) * escala;
+//			vy[0] = vy[1] = (item->posicion.y - item->altura / 2) * escala;
+//			vx[1] = vx[2] = vx[0] + item->baseMayor * escala;
+//			vy[2] = vy[3] = vy[0] + item->altura * escala;
+//		} else {
+			vx[1] = vx[2] = (item->posicion.x - item->baseMayor / 2) * escala;
+			vy[0] = vy[1] = (item->posicion.y - item->altura / 2) * escala;
+			vx[0] = vx[3] = vx[1] + item->baseMayor * escala;
+			vy[2] = vy[3] = vy[0] + item->altura * escala;
+//		}
+
+		// Obtiene los vertices del sprite.
+		Vertexes * vert = obtenerVerticesSorpresa(SORPRESA1);
+		//Vertexes * vert = obtenerVerticesPoder(PODER1);
+
+		// Obtiene la textura y su correspondiente rect para renderear.
+		TexAndVertexes * TaV = textureMap[SORPRESA1];
+
+		// Si esta no esta conectado, se cambia el color a gris.
+		// Renderea.
+		TaV->tex->dibujar(vx, vy, vert->x, vert->y, 4);
+
+		delete vert;
 }
 
 // Dibuja la metadata del juego: fondo.
@@ -553,6 +597,8 @@ void ItemRenderer::render(WorldItem * item, float escala){
 		break;
 	case SONIDO:
 		renderSonido((Sonido*) item);
+	case SORPRESA:
+		renderSorpresa((Sorpresa*) item, escala);
 	}
 }
 

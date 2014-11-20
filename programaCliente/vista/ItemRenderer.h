@@ -23,6 +23,8 @@
 
 #include "SonidosMap.h"
 
+#include "../modelo/Sorpresa.h"
+
 class ItemRenderer {
 public:
 	ItemRenderer();
@@ -46,6 +48,8 @@ private:
 
 	static SonidosMap sonidosMap;
 	static void renderSonido(Sonido * item);
+
+	static void renderSorpresa(Sorpresa*, float);
 };
 
 #endif /* ITEMRENDERER_H_ */

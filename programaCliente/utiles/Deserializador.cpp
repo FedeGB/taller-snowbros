@@ -23,7 +23,7 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 	split(buff, serializado, " ", no_empties);
 	if (buff[0] == "USERNAME") return NULL;
 	worlditem_t type = (worlditem_t) strtol(buff[0].c_str(),NULL,10);
-	std::cout<<type;
+	//std::cout<<type;
 	switch (type){
 
 	// Deserializa metadata.
@@ -125,7 +125,17 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 		en->orientation = (Personaje::orientation_t) strtol(buff[7].c_str(),NULL,10);
 		item = en;
 		break;
+	}
 
+	case SORPRESA:{
+		Sorpresa * sorpresa = new Sorpresa();
+		sorpresa->baseMayor =  (float)atof(buff[4].c_str());
+		sorpresa->altura =  (float)atof(buff[5].c_str());
+
+		sorpresa->activeSprite = (sprite_t) strtol(buff[6].c_str(),NULL,10);
+		//en->orientation = (Personaje::orientation_t) strtol(buff[7].c_str(),NULL,10);
+		item = sorpresa;
+		break;
 	}
 
 	default: return NULL;

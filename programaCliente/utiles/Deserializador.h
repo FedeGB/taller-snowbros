@@ -19,6 +19,7 @@
 #include "../modelo/formas/PoligonoRegular.h"
 
 #include "../modelo/Sonido.h"
+#include "../modelo/Sorpresa.h"
 
 class Deserializador {
 public:
