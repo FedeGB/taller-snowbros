@@ -15,6 +15,7 @@
 #include "../modelo/snowball.h"
 
 #include "../modelo/Sonido.h"
+#include "../modelo/Sorpresa.h"
 
 
 class Personaje : public Cuadrilatero {
@@ -27,6 +28,7 @@ public:
 	void setNewAngle(float32 a);
 	virtual bool isAlive();
 	virtual void applyDamage(float);
+	virtual void aplicarSorpresa(Sorpresa*);
 
 	// metodos de INotificable
 	virtual void eventoArriba();
@@ -37,6 +39,8 @@ public:
 	virtual void eventoSoltoIzquierda();
 	virtual void eventoSpace();
 	virtual void eventoSoltoSpace();
+
+	virtual void eventoa();
 
 	virtual void update(Sonido*);
 	virtual std::string serializar();

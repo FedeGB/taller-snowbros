@@ -56,37 +56,6 @@ Container& split( Container& result, const typename Container::value_type& s,
   return result;
 }
 
-class Tamano {
-public:
-	Tamano();
-	inline Tamano(int alto, int ancho) : tAlto(alto) , tAncho(ancho) {};
-	virtual ~Tamano(){};
-
-	inline int alto(){
-		return tAlto;
-	}
-
-	inline void alto(int a){
-		tAlto = a;
-	}
-
-	inline int ancho(){
-		return tAncho;
-	}
-
-	inline void ancho(int a){
-		tAncho = a;
-	}
-
-	inline void operator=(Tamano otroTamano){
-		tAlto = otroTamano.alto();
-		tAncho = otroTamano.ancho();
-	}
-
-private:
-	int tAlto, tAncho;
-};
-
 enum teclas_t{
 	ARRIBA,
 	ABAJO,
@@ -103,6 +72,7 @@ enum teclas_t{
 	SOLTOZOOMIN,
 	SOLTOZOOMOUT,
 	RESTART,
+	a,
 };
 
 enum worlditem_t{
@@ -116,6 +86,7 @@ enum worlditem_t{
 	PODERES,
 	SONIDO,
 	ENEMIGOESTANDAR,
+	SORPRESA,
 };
 
 enum sprite_t{
@@ -141,6 +112,7 @@ enum sprite_t{
 	TIRANDOIZQUIERDA1,
 	TIRANDOIZQUIERDA2,
 	TIRANDOIZQUIERDA3,
+	SORPRESA1,
 };
 
 enum sonidos_t{
@@ -160,6 +132,7 @@ enum sensor_t{
 	ESTATICO=17,
 	PERSONAJE=18,
 	PIESEN,
+	sensorSORPRESA,
 };
 
 #endif /* TIPOS_H_ */

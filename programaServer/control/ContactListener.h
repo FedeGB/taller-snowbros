@@ -53,6 +53,29 @@ class ContactListener : public b2ContactListener
 			if ( *((int*)(&fixtureBUserData)) == ESTATICO  )
 				delete (snowball*) contact->GetFixtureA()->GetBody()->GetUserData();
 		}
+
+		// colision entre las sorpresas y el pj
+		if( *((int*)(&fixtureBUserData)) == sensorSORPRESA ){
+			if ( *((int*)(&fixtureAUserData)) == PERSONAJE || *((int*)(&fixtureAUserData)) == PIESPJ ) {
+				if(( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->isAlive()) {
+					Sorpresa* sorpresa = (Sorpresa*) contact->GetFixtureB()->GetBody()->GetUserData();
+
+					( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->aplicarSorpresa(sorpresa);
+
+				}
+			}
+		}
+
+		if( *((int*)(&fixtureAUserData)) == sensorSORPRESA ){
+			if ( *((int*)(&fixtureBUserData)) == PERSONAJE || *((int*)(&fixtureBUserData)) == PIESPJ ) {
+				if(( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->isAlive()) {
+					Sorpresa* sorpresa = (Sorpresa*) contact->GetFixtureA()->GetBody()->GetUserData();
+
+					( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->aplicarSorpresa(sorpresa);
+
+				}
+			}
+		}
 	}
 
       void EndContact(b2Contact* contact) {

@@ -77,6 +77,9 @@ void Usuario::procesarNotificaciones(){
 		case ZOOMOUT:
 			PJ->camera->eventoZoomOut();
 			break;
+		case a:
+			PJ->eventoa();
+			break;
 		}
 		delete(item);
 	}

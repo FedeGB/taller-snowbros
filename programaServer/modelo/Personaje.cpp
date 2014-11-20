@@ -246,4 +246,14 @@ void Personaje::applyDamage(float dmg) {
 	vida -= dmg;
 }
 
+void Personaje::eventoa(){
+	b2World * mundo = bodyB2D->GetWorld();
+
+	Sorpresa* sorpresa = new Sorpresa();
+	sorpresa->agregarAMundo(10, 10, mundo);
+}
+
+void Personaje::aplicarSorpresa(Sorpresa* sorpresa){
+	printf("APLICADAAAA\n");
+}
 
