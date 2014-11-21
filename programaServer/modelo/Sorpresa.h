@@ -15,8 +15,11 @@ public:
 	Sorpresa(){
 		activeSprite = SORPRESA1;
 		cuerpoB2D = NULL;
+		toDelete = false;
 	}
-	virtual ~Sorpresa(){}
+	virtual ~Sorpresa(){
+		this->cuerpoB2D->GetWorld()->DestroyBody(this->cuerpoB2D);
+	}
 
 	sprite_t activeSprite;
 
@@ -49,10 +52,19 @@ public:
 		cuerpoB2D->SetUserData(this);
 	}
 
+	void setDelete(){
+		toDelete = true;
+	}
+
+	bool forDelete(){
+		return toDelete;
+	}
+
 protected:
 
 	b2Body* cuerpoB2D;
 
+	bool toDelete;
 
 	virtual void aplicarSorpresaAlPJ(){}
 

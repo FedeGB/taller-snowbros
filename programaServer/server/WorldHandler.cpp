@@ -55,6 +55,19 @@ bool WorldHandler::loopPrincipal() {
 		// Clean powers (bodies) from world
 		//this->cleanPowers();
 
+//		int j = 0;
+//		for(b2Body* cuerpo = worldB2D->GetBodyList(); cuerpo; cuerpo = cuerpo->GetNext() ){
+//			WorldItem* item = (WorldItem*) cuerpo->GetUserData();
+//			worlditem_t tipo = *(worlditem_t*) &item->tipo;
+//			//int tipo = (int) t;
+//			if( item->eliminado )
+//				printf("j: %i eliminado tipo: %i\n", j, tipo);
+//			else
+//				printf("j: %i noooo eliminado tipo: %i tipoPJ: %i\n", j, tipo, PJ);
+//			j++;
+//		}
+
+
 		// Updatea enemigos
 		if(count > 0) {
 			army.update(true);
@@ -93,6 +106,11 @@ void WorldHandler::cleanPowers() {
 		if( *((int*)(&fixData)) == PODERHIELO) {
 			if( ( (snowball*) body->GetUserData() )->forDelete() ){
 				delete ((snowball*) body->GetUserData());
+			}
+		}
+		if( *((int*)(&fixData)) == sensorSORPRESA) {
+			if( ( (Sorpresa*) body->GetUserData() )->forDelete() ){
+				delete ((Sorpresa*) body->GetUserData());
 			}
 		}
 		body = body->GetNext();
