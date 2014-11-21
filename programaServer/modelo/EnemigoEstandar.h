@@ -25,8 +25,10 @@ public:
 	virtual bool trapped();
 
 	int enemyNumber;
+	sprite_t spriteStun;
 
 protected:
+
 	bool isDownPressed;
 	bool isOnPlataform;
 	bool isOnBorder;

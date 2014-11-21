@@ -18,6 +18,7 @@ EnemigoEstandar::EnemigoEstandar(int number){
 	wasLeftPressed1st = false;
 	orientation = LEFT;
 	activeSprite = PARADOIZQUIERDA;
+	spriteStun= STUN0;
 	animationCounter = 0;
 	angulo = 0;
 	isJumping = 0;
@@ -41,13 +42,18 @@ std::string EnemigoEstandar::serializar(){
 	std::string buffer;
 	buffer = SSTR(ENEMIGOESTANDAR << " " << posicion.x << " " << posicion.y << " "
 			<< angulo << "  " << baseMayor << " " << altura << " "
-			<< activeSprite << " " << orientation);
+			<< activeSprite << " " << orientation<<" "<<spriteStun);
 	return buffer;
 }
 
 void EnemigoEstandar::update(){
 	// Determina si esta en el aire.
 	isAirborne = numFootContacts <= 0 ? true : false;
+	if(vida==0) spriteStun=STUN0;
+	else if(vida<=3) spriteStun=STUN3;
+	else if(vida<=6) spriteStun=STUN2;
+	else if(vida<10) spriteStun=STUN1;
+	else if(vida==10) spriteStun=STUN0;
 
 	if(isFrozzen){
 		stunCounter++;

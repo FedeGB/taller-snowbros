@@ -116,6 +116,10 @@ enum sprite_t{
 	ATRAPADO1,
 	ATRAPADO2,
 	CONGELADO,
+	STUN0,
+	STUN1,
+	STUN2,
+	STUN3,
 };
 
 enum sonidos_t{
