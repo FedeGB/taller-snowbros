@@ -25,7 +25,7 @@ bool TextureMap::init(){
 	if (!loadCircleTex()) return false;
 	if (!loadCuadTex()) return false;
 	if (!loadSnowBallTex()) return false;
-	if (!loadSorpresaTex()) return false;
+	if (!loadSorpresasTex()) return false;
 	inicializado = true;
 	return true;
 }
@@ -152,7 +152,7 @@ bool TextureMap::loadSnowBallTex(){
 		return true;
 }
 
-bool TextureMap::loadSorpresaTex(){
+bool TextureMap::loadSorpresasTex(){
 	// TODO: sacar hardcodeo del path de imagen.
 		Textura * tex = new Textura();
 		if (!tex) {
@@ -168,7 +168,7 @@ bool TextureMap::loadSorpresaTex(){
 		temp->vertexes->x[1] = temp->vertexes->x[2] = 183 / 428.0f;
 		temp->vertexes->y[2] = temp->vertexes->y[3] = 287 / 365.0f;
 		temp->tex = tex;
-		(*this)[SORPRESA1] = temp;
+		(*this)[SORPRESAvida] = temp;
 
 		return true;
 }

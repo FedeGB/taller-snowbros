@@ -13,7 +13,7 @@
 class Sorpresa: public Cuadrilatero {
 public:
 	Sorpresa(){
-		activeSprite = SORPRESA1;
+		activeSprite = SORPRESAvida;
 		cuerpoB2D = NULL;
 	}
 	virtual ~Sorpresa(){}

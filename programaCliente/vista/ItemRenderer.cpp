@@ -235,11 +235,29 @@ Vertexes * obtenerVerticesPoder(sprite_t activeSprite){
 Vertexes * obtenerVerticesSorpresa(sprite_t activeSprite){
 	Vertexes * vertexes = new Vertexes(4);
 
-		if (activeSprite == SORPRESA1){
+		if (activeSprite == SORPRESAvida){
 			vertexes->x[0] = vertexes->x[3] = 175 / 428.0f;
 			vertexes->y[0] = vertexes->y[1] = 275 / 365.0f;
 			vertexes->x[1] = vertexes->x[2] = 182 / 428.0f;
 			vertexes->y[2] = vertexes->y[3] = 287 / 365.0f;
+		}
+		if (activeSprite == SORPRESAcorrer){
+			vertexes->x[0] = vertexes->x[3] = 175 / 428.0f;
+			vertexes->y[0] = vertexes->y[1] = 289 / 365.0f;
+			vertexes->x[1] = vertexes->x[2] = 182 / 428.0f;
+			vertexes->y[2] = vertexes->y[3] = 299 / 365.0f;
+		}
+		if (activeSprite == SORPRESAnieveLejos){
+			vertexes->x[0] = vertexes->x[3] = 164 / 428.0f;
+			vertexes->y[0] = vertexes->y[1] = 285 / 365.0f;
+			vertexes->x[1] = vertexes->x[2] = 172 / 428.0f;
+			vertexes->y[2] = vertexes->y[3] = 295 / 365.0f;
+		}
+		if (activeSprite == SORPRESAnieveMasPotente){
+			vertexes->x[0] = vertexes->x[3] = 153 / 428.0f;
+			vertexes->y[0] = vertexes->y[1] = 300 / 365.0f;
+			vertexes->x[1] = vertexes->x[2] = 161 / 428.0f;
+			vertexes->y[2] = vertexes->y[3] = 311 / 365.0f;
 		}
 		return vertexes;
 }
@@ -493,11 +511,11 @@ void ItemRenderer::renderSorpresa(Sorpresa * item,float escala){
 //		}
 
 		// Obtiene los vertices del sprite.
-		Vertexes * vert = obtenerVerticesSorpresa(SORPRESA1);
+		Vertexes * vert = obtenerVerticesSorpresa(item->activeSprite);
 		//Vertexes * vert = obtenerVerticesPoder(PODER1);
 
 		// Obtiene la textura y su correspondiente rect para renderear.
-		TexAndVertexes * TaV = textureMap[SORPRESA1];
+		TexAndVertexes * TaV = textureMap[SORPRESAvida];
 
 		// Si esta no esta conectado, se cambia el color a gris.
 		// Renderea.
