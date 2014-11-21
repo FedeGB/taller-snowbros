@@ -78,7 +78,7 @@ void Usuario::procesarNotificaciones(){
 			PJ->camera->eventoZoomOut();
 			break;
 		case a:
-			PJ->eventoa();
+			eventoa();
 			break;
 		}
 		delete(item);
@@ -162,4 +162,21 @@ b2Vec2 Usuario::getPosition() {
 
 bool Usuario::isPJAlive() {
 	return this->PJ->isAlive();
+}
+
+void Usuario::eventoa(){
+	b2World * mundo = PJ->getMundo();
+
+	Sorpresa* sorpresa;
+
+	int tipo_sorpresa = rand() % 4;
+	switch( tipo_sorpresa ){
+
+	case 0: sorpresa= new SorpresaVida(); break;
+	case 1: sorpresa= new SorpresaCorrer(); break;
+	case 2: sorpresa= new SorpresaNieveMasLejos(); break;
+	case 3: sorpresa= new SorpresaNieveMasPotente(); break;
+	}
+
+	sorpresa->agregarAMundo(10, 10, mundo);
 }

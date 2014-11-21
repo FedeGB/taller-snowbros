@@ -13,8 +13,8 @@
 #include <SDL2/SDL.h>
 #include "../utiles/tipos.h"
 #include "../modelo/snowball.h"
-#include "../modelo/Sorpresa.h"
 #include "../modelo/Sonido.h"
+
 
 class Personaje : public Cuadrilatero {
 public:
@@ -26,7 +26,13 @@ public:
 	void setNewAngle(float32 a);
 	virtual bool isAlive();
 	virtual void applyDamage(float);
-	virtual void aplicarSorpresa(Sorpresa*);
+
+	virtual void agregarVida();
+	virtual void correrMasRapido();
+	virtual void nieveMasLejos();
+	virtual void nieveMasPotente();
+
+	virtual b2World * getMundo();
 
 	// metodos de INotificable
 	virtual void eventoArriba();
@@ -38,7 +44,7 @@ public:
 	virtual void eventoSpace();
 	virtual void eventoSoltoSpace();
 
-	virtual void eventoa();
+	//virtual void eventoa();
 
 	virtual void update(Sonido*);
 	virtual std::string serializar();

@@ -44,7 +44,7 @@ snowball::snowball(float32 posx,float32 posy,int orientation,b2World * world, fl
 			poder->SetLinearVelocity(b2Vec2(15.0f,-2.0f));
 		toDelete = false;
 		dmg = damage;
-		std::cout<<dmg;
+		std::cout<< "snowball constructor:" << dmg << '\n';
 		poder->SetUserData(this);
 		hasAtacked=false;
 

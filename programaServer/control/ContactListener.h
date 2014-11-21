@@ -10,6 +10,7 @@
 
 #include <Box2D/Box2D.h>
 #include "../modelo/EnemigoEstandar.h"
+#include "../modelo/Sorpresa.h"
 
 class ContactListener : public b2ContactListener
   {
@@ -80,7 +81,8 @@ class ContactListener : public b2ContactListener
 				if(( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->isAlive()) {
 					Sorpresa* sorpresa = (Sorpresa*) contact->GetFixtureB()->GetBody()->GetUserData();
 					sorpresa->setDelete();
-					( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->aplicarSorpresa(sorpresa);
+					sorpresa->aplicarAlPJ( ( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() ) );
+					//( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->aplicarSorpresa(sorpresa);
 				}
 			}
 		}
@@ -90,7 +92,8 @@ class ContactListener : public b2ContactListener
 				if(( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->isAlive()) {
 					Sorpresa* sorpresa = (Sorpresa*) contact->GetFixtureA()->GetBody()->GetUserData();
 					sorpresa->setDelete();
-					( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->aplicarSorpresa(sorpresa);
+					sorpresa->aplicarAlPJ( ( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() ) );
+					//( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->aplicarSorpresa(sorpresa);
 
 				}
 			}

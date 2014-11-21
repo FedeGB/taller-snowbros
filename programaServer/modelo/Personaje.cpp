@@ -157,8 +157,8 @@ void Personaje::update(Sonido* sonido){
 	}
 
 	// Calcula los impulsos a aplicar segun en que direccion se esta moviendo el PJ.
-	float impulseX = bodyB2D->GetMass() * velXChange;
-	float impulseY = bodyB2D->GetMass() * velYChange;
+	float impulseX = bodyB2D->GetMass() * velXChange * 2.0f;
+	float impulseY = bodyB2D->GetMass() * velYChange * 0.5f;
 	bodyB2D->ApplyLinearImpulse( b2Vec2(impulseX, impulseY), bodyB2D->GetWorldCenter(), true);
 
 
@@ -250,14 +250,32 @@ void Personaje::applyDamage(float dmg) {
 	vida -= dmg;
 }
 
-void Personaje::eventoa(){
-	b2World * mundo = bodyB2D->GetWorld();
-
-	Sorpresa* sorpresa = new Sorpresa();
-	sorpresa->agregarAMundo(10, 10, mundo);
+b2World* Personaje::getMundo(){
+	return bodyB2D->GetWorld();
 }
 
-void Personaje::aplicarSorpresa(Sorpresa* sorpresa){
-	printf("APLICADAAAA\n");
+void Personaje::agregarVida(){
+	printf("AGREGAR VIDA\n");
 }
+
+void Personaje::correrMasRapido(){
+	printf("CORRER MAS RAPIDO\n");
+}
+
+void Personaje::nieveMasLejos(){
+	printf("NIEVE MAS LEJOS\n");
+}
+
+void Personaje::nieveMasPotente(){
+	printf("CORRER MAS POTENTE\n");
+}
+//void Personaje::eventoa() {
+//	b2World * mundo = bodyB2D->GetWorld();
+//
+////	sprite_t tipo_sorpresa = rand() % 4;
+////	switch( tipo_sorpresa )
+//
+//	Sorpresa* sorpresa = new Sorpresa(SORPRESAvida);
+//	sorpresa->agregarAMundo(10, 10, mundo);
+//}
 

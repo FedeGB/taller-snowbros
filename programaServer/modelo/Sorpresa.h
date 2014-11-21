@@ -12,8 +12,13 @@
 
 class Sorpresa: public Cuadrilatero {
 public:
+//	Sorpresa(sprite_t s){
+//		activeSprite = s;
+//		cuerpoB2D = NULL;
+//		toDelete = false;
+//	}
 	Sorpresa(){
-		activeSprite = SORPRESA1;
+		activeSprite = SORPRESAvida;
 		cuerpoB2D = NULL;
 		toDelete = false;
 	}
@@ -27,7 +32,7 @@ public:
 		// seteo el bodyDef
 		b2BodyDef bodyDef;
 		bodyDef.type = b2_dynamicBody;
-		bodyDef.gravityScale = 2;
+		bodyDef.gravityScale = 0;
 		bodyDef.position.Set(x, y-1);
 		bodyDef.angle = 0;
 		bodyDef.fixedRotation = true;
@@ -48,7 +53,7 @@ public:
 
 		b2Fixture * fixt = cuerpoB2D->CreateFixture(&fixtDef);
 		fixt->SetUserData( (void*) sensorSORPRESA );
-		cuerpoB2D->SetLinearVelocity( b2Vec2(2.0f,-2.0f) );
+		//cuerpoB2D->SetLinearVelocity( b2Vec2(2.0f,-2.0f) );
 		cuerpoB2D->SetUserData(this);
 	}
 
@@ -60,13 +65,13 @@ public:
 		return toDelete;
 	}
 
+	virtual void aplicarAlPJ(Personaje* pj) {}
+
 protected:
 
 	b2Body* cuerpoB2D;
 
 	bool toDelete;
-
-	virtual void aplicarSorpresaAlPJ(){}
 
 	std::string serializar(){
 

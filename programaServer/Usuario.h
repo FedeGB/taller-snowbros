@@ -18,6 +18,10 @@
 #include <Box2D/Box2D.h>
 
 #include "modelo/Sonido.h"
+#include "modelo/SorpresaVida.h"
+#include "modelo/SorpresaCorrer.h"
+#include "modelo/SorpresaNieveMasLejos.h"
+#include "modelo/SorpresaNieveMasPotente.h"
 
 class Usuario {
 public:
@@ -68,6 +72,8 @@ public:
 	b2Vec2 getPosition();
 
 	bool isPJAlive();
+
+	void eventoa();
 
 private:
 	ColaTrabajo<WorkItem*>  colaNotificaciones;
