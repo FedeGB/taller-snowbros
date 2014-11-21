@@ -8,7 +8,7 @@
 #include "Personaje.h"
 #include "../modelo/snowball.h"
 
-#define danio 0.5
+float danio =0.5;
 
 Personaje::Personaje(){
 	bodyB2D = NULL;

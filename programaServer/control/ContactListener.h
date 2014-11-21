@@ -57,7 +57,7 @@ class ContactListener : public b2ContactListener
 			if ( *((int*)(&fixtureBUserData)) == ESTATICO  ) {
 				((snowball*) contact->GetFixtureA()->GetBody()->GetUserData())->setDelete();
 			}
-			if ( *((int*)(&fixtureAUserData)) == ENEMIGO || *((int*)(&fixtureAUserData)) == PIESEN ) {
+			if ( *((int*)(&fixtureBUserData)) == ENEMIGO || *((int*)(&fixtureBUserData)) == PIESEN ) {
 				((EnemigoEstandar*) contact->GetFixtureB()->GetBody()->GetUserData())->applyDamage(((snowball*) contact->GetFixtureB()->GetBody()->GetUserData())->getDamage());
 			}
 		}

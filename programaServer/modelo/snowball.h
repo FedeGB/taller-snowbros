@@ -16,6 +16,7 @@ class snowball: public Cuadrilatero {
 protected:
 	b2Body * poder;
 	bool toDelete;
+	bool hasAtacked;
 
 	enum orientation_t{
 		LEFT,
@@ -23,6 +24,7 @@ protected:
 	};
 
 	sprite_t activeSprite;
+private:
 	float dmg;
 
 public:

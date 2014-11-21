@@ -25,11 +25,13 @@ EnemigoEstandar::EnemigoEstandar(int number){
 	isMoving = false;
 	isOnPlataform = false;
 	isOnBorder = false;
+	isFrozzen=false;
 	camera = NULL;
 	online = true;
 	enemyNumber = number;
 	vida = 10;
 	isTrapped = false;
+	stunCounter=0;
 }
 
 EnemigoEstandar::~EnemigoEstandar() {};
@@ -47,8 +49,29 @@ void EnemigoEstandar::update(){
 	// Determina si esta en el aire.
 	isAirborne = numFootContacts <= 0 ? true : false;
 
+	if(isFrozzen){
+		stunCounter++;
+		if(stunCounter==10000)
+			isFrozzen=false;
+		activeSprite=CONGELADO;
+		return;
+	}
 	if(isTrapped) {
 		// TODO: Acciones a realizar si esta atrapado
+		animationCounter++;
+		if(animationCounter<100)
+			activeSprite=ATRAPADO1;
+		else if (animationCounter<200)
+			activeSprite=ATRAPADO2;
+		else {animationCounter=0;
+				stunCounter++;
+		}
+		if(stunCounter>=10){
+			vida++;
+			stunCounter=0;
+		}
+		if(vida>=10)
+			isTrapped=false;
 		return;
 	}
 
@@ -207,9 +230,16 @@ bool EnemigoEstandar::trapped() {
 }
 
 void EnemigoEstandar::applyDamage(float dmg) {
+	stunCounter=0;
 	if(!isTrapped) {
 		isTrapped = true;
+		animationCounter=0;
 	}
-	vida -= dmg;
+	vida -= 1;//TODO: dmg no se por que tiene basura por eso harcodie este 1
+	if (vida<0){
+		isFrozzen=true;
+		vida=0;
+	}
+//	std::cout<<dmg<<std::endl;
 }
 

@@ -31,6 +31,8 @@ protected:
 	bool isOnPlataform;
 	bool isOnBorder;
 	bool isTrapped;
+	bool isFrozzen;
+	int stunCounter;
 
 };
 

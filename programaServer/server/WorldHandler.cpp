@@ -47,10 +47,13 @@ bool WorldHandler::loopPrincipal() {
 		if(count == 4)
 				freq = 6000.0f;
 		//std::cout << "freq: " << freq << '\n';		// Simula.
-		for(int i=0;i<10;i++) worldB2D->Step(1.0f/freq, 8, 5);
+		for(int i=0;i<10;i++) {
+			worldB2D->Step(1.0f/freq, 8, 5);
+			this->cleanPowers();
+		};
 
 		// Clean powers (bodies) from world
-		this->cleanPowers();
+		//this->cleanPowers();
 
 		// Updatea enemigos
 		if(count > 0) {

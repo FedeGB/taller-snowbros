@@ -44,7 +44,9 @@ snowball::snowball(float32 posx,float32 posy,int orientation,b2World * world, fl
 			poder->SetLinearVelocity(b2Vec2(15.0f,-2.0f));
 		toDelete = false;
 		dmg = damage;
+		std::cout<<dmg;
 		poder->SetUserData(this);
+		hasAtacked=false;
 
 }
 
@@ -65,6 +67,10 @@ bool snowball::forDelete() {
 }
 
 float snowball::getDamage() {
-	return this->dmg;
+	if(!hasAtacked){
+		return this->dmg;
+		hasAtacked=true;
+	}
+	return 0;
 }
 
