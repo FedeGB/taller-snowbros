@@ -318,6 +318,26 @@ Vertexes * obtenerVerticesEnemigo1(sprite_t activeSprite){
 		vertexes->y[2] = vertexes->y[3] = 52 / 320.0f;
 	}
 
+	if (activeSprite == ATRAPADO1){
+			vertexes->x[0] = vertexes->x[3] = 0 / 428.0f;
+			vertexes->y[0] = vertexes->y[1] = 17.5 / 365.0f;
+			vertexes->x[1] = vertexes->x[2] = 20.5 / 428.0f;
+			vertexes->y[2] = vertexes->y[3] = 33 / 365.0f;
+		}
+
+	if (activeSprite == ATRAPADO2){
+			vertexes->x[0] = vertexes->x[3] = 17.5 / 428.0f;
+			vertexes->y[0] = vertexes->y[1] = 51.5 / 365.0f;
+			vertexes->x[1] = vertexes->x[2] = 39.5 / 428.0f;
+			vertexes->y[2] = vertexes->y[3] = 66.5 / 365.0f;
+		}
+	if (activeSprite == CONGELADO){
+				vertexes->x[0] = vertexes->x[3] = 204 / 428.0f;
+				vertexes->y[0] = vertexes->y[1] = 263 / 365.0f;
+				vertexes->x[1] = vertexes->x[2] = 223 / 428.0f;
+				vertexes->y[2] = vertexes->y[3] = 282 / 365.0f;
+			}
+
 	return vertexes;
 }
 
