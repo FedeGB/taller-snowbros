@@ -23,7 +23,7 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 	split(buff, serializado, " ", no_empties);
 	if (buff[0] == "USERNAME") return NULL;
 	worlditem_t type = (worlditem_t) strtol(buff[0].c_str(),NULL,10);
-	//std::cout<<type;
+	//printf("tipo cliente: %i\n", type);
 	switch (type){
 
 	// Deserializa metadata.

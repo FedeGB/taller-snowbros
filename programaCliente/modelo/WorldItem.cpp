@@ -11,6 +11,7 @@ WorldItem::WorldItem() {
 	angulo = 0;
 	tipo = CUADRILATERO;
 	hielo = false;
+	eliminado=false;
 }
 
 WorldItem::~WorldItem() {

@@ -27,6 +27,8 @@ public:
 	worlditem_t tipo;
 	bool hielo;
 
+	bool eliminado;
+
 };
 
 #endif /* WORLDITEM_H_ */
