@@ -13,10 +13,8 @@
 #include <SDL2/SDL.h>
 #include "../utiles/tipos.h"
 #include "../modelo/snowball.h"
-
-#include "../modelo/Sonido.h"
 #include "../modelo/Sorpresa.h"
-
+#include "../modelo/Sonido.h"
 
 class Personaje : public Cuadrilatero {
 public:

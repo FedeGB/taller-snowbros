@@ -19,12 +19,18 @@ public:
 	virtual void eventoAbajo();
 	virtual void eventoSoltoAbajo();
 	virtual bool isRestricted(teclas_t);
+	virtual void setOnBorder(bool);
+	virtual bool itsOnBorder();
+	virtual void applyDamage(float);
+	virtual bool trapped();
 
 	int enemyNumber;
 
 protected:
 	bool isDownPressed;
 	bool isOnPlataform;
+	bool isOnBorder;
+	bool isTrapped;
 
 };
 

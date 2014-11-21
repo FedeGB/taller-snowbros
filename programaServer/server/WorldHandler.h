@@ -30,6 +30,7 @@ class WorldHandler: public Thread {
 	std::string configFile;
 
 	bool loopPrincipal();
+	void cleanPowers();
 
 public:
 	WorldHandler(ControladorUsuarios & c, ControladorEnemigos & en, std::string);

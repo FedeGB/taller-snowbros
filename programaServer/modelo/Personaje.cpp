@@ -6,6 +6,9 @@
  */
 
 #include "Personaje.h"
+#include "../modelo/snowball.h"
+
+#define danio 0.5
 
 Personaje::Personaje(){
 	bodyB2D = NULL;
@@ -13,6 +16,7 @@ Personaje::Personaje(){
 	isUpPressed = false;
 	isLeftPressed = false;
 	isRightPressed = false;
+	isSpacePressed = false;
 	wasLeftPressed1st = false;
 	orientation = LEFT;
 	activeSprite = PARADOIZQUIERDA;
@@ -90,7 +94,7 @@ void Personaje::update(Sonido* sonido){
 		//TODO : ataque
 		isThrowing=true;
 		if(maxpower>500){
-			snowball *sw= new snowball(bodyB2D->GetPosition().x,bodyB2D->GetPosition().y,(int)orientation,bodyB2D->GetWorld());
+			snowball *sw= new snowball(bodyB2D->GetPosition().x,bodyB2D->GetPosition().y,(int)orientation,bodyB2D->GetWorld(), danio);
 			maxpower=0;
 		}
 

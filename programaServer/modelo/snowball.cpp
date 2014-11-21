@@ -8,14 +8,14 @@
 #include "snowball.h"
 
 snowball::~snowball() {
-	// TODO Auto-generated destructor stub
+	this->poder->GetWorld()->DestroyBody(this->poder);
 }
 
 snowball::snowball() {
 	// TODO Auto-generated constructor stub
 
 }
-snowball::snowball(float32 posx,float32 posy,int orientation,b2World * world) {
+snowball::snowball(float32 posx,float32 posy,int orientation,b2World * world, float damage) {
 
 		b2BodyDef b2dObjDef;
 		b2FixtureDef myFixtureDef;
@@ -30,19 +30,22 @@ snowball::snowball(float32 posx,float32 posy,int orientation,b2World * world) {
 		poder = world->CreateBody(&b2dObjDef);
 
 		float32 halfWidth = 1.0f; // TODO: 0.05f = windowToWorldScale. HARDCODEADO!!!
-			float32 halfHeight = 1.0f; // 0.05f = windowToWorldScale. HARDCODEADO!!!
-			polygon.SetAsBox(halfWidth, halfHeight);
-			myFixtureDef.shape = &polygon;
-		    myFixtureDef.isSensor = true;
+		float32 halfHeight = 1.0f; // 0.05f = windowToWorldScale. HARDCODEADO!!!
+		polygon.SetAsBox(halfWidth, halfHeight);
+		myFixtureDef.shape = &polygon;
+		myFixtureDef.isSensor = true;
 
-			b2Fixture * bodyFixture = poder->CreateFixture(&myFixtureDef);
-			bodyFixture->SetUserData( (void*)PODERHIELO );
-			activeSprite=BOLANIEVE1;
-			if(orientation==LEFT)
-				poder->SetLinearVelocity(b2Vec2(-15.0f,-2.0f));
-			else
-				poder->SetLinearVelocity(b2Vec2(15.0f,-2.0f));
-			poder->SetUserData(this);
+		b2Fixture * bodyFixture = poder->CreateFixture(&myFixtureDef);
+		bodyFixture->SetUserData( (void*)PODERHIELO );
+		activeSprite=BOLANIEVE1;
+		if(orientation==LEFT)
+			poder->SetLinearVelocity(b2Vec2(-15.0f,-2.0f));
+		else
+			poder->SetLinearVelocity(b2Vec2(15.0f,-2.0f));
+		toDelete = false;
+		dmg = damage;
+		poder->SetUserData(this);
+
 }
 
 std::string snowball::serializar(){
@@ -52,5 +55,16 @@ std::string snowball::serializar(){
 			<< angulo << "  " << baseMayor << " " << altura << " "
 			<< activeSprite );
 	return buffer;
+}
+
+void snowball::setDelete() {
+	toDelete = true;
+}
+bool snowball::forDelete() {
+	return toDelete;
+}
+
+float snowball::getDamage() {
+	return this->dmg;
 }
 

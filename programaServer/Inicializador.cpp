@@ -209,6 +209,7 @@ Personaje * Inicializador::pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*
 	myFixtureDef.restitution = 0.0f;
 	myFixtureDef.friction=0.2;
 	b2Fixture * bodyFixture = pjB2D->CreateFixture(&myFixtureDef); //le asigno la forma
+	bodyFixture->SetUserData( (void*)PERSONAJE );
 
 	//costados sin friccion
 	v.x=-halfWidth*0.7;
@@ -224,7 +225,6 @@ Personaje * Inicializador::pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*
 	v.x=halfWidth*0.7;
 	polygon.SetAsBox(halfWidth*0.15, halfHeight*0.7,v,0); //le doy dimensiones
 	myFixtureDef.shape = &polygon; //defino que es un poligono
-	bodyFixture->SetUserData( (void*)PERSONAJE );
 	myFixtureDef.restitution = 0.0f;
 	myFixtureDef.friction=0;
 	fixture = pjB2D->CreateFixture(&myFixtureDef);
@@ -346,6 +346,31 @@ b2Body * createObject(std::string data, b2World ** wB2D, int num) {
 		rect->desplazamiento =  0;
 		figura = rect;
 
+		b2FixtureDef borderSensFix;
+		b2PolygonShape polygon;
+		// Sensores
+		if(get_node("isPlataform", "objetos", data, num, false)) {
+			//Izquierdo
+			b2Vec2 v(0,(halfHeight*-0.1));
+			v.x=-halfWidth*0.7;
+			polygon.SetAsBox(halfWidth*0.01, halfHeight*2,v,0); //le doy dimensiones
+			borderSensFix.shape = &polygon; //defino que es un poligono;
+			borderSensFix.density=0;
+			borderSensFix.restitution = 0.0f;
+			borderSensFix.friction=0;
+			b2Fixture* fixture = _shape->CreateFixture(&borderSensFix);
+			fixture->SetUserData( (void*)BORDE );
+
+			//Derecho
+			v.x=halfWidth*0.7;
+			polygon.SetAsBox(halfWidth*0.01, halfHeight*2,v,0);
+			borderSensFix.shape = &polygon;
+			borderSensFix.restitution = 0.0f;
+			borderSensFix.friction=0;
+			fixture = _shape->CreateFixture(&borderSensFix);
+			fixture->SetUserData( (void*)BORDE );
+		}
+
 		break;
 	}
 	case 5: { // poligonos irregulares
@@ -414,7 +439,9 @@ b2Body * createObject(std::string data, b2World ** wB2D, int num) {
 			figura->hielo=true;
 	b2Fixture * shapeFixture = _shape->CreateFixture(&myFixtureDef); //le asigno la forma
 	if (b2dObjDef.type == b2_dynamicBody) shapeFixture->SetUserData((void*) DINAMICO);
-	else shapeFixture->SetUserData((void*) ESTATICO);
+	else {
+		shapeFixture->SetUserData((void*) ESTATICO);
+	}
 
 	// Setea los ultimos parametros de la figura y vincula al bodyB2D.
 	figura->posicion.x = b2dObjDef.position.x;
@@ -465,12 +492,12 @@ EnemigoEstandar * createEnemy(std::string data, b2World ** wB2D, int num) {
 		myFixtureDef.restitution = 0.0f;
 		myFixtureDef.friction=0.2;
 		b2Fixture * bodyFixture = enB2D->CreateFixture(&myFixtureDef); //le asigno la forma
+		bodyFixture->SetUserData( (void*)ENEMIGO );
 
 		//costados sin friccion
 		v.x=-halfWidth*0.7;
 		polygon.SetAsBox(halfWidth*0.15, halfHeight*0.7,v,0); //le doy dimensiones
 		myFixtureDef.shape = &polygon; //defino que es un poligono
-		bodyFixture->SetUserData( (void*)ENEMIGO );
 		myFixtureDef.density=0;
 		myFixtureDef.restitution = 0.0f;
 		myFixtureDef.friction=0;
@@ -481,7 +508,6 @@ EnemigoEstandar * createEnemy(std::string data, b2World ** wB2D, int num) {
 		v.x=halfWidth*0.7;
 		polygon.SetAsBox(halfWidth*0.15, halfHeight*0.7,v,0); //le doy dimensiones
 		myFixtureDef.shape = &polygon; //defino que es un poligono
-		bodyFixture->SetUserData( (void*)ENEMIGO );
 		myFixtureDef.restitution = 0.0f;
 		myFixtureDef.friction=0;
 		fixture = enB2D->CreateFixture(&myFixtureDef);

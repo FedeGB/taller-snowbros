@@ -49,6 +49,9 @@ bool WorldHandler::loopPrincipal() {
 		//std::cout << "freq: " << freq << '\n';		// Simula.
 		for(int i=0;i<10;i++) worldB2D->Step(1.0f/freq, 8, 5);
 
+		// Clean powers (bodies) from world
+		this->cleanPowers();
+
 		// Updatea enemigos
 		if(count > 0) {
 			army.update(true);
@@ -78,4 +81,17 @@ bool WorldHandler::loopPrincipal() {
 	}
 
 	return true;
+}
+
+void WorldHandler::cleanPowers() {
+	b2Body* body = worldB2D->GetBodyList();
+	while (body) {
+		void* fixData = body->GetFixtureList()->GetUserData();
+		if( *((int*)(&fixData)) == PODERHIELO) {
+			if( ( (snowball*) body->GetUserData() )->forDelete() ){
+				delete ((snowball*) body->GetUserData());
+			}
+		}
+		body = body->GetNext();
+	}
 }

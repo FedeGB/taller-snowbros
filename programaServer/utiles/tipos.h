@@ -133,6 +133,7 @@ enum sensor_t{
 	PERSONAJE=18,
 	PIESEN,
 	sensorSORPRESA,
+	BORDE,
 };
 
 #endif /* TIPOS_H_ */

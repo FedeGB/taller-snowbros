@@ -20,7 +20,9 @@ void ControladorEnemigos::strategy(b2World* world, ControladorUsuarios PJs) {
 	if(world) {
 		for(ControladorEnemigos::iterator it = (*this).begin(); it != (*this).end(); ++it) {
 			if((*it).second && (*it).second->tipo == ENEMIGOESTANDAR){
+				if(!(*it).second->trapped()) {
 					standarStrategy((*it).second, world, PJs);
+				}
 			}
 		}
 	}
@@ -105,8 +107,9 @@ teclas_t ControladorEnemigos::getAction(b2Vec2 unit, b2Vec2 enemy, b2World* worl
 void ControladorEnemigos::update(bool online) {
 	if(online) {
 		for(ControladorEnemigos::iterator it = (*this).begin(); it != (*this).end(); ++it) {
-			if((*it).second)
+			if((*it).second) {
 				(*it).second->update();
+			}
 		}
 	}
 }

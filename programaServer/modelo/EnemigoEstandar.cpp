@@ -24,10 +24,12 @@ EnemigoEstandar::EnemigoEstandar(int number){
 	isAirborne = false;
 	isMoving = false;
 	isOnPlataform = false;
+	isOnBorder = false;
 	camera = NULL;
 	online = true;
 	enemyNumber = number;
 	vida = 10;
+	isTrapped = false;
 }
 
 EnemigoEstandar::~EnemigoEstandar() {};
@@ -44,6 +46,11 @@ std::string EnemigoEstandar::serializar(){
 void EnemigoEstandar::update(){
 	// Determina si esta en el aire.
 	isAirborne = numFootContacts <= 0 ? true : false;
+
+	if(isTrapped) {
+		// TODO: Acciones a realizar si esta atrapado
+		return;
+	}
 
 	// Determina, si esta saltando, si ya termino el salto.
 	if (!isAirborne) {
@@ -172,6 +179,13 @@ void EnemigoEstandar::eventoSoltoAbajo() {
 	isDownPressed = false;
 }
 
+void EnemigoEstandar::setOnBorder(bool border) {
+	isOnBorder = border;
+}
+bool EnemigoEstandar::itsOnBorder() {
+	return isOnBorder;
+}
+
 bool EnemigoEstandar::isRestricted(teclas_t action) {
 	if(action == ARRIBA) {
 		if(isDownPressed || isAirborne) {
@@ -187,5 +201,15 @@ bool EnemigoEstandar::isRestricted(teclas_t action) {
 	}
 	// TODO: More restrictions
 	return false;
+}
+bool EnemigoEstandar::trapped() {
+	return isTrapped;
+}
+
+void EnemigoEstandar::applyDamage(float dmg) {
+	if(!isTrapped) {
+		isTrapped = true;
+	}
+	vida -= dmg;
 }
 
