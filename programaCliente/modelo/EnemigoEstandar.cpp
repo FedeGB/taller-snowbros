@@ -22,7 +22,7 @@ std::string EnemigoEstandar::serializar(){
 	std::string buffer;
 	buffer = SSTR(PJ << " " << posicion.x << " " << posicion.y << " "
 			<< angulo << "  " << baseMayor << " " << altura << " "
-			<< activeSprite << " " << orientation);
+			<< activeSprite << " " << orientation<<""<<spriteStun);
 	return buffer;
 }
 

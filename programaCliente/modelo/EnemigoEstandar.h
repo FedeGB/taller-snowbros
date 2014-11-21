@@ -14,7 +14,9 @@
 
 
 class EnemigoEstandar: public Personaje {
+
 public:
+	sprite_t spriteStun;
 	EnemigoEstandar();
 	virtual ~EnemigoEstandar();
 

@@ -244,6 +244,38 @@ Vertexes * obtenerVerticesSorpresa(sprite_t activeSprite){
 		return vertexes;
 }
 
+Vertexes * obtenerVerticesBola(sprite_t activeSprite){
+	Vertexes * vertexes = new Vertexes(4);
+
+		if (activeSprite == STUN0){
+			vertexes->x[0] = vertexes->x[3] = 0 / 428.0f;
+			vertexes->y[0] = vertexes->y[1] = 0 / 365.0f;
+			vertexes->x[1] = vertexes->x[2] = 0 / 428.0f;
+			vertexes->y[2] = vertexes->y[3] = 0 / 365.0f;
+		}
+		if (activeSprite == STUN1){
+			vertexes->x[0] = vertexes->x[3] = 197 / 428.0f;
+			vertexes->y[0] = vertexes->y[1] = 306 / 365.0f;
+			vertexes->x[1] = vertexes->x[2] = 214 / 428.0f;
+			vertexes->y[2] = vertexes->y[3] = 324 / 365.0f;
+		}
+
+		if (activeSprite == STUN2){
+			vertexes->x[0] = vertexes->x[3] = 175 / 428.0f;
+			vertexes->y[0] = vertexes->y[1] = 306 / 365.0f;
+			vertexes->x[1] = vertexes->x[2] = 194 / 428.0f;
+			vertexes->y[2] = vertexes->y[3] = 324 / 365.0f;
+		}
+
+		if (activeSprite == STUN3){
+			vertexes->x[0] = vertexes->x[3] = 222 / 428.0f;
+			vertexes->y[0] = vertexes->y[1] = 306 / 365.0f;
+			vertexes->x[1] = vertexes->x[2] = 241 / 428.0f;
+			vertexes->y[2] = vertexes->y[3] = 325 / 365.0f;
+		}
+		return vertexes;
+}
+
 Vertexes * obtenerVerticesEnemigo1(sprite_t activeSprite){
 
 	Vertexes * vertexes = new Vertexes(4);
@@ -405,7 +437,9 @@ void ItemRenderer::renderENES(EnemigoEstandar * item, float escala) {
 
 	// Renderea.
 	TaV->tex->dibujar(vx, vy, vert->x, vert->y, 4);
-
+	delete vert;
+	vert = obtenerVerticesBola(item->spriteStun);
+	TaV->tex->dibujar(vx, vy, vert->x, vert->y, 4);
 	delete vert;
 }
 
