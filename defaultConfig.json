@@ -99,6 +99,7 @@
             "tipo": "rect",
             "x": 40,
             "y": 22,
+	    "atravesable": true,
             "rot": 0,
             "alto": 0.6,
             "ancho": 17.9,

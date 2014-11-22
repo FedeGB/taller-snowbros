@@ -211,6 +211,7 @@ Personaje * Inicializador::pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*
 	b2Fixture * bodyFixture = pjB2D->CreateFixture(&myFixtureDef); //le asigno la forma
 	bodyFixture->SetUserData( (void*)PERSONAJE );
 
+
 	//costados sin friccion
 	v.x=-halfWidth*0.7;
 	polygon.SetAsBox(halfWidth*0.15, halfHeight*0.7,v,0); //le doy dimensiones
@@ -238,8 +239,9 @@ Personaje * Inicializador::pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*
 	myFixtureDef.density = 1.0f; //le doy masa
 	myFixtureDef.restitution = 0.0f;
 	myFixtureDef.friction=2.0f;
-	fixture = pjB2D->CreateFixture(&myFixtureDef);
+	b2Fixture* fixture = pjB2D->CreateFixture(&myFixtureDef);
 	fixture->SetUserData( (void*)PERSONAJE );
+
 
     // Agrego el sensor para saltos
     polygon.SetAsBox(halfWidth * 0.3, 0.15f, b2Vec2(0,halfHeight), 0);
@@ -442,6 +444,9 @@ b2Body * createObject(std::string data, b2World ** wB2D, int num) {
 	else {
 		shapeFixture->SetUserData((void*) ESTATICO);
 	}
+
+	//Me fijo si el objeto que creo es atravesable.
+	if (get_node("atravesable", "objetos", data, num, false)) shapeFixture->SetUserData((void*) ATRAVESABLE);
 
 	// Setea los ultimos parametros de la figura y vincula al bodyB2D.
 	figura->posicion.x = b2dObjDef.position.x;

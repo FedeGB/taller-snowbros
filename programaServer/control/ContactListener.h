@@ -127,6 +127,37 @@ class ContactListener : public b2ContactListener
 				}
 			}
       }
+
+      void PreSolve(b2Contact* contact, const b2Manifold* oldManiFold){
+    	  void* fixtureAUserData = contact->GetFixtureA()->GetUserData();
+    	  void* fixtureBUserData = contact->GetFixtureB()->GetUserData();
+
+    	  if ( *((int*)(&fixtureAUserData)) == ATRAVESABLE){
+    		  if (*((int*)(&fixtureBUserData)) == PERSONAJE || *((int*)(&fixtureBUserData)) == PIESPJ){
+    			  Cuadrilatero* ITA = (Cuadrilatero*) contact->GetFixtureA()->GetBody()->GetUserData();
+    			  float PosA = ITA->posicion.y - (ITA->altura / 2.0);
+    			  Personaje* PJB = (Personaje*) contact->GetFixtureB()->GetBody()->GetUserData();
+    			  float PosB = PJB->posicion.y + (PJB->altura / 2.0);
+
+    			  printf("Pos PJ: %f", PosB);
+    			  printf("Pos Plat: %f", PosA);
+    			  if ( PosB > PosA + 0.2) contact->SetEnabled(false);
+    		  }
+    	  }
+
+    	  if (*((int*)(&fixtureAUserData)) == PERSONAJE || *((int*)(&fixtureAUserData)) == PIESPJ){
+    		  if (*((int*)(&fixtureBUserData)) == ATRAVESABLE){
+    			  Cuadrilatero* ITA = (Cuadrilatero *) contact->GetFixtureB()->GetBody()->GetUserData();
+				  float PosA = ITA->posicion.y - (ITA->altura / 2.0);
+				  Personaje* PJB = (Personaje*)contact->GetFixtureA()->GetBody()->GetUserData();
+				  float PosB = PJB->posicion.y + (PJB->altura / 2.0);
+
+				  printf("Pos PJ: %f", PosB);
+				  printf("Pos Plat: %f", PosA);
+				  if ( PosB > PosA + 0.2) contact->SetEnabled(false);
+    		  }
+    	  }
+      }
   };
 
 
