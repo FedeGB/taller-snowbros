@@ -225,12 +225,10 @@ void Camera::updateRenderList(){
 		void* fixtureBUserData = ce->contact->GetFixtureB()->GetUserData();
 
 		// Obtiene la informacion del cuerpo que esta en contacto con la camara.
-		// TODO: sacar estas constantes hardcodeadas.
 		if ( *((int*)(&fixtureAUserData)) != CAMARA ) body = ce->contact->GetFixtureA()->GetBody();
 		else body = ce->contact->GetFixtureB()->GetBody();
 
 		// Saltea los apendices de los personajes.
-		// TODO: sacar estas constantes hardcodeadas.
 		if ( *((int*)(&fixtureAUserData)) == PIESPJ || *((int*)(&fixtureBUserData)) == PIESPJ )
 			continue;
 

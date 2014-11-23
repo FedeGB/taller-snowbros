@@ -13,12 +13,6 @@
 ConnectionHandler::ConnectionHandler(ControladorUsuarios & c, TCPStream * stream) :
 	controlador(c), m_stream(stream){}
 
-/*void rechazarConexion(){
-
-	//TODO: implementar.
-	std::cout << "conexion rechazada" << std::endl;
-
-}*/
 
 int ConnectionHandler::logIn(std::string username){
 

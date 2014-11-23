@@ -239,7 +239,7 @@ Personaje * Inicializador::pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*
 	myFixtureDef.density = 1.0f; //le doy masa
 	myFixtureDef.restitution = 0.0f;
 	myFixtureDef.friction=2.0f;
-	b2Fixture* fixture = pjB2D->CreateFixture(&myFixtureDef);
+	fixture = pjB2D->CreateFixture(&myFixtureDef);
 	fixture->SetUserData( (void*)PERSONAJE );
 
 
@@ -539,7 +539,7 @@ EnemigoEstandar * createEnemy(std::string data, b2World ** wB2D, int num) {
 	    type = ENEMIGOESTANDAR;
 	} else {
 		std::cout << "No es un tipo reconocible" << std::endl;
-		// TODO: No deberia entrar, pero hay que contemplarlo
+		//No deberia entrar, pero hay que contemplarlo
 	}
     // Crea la representacion del enemigo fuera del mundo de B2D, para manejar su movimiento
     // y datos necesarios para renderizarlo en el cliente.

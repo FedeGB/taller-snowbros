@@ -139,7 +139,6 @@ void Usuario::inicializarPJ(b2World * worldB2D, std::string configFile){
 	Inicializador inicializador;
 	PJ = inicializador.pjInit(&worldB2D, listaVisibles, configFile);
 	if (!PJ){
-		// TODO: Error handling.
 		std::cout << "hubo un error al crear el PJ" << std::endl;
 	}
 	sonidoPJ = new Sonido();
