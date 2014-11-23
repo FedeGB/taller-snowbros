@@ -246,6 +246,10 @@ bool Personaje::isAlive() {
 	return (vida > 0.0f);
 }
 
+bool Personaje::GetAirborne(){
+	return this->isAirborne;
+}
+
 void Personaje::applyDamage(float dmg) {
 	vida -= dmg;
 }

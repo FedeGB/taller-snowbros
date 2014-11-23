@@ -26,6 +26,7 @@ public:
 	void setNewAngle(float32 a);
 	virtual bool isAlive();
 	virtual void applyDamage(float);
+	virtual bool GetAirborne();
 
 	virtual void agregarVida();
 	virtual void correrMasRapido();

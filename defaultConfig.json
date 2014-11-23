@@ -97,9 +97,9 @@
 	{
             "estatico": true,
             "tipo": "rect",
-            "x": 40,
-            "y": 22,
 	    "atravesable": true,
+            "x": 40,
+            "y": 21.5,
             "rot": 0,
             "alto": 0.6,
             "ancho": 17.9,

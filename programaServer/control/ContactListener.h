@@ -131,32 +131,33 @@ class ContactListener : public b2ContactListener
       void PreSolve(b2Contact* contact, const b2Manifold* oldManiFold){
     	  void* fixtureAUserData = contact->GetFixtureA()->GetUserData();
     	  void* fixtureBUserData = contact->GetFixtureB()->GetUserData();
+    	  Cuadrilatero* ITA = NULL;
+    	  Personaje* PJB = NULL;
 
     	  if ( *((int*)(&fixtureAUserData)) == ATRAVESABLE){
     		  if (*((int*)(&fixtureBUserData)) == PERSONAJE || *((int*)(&fixtureBUserData)) == PIESPJ){
-    			  Cuadrilatero* ITA = (Cuadrilatero*) contact->GetFixtureA()->GetBody()->GetUserData();
-    			  float PosA = ITA->posicion.y - (ITA->altura / 2.0);
-    			  Personaje* PJB = (Personaje*) contact->GetFixtureB()->GetBody()->GetUserData();
-    			  float PosB = PJB->posicion.y + (PJB->altura / 2.0);
-
-    			  printf("Pos PJ: %f", PosB);
-    			  printf("Pos Plat: %f", PosA);
-    			  if ( PosB > PosA + 0.2) contact->SetEnabled(false);
+    			  ITA = (Cuadrilatero*) contact->GetFixtureA()->GetBody()->GetUserData();
+    			  PJB = (Personaje*) contact->GetFixtureB()->GetBody()->GetUserData();
     		  }
     	  }
 
     	  if (*((int*)(&fixtureAUserData)) == PERSONAJE || *((int*)(&fixtureAUserData)) == PIESPJ){
     		  if (*((int*)(&fixtureBUserData)) == ATRAVESABLE){
-    			  Cuadrilatero* ITA = (Cuadrilatero *) contact->GetFixtureB()->GetBody()->GetUserData();
-				  float PosA = ITA->posicion.y - (ITA->altura / 2.0);
-				  Personaje* PJB = (Personaje*)contact->GetFixtureA()->GetBody()->GetUserData();
-				  float PosB = PJB->posicion.y + (PJB->altura / 2.0);
-
-				  printf("Pos PJ: %f", PosB);
-				  printf("Pos Plat: %f", PosA);
-				  if ( PosB > PosA + 0.2) contact->SetEnabled(false);
+    			  ITA = (Cuadrilatero *) contact->GetFixtureB()->GetBody()->GetUserData();
+				  PJB = (Personaje*)contact->GetFixtureA()->GetBody()->GetUserData();
     		  }
     	  }
+
+    	  if(PJB != NULL && ITA != NULL){
+    		  //Me fijo si la parte de abajo del personaje esta por arriba del la parte de arriba de la plataforma.
+    		  float PosA = ITA->posicion.y - (ITA->altura / 2.0);
+    	  	  float PosB = PJB->posicion.y + (PJB->altura / 2.0);
+
+		  	  if ( PosB > PosA + 0.2 && PJB->GetAirborne() ){
+			  	  contact->SetEnabled(false);
+		  	  }
+    	  }
+
       }
   };
 
