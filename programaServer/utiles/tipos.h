@@ -129,6 +129,9 @@ enum sonidos_t{
 	VACIO,
 	SALTO,
 	EXPLOSION,
+	DISPARO,
+	DISPARO_SORPRESA,
+	VIDA_EXTRA,
 };
 
 enum sensor_t{

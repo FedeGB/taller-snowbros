@@ -29,6 +29,12 @@ Personaje::Personaje(){
 	camera = NULL;
 	online = true;
 	vida = 5;
+	for( int i = 0; i < 3; i++)
+		sorpresasContador[i] = 0.0f;
+	sorpresaPaso = 0.2;
+	velocidadPJSorpresa = 1.0f;
+	potenciaNieveSorpresa = 0.5f;
+	impulsoNieveSorpresa = 1.0f;
 }
 
 Personaje::~Personaje() {}
@@ -90,16 +96,23 @@ void Personaje::update(Sonido* sonido){
 
 
 	camera->update();
+
+	actualizarEfectos();
+
 	if(isSpacePressed && !isAirborne){
 		//TODO : ataque
 		isThrowing=true;
 		if(maxpower>500){
-			snowball *sw= new snowball(bodyB2D->GetPosition().x,bodyB2D->GetPosition().y,(int)orientation,bodyB2D->GetWorld(), danio);
+			snowball *sw= new snowball(bodyB2D->GetPosition().x,bodyB2D->GetPosition().y,(int)orientation,bodyB2D->GetWorld(), potenciaNieveSorpresa, impulsoNieveSorpresa);
 			maxpower=0;
+			if( potenciaNieveSorpresa == 0.5 && impulsoNieveSorpresa == 1.0 )
+				sonido->sonido = DISPARO;
+			else
+				sonido->sonido = DISPARO_SORPRESA;
 		}
 
 	}
-		maxpower++;
+	maxpower++;
 
 	if(!this->isAlive()) {
 		activeSprite = PARADOIZQUIERDA;
@@ -125,7 +138,7 @@ void Personaje::update(Sonido* sonido){
 	// Se mueve a la izquierda.
 	if (isLeftPressed && wasLeftPressed1st){
 		orientation = LEFT;
-		desiredVel = -14;                         //// VERIFICAR QUE CUANDO ESTE SALTANDO NO CAMBIE LA VELOCIDAD EN Y!! ! ! ! ! ! !  11 1 1 1 1 one one one
+		desiredVel = -14 * velocidadPJSorpresa;                         //// VERIFICAR QUE CUANDO ESTE SALTANDO NO CAMBIE LA VELOCIDAD EN Y!! ! ! ! ! ! !  11 1 1 1 1 one one one
 		if (angulo <= 180 * DEGTORAD) scale = 0.33;
 		else scale = 3;
 		isMoving = true;
@@ -134,7 +147,7 @@ void Personaje::update(Sonido* sonido){
 	// Se mueve a la derecha.
 	if (isRightPressed && !wasLeftPressed1st){
 		orientation = RIGHT;
-		desiredVel = 14;
+		desiredVel = 14 * velocidadPJSorpresa;
 		scale = 4;
 		if (angulo <= 180 * DEGTORAD) scale = 3;
 		else scale = 0.33;
@@ -142,8 +155,8 @@ void Personaje::update(Sonido* sonido){
 	}
 
 	// Calcula las velocidades deseadas segun la direccion de movimiento.
-	b2Vec2 vel = bodyB2D->GetLinearVelocity();
-	float32 velXChange = desiredVel * cos(angulo) - vel.x;
+	b2Vec2 vel = bodyB2D->GetLinearVelocity() ;
+	float32 velXChange = desiredVel * cos(angulo) - vel.x ;
 	float32 velYChange = 0;
 	if ( angulo != 0 ) velYChange =  scale * desiredVel * sin(angulo) - vel.y ;
 
@@ -157,8 +170,8 @@ void Personaje::update(Sonido* sonido){
 	}
 
 	// Calcula los impulsos a aplicar segun en que direccion se esta moviendo el PJ.
-	float impulseX = bodyB2D->GetMass() * velXChange * 2.0f;
-	float impulseY = bodyB2D->GetMass() * velYChange * 0.5f;
+	float impulseX = bodyB2D->GetMass() * velXChange ;
+	float impulseY = bodyB2D->GetMass() * velYChange ;
 	bodyB2D->ApplyLinearImpulse( b2Vec2(impulseX, impulseY), bodyB2D->GetWorldCenter(), true);
 
 
@@ -260,26 +273,60 @@ b2World* Personaje::getMundo(){
 
 void Personaje::agregarVida(){
 	printf("AGREGAR VIDA\n");
+	vida += 1.0f;
 }
 
 void Personaje::correrMasRapido(){
 	printf("CORRER MAS RAPIDO\n");
+	if( velocidadPJSorpresa == 1.0f )
+		velocidadPJSorpresa = 2.0f;
 }
 
 void Personaje::nieveMasLejos(){
 	printf("NIEVE MAS LEJOS\n");
+	if( impulsoNieveSorpresa == 1.0f )
+		impulsoNieveSorpresa = 2.0f;
 }
 
 void Personaje::nieveMasPotente(){
-	printf("CORRER MAS POTENTE\n");
+	printf("NIEVE MAS POTENTE\n");
+	if( potenciaNieveSorpresa == 0.5f )
+		potenciaNieveSorpresa = 2.0f;
 }
-//void Personaje::eventoa() {
-//	b2World * mundo = bodyB2D->GetWorld();
-//
-////	sprite_t tipo_sorpresa = rand() % 4;
-////	switch( tipo_sorpresa )
-//
-//	Sorpresa* sorpresa = new Sorpresa(SORPRESAvida);
-//	sorpresa->agregarAMundo(10, 10, mundo);
-//}
+
+void Personaje::actualizarEfectos(){
+
+	// actualiza contador de sopresa velocidad del pj
+	if( velocidadPJSorpresa != 1.0f ){
+		sorpresasContador[0] += sorpresaPaso;
+//		printf("contador velocidad = %f\n", sorpresasContador[0]);
+		if( sorpresasContador[0] > 3000.0f  ){
+			velocidadPJSorpresa = 1.0f;
+			sorpresasContador[0] = 0.0f;
+			printf("FIN EFECTO RAPIDEZ\n");
+		}
+	}
+
+	// actualiza contador de sopresa nieve mas potente
+	if( potenciaNieveSorpresa != 0.5f ){
+		sorpresasContador[1] += sorpresaPaso;
+//		printf("contador nieve ṕotencia = %f\n", sorpresasContador[1]);
+		if( sorpresasContador[1] > 3000.0f ){
+			potenciaNieveSorpresa = 0.5f;
+			sorpresasContador[1] = 0.0f;
+			printf("FIN EFECTO NIEVE POTENTE\n");
+		}
+	}
+
+	// actualiza contador de sopresa nieve mas lejos
+	if( impulsoNieveSorpresa != 1.0f ){
+		sorpresasContador[2] += sorpresaPaso;
+//		printf("contador nieve lejos = %f\n", sorpresasContador[2]);
+		if( sorpresasContador[2] > 3000.0f ){
+			impulsoNieveSorpresa = 1.0f;
+			sorpresasContador[2] = 0.0f;
+			printf("FIN EFECTO NIEVE LEJOS\n");
+		}
+	}
+}
 

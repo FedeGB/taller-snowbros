@@ -33,6 +33,8 @@ public:
 	virtual void nieveMasLejos();
 	virtual void nieveMasPotente();
 
+	virtual void actualizarEfectos();
+
 	virtual b2World * getMundo();
 
 	// metodos de INotificable
@@ -68,7 +70,14 @@ protected:
 	bool isMoving;
 	bool isThrowing;
 	bool isSpacePressed;
+
+	float sorpresaPaso;
+	float sorpresasContador[4];
+
 	float vida;
+	float velocidadPJSorpresa;
+	float potenciaNieveSorpresa;
+	float impulsoNieveSorpresa;
 
 	enum orientation_t{
 		LEFT,

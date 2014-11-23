@@ -47,18 +47,20 @@ class ContactListener : public b2ContactListener
 
 		// Collision between Snowballs and Static Objects
 		if( *((int*)(&fixtureBUserData)) == PODERHIELO ){
-			if ( *((int*)(&fixtureAUserData)) == ESTATICO  ) {
+			if ( *((int*)(&fixtureAUserData)) == ESTATICO || *((int*)(&fixtureAUserData)) == ATRAVESABLE  ){
 				((snowball*) contact->GetFixtureB()->GetBody()->GetUserData())->setDelete();
 			}
 			if ( *((int*)(&fixtureAUserData)) == ENEMIGO || *((int*)(&fixtureAUserData)) == PIESEN ) {
+				((snowball*) contact->GetFixtureB()->GetBody()->GetUserData())->setDelete();
 				((EnemigoEstandar*) contact->GetFixtureA()->GetBody()->GetUserData())->applyDamage(((snowball*) contact->GetFixtureA()->GetBody()->GetUserData())->getDamage());
 			}
 		}
 		if( *((int*)(&fixtureAUserData)) == PODERHIELO ){
-			if ( *((int*)(&fixtureBUserData)) == ESTATICO  ) {
+			if ( *((int*)(&fixtureBUserData)) == ESTATICO  || *((int*)(&fixtureBUserData)) == ATRAVESABLE  ) {
 				((snowball*) contact->GetFixtureA()->GetBody()->GetUserData())->setDelete();
 			}
 			if ( *((int*)(&fixtureBUserData)) == ENEMIGO || *((int*)(&fixtureBUserData)) == PIESEN ) {
+				((snowball*) contact->GetFixtureA()->GetBody()->GetUserData())->setDelete();
 				((EnemigoEstandar*) contact->GetFixtureB()->GetBody()->GetUserData())->applyDamage(((snowball*) contact->GetFixtureB()->GetBody()->GetUserData())->getDamage());
 			}
 		}
@@ -136,6 +138,14 @@ class ContactListener : public b2ContactListener
 
     	  if ( *((int*)(&fixtureAUserData)) == ATRAVESABLE){
     		  if (*((int*)(&fixtureBUserData)) == PERSONAJE || *((int*)(&fixtureBUserData)) == PIESPJ){
+    //			  Cuadrilatero* ITA = (Cuadrilatero*) contact->GetFixtureA()->GetBody()->GetUserData();
+   // 			  float PosA = ITA->posicion.y - (ITA->altura / 2.0);
+ //   			  Personaje* PJB = (Personaje*) contact->GetFixtureB()->GetBody()->GetUserData();
+//    			  float PosB = PJB->posicion.y + (PJB->altura / 2.0);
+
+//    			  printf("Pos PJ: %f", PosB);
+//   			  printf("Pos Plat: %f", PosA);
+//    			  if ( PosB > PosA + 0.2) contact->SetEnabled(false);
     			  ITA = (Cuadrilatero*) contact->GetFixtureA()->GetBody()->GetUserData();
     			  PJB = (Personaje*) contact->GetFixtureB()->GetBody()->GetUserData();
     		  }
@@ -153,6 +163,8 @@ class ContactListener : public b2ContactListener
     		  float PosA = ITA->posicion.y - (ITA->altura / 2.0);
     	  	  float PosB = PJB->posicion.y + (PJB->altura / 2.0);
 
+//				  printf("Pos PJ: %f", PosB);
+//				  printf("Pos Plat: %f", PosA);
 		  	  if ( PosB > PosA + 0.2 && PJB->GetAirborne() ){
 			  	  contact->SetEnabled(false);
 		  	  }

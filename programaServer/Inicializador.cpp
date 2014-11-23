@@ -239,7 +239,7 @@ Personaje * Inicializador::pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*
 	myFixtureDef.density = 1.0f; //le doy masa
 	myFixtureDef.restitution = 0.0f;
 	myFixtureDef.friction=2.0f;
-	fixture = pjB2D->CreateFixture(&myFixtureDef);
+	/* b2Fixture* */fixture = pjB2D->CreateFixture(&myFixtureDef);
 	fixture->SetUserData( (void*)PERSONAJE );
 
 

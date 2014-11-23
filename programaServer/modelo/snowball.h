@@ -30,7 +30,7 @@ private:
 public:
 	virtual ~snowball();
 	snowball();
-	snowball(float32 posx,float32 posy,int orientation,b2World * world, float);
+	snowball(float32 posx,float32 posy,int orientation,b2World * world, float potenciaNieve, float impulsoNieve);
 	std::string serializar();
 	void setDelete();
 	bool forDelete();

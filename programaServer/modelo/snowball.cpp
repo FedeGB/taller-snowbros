@@ -15,7 +15,7 @@ snowball::snowball() {
 	// TODO Auto-generated constructor stub
 
 }
-snowball::snowball(float32 posx,float32 posy,int orientation,b2World * world, float damage) {
+snowball::snowball(float32 posx,float32 posy,int orientation,b2World * world, float damage, float impulsoNieve) {
 
 		b2BodyDef b2dObjDef;
 		b2FixtureDef myFixtureDef;
@@ -35,16 +35,17 @@ snowball::snowball(float32 posx,float32 posy,int orientation,b2World * world, fl
 		myFixtureDef.shape = &polygon;
 		myFixtureDef.isSensor = true;
 
+
 		b2Fixture * bodyFixture = poder->CreateFixture(&myFixtureDef);
 		bodyFixture->SetUserData( (void*)PODERHIELO );
 		activeSprite=BOLANIEVE1;
 		if(orientation==LEFT)
-			poder->SetLinearVelocity(b2Vec2(-15.0f,-2.0f));
+			poder->SetLinearVelocity(b2Vec2(-15.0f*impulsoNieve,-2.0f*impulsoNieve));
 		else
-			poder->SetLinearVelocity(b2Vec2(15.0f,-2.0f));
+			poder->SetLinearVelocity(b2Vec2(15.0f*impulsoNieve,-2.0f*impulsoNieve));
 		toDelete = false;
 		dmg = damage;
-		std::cout<< "snowball constructor:" << dmg << '\n';
+		std::cout<< "snowball constructor:" << damage << '\n';
 		poder->SetUserData(this);
 		hasAtacked=false;
 
