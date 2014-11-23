@@ -26,6 +26,8 @@ bool SonidosMap::init() {
 
 	if( !loadSonidoSalto() ) return false;
 	if( !loadSonidoExplosion() ) return false;
+	if( !loadSonidoDisparo() ) return false;
+	if( !loadSonidoDisparoSorpresa() ) return false;
 
 	inicializado=true;
 	return true;
@@ -61,5 +63,43 @@ bool SonidosMap::loadSonidoSalto() {
 
 bool SonidosMap::loadSonidoExplosion() {
 
+	return true;
+}
+
+bool SonidosMap::loadSonidoDisparo() {
+
+	Sonido* sonido = NULL;
+	sonido =  new Sonido();
+
+	if(!sonido ){
+		printf("No se pudo cargar el sonido %s\n", SONIDO_DISPARO);
+		return false;
+	}
+
+	if( !sonido->generar(SONIDO_DISPARO) ){
+		printf("NO SE PUDO GENERAR EL BUFFER PARA SONIDO %s\n", SONIDO_DISPARO);
+		return false;
+	}
+
+	(*this)[DISPARO] = sonido;
+	return true;
+}
+
+bool SonidosMap::loadSonidoDisparoSorpresa() {
+
+	Sonido* sonido = NULL;
+	sonido =  new Sonido();
+
+	if(!sonido ){
+		printf("No se pudo cargar el sonido %s\n", SONIDO_DISPARO_SORPRESA);
+		return false;
+	}
+
+	if( !sonido->generar(SONIDO_DISPARO_SORPRESA) ){
+		printf("NO SE PUDO GENERAR EL BUFFER PARA SONIDO %s\n", SONIDO_DISPARO_SORPRESA);
+		return false;
+	}
+
+	(*this)[DISPARO_SORPRESA] = sonido;
 	return true;
 }

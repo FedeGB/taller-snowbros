@@ -25,6 +25,8 @@
 #define IMAGEN_FONDO "imagenes/fondo2.png"
 
 #define SONIDO_SALTO "sonidos/salto.wav"
+#define SONIDO_DISPARO "sonidos/disparo.wav"
+#define SONIDO_DISPARO_SORPRESA "sonidos/disparo_sorpresa.wav"
 
 #define PI 3.14159265
 const float32 DEGTORAD = 0.0174532925199432957f;
@@ -141,6 +143,9 @@ enum sonidos_t{
 	VACIO,
 	SALTO,
 	EXPLOSION,
+	DISPARO,
+	DISPARO_SORPRESA,
+	VIDA_EXTRA,
 };
 
 enum sensor_t{

@@ -26,6 +26,8 @@ private:
 
 	bool loadSonidoSalto();
 	bool loadSonidoExplosion();
+	bool loadSonidoDisparo();
+	bool loadSonidoDisparoSorpresa();
 };
 
 #endif /* SONIDOSMAP_H_ */
