@@ -24,7 +24,6 @@ EnemigoEstandar::EnemigoEstandar(int number){
 	isJumping = 0;
 	isAirborne = false;
 	isMoving = false;
-	isOnPlataform = false;
 	isOnBorder = false;
 	isFrozzen=false;
 	camera = NULL;
@@ -84,9 +83,8 @@ void EnemigoEstandar::update(){
 	// Determina, si esta saltando, si ya termino el salto.
 	if (!isAirborne) {
 		isJumping = false;
-		if(isDownPressed /*&& isOnPlataform*/) {
+		if(isDownPressed) {
 			// TODO: En ContactListener falta contacto con plataformas
-			bodyB2D->SetType(b2_kinematicBody);
 		}
 	}
 

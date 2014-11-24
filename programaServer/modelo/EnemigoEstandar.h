@@ -30,7 +30,6 @@ public:
 protected:
 
 	bool isDownPressed;
-	bool isOnPlataform;
 	bool isOnBorder;
 	bool isTrapped;
 	bool isFrozzen;

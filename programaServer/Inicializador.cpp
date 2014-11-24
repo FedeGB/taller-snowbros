@@ -354,21 +354,23 @@ b2Body * createObject(std::string data, b2World ** wB2D, int num) {
 		if(get_node("isPlataform", "objetos", data, num, false)) {
 			//Izquierdo
 			b2Vec2 v(0,(halfHeight*-0.1));
-			v.x=-halfWidth*0.7;
+			v.x=-halfWidth*0.9;
 			polygon.SetAsBox(halfWidth*0.01, halfHeight*2,v,0); //le doy dimensiones
 			borderSensFix.shape = &polygon; //defino que es un poligono;
 			borderSensFix.density=0;
+			borderSensFix.isSensor = true;
 			borderSensFix.restitution = 0.0f;
 			borderSensFix.friction=0;
 			b2Fixture* fixture = _shape->CreateFixture(&borderSensFix);
 			fixture->SetUserData( (void*)BORDE );
 
 			//Derecho
-			v.x=halfWidth*0.7;
+			v.x=halfWidth*0.9;
 			polygon.SetAsBox(halfWidth*0.01, halfHeight*2,v,0);
 			borderSensFix.shape = &polygon;
 			borderSensFix.restitution = 0.0f;
 			borderSensFix.friction=0;
+			borderSensFix.isSensor = true;
 			fixture = _shape->CreateFixture(&borderSensFix);
 			fixture->SetUserData( (void*)BORDE );
 		}

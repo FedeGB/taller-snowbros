@@ -32,14 +32,14 @@ class ContactListener : public b2ContactListener
 		// Collision between PJ and Enemy, apply damage
 		if( *((int*)(&fixtureAUserData)) == ENEMIGO || *((int*)(&fixtureAUserData)) == PIESEN ){
 			if ( *((int*)(&fixtureBUserData)) == PERSONAJE || *((int*)(&fixtureBUserData)) == PIESPJ ) {
-				if(( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->isAlive()) {
+				if(( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->isAlive() && !( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() )->trapped()) {
 					( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->applyDamage(0.5);
 				}
 			}
 		}
 		if( *((int*)(&fixtureBUserData)) == ENEMIGO || *((int*)(&fixtureBUserData)) == PIESEN ){
 			if ( *((int*)(&fixtureAUserData)) == PERSONAJE || *((int*)(&fixtureAUserData)) == PIESPJ ) {
-				if(( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->isAlive()) {
+				if(( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->isAlive() && !( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() )) {
 					( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->applyDamage(0.5);
 				}
 			}
@@ -47,7 +47,7 @@ class ContactListener : public b2ContactListener
 
 		// Collision between Snowballs and Static Objects
 		if( *((int*)(&fixtureBUserData)) == PODERHIELO ){
-			if ( *((int*)(&fixtureAUserData)) == ESTATICO || *((int*)(&fixtureAUserData)) == ATRAVESABLE  ){
+			if ( *((int*)(&fixtureAUserData)) == ESTATICO || *((int*)(&fixtureAUserData)) == ATRAVESABLE || *((int*)(&fixtureAUserData)) == DINAMICO ){
 				((snowball*) contact->GetFixtureB()->GetBody()->GetUserData())->setDelete();
 			}
 			if ( *((int*)(&fixtureAUserData)) == ENEMIGO || *((int*)(&fixtureAUserData)) == PIESEN ) {
@@ -56,7 +56,7 @@ class ContactListener : public b2ContactListener
 			}
 		}
 		if( *((int*)(&fixtureAUserData)) == PODERHIELO ){
-			if ( *((int*)(&fixtureBUserData)) == ESTATICO  || *((int*)(&fixtureBUserData)) == ATRAVESABLE  ) {
+			if ( *((int*)(&fixtureBUserData)) == ESTATICO  || *((int*)(&fixtureBUserData)) == ATRAVESABLE || *((int*)(&fixtureBUserData)) == DINAMICO ) {
 				((snowball*) contact->GetFixtureA()->GetBody()->GetUserData())->setDelete();
 			}
 			if ( *((int*)(&fixtureBUserData)) == ENEMIGO || *((int*)(&fixtureBUserData)) == PIESEN ) {

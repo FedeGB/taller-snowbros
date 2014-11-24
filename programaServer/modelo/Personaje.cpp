@@ -26,9 +26,11 @@ Personaje::Personaje(){
 	isAirborne = false;
 	isMoving = false;
 	isThrowing = false;
+	canKick = false;
 	camera = NULL;
 	online = true;
 	vida = 5;
+	maxpower = 0;
 	for( int i = 0; i < 3; i++)
 		sorpresasContador[i] = 0.0f;
 	sorpresaPaso = 0.2;
