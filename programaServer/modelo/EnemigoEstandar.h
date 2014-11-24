@@ -18,21 +18,36 @@ public:
 	virtual void update();
 	virtual void eventoAbajo();
 	virtual void eventoSoltoAbajo();
+	virtual void eventoSpace();
+	virtual void eventoSoltoSpace();
 	virtual bool isRestricted(teclas_t);
 	virtual void setOnBorder(bool);
 	virtual bool itsOnBorder();
 	virtual void applyDamage(float);
 	virtual bool trapped();
+	virtual void empujar(orientation_t);
+	virtual void Noempujar();
+	void setDelete(){
+			toDelete = true;
+		}
+	bool forDelete(){
+			return toDelete;
+		}
 
 	int enemyNumber;
 	sprite_t spriteStun;
+	bool isFrozzen;
 
 protected:
+	bool toDelete;
 
 	bool isDownPressed;
+	bool isSpacePressed;
 	bool isOnBorder;
 	bool isTrapped;
-	bool isFrozzen;
+	bool isPushable;
+	orientation_t pushOrientation;
+
 	int stunCounter;
 
 };

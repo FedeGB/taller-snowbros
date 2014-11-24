@@ -7,14 +7,17 @@
 
 #include "EnemigoEstandar.h"
 #include "../utiles/tipos.h"
+#include "formas/Circulo.h"
 
 EnemigoEstandar::EnemigoEstandar(int number){
 	bodyB2D = NULL;
 	numFootContacts = 0;
+	toDelete=false;
 	isUpPressed = false;
 	isDownPressed = false;
 	isLeftPressed = false;
 	isRightPressed = false;
+	isSpacePressed=false;
 	wasLeftPressed1st = false;
 	orientation = LEFT;
 	activeSprite = PARADOIZQUIERDA;
@@ -32,9 +35,58 @@ EnemigoEstandar::EnemigoEstandar(int number){
 	vida = 10;
 	isTrapped = false;
 	stunCounter=0;
+	isPushable=false;
 }
 
-EnemigoEstandar::~EnemigoEstandar() {};
+EnemigoEstandar::~EnemigoEstandar() {
+	orientation_t temp=this->pushOrientation;
+
+
+	b2BodyDef b2dObjDef;
+	b2FixtureDef myFixtureDef;
+	b2CircleShape circle;
+	WorldItem * figura;
+
+	b2dObjDef.type = b2_dynamicBody;
+	b2dObjDef.bullet = true;
+
+	b2dObjDef.position.x = this->bodyB2D->GetPosition().x;
+	b2dObjDef.position.y = this->bodyB2D->GetPosition().y;
+
+	circle.m_radius = 1.5f; //defino el tamaño
+	myFixtureDef.shape = &circle; //defino que es un circulo
+
+			// Determina el tipo de figura para poder dibujarla.
+	Circulo * circ = new Circulo();
+	circ->radio = circle.m_radius;
+	figura = circ;
+	//lo vinculo al mundo
+	b2Body *_shape = this->bodyB2D->GetWorld()->CreateBody(&b2dObjDef);
+	myFixtureDef.density =1.0f; //le doy masa
+	myFixtureDef.restitution = 0.15f;
+
+	myFixtureDef.friction = 0.3f;
+
+		b2Fixture * shapeFixture = _shape->CreateFixture(&myFixtureDef); //le asigno la forma
+		if (b2dObjDef.type == b2_dynamicBody) shapeFixture->SetUserData((void*) DINAMICO);
+		else {
+			shapeFixture->SetUserData((void*) ESTATICO);
+		}
+
+		//Me fijo si el objeto que creo es atravesable.
+
+		// Setea los ultimos parametros de la figura y vincula al bodyB2D.
+		figura->posicion.x = b2dObjDef.position.x;
+		figura->posicion.y = b2dObjDef.position.y;
+		figura->angulo = b2dObjDef.angle;
+		_shape->SetUserData(figura);
+		if(temp==LEFT)
+			_shape->ApplyForceToCenter(b2Vec2(10.0f,0),true);
+		else
+			_shape->ApplyForceToCenter(b2Vec2(10.0f,0),true);
+
+	this->bodyB2D->GetWorld()->DestroyBody(this->bodyB2D);
+};
 
 std::string EnemigoEstandar::serializar(){
 
@@ -48,19 +100,37 @@ std::string EnemigoEstandar::serializar(){
 void EnemigoEstandar::update(){
 	// Determina si esta en el aire.
 	isAirborne = numFootContacts <= 0 ? true : false;
-	if(vida==0) spriteStun=STUN0;
+	if(vida<=0) spriteStun=STUN0;
 	else if(vida<=3) spriteStun=STUN3;
 	else if(vida<=6) spriteStun=STUN2;
 	else if(vida<10) spriteStun=STUN1;
-	else if(vida==10) spriteStun=STUN0;
+	else if(vida>=10) spriteStun=STUN0;
+
+	if(isPushable){
+		animationCounter++;
+			if(pushOrientation==LEFT)
+				bodyB2D->ApplyLinearImpulse( b2Vec2(-10.0f, 0.0), bodyB2D->GetWorldCenter(), true);
+			else
+				bodyB2D->ApplyLinearImpulse( b2Vec2(10.0f, 0.0), bodyB2D->GetWorldCenter(), true);
+			if(animationCounter==200)
+				isPushable=false;
+			return;
+		}
 
 	if(isFrozzen){
 		stunCounter++;
-		if(stunCounter==10000)
+		if(stunCounter==10000){
 			isFrozzen=false;
+			for(b2Fixture * fix= bodyB2D->GetFixtureList();fix!=NULL;fix=fix->GetNext()){
+				void* userData =fix->GetUserData();
+				if(*((int*)(&userData))==ENEMIGOBOLA) fix->SetUserData((void*)ENEMIGOCONGELADO);
+				if(*((int*)(&userData))==PIESENBOLA) fix->SetUserData((void*)PIESENCONGELADO);
+			}
+		}
 		activeSprite=CONGELADO;
 		return;
 	}
+
 	if(isTrapped) {
 		// TODO: Acciones a realizar si esta atrapado
 		animationCounter++;
@@ -75,10 +145,20 @@ void EnemigoEstandar::update(){
 			vida++;
 			stunCounter=0;
 		}
-		if(vida>=10)
+		if(vida>=10){
 			isTrapped=false;
+			for(b2Fixture * fix= bodyB2D->GetFixtureList();fix!=NULL;fix=fix->GetNext()){
+				void* userData =fix->GetUserData();
+				if(*((int*)(&userData))==ENEMIGOCONGELADO)
+					fix->SetUserData((void*)ENEMIGO);
+				if(*((int*)(&userData))==PIESENCONGELADO)
+					fix->SetUserData((void*)PIESEN);
+			}
+		}
 		return;
 	}
+
+
 
 	// Determina, si esta saltando, si ya termino el salto.
 	if (!isAirborne) {
@@ -197,6 +277,14 @@ void EnemigoEstandar::update(){
 
 }
 
+void EnemigoEstandar::eventoSpace() {
+	std::cout<<"space";
+	isSpacePressed = true;
+}
+
+void EnemigoEstandar::eventoSoltoSpace() {
+	isSpacePressed = false;
+}
 
 void EnemigoEstandar::eventoAbajo() {
 	isDownPressed = true;
@@ -238,12 +326,37 @@ void EnemigoEstandar::applyDamage(float dmg) {
 	if(!isTrapped) {
 		isTrapped = true;
 		animationCounter=0;
+		for(b2Fixture * fix= bodyB2D->GetFixtureList();fix!=NULL;fix=fix->GetNext()){
+			void* userData =fix->GetUserData();
+			if(*((int*)(&userData))==ENEMIGO){
+				fix->SetUserData((void*)ENEMIGOCONGELADO);
+			}
+			if(*((int*)(&userData))==PIESEN)
+							fix->SetUserData((void*)PIESENCONGELADO);
+		}
+
 	}
 	vida -= 1;//TODO: dmg no se por que tiene basura por eso harcodie este 1
 	if (vida<0){
 		isFrozzen=true;
 		vida=0;
+		for(b2Fixture * fix= bodyB2D->GetFixtureList();fix!=NULL;fix=fix->GetNext()){
+						void* userData =fix->GetUserData();
+								if(*((int*)(&userData))==ENEMIGOCONGELADO)
+									fix->SetUserData((void*)ENEMIGOBOLA);
+								if(*((int*)(&userData))==PIESENCONGELADO)
+												fix->SetUserData((void*)PIESENBOLA);
+							}
 	}
 //	std::cout<<dmg<<std::endl;
+}
+
+void EnemigoEstandar::empujar(orientation_t ori){
+	setDelete();
+
+}
+
+void EnemigoEstandar::Noempujar(){
+		//isPushable=false;
 }
 

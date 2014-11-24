@@ -332,3 +332,14 @@ void Personaje::actualizarEfectos(){
 	}
 }
 
+void Personaje::Patear(){
+	canKick=true;
+}
+void Personaje::NoPatear(){
+	canKick=false;
+}
+
+int Personaje::GetOrientation(){
+	return orientation;
+}
+

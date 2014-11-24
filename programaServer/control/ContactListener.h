@@ -19,6 +19,26 @@ class ContactListener : public b2ContactListener
 		void* fixtureAUserData = contact->GetFixtureA()->GetUserData();
 		void* fixtureBUserData = contact->GetFixtureB()->GetUserData();
 
+		if ( *((int*)(&fixtureAUserData)) == EMPUJE ){
+					if ( *((int*)(&fixtureBUserData)) == ENEMIGOBOLA ){
+						orientation_t ori=(orientation_t)( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->GetOrientation();
+						if(( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->isSpacePressed){
+							std::cout<<"space";
+							( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->Patear();
+							( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() )->empujar(ori);
+						}
+					}
+		}
+		if ( *((int*)(&fixtureAUserData)) == ENEMIGOBOLA ){
+							if ( *((int*)(&fixtureBUserData)) == EMPUJE ){
+								orientation_t ori=(orientation_t)( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->GetOrientation();
+								if(( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->isSpacePressed){
+									( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->Patear();
+									( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() )->empujar(ori);
+								}
+							}
+		}
+
 		// Foot sensor collision for jump
 		if ( *((int*)(&fixtureAUserData)) == PIESPJ || *((int*)(&fixtureAUserData)) == PIESEN ){
 			if ( (*((int*)(&fixtureBUserData)) != CAMARA)&&(*((int*)(&fixtureBUserData)) != PODERHIELO) )
@@ -50,7 +70,7 @@ class ContactListener : public b2ContactListener
 			if ( *((int*)(&fixtureAUserData)) == ESTATICO || *((int*)(&fixtureAUserData)) == ATRAVESABLE || *((int*)(&fixtureAUserData)) == DINAMICO ){
 				((snowball*) contact->GetFixtureB()->GetBody()->GetUserData())->setDelete();
 			}
-			if ( *((int*)(&fixtureAUserData)) == ENEMIGO || *((int*)(&fixtureAUserData)) == PIESEN ) {
+			if ( *((int*)(&fixtureAUserData)) == ENEMIGO|| *((int*)(&fixtureAUserData)) == ENEMIGOCONGELADO|| *((int*)(&fixtureAUserData)) == PIESEN ) {
 				((snowball*) contact->GetFixtureB()->GetBody()->GetUserData())->setDelete();
 				((EnemigoEstandar*) contact->GetFixtureA()->GetBody()->GetUserData())->applyDamage(((snowball*) contact->GetFixtureA()->GetBody()->GetUserData())->getDamage());
 			}
@@ -59,7 +79,7 @@ class ContactListener : public b2ContactListener
 			if ( *((int*)(&fixtureBUserData)) == ESTATICO  || *((int*)(&fixtureBUserData)) == ATRAVESABLE || *((int*)(&fixtureBUserData)) == DINAMICO ) {
 				((snowball*) contact->GetFixtureA()->GetBody()->GetUserData())->setDelete();
 			}
-			if ( *((int*)(&fixtureBUserData)) == ENEMIGO || *((int*)(&fixtureBUserData)) == PIESEN ) {
+			if ( *((int*)(&fixtureBUserData)) == ENEMIGO || *((int*)(&fixtureBUserData)) == ENEMIGOCONGELADO|| *((int*)(&fixtureBUserData)) == PIESEN ) {
 				((snowball*) contact->GetFixtureA()->GetBody()->GetUserData())->setDelete();
 				((EnemigoEstandar*) contact->GetFixtureB()->GetBody()->GetUserData())->applyDamage(((snowball*) contact->GetFixtureB()->GetBody()->GetUserData())->getDamage());
 			}
@@ -103,6 +123,19 @@ class ContactListener : public b2ContactListener
     	  // Get Collision fixtures
     	  void* fixtureAUserData = contact->GetFixtureA()->GetUserData();
     	  void* fixtureBUserData = contact->GetFixtureB()->GetUserData();
+
+    	  if ( *((int*)(&fixtureAUserData)) == PERSONAJE ){
+    	  					if ( *((int*)(&fixtureBUserData)) == ENEMIGOBOLA ){
+    	  						( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->NoPatear();
+    	  						( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() )->Noempujar();
+    	  					}
+    	  		}
+    	  		if ( *((int*)(&fixtureAUserData)) == ENEMIGOBOLA ){
+    	  							if ( *((int*)(&fixtureBUserData)) == PERSONAJE ){
+    	  								( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->NoPatear();
+    	  								( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() )->Noempujar();
+    	  							}
+    	  		}
 
   		// Foot sensor collision for jump
     	  if ( *((int*)(&fixtureAUserData)) == PIESPJ || *((int*)(&fixtureAUserData)) == PIESEN ){

@@ -27,11 +27,14 @@ public:
 	virtual bool isAlive();
 	virtual void applyDamage(float);
 	virtual bool GetAirborne();
+	virtual int GetOrientation();
 
 	virtual void agregarVida();
 	virtual void correrMasRapido();
 	virtual void nieveMasLejos();
 	virtual void nieveMasPotente();
+	virtual void Patear();
+	virtual void NoPatear();
 
 	virtual void actualizarEfectos();
 
@@ -54,7 +57,8 @@ public:
 
 	Camera * camera;
 	bool online;
-
+	orientation_t orientation;
+	bool isSpacePressed;
 protected:
 	b2Body * bodyB2D;
 
@@ -69,7 +73,8 @@ protected:
 	bool isAirborne;
 	bool isMoving;
 	bool isThrowing;
-	bool isSpacePressed;
+
+
 
 	float sorpresaPaso;
 	float sorpresasContador[4];
@@ -79,12 +84,9 @@ protected:
 	float potenciaNieveSorpresa;
 	float impulsoNieveSorpresa;
 
-	enum orientation_t{
-		LEFT,
-		RIGHT,
-	};
 
-	orientation_t orientation;
+
+
 
 	sprite_t activeSprite;
 

@@ -75,6 +75,11 @@ enum teclas_t{
 	a,
 };
 
+enum orientation_t{
+			LEFT,
+			RIGHT,
+		};
+
 enum worlditem_t{
 	METADATAFONDO,
 	METADATAHUD,
@@ -148,6 +153,12 @@ enum sensor_t{
 	PIESEN,
 	sensorSORPRESA,
 	BORDE,
+	ENEMIGOCONGELADO,
+	PIESENCONGELADO,
+	BOLA,
+	ENEMIGOBOLA,
+	PIESENBOLA,
+	EMPUJE,
 };
 
 #endif /* TIPOS_H_ */

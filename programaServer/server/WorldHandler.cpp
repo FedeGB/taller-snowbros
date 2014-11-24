@@ -108,6 +108,7 @@ void WorldHandler::cleanPowers() {
 				delete ((snowball*) body->GetUserData());
 			}
 		}
+
 		if( *((int*)(&fixData)) == sensorSORPRESA) {
 			if( ( (Sorpresa*) body->GetUserData() )->forDelete() ){
 				delete ((Sorpresa*) body->GetUserData());

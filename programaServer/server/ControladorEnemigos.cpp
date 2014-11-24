@@ -124,6 +124,12 @@ void ControladorEnemigos::update(bool online) {
 	if(online) {
 		for(ControladorEnemigos::iterator it = (*this).begin(); it != (*this).end(); ++it) {
 			if((*it).second) {
+
+				if((*it).second->forDelete()){
+					delete (*it).second;
+					(*it).second=NULL;
+				}
+				else
 				(*it).second->update();
 			}
 		}

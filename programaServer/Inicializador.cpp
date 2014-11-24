@@ -251,6 +251,21 @@ Personaje * Inicializador::pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*
     b2Fixture* footSensorFixture = pjB2D->CreateFixture(&myFixtureDef);
     footSensorFixture->SetUserData( (void*)PIESPJ );
 
+    // Agrego el sensor para empujar
+        polygon.SetAsBox(0.1, 0.1f, b2Vec2(halfWidth*1.2,0), 0);
+    	myFixtureDef.shape = &polygon; //defino que es un poligono
+        myFixtureDef.isSensor = true;
+    	myFixtureDef.density = 1.0f; //le doy masa
+        b2Fixture* pushSensor1 = pjB2D->CreateFixture(&myFixtureDef);
+        pushSensor1->SetUserData( (void*)EMPUJE );
+
+        polygon.SetAsBox(0.1, 0.1f, b2Vec2(-halfWidth*1.2,0), 0);
+        myFixtureDef.shape = &polygon; //defino que es un poligono
+        myFixtureDef.isSensor = true;
+        myFixtureDef.density = 1.0f; //le doy masa
+        b2Fixture* pushSensor2 = pjB2D->CreateFixture(&myFixtureDef);
+        pushSensor2->SetUserData( (void*)EMPUJE );
+
     // Crea la representacion del PJ fuera del mundo de B2D, para manejar su movimiento
     // y datos necesarios para renderizarlo en el cliente.
     Personaje * pj = new Personaje();
@@ -527,7 +542,7 @@ EnemigoEstandar * createEnemy(std::string data, b2World ** wB2D, int num) {
 		myFixtureDef.shape = &polygon; //defino que es un poligono
 		myFixtureDef.density = 1.0f; //le doy masa
 		myFixtureDef.restitution = 0.0f;
-		myFixtureDef.friction=2.0f;
+		myFixtureDef.friction=20.0f;
 		fixture = enB2D->CreateFixture(&myFixtureDef);
 		fixture->SetUserData( (void*)PIESEN  );
 
