@@ -233,13 +233,13 @@ Personaje * Inicializador::pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*
 
 	//pies
 	v.x=0;
-	v.y=halfHeight*0.8;
+	v.y=halfHeight*0.75;
 	polygon.SetAsBox(halfWidth*0.4, halfHeight*0.1, v, 0);
 	myFixtureDef.shape = &polygon; //defino que es un poligono
 	myFixtureDef.density = 1.0f; //le doy masa
 	myFixtureDef.restitution = 0.0f;
 	myFixtureDef.friction=2.0f;
-	/* b2Fixture* */fixture = pjB2D->CreateFixture(&myFixtureDef);
+	fixture = pjB2D->CreateFixture(&myFixtureDef);
 	fixture->SetUserData( (void*)PERSONAJE );
 
 
@@ -522,7 +522,7 @@ EnemigoEstandar * createEnemy(std::string data, b2World ** wB2D, int num) {
 
 		//pies
 		v.x=0;
-		v.y=halfHeight*0.8;
+		v.y=halfHeight*0.75;
 		polygon.SetAsBox(halfWidth*0.4, halfHeight*0.1, v, 0);
 		myFixtureDef.shape = &polygon; //defino que es un poligono
 		myFixtureDef.density = 1.0f; //le doy masa

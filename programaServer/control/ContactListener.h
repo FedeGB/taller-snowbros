@@ -84,7 +84,6 @@ class ContactListener : public b2ContactListener
 					Sorpresa* sorpresa = (Sorpresa*) contact->GetFixtureB()->GetBody()->GetUserData();
 					sorpresa->setDelete();
 					sorpresa->aplicarAlPJ( ( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() ) );
-					//( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->aplicarSorpresa(sorpresa);
 				}
 			}
 		}
@@ -95,8 +94,6 @@ class ContactListener : public b2ContactListener
 					Sorpresa* sorpresa = (Sorpresa*) contact->GetFixtureA()->GetBody()->GetUserData();
 					sorpresa->setDelete();
 					sorpresa->aplicarAlPJ( ( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() ) );
-					//( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->aplicarSorpresa(sorpresa);
-
 				}
 			}
 		}
@@ -157,6 +154,20 @@ class ContactListener : public b2ContactListener
 				  PJB = (Personaje*)contact->GetFixtureA()->GetBody()->GetUserData();
     		  }
     	  }
+
+    	  if ( *((int*)(&fixtureAUserData)) == ATRAVESABLE){
+    	    		  if (*((int*)(&fixtureBUserData)) == ENEMIGO || *((int*)(&fixtureBUserData)) == PIESEN){
+    	    			  ITA = (Cuadrilatero*) contact->GetFixtureA()->GetBody()->GetUserData();
+    	    			  PJB = (EnemigoEstandar*) contact->GetFixtureB()->GetBody()->GetUserData();
+    	    		  }
+    	    	  }
+
+    	    	  if (*((int*)(&fixtureAUserData)) == ENEMIGO || *((int*)(&fixtureAUserData)) == PIESEN){
+    	    		  if (*((int*)(&fixtureBUserData)) == ATRAVESABLE){
+    	    			  ITA = (Cuadrilatero *) contact->GetFixtureB()->GetBody()->GetUserData();
+    					  PJB = (EnemigoEstandar*)contact->GetFixtureA()->GetBody()->GetUserData();
+    	    		  }
+    	    	  }
 
     	  if(PJB != NULL && ITA != NULL){
     		  //Me fijo si la parte de abajo del personaje esta por arriba del la parte de arriba de la plataforma.

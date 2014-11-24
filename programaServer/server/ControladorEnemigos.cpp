@@ -116,7 +116,7 @@ teclas_t ControladorEnemigos::getAction(EnemigoEstandar* unit, b2Vec2 enemy, b2W
 		}
 	}
 	// Romear
-	return SPACE;
+	return DERECHA;
 
 }
 
