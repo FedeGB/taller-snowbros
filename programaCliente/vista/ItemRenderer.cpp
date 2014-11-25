@@ -712,10 +712,13 @@ void ItemRenderer::render(WorldItem * item, float escala){
 		break;
 	case SONIDO:
 		renderSonido((Sonido*) item);
+		break;
 	case SORPRESA:
 		renderSorpresa((Sorpresa*) item, escala);
+		break;
 	case BOLASNOW:
 		renderBola((BolaEnemigo*) item, escala);
+		break;
 	}
 }
 

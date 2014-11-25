@@ -61,8 +61,9 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 	}
 
 	case BOLASNOW:{
-			BolaEnemigo * bola = new BolaEnemigo();
-			bola->radio = (float)atof(buff[4].c_str());
+			Circulo * b = new Circulo();
+			b->radio = (float)atof(buff[4].c_str());
+			BolaEnemigo * bola = (BolaEnemigo*)b;
 
 			item = bola;
 			break;
