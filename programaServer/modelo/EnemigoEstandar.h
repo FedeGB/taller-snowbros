@@ -33,7 +33,7 @@ public:
 	bool forDelete(){
 			return toDelete;
 		}
-
+	//bool isSpacePressed;
 	int enemyNumber;
 	sprite_t spriteStun;
 	bool isFrozzen;
@@ -42,7 +42,7 @@ protected:
 	bool toDelete;
 
 	bool isDownPressed;
-	bool isSpacePressed;
+
 	bool isOnBorder;
 	bool isTrapped;
 	bool isPushable;

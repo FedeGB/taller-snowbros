@@ -12,6 +12,8 @@ BolaEnemigo::BolaEnemigo(b2Body * body){
 	b2FixtureDef myFixtureDef;
 	b2CircleShape circle;
 	WorldItem * figura;
+	this->tiempoDeVida=0;
+	this->toDelete=false;
 
 	b2dObjDef.type = b2_dynamicBody;
 	b2dObjDef.bullet = true;
@@ -27,14 +29,14 @@ BolaEnemigo::BolaEnemigo(b2Body * body){
 	//lo vinculo al mundo
 	bodyB2D = body->GetWorld()->CreateBody(&b2dObjDef);
 	myFixtureDef.density =1.0f; //le doy masa
-	myFixtureDef.restitution = 0.15f;
+	myFixtureDef.restitution = 0.8f;
 
 	myFixtureDef.friction = 0.3f;
 
 	b2Fixture * shapeFixture = bodyB2D->CreateFixture(&myFixtureDef); //le asigno la forma
-	if (b2dObjDef.type == b2_dynamicBody) shapeFixture->SetUserData((void*) DINAMICO);
+	if (b2dObjDef.type == b2_dynamicBody) shapeFixture->SetUserData((void*) BOLASNOW);
 	else {
-		shapeFixture->SetUserData((void*) ESTATICO);
+		shapeFixture->SetUserData((void*) BOLASNOW);
 	}
 
 	// Setea los ultimos parametros de la figura y vincula al bodyB2D.
@@ -48,9 +50,9 @@ BolaEnemigo::BolaEnemigo(b2Body * body){
 
 void BolaEnemigo::Impulso(orientation_t ori){
 	if(ori==LEFT)
-		bodyB2D->ApplyLinearImpulse(b2Vec2(-300.0f,0), bodyB2D->GetWorldCenter(),true);
+		bodyB2D->ApplyLinearImpulse(b2Vec2(-3000.0f,0), bodyB2D->GetWorldCenter(),true);
 	else
-		bodyB2D->ApplyLinearImpulse(b2Vec2(300.0f,0), bodyB2D->GetWorldCenter(),true);
+		bodyB2D->ApplyLinearImpulse(b2Vec2(3000.0f,0), bodyB2D->GetWorldCenter(),true);
 }
 
 std::string BolaEnemigo::serializar(){
@@ -61,4 +63,14 @@ std::string BolaEnemigo::serializar(){
 	return buffer;
 }
 
-BolaEnemigo::~BolaEnemigo() {}
+BolaEnemigo::~BolaEnemigo() {
+	this->bodyB2D->GetWorld()->DestroyBody(this->bodyB2D);
+	//TODO: crear Sorpresa
+}
+
+void BolaEnemigo::aumentarTiempo(){
+	tiempoDeVida++;
+	if(tiempoDeVida>=100000)
+		setDelete();
+	return;
+}

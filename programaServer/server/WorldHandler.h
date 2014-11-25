@@ -11,6 +11,7 @@
 
 #include "WorkItem.h"
 #include "../modelo/WorldItem.h"
+#include "../modelo/BolaEnemigo.h"
 #include "../threads/Thread.h"
 //#include "../threads/ThreadSafeList.h"
 #include "../threads/ConditionVariable.h"

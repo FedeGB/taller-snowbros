@@ -15,7 +15,6 @@
 #include "../modelo/snowball.h"
 #include "../modelo/Sonido.h"
 
-
 class Personaje : public Cuadrilatero {
 public:
 	Personaje();
@@ -59,6 +58,8 @@ public:
 	bool online;
 	orientation_t orientation;
 	bool isSpacePressed;
+	void * enemigoParaEmpujar;
+
 protected:
 	b2Body * bodyB2D;
 

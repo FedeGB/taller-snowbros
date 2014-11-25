@@ -114,6 +114,13 @@ void WorldHandler::cleanPowers() {
 				delete ((Sorpresa*) body->GetUserData());
 			}
 		}
+		if( *((int*)(&fixData)) == BOLASNOW) {
+			if( ( (BolaEnemigo*) body->GetUserData() )->forDelete() ){
+				delete ((BolaEnemigo*) body->GetUserData());
+			}
+			else
+				((BolaEnemigo*) body->GetUserData())->aumentarTiempo();
+		}
 		body = body->GetNext();
 	}
 }

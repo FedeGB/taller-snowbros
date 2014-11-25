@@ -6,6 +6,7 @@
  */
 
 #include "Personaje.h"
+#include "EnemigoEstandar.h"
 #include "../modelo/snowball.h"
 
 float danio =0.5;
@@ -67,6 +68,9 @@ void Personaje::eventoSoltoIzquierda(){
 
 void Personaje::eventoSpace() {
 	isSpacePressed = true;
+	if(enemigoParaEmpujar!=NULL){
+		((EnemigoEstandar*)enemigoParaEmpujar)->isSpacePressed=true;
+	}
 }
 
 void Personaje::eventoSoltoSpace() {

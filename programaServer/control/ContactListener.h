@@ -22,19 +22,17 @@ class ContactListener : public b2ContactListener
 		if ( *((int*)(&fixtureAUserData)) == EMPUJE ){
 					if ( *((int*)(&fixtureBUserData)) == ENEMIGOBOLA ){
 						orientation_t ori=(orientation_t)( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->GetOrientation();
-						if(( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->isSpacePressed){
 							( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->Patear();
 							( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() )->empujar(ori);
-						}
+							( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->enemigoParaEmpujar=( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() );
 					}
 		}
 		if ( *((int*)(&fixtureAUserData)) == ENEMIGOBOLA ){
 							if ( *((int*)(&fixtureBUserData)) == EMPUJE ){
 								orientation_t ori=(orientation_t)( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->GetOrientation();
-								if(( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->isSpacePressed){
 									( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->Patear();
 									( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() )->empujar(ori);
-								}
+									( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->enemigoParaEmpujar=( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() );
 							}
 		}
 
@@ -127,12 +125,14 @@ class ContactListener : public b2ContactListener
     	  					if ( *((int*)(&fixtureBUserData)) == ENEMIGOBOLA ){
     	  						( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->NoPatear();
     	  						( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() )->Noempujar();
+    	  						( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->enemigoParaEmpujar= NULL;
     	  					}
     	  		}
     	  		if ( *((int*)(&fixtureAUserData)) == ENEMIGOBOLA ){
     	  							if ( *((int*)(&fixtureBUserData)) == PERSONAJE ){
     	  								( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->NoPatear();
     	  								( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() )->Noempujar();
+    	  								( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->enemigoParaEmpujar= NULL;
     	  							}
     	  		}
 

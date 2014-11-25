@@ -15,10 +15,19 @@ public:
 	~BolaEnemigo();
 	void Impulso(orientation_t);
 	virtual std::string serializar();
+	void aumentarTiempo();
+	void setDelete(){
+		toDelete = true;
+	}
+	bool forDelete(){
+		return toDelete;
+	}
 
 protected:
 	b2Body * bodyB2D;
 	sprite_t activeSprite;
+	int tiempoDeVida;
+	bool toDelete;
 };
 
 #endif /* BOLAENEMIGO_H_ */

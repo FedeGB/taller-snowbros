@@ -231,6 +231,10 @@ void Camera::updateRenderList(){
 		// Saltea los apendices de los personajes.
 		if ( *((int*)(&fixtureAUserData)) == PIESPJ || *((int*)(&fixtureBUserData)) == PIESPJ )
 			continue;
+		if ( *((int*)(&fixtureAUserData)) == EMPUJE || *((int*)(&fixtureBUserData)) == EMPUJE )
+			continue;
+		if ( *((int*)(&fixtureAUserData)) == PIESEN || *((int*)(&fixtureBUserData)) == PIESEN )
+			continue;
 
 		// Saltea las demas camaras.
 		if ( *((int*)(&fixtureAUserData)) == CAMARA && *((int*)(&fixtureBUserData)) == CAMARA )
