@@ -12,6 +12,7 @@
 #include "../modelo/Personaje.h"
 #include "../modelo/poder.h"
 #include "../modelo/EnemigoEstandar.h"
+#include "../modelo/BolaEnemigo.h"
 #include "../modelo/Metadata.h"
 #include "../modelo/formas/Circulo.h"
 #include "../modelo/formas/Cuadrilatero.h"
@@ -45,6 +46,7 @@ private:
 	static void renderPoder(poder *item,float escala);
 	static void renderMetadataFondo(Metadata * item);
 	static void renderMetadataHUD(Metadata * item);
+	static void renderBola(BolaEnemigo * item, float escala);
 
 	static SonidosMap sonidosMap;
 	static void renderSonido(Sonido * item);

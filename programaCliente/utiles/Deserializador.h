@@ -14,6 +14,7 @@
 #include "../modelo/Personaje.h"
 #include "../modelo/poder.h"
 #include "../modelo/EnemigoEstandar.h"
+#include "../modelo/BolaEnemigo.h"
 #include "../modelo/formas/Circulo.h"
 #include "../modelo/formas/Cuadrilatero.h"
 #include "../modelo/formas/PoligonoRegular.h"

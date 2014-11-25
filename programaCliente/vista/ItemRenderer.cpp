@@ -291,7 +291,23 @@ Vertexes * obtenerVerticesBola(sprite_t activeSprite){
 			vertexes->x[1] = vertexes->x[2] = 241 / 428.0f;
 			vertexes->y[2] = vertexes->y[3] = 325 / 365.0f;
 		}
+		if (activeSprite == CONGELADO){
+						vertexes->x[0] = vertexes->x[3] = 204 / 428.0f;
+						vertexes->y[0] = vertexes->y[1] = 263 / 365.0f;
+						vertexes->x[1] = vertexes->x[2] = 223 / 428.0f;
+						vertexes->y[2] = vertexes->y[3] = 282 / 365.0f;
+					}
 		return vertexes;
+}
+
+Vertexes * obtenerVerticesNieve(sprite_t activeSprite){
+	Vertexes * vertexes = new Vertexes(20);
+	for (int i = 0; i < 20; i++) {
+		float thita = (2 * i * PI / 20);
+		vertexes->x[i] = ( 214.5 + 9.5 * cos(thita) ) / 428.0f;
+		vertexes->y[i] = ( 272.5 - 9.5 * sin(thita) ) / 365.0f;
+	}
+	return vertexes;
 }
 
 Vertexes * obtenerVerticesEnemigo1(sprite_t activeSprite){
@@ -615,6 +631,33 @@ void ItemRenderer::renderMetadataHUD(Metadata * item){
 
 }
 
+void ItemRenderer::renderBola(BolaEnemigo * item, float escala){
+
+	// Convierte los parametros de B2D en los necesarios para renderear el sprite.
+	// Obtiene la seccion de la pantalla a renderear.
+	GLfloat vx[20];
+	GLfloat vy[20];
+
+	for (int i = 0; i < 20; i++) {
+		float thita = (2 * i * PI / 20) - (item->angulo);
+		vx[i] = ( item->posicion.x - item->radio * cos(thita) ) * escala;
+		vy[i] = ( item->posicion.y + item->radio * sin(thita) ) * escala;
+	}
+
+	// Obtiene la textura y su correspondiente rect para renderear.
+	Vertexes * vert = obtenerVerticesNieve(item->activeSprite);
+
+	// Obtiene la textura y su correspondiente rect para renderear.
+	TexAndVertexes * TaV = textureMap[ENES];
+
+	// Si esta no esta conectado, se cambia el color a gris.
+	// Renderea.
+	TaV->tex->dibujar(vx, vy, vert->x, vert->y, 20);
+
+	delete vert;
+
+}
+
 void ItemRenderer::renderSonido(Sonido * item){
 
 	sonidosMap[item->sonido]->actualizarEstado();
@@ -671,6 +714,9 @@ void ItemRenderer::render(WorldItem * item, float escala){
 		renderSonido((Sonido*) item);
 	case SORPRESA:
 		renderSorpresa((Sorpresa*) item, escala);
+	case BOLASNOW:
+		renderBola((BolaEnemigo*) item, escala);
 	}
 }
+
 

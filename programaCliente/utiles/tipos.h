@@ -100,6 +100,7 @@ enum worlditem_t{
 	SONIDO,
 	ENEMIGOESTANDAR,
 	SORPRESA,
+	BOLASNOW,
 };
 
 enum sprite_t{
