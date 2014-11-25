@@ -8,6 +8,7 @@
 #include "EnemigoEstandar.h"
 #include "../utiles/tipos.h"
 #include "formas/Circulo.h"
+#include "BolaEnemigo.h"
 
 EnemigoEstandar::EnemigoEstandar(int number){
 	bodyB2D = NULL;
@@ -40,51 +41,8 @@ EnemigoEstandar::EnemigoEstandar(int number){
 
 EnemigoEstandar::~EnemigoEstandar() {
 	orientation_t temp=this->pushOrientation;
-
-
-	b2BodyDef b2dObjDef;
-	b2FixtureDef myFixtureDef;
-	b2CircleShape circle;
-	WorldItem * figura;
-
-	b2dObjDef.type = b2_dynamicBody;
-	b2dObjDef.bullet = true;
-
-	b2dObjDef.position.x = this->bodyB2D->GetPosition().x;
-	b2dObjDef.position.y = this->bodyB2D->GetPosition().y;
-
-	circle.m_radius = 1.5f; //defino el tamaño
-	myFixtureDef.shape = &circle; //defino que es un circulo
-
-			// Determina el tipo de figura para poder dibujarla.
-	Circulo * circ = new Circulo();
-	circ->radio = circle.m_radius;
-	figura = circ;
-	//lo vinculo al mundo
-	b2Body *_shape = this->bodyB2D->GetWorld()->CreateBody(&b2dObjDef);
-	myFixtureDef.density =1.0f; //le doy masa
-	myFixtureDef.restitution = 0.15f;
-
-	myFixtureDef.friction = 0.3f;
-
-		b2Fixture * shapeFixture = _shape->CreateFixture(&myFixtureDef); //le asigno la forma
-		if (b2dObjDef.type == b2_dynamicBody) shapeFixture->SetUserData((void*) DINAMICO);
-		else {
-			shapeFixture->SetUserData((void*) ESTATICO);
-		}
-
-		//Me fijo si el objeto que creo es atravesable.
-
-		// Setea los ultimos parametros de la figura y vincula al bodyB2D.
-		figura->posicion.x = b2dObjDef.position.x;
-		figura->posicion.y = b2dObjDef.position.y;
-		figura->angulo = b2dObjDef.angle;
-		_shape->SetUserData(figura);
-		if(temp==LEFT)
-			_shape->ApplyForceToCenter(b2Vec2(10.0f,0),true);
-		else
-			_shape->ApplyForceToCenter(b2Vec2(10.0f,0),true);
-
+	BolaEnemigo * bola= new BolaEnemigo(bodyB2D);
+	bola->Impulso(temp);
 	this->bodyB2D->GetWorld()->DestroyBody(this->bodyB2D);
 };
 
@@ -106,15 +64,9 @@ void EnemigoEstandar::update(){
 	else if(vida<10) spriteStun=STUN1;
 	else if(vida>=10) spriteStun=STUN0;
 
-	if(isPushable){
-		animationCounter++;
-			if(pushOrientation==LEFT)
-				bodyB2D->ApplyLinearImpulse( b2Vec2(-10.0f, 0.0), bodyB2D->GetWorldCenter(), true);
-			else
-				bodyB2D->ApplyLinearImpulse( b2Vec2(10.0f, 0.0), bodyB2D->GetWorldCenter(), true);
-			if(animationCounter==200)
-				isPushable=false;
-			return;
+	if(isPushable&&isSpacePressed){
+		setDelete();
+
 		}
 
 	if(isFrozzen){
@@ -352,11 +304,12 @@ void EnemigoEstandar::applyDamage(float dmg) {
 }
 
 void EnemigoEstandar::empujar(orientation_t ori){
-	setDelete();
+	isPushable=true;
+	this->pushOrientation=ori;
 
 }
 
 void EnemigoEstandar::Noempujar(){
-		//isPushable=false;
+	isPushable=false;
 }
 

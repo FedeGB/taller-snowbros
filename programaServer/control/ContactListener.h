@@ -23,7 +23,6 @@ class ContactListener : public b2ContactListener
 					if ( *((int*)(&fixtureBUserData)) == ENEMIGOBOLA ){
 						orientation_t ori=(orientation_t)( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->GetOrientation();
 						if(( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->isSpacePressed){
-							std::cout<<"space";
 							( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->Patear();
 							( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() )->empujar(ori);
 						}
@@ -127,7 +126,7 @@ class ContactListener : public b2ContactListener
     	  if ( *((int*)(&fixtureAUserData)) == PERSONAJE ){
     	  					if ( *((int*)(&fixtureBUserData)) == ENEMIGOBOLA ){
     	  						( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->NoPatear();
-    	  						( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() )->Noempujar();
+    	  						( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() )->Noempujar();
     	  					}
     	  		}
     	  		if ( *((int*)(&fixtureAUserData)) == ENEMIGOBOLA ){
