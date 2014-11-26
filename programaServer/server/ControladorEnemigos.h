@@ -26,7 +26,7 @@ public:
 private:
 	void standarStrategy(EnemigoEstandar* unit, b2World* world, ControladorUsuarios PJs);
 	b2Vec2 closerPJ(b2World* world, b2Vec2 unit, ControladorUsuarios PJs);
-	bool isPlataformInDirection(b2World* world, EnemigoEstandar* unit, float angle, float length);
+	bool isObjectInDirection(b2World* world, EnemigoEstandar* unit, sensor_t obj, float angle, float length);
 	teclas_t getAction(EnemigoEstandar* unit, b2Vec2 enemy, b2World* world);
 };
 

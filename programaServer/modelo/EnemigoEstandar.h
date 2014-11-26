@@ -13,6 +13,7 @@
 class EnemigoEstandar: public Personaje {
 public:
 	EnemigoEstandar(int number);
+	EnemigoEstandar();
 	virtual ~EnemigoEstandar();
 	virtual std::string serializar();
 	virtual void update();
@@ -27,6 +28,8 @@ public:
 	virtual bool trapped();
 	virtual void empujar(orientation_t);
 	virtual void Noempujar();
+	virtual bool isMovingLeft();
+	virtual bool isMovingRight();
 	void setDelete(){
 			toDelete = true;
 		}

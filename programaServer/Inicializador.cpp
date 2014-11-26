@@ -81,15 +81,6 @@ bool loadInitialValues(std::string configFile, std::string& sConfig) {
 	return true;
 }
 
-/*
-bool windowInit(Window ** w, int widthScreen, int heightScreen, float wRatio,
-		float hRatio, std::string path_fondo) {
-	*w = new Window();
-	bool statusOK = (*w)->init(widthScreen, heightScreen, wRatio, hRatio,
-			path_fondo);
-	return statusOK;
-}*/
-
 void worldInit(b2World ** worldB2D, ContactListener * contactListener) {
 
 	b2Vec2 gravedad(0, 35);
@@ -252,19 +243,19 @@ Personaje * Inicializador::pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*
     footSensorFixture->SetUserData( (void*)PIESPJ );
 
     // Agrego el sensor para empujar
-        polygon.SetAsBox(0.1, 0.1f, b2Vec2(halfWidth*1.2,0), 0);
-    	myFixtureDef.shape = &polygon; //defino que es un poligono
-        myFixtureDef.isSensor = true;
-    	myFixtureDef.density = 1.0f; //le doy masa
-        b2Fixture* pushSensor1 = pjB2D->CreateFixture(&myFixtureDef);
-        pushSensor1->SetUserData( (void*)EMPUJE );
+    polygon.SetAsBox(0.1, 0.1f, b2Vec2(halfWidth*1.2,0), 0);
+    myFixtureDef.shape = &polygon; //defino que es un poligono
+    myFixtureDef.isSensor = true;
+    myFixtureDef.density = 1.0f; //le doy masa
+    b2Fixture* pushSensor1 = pjB2D->CreateFixture(&myFixtureDef);
+    pushSensor1->SetUserData( (void*)EMPUJE );
 
-        polygon.SetAsBox(0.1, 0.1f, b2Vec2(-halfWidth*1.2,0), 0);
-        myFixtureDef.shape = &polygon; //defino que es un poligono
-        myFixtureDef.isSensor = true;
-        myFixtureDef.density = 1.0f; //le doy masa
-        b2Fixture* pushSensor2 = pjB2D->CreateFixture(&myFixtureDef);
-        pushSensor2->SetUserData( (void*)EMPUJE );
+    polygon.SetAsBox(0.1, 0.1f, b2Vec2(-halfWidth*1.2,0), 0);
+    myFixtureDef.shape = &polygon; //defino que es un poligono
+    myFixtureDef.isSensor = true;
+    myFixtureDef.density = 1.0f; //le doy masa
+    b2Fixture* pushSensor2 = pjB2D->CreateFixture(&myFixtureDef);
+    pushSensor2->SetUserData( (void*)EMPUJE );
 
     // Crea la representacion del PJ fuera del mundo de B2D, para manejar su movimiento
     // y datos necesarios para renderizarlo en el cliente.
@@ -365,30 +356,6 @@ b2Body * createObject(std::string data, b2World ** wB2D, int num) {
 
 		b2FixtureDef borderSensFix;
 		b2PolygonShape polygon;
-		// Sensores
-		if(get_node("isPlataform", "objetos", data, num, false)) {
-			//Izquierdo
-			b2Vec2 v(0,(halfHeight*-0.1));
-			v.x=-halfWidth*0.9;
-			polygon.SetAsBox(halfWidth*0.01, halfHeight*2,v,0); //le doy dimensiones
-			borderSensFix.shape = &polygon; //defino que es un poligono;
-			borderSensFix.density=0;
-			borderSensFix.isSensor = true;
-			borderSensFix.restitution = 0.0f;
-			borderSensFix.friction=0;
-			b2Fixture* fixture = _shape->CreateFixture(&borderSensFix);
-			fixture->SetUserData( (void*)BORDE );
-
-			//Derecho
-			v.x=halfWidth*0.9;
-			polygon.SetAsBox(halfWidth*0.01, halfHeight*2,v,0);
-			borderSensFix.shape = &polygon;
-			borderSensFix.restitution = 0.0f;
-			borderSensFix.friction=0;
-			borderSensFix.isSensor = true;
-			fixture = _shape->CreateFixture(&borderSensFix);
-			fixture->SetUserData( (void*)BORDE );
-		}
 
 		break;
 	}
@@ -487,80 +454,85 @@ EnemigoEstandar * createEnemy(std::string data, b2World ** wB2D, int num) {
 	float32 en_y = get_node("y", "enemigos", data, num, 10.0f);
 	b2Body* enB2D = NULL;
 	worlditem_t type = ENEMIGOESTANDAR;
-	if (tipo == "est") {
-		float32 anchoMaximo = get_node("ancho-un", "escenario", data, 10.0f);
-		float32 altoMaximo = get_node("alto-un", "escenario", data, 10.0f);
-		if( (en_x > anchoMaximo) | (en_y > altoMaximo) ){
-			if (!log.abrirLog(WINDOWLOG)) {
-				std::cout << "Error al abrir archivo de log" << std::endl;
-				return NULL;
-			}
-			log.escribirLog(WARNING, "No se puede inicializar al personaje fuera del escenario. Seteado por default al medio del escenario.");
-			log.cerrarLog();
-			en_x = ( anchoMaximo * 0.5 ); en_y = ( altoMaximo * 0.5 );
+	EnemigoEstandar * en;
+	float32 anchoMaximo = get_node("ancho-un", "escenario", data, 10.0f);
+	float32 altoMaximo = get_node("alto-un", "escenario", data, 10.0f);
+	if( (en_x > anchoMaximo) | (en_y > altoMaximo) ){
+		if (!log.abrirLog(WINDOWLOG)) {
+			std::cout << "Error al abrir archivo de log" << std::endl;
+			return NULL;
 		}
-		b2dObjDef.position.Set(en_x, en_y);
-		b2dObjDef.angle = 0;
-		b2dObjDef.fixedRotation = true;
-		b2dObjDef.bullet = true;
-		//lo vinculo al mundo
-		enB2D = (*wB2D)->CreateBody(&b2dObjDef);
-		//le doy forma
-		b2Vec2 v(0,(halfHeight*-0.1));
+		log.escribirLog(WARNING, "No se puede inicializar al personaje fuera del escenario. Seteado por default al medio del escenario.");
+		log.cerrarLog();
+		en_x = ( anchoMaximo * 0.5 ); en_y = ( altoMaximo * 0.5 );
+	}
+	b2dObjDef.position.Set(en_x, en_y);
+	b2dObjDef.angle = 0;
+	b2dObjDef.fixedRotation = true;
+	b2dObjDef.bullet = true;
+	//lo vinculo al mundo
+	enB2D = (*wB2D)->CreateBody(&b2dObjDef);
+	//le doy forma
+	b2Vec2 v(0,(halfHeight*-0.1));
 
-		polygon.SetAsBox(halfWidth*0.7, halfHeight*0.7,v,0); //le doy dimensiones
-		myFixtureDef.shape = &polygon; //defino que es un poligono
-		myFixtureDef.density =  get_node("masa", "enemigos", data, num, 20.0f); //le doy masa
-		myFixtureDef.restitution = 0.0f;
-		myFixtureDef.friction=0.2;
-		b2Fixture * bodyFixture = enB2D->CreateFixture(&myFixtureDef); //le asigno la forma
-		bodyFixture->SetUserData( (void*)ENEMIGO );
+	polygon.SetAsBox(halfWidth*0.7, halfHeight*0.7,v,0); //le doy dimensiones
+	myFixtureDef.shape = &polygon; //defino que es un poligono
+	myFixtureDef.density =  get_node("masa", "enemigos", data, num, 20.0f); //le doy masa
+	myFixtureDef.restitution = 0.0f;
+	myFixtureDef.friction=0.2;
+	b2Fixture * bodyFixture = enB2D->CreateFixture(&myFixtureDef); //le asigno la forma
+	bodyFixture->SetUserData( (void*)ENEMIGO );
 
-		//costados sin friccion
-		v.x=-halfWidth*0.7;
-		polygon.SetAsBox(halfWidth*0.15, halfHeight*0.7,v,0); //le doy dimensiones
-		myFixtureDef.shape = &polygon; //defino que es un poligono
-		myFixtureDef.density=0;
-		myFixtureDef.restitution = 0.0f;
-		myFixtureDef.friction=0;
-		b2Fixture* fixture = enB2D->CreateFixture(&myFixtureDef);
-		fixture->SetUserData( (void*)ENEMIGO ); // CAMBIAR ESTA DATA POR NUMEROS UNICOS POR CADA ENEMIGO NUEVO (ATRIBUTO DE CLASE)
+	//costados sin friccion
+	v.x=-halfWidth*0.7;
+	polygon.SetAsBox(halfWidth*0.15, halfHeight*0.7,v,0); //le doy dimensiones
+	myFixtureDef.shape = &polygon; //defino que es un poligono
+	myFixtureDef.density=0;
+	myFixtureDef.restitution = 0.0f;
+	myFixtureDef.friction=0;
+	b2Fixture* fixture = enB2D->CreateFixture(&myFixtureDef);
+	fixture->SetUserData( (void*)ENEMIGO ); // CAMBIAR ESTA DATA POR NUMEROS UNICOS POR CADA ENEMIGO NUEVO (ATRIBUTO DE CLASE)
 
-		//costados sin friccion
-		v.x=halfWidth*0.7;
-		polygon.SetAsBox(halfWidth*0.15, halfHeight*0.7,v,0); //le doy dimensiones
-		myFixtureDef.shape = &polygon; //defino que es un poligono
-		myFixtureDef.restitution = 0.0f;
-		myFixtureDef.friction=0;
-		fixture = enB2D->CreateFixture(&myFixtureDef);
-		fixture->SetUserData( (void*)ENEMIGO );
+	//costados sin friccion
+	v.x=halfWidth*0.7;
+	polygon.SetAsBox(halfWidth*0.15, halfHeight*0.7,v,0); //le doy dimensiones
+	myFixtureDef.shape = &polygon; //defino que es un poligono
+	myFixtureDef.restitution = 0.0f;
+	myFixtureDef.friction=0;
+	fixture = enB2D->CreateFixture(&myFixtureDef);
+	fixture->SetUserData( (void*)ENEMIGO );
 
-		//pies
-		v.x=0;
-		v.y=halfHeight*0.75;
-		polygon.SetAsBox(halfWidth*0.4, halfHeight*0.1, v, 0);
-		myFixtureDef.shape = &polygon; //defino que es un poligono
-		myFixtureDef.density = 1.0f; //le doy masa
-		myFixtureDef.restitution = 0.0f;
-		myFixtureDef.friction=20.0f;
-		fixture = enB2D->CreateFixture(&myFixtureDef);
-		fixture->SetUserData( (void*)PIESEN  );
+	//pies
+	v.x=0;
+	v.y=halfHeight*0.75;
+	polygon.SetAsBox(halfWidth*0.4, halfHeight*0.1, v, 0);
+	myFixtureDef.shape = &polygon; //defino que es un poligono
+	myFixtureDef.density = 1.0f; //le doy masa
+	myFixtureDef.restitution = 0.0f;
+	myFixtureDef.friction=20.0f;
+	fixture = enB2D->CreateFixture(&myFixtureDef);
+	fixture->SetUserData( (void*)PIESEN  );
 
-		// Agrego el sensor para saltos
-	    polygon.SetAsBox(halfWidth * 0.3, 0.15f, b2Vec2(0,halfHeight), 0);
-		myFixtureDef.shape = &polygon; //defino que es un poligono
-	    myFixtureDef.isSensor = true;
-		myFixtureDef.density = 1.0f; //le doy masa
-	    b2Fixture* footSensorFixture = enB2D->CreateFixture(&myFixtureDef);
-	    footSensorFixture->SetUserData( (void*)PIESEN );
+	// Agrego el sensor para saltos
+	polygon.SetAsBox(halfWidth * 0.3, 0.15f, b2Vec2(0,halfHeight), 0);
+	myFixtureDef.shape = &polygon; //defino que es un poligono
+	myFixtureDef.isSensor = true;
+	myFixtureDef.density = 1.0f; //le doy masa
+	b2Fixture* footSensorFixture = enB2D->CreateFixture(&myFixtureDef);
+	footSensorFixture->SetUserData( (void*)PIESEN );
+	if (tipo == "est") {
 	    type = ENEMIGOESTANDAR;
+	    en = new EnemigoEstandar(num);
+	} else if(tipo == "tfue") {
+		type = ENEMIGOTIRAFUEGO;
+		en = (EnemigoEstandar*) new EnemigoTiraFuego(num);
 	} else {
 		std::cout << "No es un tipo reconocible" << std::endl;
 		//No deberia entrar, pero hay que contemplarlo
+		//en = new EnemigoEstandar(num);
 	}
     // Crea la representacion del enemigo fuera del mundo de B2D, para manejar su movimiento
     // y datos necesarios para renderizarlo en el cliente.
-    EnemigoEstandar * en = new EnemigoEstandar(num);
 
     en->setB2DBody(enB2D);
     en->baseMayor = halfWidth * 2;

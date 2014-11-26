@@ -79,5 +79,7 @@ std::string ControladorUsuarios::obtenerPantallaSerializada(std::string username
 	buffer += "%";
 	buffer += metadata->serializar();
 
+	delete metadata;
+
 	return buffer;
 }

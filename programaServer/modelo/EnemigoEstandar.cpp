@@ -6,9 +6,36 @@
  */
 
 #include "EnemigoEstandar.h"
-#include "../utiles/tipos.h"
-#include "formas/Circulo.h"
 #include "BolaEnemigo.h"
+
+EnemigoEstandar::EnemigoEstandar() {
+	bodyB2D = NULL;
+	numFootContacts = 0;
+	toDelete=false;
+	isUpPressed = false;
+	isDownPressed = false;
+	isLeftPressed = false;
+	isRightPressed = false;
+	isSpacePressed=false;
+	wasLeftPressed1st = false;
+	orientation = LEFT;
+	activeSprite = PARADOIZQUIERDA;
+	spriteStun= STUN0;
+	animationCounter = 0;
+	angulo = 0;
+	isJumping = 0;
+	isAirborne = false;
+	isMoving = false;
+	isOnBorder = false;
+	isFrozzen=false;
+	camera = NULL;
+	online = true;
+	enemyNumber = 1;
+	vida = 10;
+	isTrapped = false;
+	stunCounter=0;
+	isPushable=false;
+}
 
 EnemigoEstandar::EnemigoEstandar(int number){
 	bodyB2D = NULL;
@@ -66,8 +93,7 @@ void EnemigoEstandar::update(){
 
 	if(isPushable&&isSpacePressed){
 		setDelete();
-
-		}
+	}
 
 	if(isFrozzen){
 		stunCounter++;
@@ -116,7 +142,14 @@ void EnemigoEstandar::update(){
 	if (!isAirborne) {
 		isJumping = false;
 		if(isDownPressed) {
-			// TODO: En ContactListener falta contacto con plataformas
+			isFalling = true;
+		} else {
+			isFalling = false;
+		}
+	} else {
+		b2Vec2 vel = bodyB2D->GetLinearVelocity();
+		if(vel.y >= 0) {
+			isFalling = true;
 		}
 	}
 
@@ -249,6 +282,7 @@ void EnemigoEstandar::eventoSoltoAbajo() {
 void EnemigoEstandar::setOnBorder(bool border) {
 	isOnBorder = border;
 }
+
 bool EnemigoEstandar::itsOnBorder() {
 	return isOnBorder;
 }
@@ -269,6 +303,7 @@ bool EnemigoEstandar::isRestricted(teclas_t action) {
 	// TODO: More restrictions
 	return false;
 }
+
 bool EnemigoEstandar::trapped() {
 	return isTrapped;
 }
@@ -311,5 +346,13 @@ void EnemigoEstandar::empujar(orientation_t ori){
 
 void EnemigoEstandar::Noempujar(){
 	isPushable=false;
+}
+
+bool EnemigoEstandar::isMovingLeft() {
+	return isLeftPressed;
+}
+
+bool EnemigoEstandar::isMovingRight() {
+	return isRightPressed;
 }
 

@@ -48,6 +48,8 @@ public:
 	virtual void eventoSoltoIzquierda();
 	virtual void eventoSpace();
 	virtual void eventoSoltoSpace();
+	virtual void setFalling(bool);
+	virtual bool getFalling();
 
 	//virtual void eventoa();
 
@@ -74,7 +76,7 @@ protected:
 	bool isAirborne;
 	bool isMoving;
 	bool isThrowing;
-
+	bool isFalling;
 
 
 	float sorpresaPaso;

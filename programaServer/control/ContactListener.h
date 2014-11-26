@@ -20,20 +20,20 @@ class ContactListener : public b2ContactListener
 		void* fixtureBUserData = contact->GetFixtureB()->GetUserData();
 
 		if ( *((int*)(&fixtureAUserData)) == EMPUJE ){
-					if ( *((int*)(&fixtureBUserData)) == ENEMIGOBOLA ){
-						orientation_t ori=(orientation_t)( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->GetOrientation();
-							( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->Patear();
-							( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() )->empujar(ori);
-							( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->enemigoParaEmpujar=( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() );
-					}
+			if ( *((int*)(&fixtureBUserData)) == ENEMIGOBOLA ){
+				orientation_t ori=(orientation_t)( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->GetOrientation();
+					( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->Patear();
+					( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() )->empujar(ori);
+					( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->enemigoParaEmpujar=( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() );
+			}
 		}
 		if ( *((int*)(&fixtureAUserData)) == ENEMIGOBOLA ){
-							if ( *((int*)(&fixtureBUserData)) == EMPUJE ){
-								orientation_t ori=(orientation_t)( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->GetOrientation();
-									( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->Patear();
-									( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() )->empujar(ori);
-									( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->enemigoParaEmpujar=( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() );
-							}
+			if ( *((int*)(&fixtureBUserData)) == EMPUJE ){
+				orientation_t ori=(orientation_t)( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->GetOrientation();
+					( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->Patear();
+					( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() )->empujar(ori);
+					( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->enemigoParaEmpujar=( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() );
+			}
 		}
 
 		// Foot sensor collision for jump
@@ -79,18 +79,6 @@ class ContactListener : public b2ContactListener
 			if ( *((int*)(&fixtureBUserData)) == ENEMIGO || *((int*)(&fixtureBUserData)) == ENEMIGOCONGELADO|| *((int*)(&fixtureBUserData)) == PIESEN ) {
 				((snowball*) contact->GetFixtureA()->GetBody()->GetUserData())->setDelete();
 				((EnemigoEstandar*) contact->GetFixtureB()->GetBody()->GetUserData())->applyDamage(((snowball*) contact->GetFixtureB()->GetBody()->GetUserData())->getDamage());
-			}
-		}
-
-		// Plataform borders collision
-		if( *((int*)(&fixtureBUserData)) == ENEMIGO || *((int*)(&fixtureBUserData)) == PIESEN ){
-			if ( *((int*)(&fixtureAUserData)) == BORDE ) {
-				((EnemigoEstandar*) contact->GetFixtureB()->GetBody()->GetUserData())->setOnBorder(true);
-			}
-		}
-		if (  *((int*)(&fixtureBUserData)) == BORDE ){
-			if ( *((int*)(&fixtureAUserData)) == ENEMIGO || *((int*)(&fixtureAUserData)) == PIESEN ) {
-				((EnemigoEstandar*) contact->GetFixtureA()->GetBody()->GetUserData())->setOnBorder(true);
 			}
 		}
 
@@ -145,18 +133,6 @@ class ContactListener : public b2ContactListener
         	  if ( (*((int*)(&fixtureAUserData)) != CAMARA)&&(*((int*)(&fixtureAUserData)) != PODERHIELO))
         		  ( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->modifyFootContacts(-1);
           }
-
-    	  	// Plataform borders collision
-			if( *((int*)(&fixtureBUserData)) == ENEMIGO || *((int*)(&fixtureBUserData)) == PIESEN ){
-				if ( *((int*)(&fixtureAUserData)) == BORDE ) {
-					( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() )->setOnBorder(false);
-				}
-			}
-			if (  *((int*)(&fixtureBUserData)) == BORDE ){
-				if ( *((int*)(&fixtureAUserData)) == ENEMIGO || *((int*)(&fixtureAUserData)) == PIESEN ) {
-					( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() )->setOnBorder(false);
-				}
-			}
       }
 
       void PreSolve(b2Contact* contact, const b2Manifold* oldManiFold){
@@ -206,10 +182,15 @@ class ContactListener : public b2ContactListener
     		  float PosA = ITA->posicion.y - (ITA->altura / 2.0);
     	  	  float PosB = PJB->posicion.y + (PJB->altura / 2.0);
 
-//				  printf("Pos PJ: %f", PosB);
-//				  printf("Pos Plat: %f", PosA);
+    	  	  // printf("Pos PJ: %f", PosB);
+    	  	  // printf("Pos Plat: %f", PosA);
 		  	  if ( PosB > PosA + 0.2 && PJB->GetAirborne() ){
 			  	  contact->SetEnabled(false);
+		  	  }
+
+
+		  	  if(PosB - 0.25 < PosA && PJB->getFalling()) {
+		  		  contact->SetEnabled(false);
 		  	  }
     	  }
 

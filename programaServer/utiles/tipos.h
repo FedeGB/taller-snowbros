@@ -93,6 +93,7 @@ enum worlditem_t{
 	ENEMIGOESTANDAR,
 	SORPRESA,
 	BOLASNOW,
+	ENEMIGOTIRAFUEGO,
 };
 
 enum sprite_t{

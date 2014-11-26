@@ -27,6 +27,7 @@ Personaje::Personaje(){
 	isAirborne = false;
 	isMoving = false;
 	isThrowing = false;
+	isFalling = false;
 	canKick = false;
 	camera = NULL;
 	online = true;
@@ -38,6 +39,7 @@ Personaje::Personaje(){
 	velocidadPJSorpresa = 1.0f;
 	potenciaNieveSorpresa = 0.5f;
 	impulsoNieveSorpresa = 1.0f;
+	enemigoParaEmpujar = NULL;
 }
 
 Personaje::~Personaje() {}
@@ -345,5 +347,13 @@ void Personaje::NoPatear(){
 
 int Personaje::GetOrientation(){
 	return orientation;
+}
+
+void Personaje::setFalling(bool fall) {
+	isFalling = fall;
+}
+
+bool Personaje::getFalling() {
+	return isFalling;
 }
 

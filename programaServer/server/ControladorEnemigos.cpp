@@ -6,8 +6,9 @@
  */
 
 #include "ControladorEnemigos.h"
-#include <cstdlib>
+//#include <cstdlib>
 #include "../control/RayCaster.h"
+#include <random>
 
 ControladorEnemigos::ControladorEnemigos(){}
 
@@ -57,7 +58,6 @@ void ControladorEnemigos::standarStrategy(EnemigoEstandar* unit, b2World* world,
 		unit->eventoAbajo();
 		break;
 	default:
-		// Should not enter here.
 		break;
 	}
 }
@@ -81,13 +81,13 @@ b2Vec2 ControladorEnemigos::closerPJ(b2World* world, b2Vec2 unit, ControladorUsu
 	return closer;
 }
 
-bool ControladorEnemigos::isPlataformInDirection(b2World* world, EnemigoEstandar* unit, float angle, float length) {
+bool ControladorEnemigos::isObjectInDirection(b2World* world, EnemigoEstandar* unit, sensor_t obj, float angle, float length) {
 	b2Vec2 p1 = unit->posicion;
 	b2Vec2 p2 =  p1 + length * b2Vec2( sinf(angle), cosf(angle) );
 	RayCaster caster;
 	world->RayCast(&caster, p1, p2);
 	void* fixData = caster.m_fixture->GetUserData();
-	if( *((int*)(&fixData)) == ATRAVESABLE) {
+	if( *((int*)(&fixData)) == obj) {
 		return true;
 	}
 	return false;
@@ -103,21 +103,76 @@ teclas_t ControladorEnemigos::getAction(EnemigoEstandar* unit, b2Vec2 enemy, b2W
 		if(mod_x < 0) mod_x *= (-1.0f);
 		if(mod_y < 0) mod_y *= (-1.0f);
 		if(dif_y > 0.5) {
-			if(this->isPlataformInDirection(world, unit, 180, unit->altura*2.5) && mod_y + 5 > mod_x) {
+			if(this->isObjectInDirection(world, unit, ATRAVESABLE, 180, unit->altura*2.5) && mod_y + 5 > mod_x) {
 				return ARRIBA;
 			}
 		} else if (dif_y < -0.5) {
-			if(this->isPlataformInDirection(world, unit, 0, 5) && mod_y + 5 > mod_x) {
+			if(this->isObjectInDirection(world, unit, ATRAVESABLE, 0, unit->altura* 1.5) && mod_y + 5 > mod_x) {
 				return ABAJO;
 			}
 		} else {
-			if(dif_x < 0) return DERECHA;
-			else return IZQUIERDA;
+			if(dif_x < 0) {
+//				if(this->isObjectInDirection(world, unit, ATRAVESABLE, 90, unit->baseMayor* 2) || this->isObjectInDirection(world, unit, ESTATICO, 90, unit->baseMayor* 2)) {
+//					return IZQUIERDA;
+//				}
+				if(this->isObjectInDirection(world, unit, ATRAVESABLE, 0, unit->altura* 1.5) && !this->isObjectInDirection(world, unit, ATRAVESABLE, 25, unit->baseMayor*4.0)) {
+					if(unit->GetAirborne()) {
+						return DERECHA;
+					} else {
+						return ARRIBA;
+					}
+				}
+				return DERECHA;
+			}
+			else {
+//				if(this->isObjectInDirection(world, unit, ATRAVESABLE, 270, unit->baseMayor* 2) || this->isObjectInDirection(world, unit, ESTATICO, 270, unit->baseMayor* 2)) {
+//					return DERECHA;
+//				}
+				if(this->isObjectInDirection(world, unit, ATRAVESABLE, 0, unit->altura* 1.5) && !this->isObjectInDirection(world, unit, ATRAVESABLE, 295, unit->baseMayor*4.0)) {
+					if(unit->GetAirborne()) {
+						return IZQUIERDA;
+					} else {
+						return ARRIBA;
+					}
+				}
+				return IZQUIERDA;
+			}
 		}
 	}
 	// Romear
-	return DERECHA;
+	if(unit->isMovingRight()) {
+		if(this->isObjectInDirection(world, unit, ATRAVESABLE, 0, unit->altura * 1.5) && !this->isObjectInDirection(world, unit, ATRAVESABLE, 25, unit->baseMayor*4.0)) {
+			if(unit->GetAirborne()) {
+				return DERECHA;
+			} else {
+				return ARRIBA;
+			}
+		}
+		if(this->isObjectInDirection(world, unit, ESTATICO, 90, unit->baseMayor * 1.3)) {
+			return IZQUIERDA;
+		}
+		return DERECHA;
+	}
+	if(unit->isMovingLeft()) {
+		if(this->isObjectInDirection(world, unit, ATRAVESABLE, 0, unit->altura * 1.5) && !this->isObjectInDirection(world, unit, ATRAVESABLE, 295, unit->baseMayor*4.0)) {
+			if(unit->GetAirborne()) {
+				return IZQUIERDA;
+			} else {
+				return ARRIBA;
+			}
+		}
+		if(this->isObjectInDirection(world, unit, ESTATICO, 270, unit->baseMayor * 1.3)) {
+			return DERECHA;
+		}
+		return IZQUIERDA;
+	}
 
+	int numero = rand();
+	if(numero%5 == 0) {
+		return IZQUIERDA;
+	}else {
+		return DERECHA;
+	}
 }
 
 void ControladorEnemigos::update(bool online) {
