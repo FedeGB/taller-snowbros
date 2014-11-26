@@ -40,6 +40,8 @@ Personaje::Personaje(){
 	potenciaNieveSorpresa = 0.5f;
 	impulsoNieveSorpresa = 1.0f;
 	enemigoParaEmpujar = NULL;
+	sumergido = false;
+	velocidadSumergido = 1.0f;
 }
 
 Personaje::~Personaje() {}
@@ -107,11 +109,11 @@ void Personaje::update(Sonido* sonido){
 
 	actualizarEfectos();
 
-	if(isSpacePressed && !isAirborne){
+	if(isSpacePressed /* && !isAirborne */){
 		//TODO : ataque
 		isThrowing=true;
 		if(maxpower>500){
-			snowball *sw= new snowball(bodyB2D->GetPosition().x,bodyB2D->GetPosition().y,(int)orientation,bodyB2D->GetWorld(), potenciaNieveSorpresa, impulsoNieveSorpresa);
+			snowball *sw= new snowball(bodyB2D->GetPosition().x,bodyB2D->GetPosition().y,(int)orientation,bodyB2D->GetWorld(), potenciaNieveSorpresa, impulsoNieveSorpresa, bodyB2D->GetLinearVelocity());
 			maxpower=0;
 			if( potenciaNieveSorpresa == 0.5 && impulsoNieveSorpresa == 1.0 )
 				sonido->sonido = DISPARO;
@@ -134,6 +136,15 @@ void Personaje::update(Sonido* sonido){
 	// Determina, si el PJ esta saltando, si ya termino el salto.
 	if (!isAirborne) isJumping = false;
 
+	if( sumergido ){
+		bodyB2D->SetGravityScale(0.2f);
+		velocidadSumergido = 0.2f;
+	}
+	else{
+		bodyB2D->SetGravityScale(1.0f);
+		velocidadSumergido = 1.0f;
+	}
+
 	// Determina si esta sobre un plano inclinado para ajustar el angulo.
 	//if (angulo >= 90 * DEGTORAD && angulo <= 180 * DEGTORAD) angulo +=180 * DEGTORAD;
 	//if (angulo >= 180 * DEGTORAD && angulo <= 270 * DEGTORAD) angulo -=180 * DEGTORAD;
@@ -146,7 +157,7 @@ void Personaje::update(Sonido* sonido){
 	// Se mueve a la izquierda.
 	if (isLeftPressed && wasLeftPressed1st){
 		orientation = LEFT;
-		desiredVel = -14 * velocidadPJSorpresa;                         //// VERIFICAR QUE CUANDO ESTE SALTANDO NO CAMBIE LA VELOCIDAD EN Y!! ! ! ! ! ! !  11 1 1 1 1 one one one
+		desiredVel = -14 * velocidadPJSorpresa * velocidadSumergido;                         //// VERIFICAR QUE CUANDO ESTE SALTANDO NO CAMBIE LA VELOCIDAD EN Y!! ! ! ! ! ! !  11 1 1 1 1 one one one
 		if (angulo <= 180 * DEGTORAD) scale = 0.33;
 		else scale = 3;
 		isMoving = true;
@@ -155,7 +166,7 @@ void Personaje::update(Sonido* sonido){
 	// Se mueve a la derecha.
 	if (isRightPressed && !wasLeftPressed1st){
 		orientation = RIGHT;
-		desiredVel = 14 * velocidadPJSorpresa;
+		desiredVel = 14 * velocidadPJSorpresa * velocidadSumergido;
 		scale = 4;
 		if (angulo <= 180 * DEGTORAD) scale = 3;
 		else scale = 0.33;
@@ -172,7 +183,7 @@ void Personaje::update(Sonido* sonido){
 	// Si ninguna tecla de direccion esta presionada, el PJ se debe quedar quieto.
 	if (!isRightPressed && !isLeftPressed ){
 		velXChange = -vel.x; // I want the PJ to stop moving in the X axis.
-		if (isAirborne) velYChange = 0; // I want the PJ to keep moving normally in the Y axis if it is falling.
+		if (isAirborne ) velYChange = 0; // I want the PJ to keep moving normally in the Y axis if it is falling.
 		else velYChange = -vel.y; // I want the PJ to stop it's motion if it's in a slope.
 		isMoving = false;
 	}
@@ -183,15 +194,18 @@ void Personaje::update(Sonido* sonido){
 	bodyB2D->ApplyLinearImpulse( b2Vec2(impulseX, impulseY), bodyB2D->GetWorldCenter(), true);
 
 
-	// Si se apreto UP y el personaje esta en el piso, salta.
-	if (isUpPressed && (!isAirborne)){
+	// Si se apreto UP y si el personaje esta en el piso o si se apreto UP y el pj esta sumergido, salta.
+	if ( (isUpPressed && (!isAirborne)) || (sumergido && isUpPressed) ){
 		b2Vec2 vel = bodyB2D->GetLinearVelocity();
-		float desiredVel = -20;
+		float desiredVel = -20 * velocidadSumergido;
 		float velChange = desiredVel - vel.y;
 		float impulse = bodyB2D->GetMass() * velChange;
 		bodyB2D->ApplyLinearImpulse( b2Vec2(0,impulse), bodyB2D->GetWorldCenter(), true);
 		isJumping = true;
-		sonido->sonido=SALTO;
+		if( sumergido )
+			sonido->sonido=SALTO_SUMERGIDO;
+		else
+			sonido->sonido=SALTO;
 	}
 
 	// DETERMINA EL SPRITE QUE CORRESPONDE AL ESTADO DEL PJ.
@@ -347,6 +361,15 @@ void Personaje::NoPatear(){
 
 int Personaje::GetOrientation(){
 	return orientation;
+}
+
+bool Personaje::estaSumergido(){
+	return sumergido;
+}
+
+void Personaje::setSumergido(bool s){
+	if( sumergido != s)
+		sumergido = s;
 }
 
 void Personaje::setFalling(bool fall) {

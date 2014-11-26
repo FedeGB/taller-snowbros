@@ -39,6 +39,9 @@ public:
 
 	virtual b2World * getMundo();
 
+	virtual bool estaSumergido();
+	virtual void setSumergido(bool);
+
 	// metodos de INotificable
 	virtual void eventoArriba();
 	virtual void eventoSoltoArriba();
@@ -77,6 +80,8 @@ protected:
 	bool isMoving;
 	bool isThrowing;
 	bool isFalling;
+	bool sumergido;
+
 
 
 	float sorpresaPaso;
@@ -87,7 +92,7 @@ protected:
 	float potenciaNieveSorpresa;
 	float impulsoNieveSorpresa;
 
-
+	float velocidadSumergido;
 
 
 

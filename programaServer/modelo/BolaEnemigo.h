@@ -8,6 +8,11 @@
 #ifndef BOLAENEMIGO_H_
 #define BOLAENEMIGO_H_
 #include "../modelo/formas/Circulo.h"
+#include "../modelo/Sorpresa.h"
+#include "../modelo/SorpresaVida.h"
+#include "../modelo/SorpresaCorrer.h"
+#include "../modelo/SorpresaNieveMasPotente.h"
+#include "../modelo/SorpresaNieveMasLejos.h"
 
 class BolaEnemigo:public Circulo {
 public:

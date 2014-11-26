@@ -38,11 +38,11 @@ class ContactListener : public b2ContactListener
 
 		// Foot sensor collision for jump
 		if ( *((int*)(&fixtureAUserData)) == PIESPJ || *((int*)(&fixtureAUserData)) == PIESEN ){
-			if ( (*((int*)(&fixtureBUserData)) != CAMARA)&&(*((int*)(&fixtureBUserData)) != PODERHIELO) )
+			if ( (*((int*)(&fixtureBUserData)) != CAMARA)&&(*((int*)(&fixtureBUserData)) != PODERHIELO) && (*((int*)(&fixtureBUserData)) != sensorLAGUNA))
 				( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->modifyFootContacts(1);
 		}
 		if ( *((int*)(&fixtureBUserData)) == PIESPJ || *((int*)(&fixtureBUserData)) == PIESEN ){
-			if ( (*((int*)(&fixtureAUserData)) != CAMARA)&& (*((int*)(&fixtureAUserData)) != PODERHIELO) )
+			if ( (*((int*)(&fixtureAUserData)) != CAMARA)&& (*((int*)(&fixtureAUserData)) != PODERHIELO) && (*((int*)(&fixtureAUserData)) != sensorLAGUNA))
 				( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->modifyFootContacts(1);
 		}
 
@@ -102,6 +102,25 @@ class ContactListener : public b2ContactListener
 				}
 			}
 		}
+
+		// colision entre las lagunas y el pj
+		if( *((int*)(&fixtureBUserData)) == sensorLAGUNA ){
+			if ( *((int*)(&fixtureAUserData)) == PERSONAJE ) {
+				if(( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->isAlive() &&
+						!((Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->estaSumergido()) {
+					( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->setSumergido(true);
+				}
+			}
+		}
+
+		if( *((int*)(&fixtureAUserData)) == sensorLAGUNA ){
+			if ( *((int*)(&fixtureBUserData)) == PERSONAJE ) {
+				if(( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->isAlive() &&
+						!((Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->estaSumergido() ) {
+					( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->setSumergido(true);
+				}
+			}
+		}
 	}
 
       void EndContact(b2Contact* contact) {
@@ -126,13 +145,33 @@ class ContactListener : public b2ContactListener
 
   		// Foot sensor collision for jump
     	  if ( *((int*)(&fixtureAUserData)) == PIESPJ || *((int*)(&fixtureAUserData)) == PIESEN ){
-        	  if ((*((int*)(&fixtureBUserData)) != CAMARA)&&(*((int*)(&fixtureBUserData)) != PODERHIELO))
+        	  if ((*((int*)(&fixtureBUserData)) != CAMARA)&&(*((int*)(&fixtureBUserData)) != PODERHIELO) && (*((int*)(&fixtureBUserData)) != sensorLAGUNA))
         		  ( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->modifyFootContacts(-1);
           }
     	  if ( *((int*)(&fixtureBUserData)) == PIESPJ || *((int*)(&fixtureBUserData)) == PIESEN ){
-        	  if ( (*((int*)(&fixtureAUserData)) != CAMARA)&&(*((int*)(&fixtureAUserData)) != PODERHIELO))
+        	  if ( (*((int*)(&fixtureAUserData)) != CAMARA)&&(*((int*)(&fixtureAUserData)) != PODERHIELO) && (*((int*)(&fixtureAUserData)) != sensorLAGUNA))
         		  ( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->modifyFootContacts(-1);
           }
+
+			// detecta que no haya mas contacto del pj con la laguna
+			// colision entre las lagunas y el pj
+			if( *((int*)(&fixtureBUserData)) == sensorLAGUNA ){
+				if ( *((int*)(&fixtureAUserData)) == PERSONAJE  ) {
+					if(( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->isAlive() &&
+							((Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->estaSumergido()) {
+						( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->setSumergido(false);
+					}
+				}
+			}
+
+			if( *((int*)(&fixtureAUserData)) == sensorLAGUNA ){
+				if ( *((int*)(&fixtureBUserData)) == PERSONAJE ) {
+					if(( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->isAlive() &&
+							((Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->estaSumergido()) {
+						( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->setSumergido(false);
+					}
+				}
+			}
       }
 
       void PreSolve(b2Contact* contact, const b2Manifold* oldManiFold){

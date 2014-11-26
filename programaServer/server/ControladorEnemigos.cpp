@@ -8,7 +8,7 @@
 #include "ControladorEnemigos.h"
 //#include <cstdlib>
 #include "../control/RayCaster.h"
-#include <random>
+//#include <random>
 
 ControladorEnemigos::ControladorEnemigos(){}
 

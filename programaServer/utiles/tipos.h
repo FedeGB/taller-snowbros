@@ -93,6 +93,7 @@ enum worlditem_t{
 	ENEMIGOESTANDAR,
 	SORPRESA,
 	BOLASNOW,
+	LAGUNA,
 	ENEMIGOTIRAFUEGO,
 };
 
@@ -130,11 +131,13 @@ enum sprite_t{
 	STUN1,
 	STUN2,
 	STUN3,
+	spriteLAGUNA,
 };
 
 enum sonidos_t{
 	VACIO,
 	SALTO,
+	SALTO_SUMERGIDO,
 	EXPLOSION,
 	DISPARO,
 	DISPARO_SORPRESA,
@@ -161,6 +164,7 @@ enum sensor_t{
 	ENEMIGOBOLA,
 	PIESENBOLA,
 	EMPUJE,
+	sensorLAGUNA,
 };
 
 #endif /* TIPOS_H_ */

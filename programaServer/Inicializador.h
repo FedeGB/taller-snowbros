@@ -23,6 +23,7 @@
 #include "modelo/Personaje.h"
 #include "modelo/Camera.h"
 #include "modelo/EnemigoTiraFuego.h"
+#include "modelo/Laguna.h"
 #include "server/ControladorEnemigos.h"
 
 #include "threads/ThreadSafeList.h"

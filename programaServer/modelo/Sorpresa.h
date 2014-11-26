@@ -9,6 +9,7 @@
 #define SORPRESA_H_
 
 #include "../utiles/tipos.h"
+#include "Personaje.h"
 
 class Sorpresa: public Cuadrilatero {
 public:

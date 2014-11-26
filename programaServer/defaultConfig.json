@@ -29,6 +29,19 @@
 	{
             "estatico": true,
             "tipo": "rect",
+            "x": 38,
+            "y": 8,
+            "esLaguna": true,
+            "rot": 0,
+            "alto": 10,
+            "ancho": 10,
+            "masa": 1,
+	    "color": "#A42050",
+            "friccion": 0.2
+        },
+	{
+            "estatico": true,
+            "tipo": "rect",
             "x": 50,
             "y": 0,
             "rot": 0,
@@ -114,7 +127,7 @@
             "estatico": true,
             "tipo": "rect",
             "x": 40,
-            "y": 19,
+            "y": 18,
             "atravesable": true,
             "rot": 0,
             "alto": 0.6,

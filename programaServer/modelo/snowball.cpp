@@ -15,7 +15,7 @@ snowball::snowball() {
 	// TODO Auto-generated constructor stub
 
 }
-snowball::snowball(float32 posx,float32 posy,int orientation,b2World * world, float damage, float impulsoNieve) {
+snowball::snowball(float32 posx,float32 posy,int orientation,b2World * world, float damage, float impulsoNieve, b2Vec2 vel_pj) {
 
 		b2BodyDef b2dObjDef;
 		b2FixtureDef myFixtureDef;
@@ -40,9 +40,9 @@ snowball::snowball(float32 posx,float32 posy,int orientation,b2World * world, fl
 		bodyFixture->SetUserData( (void*)PODERHIELO );
 		activeSprite=BOLANIEVE1;
 		if(orientation==LEFT)
-			poder->SetLinearVelocity(b2Vec2(-15.0f*impulsoNieve,-2.0f*impulsoNieve));
+			poder->SetLinearVelocity(b2Vec2(-15.0f*impulsoNieve + vel_pj.x,-2.0f*impulsoNieve));
 		else
-			poder->SetLinearVelocity(b2Vec2(15.0f*impulsoNieve,-2.0f*impulsoNieve));
+			poder->SetLinearVelocity(b2Vec2(15.0f*impulsoNieve + vel_pj.x,-2.0f*impulsoNieve));
 		toDelete = false;
 		dmg = damage;
 		std::cout<< "snowball constructor:" << damage << '\n';

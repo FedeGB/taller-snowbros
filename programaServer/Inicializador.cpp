@@ -352,7 +352,20 @@ b2Body * createObject(std::string data, b2World ** wB2D, int num) {
 		rect->baseMenor =  halfWidth * 2;
 		rect->altura =  halfHeight * 2;
 		rect->desplazamiento =  0;
-		figura = rect;
+
+		if( get_node("esLaguna", "objetos", data, num, false) ){
+			_shape->SetBullet(false);
+			myFixtureDef.isSensor = true;
+			//Laguna * laguna = (Laguna*) rect;
+			Laguna * laguna = new Laguna();
+			laguna->baseMayor =  halfWidth * 2;
+			laguna->baseMenor =  halfWidth * 2;
+			laguna->altura =  halfHeight * 2;
+			laguna->desplazamiento =  0;
+			figura = laguna;
+			break;
+		}else
+			figura = rect;
 
 		b2FixtureDef borderSensFix;
 		b2PolygonShape polygon;
@@ -431,6 +444,9 @@ b2Body * createObject(std::string data, b2World ** wB2D, int num) {
 
 	//Me fijo si el objeto que creo es atravesable.
 	if (get_node("atravesable", "objetos", data, num, false)) shapeFixture->SetUserData((void*) ATRAVESABLE);
+
+	// me fijo si es laguna
+	if (get_node("esLaguna", "objetos", data, num, false)) shapeFixture->SetUserData((void*) sensorLAGUNA);
 
 	// Setea los ultimos parametros de la figura y vincula al bodyB2D.
 	figura->posicion.x = b2dObjDef.position.x;

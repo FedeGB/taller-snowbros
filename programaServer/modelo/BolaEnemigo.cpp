@@ -64,8 +64,19 @@ std::string BolaEnemigo::serializar(){
 }
 
 BolaEnemigo::~BolaEnemigo() {
+	Sorpresa * sorpresa;
+	int tipo_sorpresa = rand() % 4;
+	switch( tipo_sorpresa ){
+
+	case 0: sorpresa= new SorpresaVida(); break;
+	case 1: sorpresa= new SorpresaCorrer(); break;
+	case 2: sorpresa= new SorpresaNieveMasLejos(); break;
+	case 3: sorpresa= new SorpresaNieveMasPotente(); break;
+	}
+
+	sorpresa->agregarAMundo(bodyB2D->GetPosition().x, bodyB2D->GetPosition().y, bodyB2D->GetWorld());
+
 	this->bodyB2D->GetWorld()->DestroyBody(this->bodyB2D);
-	//TODO: crear Sorpresa
 }
 
 void BolaEnemigo::aumentarTiempo(){
