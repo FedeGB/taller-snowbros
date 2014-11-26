@@ -25,6 +25,7 @@
 #include "SonidosMap.h"
 
 #include "../modelo/Sorpresa.h"
+#include "../modelo/Laguna.h"
 
 class ItemRenderer {
 public:
@@ -47,6 +48,7 @@ private:
 	static void renderMetadataFondo(Metadata * item);
 	static void renderMetadataHUD(Metadata * item);
 	static void renderBola(BolaEnemigo * item, float escala);
+	static void renderLaguna(Laguna * item, float escala);
 
 	static SonidosMap sonidosMap;
 	static void renderSonido(Sonido * item);

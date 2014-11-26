@@ -26,6 +26,7 @@ bool TextureMap::init(){
 	if (!loadCuadTex()) return false;
 	if (!loadSnowBallTex()) return false;
 	if (!loadSorpresasTex()) return false;
+	if (!loadLagunaTex()) return false;
 	inicializado = true;
 	return true;
 }
@@ -169,6 +170,27 @@ bool TextureMap::loadSorpresasTex(){
 		temp->vertexes->y[2] = temp->vertexes->y[3] = 287 / 365.0f;
 		temp->tex = tex;
 		(*this)[SORPRESAvida] = temp;
+
+		return true;
+}
+
+bool TextureMap::loadLagunaTex(){
+	// TODO: sacar hardcodeo del path de imagen.
+		Textura * tex = new Textura();
+		if (!tex) {
+			std::cout << "no se cargo la imagen" << std::endl;
+			return false;
+		}
+		tex->generar(TEXTURA_LAGUNA);
+
+		TexAndVertexes * temp = new TexAndVertexes;
+		temp->vertexes = new Vertexes(4);
+		temp->vertexes->x[0] = temp->vertexes->x[3] = 0.0f;
+		temp->vertexes->y[0] = temp->vertexes->y[1] = 0.0f;
+		temp->vertexes->x[1] = temp->vertexes->x[2] = 1.0f;
+		temp->vertexes->y[2] = temp->vertexes->y[3] = 1.0f;
+		temp->tex = tex;
+		(*this)[spriteLAGUNA] = temp;
 
 		return true;
 }

@@ -21,6 +21,7 @@
 
 #include "../modelo/Sonido.h"
 #include "../modelo/Sorpresa.h"
+#include "../modelo/Laguna.h"
 
 class Deserializador {
 public:

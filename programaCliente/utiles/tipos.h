@@ -23,10 +23,12 @@
 #define TEXTURA_VIDA "imagenes/vida.png"
 #define FONT_TTF "fuentes/Ubuntu-B.ttf"
 #define IMAGEN_FONDO "imagenes/fondo2.png"
+#define TEXTURA_LAGUNA "imagenes/laguna.png"
 
 #define SONIDO_SALTO "sonidos/salto.wav"
 #define SONIDO_DISPARO "sonidos/disparo.wav"
 #define SONIDO_DISPARO_SORPRESA "sonidos/disparo_sorpresa.wav"
+#define SONIDO_SALTO_SUMERGIDO "sonidos/salto_sumergido.wav"
 
 #define PI 3.14159265
 const float32 DEGTORAD = 0.0174532925199432957f;
@@ -101,6 +103,7 @@ enum worlditem_t{
 	ENEMIGOESTANDAR,
 	SORPRESA,
 	BOLASNOW,
+	LAGUNA,
 };
 
 enum sprite_t{
@@ -137,12 +140,14 @@ enum sprite_t{
 	STUN1,
 	STUN2,
 	STUN3,
+	spriteLAGUNA,
 };
 
 
 enum sonidos_t{
 	VACIO,
 	SALTO,
+	SALTO_SUMERGIDO,
 	EXPLOSION,
 	DISPARO,
 	DISPARO_SORPRESA,

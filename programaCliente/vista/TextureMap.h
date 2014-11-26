@@ -65,6 +65,7 @@ private:
 	bool inicializado;
 	bool loadSnowBallTex();
 	bool loadSorpresasTex();
+	bool loadLagunaTex();
 };
 
 #endif /* TEXTUREMAP_H_ */

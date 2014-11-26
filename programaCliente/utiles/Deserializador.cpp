@@ -146,6 +146,17 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 		break;
 	}
 
+	case LAGUNA:{
+		Laguna * laguna = new Laguna();
+		laguna->baseMayor =  (float)atof(buff[4].c_str());
+		laguna->altura =  (float)atof(buff[5].c_str());
+
+		laguna->activeSprite = spriteLAGUNA;
+		//en->orientation = (Personaje::orientation_t) strtol(buff[7].c_str(),NULL,10);
+		item = laguna;
+		break;
+	}
+
 	default: return NULL;
 
 	}
