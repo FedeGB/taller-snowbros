@@ -25,6 +25,7 @@
 #define IMAGEN_FONDO "imagenes/fondo2.png"
 #define TEXTURA_LAGUNA "imagenes/laguna.png"
 
+#define MUSICA_FONDO "sonidos/musica_fondo.wav"
 #define SONIDO_SALTO "sonidos/salto.wav"
 #define SONIDO_DISPARO "sonidos/disparo.wav"
 #define SONIDO_DISPARO_SORPRESA "sonidos/disparo_sorpresa.wav"
@@ -145,6 +146,7 @@ enum sprite_t{
 
 
 enum sonidos_t{
+	MUSICA_DE_FONDO,
 	VACIO,
 	SALTO,
 	SALTO_SUMERGIDO,

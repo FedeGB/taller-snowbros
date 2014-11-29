@@ -103,12 +103,12 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 	}
 
 	case SONIDO:{
-		//sonido = buff[1];
 		Sonido * s = new Sonido();
 		s->tipo = type;
 		s->sonido = (sonidos_t) strtol(buff[1].c_str(),NULL,10);
 		if( s->sonido == VACIO ) return NULL;
-		std::cout << "sonido recibido: " << s->sonido << '\n';
+		s->velocidad = (float)atof(buff[2].c_str());
+		std::cout << "sonido recibido: " << s->sonido << " velocidad: " << s->velocidad << '\n';
 		return s;
 	}
 

@@ -24,6 +24,7 @@ bool SonidosMap::init() {
 
 	if(inicializado) return false;
 
+	if( !loadMusiquitaDeFondo() ) return false;
 	if( !loadSonidoSalto() ) return false;
 	if( !loadSonidoExplosion() ) return false;
 	if( !loadSonidoDisparo() ) return false;
@@ -41,6 +42,26 @@ bool SonidosMap::yaInicializado(){
 void SonidosMap::actualizarEstados(){
 	for (SonidosMap::iterator it = this->begin(); it != this->end(); it++)
 		(*it).second->actualizarEstado();
+}
+
+bool SonidosMap::loadMusiquitaDeFondo(){
+	Sonido* sonido = NULL;
+	sonido =  new Sonido();
+
+	if(!sonido ){
+		printf("No se pudo cargar el sonido %s\n", MUSICA_FONDO);
+		return false;
+	}
+
+	if( !sonido->generar(MUSICA_FONDO) ){
+		printf("NO SE PUDO GENERAR EL BUFFER PARA SONIDO %s\n", MUSICA_FONDO);
+		return false;
+	}
+
+	(*this)[MUSICA_DE_FONDO] = sonido;
+	(*this)[MUSICA_DE_FONDO]->reproducir();
+
+	return true;
 }
 
 bool SonidosMap::loadSonidoSalto() {

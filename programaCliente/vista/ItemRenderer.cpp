@@ -686,9 +686,15 @@ void ItemRenderer::renderLaguna(Laguna* item, float escala){
 void ItemRenderer::renderSonido(Sonido * item){
 
 	sonidosMap[item->sonido]->actualizarEstado();
+	sonidosMap[item->sonido]->velocidad = item->velocidad;
 
-	if( sonidosMap[item->sonido]->estaSonando()  )
+	if( sonidosMap[item->sonido]->estaSonando() )
 		sonidosMap[item->sonido]->apagar();
+
+	if( sonidosMap[item->sonido]->velocidad != item->velocidad ){
+		sonidosMap[item->sonido]->pausar();
+		sonidosMap[item->sonido]->velocidad = item->velocidad;
+	}
 
 	sonidosMap[item->sonido]->reproducir();
 }

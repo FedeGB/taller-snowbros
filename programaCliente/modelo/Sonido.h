@@ -19,15 +19,20 @@ class Sonido : public WorldItem{
 
 public:
 	sonidos_t sonido;
+	ALfloat velocidad;
+
 	unsigned int id;
 	unsigned int source;
 	int estado;
+	bool loop;
 
 	Sonido() {
 		sonido = VACIO;
 		id = 0;
 		estado = AL_STOPPED;
+		loop = false;
 		source = 0;
+		velocidad = 1.0f;
 	}
 	virtual ~Sonido() {
 		eliminar();
@@ -48,8 +53,14 @@ public:
 		alGenSources(1, &source);
 
 		alSourcei(source, AL_BUFFER, id);
+		alSourcef(source, AL_PITCH, velocidad);
+		alSourcei(source, AL_LOOPING, loop);
 
 		alSourcePlay(source);
+	}
+
+	bool pausar() {
+		alSourcePause(source);
 	}
 
 	bool detener() {

@@ -24,6 +24,8 @@ public:
 private:
 	bool inicializado;
 
+	bool loadMusiquitaDeFondo();
+
 	bool loadSonidoSalto();
 	bool loadSonidoExplosion();
 	bool loadSonidoDisparo();
