@@ -13,15 +13,17 @@ class Sonido {
 
 public:
 	sonidos_t sonido;
+	float velocidad;
 
 	Sonido() {
 		sonido = VACIO;
+		velocidad = 1.0f;
 	}
 	virtual ~Sonido() {}
 
 	std::string serializar(){
 		std::string buffer;
-		buffer = SSTR(SONIDO << " " << sonido);
+		buffer = SSTR(SONIDO << " " << sonido << " " << velocidad);
 		return buffer;
 	}
 

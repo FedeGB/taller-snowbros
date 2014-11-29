@@ -135,6 +135,7 @@ enum sprite_t{
 };
 
 enum sonidos_t{
+	MUSICA_DE_FONDO,
 	VACIO,
 	SALTO,
 	SALTO_SUMERGIDO,

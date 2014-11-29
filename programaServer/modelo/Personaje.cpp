@@ -107,6 +107,18 @@ void Personaje::update(Sonido* sonido){
 
 	camera->update();
 
+	// si la velocidad del pj es mayor a la normal, y el sonido todavia no esta con una velocidad mayor, lo cambio
+	if( velocidadPJSorpresa == 2.0f && sonido->velocidad != 2.0f ){
+		sonido->sonido = MUSICA_DE_FONDO;
+		sonido->velocidad = 2.0f;
+	}
+
+	// si la velocidad del pj es igual a la normal, y el sonido todavia no esta con una velocidad normal, lo cambio
+	if( velocidadPJSorpresa != 2.0f && sonido->velocidad != 1.0f ){
+		sonido->sonido = MUSICA_DE_FONDO;
+		sonido->velocidad = 1.0f;
+	}
+
 	actualizarEfectos();
 
 	if(isSpacePressed /* && !isAirborne */){
@@ -287,6 +299,7 @@ bool Personaje::GetAirborne(){
 
 void Personaje::applyDamage(float dmg) {
 	vida -= dmg;
+	printf("vida restante: %f\n", vida);
 }
 
 b2World* Personaje::getMundo(){
