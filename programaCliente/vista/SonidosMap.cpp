@@ -57,7 +57,7 @@ bool SonidosMap::loadMusiquitaDeFondo(){
 		printf("NO SE PUDO GENERAR EL BUFFER PARA SONIDO %s\n", MUSICA_FONDO);
 		return false;
 	}
-
+	sonido->loop=true;
 	(*this)[MUSICA_DE_FONDO] = sonido;
 	(*this)[MUSICA_DE_FONDO]->reproducir();
 
