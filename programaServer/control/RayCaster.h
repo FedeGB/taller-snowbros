@@ -18,7 +18,9 @@ public:
 	float32 ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction) {
         m_fixture = fixture;
         void* fixData = fixture->GetUserData();
-
+        if(fixData && (*(int*)&fixData == ENEMIGO || *(int*)&fixData == PIESEN)) {
+        	return -1;
+        }
         m_point = point;
         m_normal = normal;
         m_fraction = fraction;

@@ -9,7 +9,7 @@
 #include "BolaEnemigo.h"
 #include "Fireball.h"
 
-#define TTHROW 200;
+#define TTHROW 500
 
 EnemigoTiraFuego::EnemigoTiraFuego(int number) {
 	bodyB2D = NULL;
@@ -39,7 +39,7 @@ EnemigoTiraFuego::EnemigoTiraFuego(int number) {
 	stunCounter=0;
 	isPushable=false;
 	maxpower = 0;
-	timerThrow = TTHROW;
+	timerThrow = 0;
 	wasKicked = false;
 }
 
@@ -246,10 +246,10 @@ void EnemigoTiraFuego::update(){
 }
 
 void EnemigoTiraFuego::restarTimerThrow() {
-	if(timerThrow) {
+	if(timerThrow != 0) {
 		timerThrow--;
 	} else {
-		timerThrow = TTHROW - 1;
+		timerThrow = TTHROW;
 	}
 }
 
