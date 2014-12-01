@@ -101,7 +101,7 @@ std::string Personaje::serializar(){
 	std::string buffer;
 	buffer = SSTR(PJ << " " << posicion.x << " " << posicion.y << " "
 			<< angulo << "  " << baseMayor << " " << altura << " "
-			<< activeSprite << " " << orientation<<" "<< online);
+			<< activeSprite << " " << orientation<<" "<< online<<" "<<inmunity);
 	return buffer;
 }
 
