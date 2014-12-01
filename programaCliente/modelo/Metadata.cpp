@@ -10,7 +10,6 @@
 
 Metadata::Metadata() {
 	escala = 0.05;
-	vidas = 3;
 	puntaje = 1;
 	posXCamara = 0;
 	posYCamara = 0;

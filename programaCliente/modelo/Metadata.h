@@ -17,7 +17,7 @@ public:
 	virtual std::string serializar();
 
 	float escala;
-	int vidas;
+	int vidas[4];
 	int puntaje;
 	float posXCamara;
 	float posYCamara;
@@ -26,6 +26,7 @@ public:
 	float anchoCamara;
 	float altoCamara;
 	std::string mensaje;
+	std::string users[4];
 };
 
 #endif /* METADATA_H_ */

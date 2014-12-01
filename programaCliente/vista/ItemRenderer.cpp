@@ -734,25 +734,25 @@ void ItemRenderer::renderMetadataHUD(Metadata * item){
 	// Obtiene la textura y su correspondiente rect para renderear las vidas.
 	TexAndVertexes * TaV = textureMap[VIDAS1];
 
-	//for (int i = 0; i < item->vidas; i++){
+	for (int i = 0; i < 4; i++){
 
 		// Calcula la posicion de los corazones de vida.
-		vx[0] = vx[3] = 20 ;
+		vx[0] = vx[3] = 20 + 3*i * 54;
 		vy[0] = vy[1] = 20;
-		vx[1] = vx[2] = 68 ;
+		vx[1] = vx[2] = 68 + 3*i * 54;
 		vy[2] = vy[3] = 68;
 
 		// Renderea vidas.
 		TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
-	//}
+	}
 
 	std::string puntaje = SSTR("Puntaje: " << item->puntaje);
 
 	// Calcula la posicion del puntaje
 	vx[0] = vx[3] = 600;
-	vy[0] = vy[1] = 25;
+	vy[0] = vy[1] = 600;
 	vx[1] = vx[2] = 600 + 8 * puntaje.size();
-	vy[2] = vy[3] = 50;
+	vy[2] = vy[3] = 628;
 
 	TaV = textureMap[PUNTAJE1];
 	TaV->tex->eliminar();
@@ -761,19 +761,31 @@ void ItemRenderer::renderMetadataHUD(Metadata * item){
 
 	// Renderea puntaje.
 	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
+	for (int i = 0; i < 4; i++){
+		//posicion xvidas
+		vx[0] = vx[3] = 20 + 1 * 54 + 3*i*54;
+		vy[0] = vy[1] = 20;
+		vx[1] = vx[2] = 68 + 1 * 54 + 3*i*54;
+		vy[2] = vy[3] = 68;
 
-	//posicion xvidas
-	vx[0] = vx[3] = 20 + 1 * 54;
-	vy[0] = vy[1] = 20;
-	vx[1] = vx[2] = 68 + 1 * 54;
-	vy[2] = vy[3] = 68;
-
-	std::string xvidas = SSTR("X" << item->vidas);
-	TaV->tex->generarTexto("fuentes/Ubuntu-B.ttf", 30, xvidas, c);
-
+		std::string xvidas = SSTR("X" << item->vidas[i]);
+		TaV->tex->generarTexto("fuentes/Ubuntu-B.ttf", 30, xvidas, c);
 		// Renderea vidas numero
 	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
+	}
+	for (int i = 0; i < 4; i++){
+	//posicion nombre 1
+		vx[0] = vx[3] = 20 + 3*i * 54;
+		vy[0] = vy[1] = 70;
+		vx[1] = vx[2] = 68	+ 3*i * 54 ;
+		vy[2] = vy[3] = 98;
 
+		std::string user = SSTR( item->users[i]);
+		TaV->tex->generarTexto("fuentes/Ubuntu-B.ttf", 30, user, c);
+
+	// Renderea nombre
+		TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
+	}
 	// Analiza el mensaje.
 	if (item->mensaje == "NOMESSAGE") return;
 
