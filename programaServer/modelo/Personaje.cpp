@@ -31,7 +31,7 @@ Personaje::Personaje(){
 	canKick = false;
 	camera = NULL;
 	online = true;
-	vida = 0.5f;
+	vida = 5;
 	maxpower = 0;
 	for( int i = 0; i < 3; i++)
 		sorpresasContador[i] = 0.0f;

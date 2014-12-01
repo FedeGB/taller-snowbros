@@ -75,6 +75,8 @@ public:
 
 	void eventoa();
 
+	float getLives();
+
 private:
 	ColaTrabajo<WorkItem*>  colaNotificaciones;
 	ConditionVariable c;

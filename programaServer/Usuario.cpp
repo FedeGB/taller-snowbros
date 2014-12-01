@@ -179,3 +179,7 @@ void Usuario::eventoa(){
 
 	sorpresa->agregarAMundo(10, 10, mundo);
 }
+
+float Usuario::getLives(){
+	return this->PJ->vida;
+}

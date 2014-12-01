@@ -35,7 +35,7 @@ public:
 	virtual void nieveMasPotente();
 	virtual void Patear();
 	virtual void NoPatear();
- void respawn();
+	void respawn();
 
 	virtual void actualizarEfectos();
 
@@ -70,6 +70,7 @@ public:
 	b2Vec2 initPos;
 	bool isRespawnable;
 	bool inmunity;
+	float vida;
 
 protected:
 	b2Body * bodyB2D;
@@ -94,7 +95,7 @@ protected:
 	float sorpresaPaso;
 	float sorpresasContador[4];
 
-	float vida;
+
 	float velocidadPJSorpresa;
 	float potenciaNieveSorpresa;
 	float impulsoNieveSorpresa;
