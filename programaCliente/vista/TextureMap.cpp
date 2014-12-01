@@ -22,8 +22,10 @@ bool TextureMap::init(){
 	if (!loadMetadataTex()) return false;
 	if (!loadPJTex()) return false;
 	if (!loadENESTex()) return false;
+	if (!loadENTIFUETex()) return false;
 	if (!loadCircleTex()) return false;
 	if (!loadCuadTex()) return false;
+	if (!loadFireBallTex()) return false;
 	if (!loadSnowBallTex()) return false;
 	if (!loadSorpresasTex()) return false;
 	if (!loadLagunaTex()) return false;
@@ -132,8 +134,27 @@ bool TextureMap::loadENESTex(){
 	return true;
 }
 
+bool TextureMap::loadENTIFUETex() {
+	Textura * tex = new Textura();
+	if (!tex) {
+		std::cout << "no se cargo la imagen" << std::endl;
+		return false;
+	}
+	tex->generar(ENEMIES_SHEET);
+
+	TexAndVertexes * temp = new TexAndVertexes;
+	temp->vertexes = new Vertexes(4);
+	temp->vertexes->x[0] = temp->vertexes->x[3] = 5 / 432.0f;
+	temp->vertexes->y[0] = temp->vertexes->y[1] = 7 / 320.0f;
+	temp->vertexes->x[1] = temp->vertexes->x[2] = 30 / 432.0f;
+	temp->vertexes->y[2] = temp->vertexes->y[3] = 35 / 320.0f;
+	temp->tex = tex;
+	(*this)[ENTIFUE] = temp;
+
+	return true;
+}
+
 bool TextureMap::loadSnowBallTex(){
-	// TODO: sacar hardcodeo del path de imagen.
 		Textura * tex = new Textura();
 		if (!tex) {
 			std::cout << "no se cargo la imagen" << std::endl;
@@ -151,6 +172,26 @@ bool TextureMap::loadSnowBallTex(){
 		(*this)[PODER1] = temp;
 
 		return true;
+}
+
+bool TextureMap::loadFireBallTex(){
+	Textura * tex = new Textura();
+	if (!tex) {
+		std::cout << "no se cargo la imagen" << std::endl;
+		return false;
+	}
+	tex->generar(SPRITE_SHEET);
+
+	TexAndVertexes * temp = new TexAndVertexes;
+	temp->vertexes = new Vertexes(4);
+	temp->vertexes->x[0] = temp->vertexes->x[3] = 290 / 432.0f;
+	temp->vertexes->y[0] = temp->vertexes->y[1] = 215 / 320.0f;
+	temp->vertexes->x[1] = temp->vertexes->x[2] = 300 / 432.0f;
+	temp->vertexes->y[2] = temp->vertexes->y[3] = 230 / 320.0f;
+	temp->tex = tex;
+	(*this)[PODER2] = temp;
+
+	return true;
 }
 
 bool TextureMap::loadSorpresasTex(){

@@ -112,19 +112,38 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 		return s;
 	}
 
-	case PODERES:{
+	case NIEVE:{
 		poder * poderes = new poder();
 		poderes->baseMayor =  (float)atof(buff[4].c_str());
-		//poderes->baseMenor =  (float)atof(buff[5].c_str());
 		poderes->altura =  (float)atof(buff[5].c_str());
 		poderes->activeSprite =  PODER1;
 		item = poderes;
 		break;
+	}
 
+	case FUEGO: {
+		Fireball * poderes = new Fireball();
+		poderes->baseMayor =  (float)atof(buff[4].c_str());
+		poderes->altura =  (float)atof(buff[5].c_str());
+		poderes->activeSprite =  PODER2;
+		item = poderes;
+		break;
 	}
 
 	case ENEMIGOESTANDAR:{
 		EnemigoEstandar * en = new EnemigoEstandar();
+		en->baseMayor =  (float)atof(buff[4].c_str());
+		en->altura =  (float)atof(buff[5].c_str());
+
+		en->activeSprite = (sprite_t) strtol(buff[6].c_str(),NULL,10);
+		en->orientation = (Personaje::orientation_t) strtol(buff[7].c_str(),NULL,10);
+		en->spriteStun = (sprite_t) strtol(buff[8].c_str(),NULL,10);
+		item = en;
+		break;
+	}
+
+	case ENEMIGOTIRAFUEGO:{
+		EnemigoTiraFuego* en = new EnemigoTiraFuego();
 		en->baseMayor =  (float)atof(buff[4].c_str());
 		en->altura =  (float)atof(buff[5].c_str());
 

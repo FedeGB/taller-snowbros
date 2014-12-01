@@ -229,6 +229,12 @@ Vertexes * obtenerVerticesPoder(sprite_t activeSprite){
 			vertexes->x[1] = vertexes->x[2] = 302 / 432.0f;
 			vertexes->y[2] = vertexes->y[3] = 230 / 320.0f;
 		}
+		if (activeSprite == PODER2){
+			vertexes->x[0] = vertexes->x[3] = 311.5 / 432.0f;
+			vertexes->y[0] = vertexes->y[1] = 213 / 320.0f;
+			vertexes->x[1] = vertexes->x[2] = 324 / 432.0f;
+			vertexes->y[2] = vertexes->y[3] = 227 / 320.0f;
+		}
 		return vertexes;
 }
 
@@ -292,11 +298,11 @@ Vertexes * obtenerVerticesBola(sprite_t activeSprite){
 			vertexes->y[2] = vertexes->y[3] = 325 / 365.0f;
 		}
 		if (activeSprite == CONGELADO){
-						vertexes->x[0] = vertexes->x[3] = 204 / 428.0f;
-						vertexes->y[0] = vertexes->y[1] = 263 / 365.0f;
-						vertexes->x[1] = vertexes->x[2] = 223 / 428.0f;
-						vertexes->y[2] = vertexes->y[3] = 282 / 365.0f;
-					}
+			vertexes->x[0] = vertexes->x[3] = 204 / 428.0f;
+			vertexes->y[0] = vertexes->y[1] = 263 / 365.0f;
+			vertexes->x[1] = vertexes->x[2] = 223 / 428.0f;
+			vertexes->y[2] = vertexes->y[3] = 282 / 365.0f;
+		}
 		return vertexes;
 }
 
@@ -308,6 +314,10 @@ Vertexes * obtenerVerticesNieve(sprite_t activeSprite){
 		vertexes->y[i] = ( 272.5 - 9.5 * sin(thita) ) / 365.0f;
 	}
 	return vertexes;
+}
+
+Vertexes * obtenerVerticesFuego(sprite_t activeSprite){
+	return obtenerVerticesNieve(activeSprite);
 }
 
 Vertexes * obtenerVerticesEnemigo1(sprite_t activeSprite){
@@ -407,6 +417,92 @@ Vertexes * obtenerVerticesEnemigo1(sprite_t activeSprite){
 	return vertexes;
 }
 
+Vertexes * obtenerVerticesEnemigo2(sprite_t activeSprite){
+
+	Vertexes * vertexes = new Vertexes(4);
+
+	if (activeSprite == PARADOIZQUIERDA){
+		vertexes->x[0] = vertexes->x[3] = 190.5 / 428.0f;
+		vertexes->y[0] = vertexes->y[1] = 0;
+		vertexes->x[1] = vertexes->x[2] = 206 / 428.0f;
+		vertexes->y[2] = vertexes->y[3] = 18 / 365.0f;
+	}
+	if (activeSprite == MOVIENDOIZQUIERDA1){
+		vertexes->x[0] = vertexes->x[3] = 151/428.0f;
+		vertexes->y[0] = vertexes->y[1] = 0;
+		vertexes->x[1] = vertexes->x[2] = 172 / 428.0f;
+		vertexes->y[2] = vertexes->y[3] = 16 / 365.0f;
+	}
+	if (activeSprite == MOVIENDOIZQUIERDA2){
+		vertexes->x[0] = vertexes->x[3] = 173.5 / 428.0f;
+		vertexes->y[0] = vertexes->y[1] = 0/ 365.0f;
+		vertexes->x[1] = vertexes->x[2] = 190 / 428.0f;
+		vertexes->y[2] = vertexes->y[3] = 18 / 365.0f;
+	}
+	if (activeSprite == MOVIENDOIZQUIERDA3){
+		vertexes->x[0] = vertexes->x[3] = 151/428.0f;
+		vertexes->y[0] = vertexes->y[1] = 0;
+		vertexes->x[1] = vertexes->x[2] = 172 / 428.0f;
+		vertexes->y[2] = vertexes->y[3] = 16 / 365.0f;
+	}
+	if (activeSprite == MOVIENDOIZQUIERDA4){
+		vertexes->x[0] = vertexes->x[3] = 173.5 / 428.0f;
+		vertexes->y[0] = vertexes->y[1] = 0/ 365.0f;
+		vertexes->x[1] = vertexes->x[2] = 190 / 428.0f;
+		vertexes->y[2] = vertexes->y[3] = 18 / 365.0f;
+	}
+	if (activeSprite == SALTANDOIZQUIERDA1){
+		vertexes->x[0] = vertexes->x[3] = 151/428.0f;
+		vertexes->y[0] = vertexes->y[1] = 35 / 365.0f;
+		vertexes->x[1] = vertexes->x[2] = 169 / 428.0f;
+		vertexes->y[2] = vertexes->y[3] = 58 / 365.0f;
+	}
+	if (activeSprite == SALTANDOIZQUIERDA2){
+		vertexes->x[0] = vertexes->x[3] = 151/428.0f;
+		vertexes->y[0] = vertexes->y[1] = 35 / 365.0f;
+		vertexes->x[1] = vertexes->x[2] = 169 / 428.0f;
+		vertexes->y[2] = vertexes->y[3] = 58 / 365.0f;
+	}
+	if (activeSprite == SALTANDOIZQUIERDA3){
+		vertexes->x[0] = vertexes->x[3] = 151/428.0f;
+		vertexes->y[0] = vertexes->y[1] = 35 / 365.0f;
+		vertexes->x[1] = vertexes->x[2] = 169 / 428.0f;
+		vertexes->y[2] = vertexes->y[3] = 58 / 365.0f;
+	}
+	if (activeSprite == SALTANDOIZQUIERDA4){
+		vertexes->x[0] = vertexes->x[3] = 151/428.0f;
+		vertexes->y[0] = vertexes->y[1] = 35 / 365.0f;
+		vertexes->x[1] = vertexes->x[2] = 169 / 428.0f;
+		vertexes->y[2] = vertexes->y[3] = 58 / 365.0f;
+	}
+	if (activeSprite == SALTANDOIZQUIERDA5){
+		vertexes->x[0] = vertexes->x[3] = 151/428.0f;
+		vertexes->y[0] = vertexes->y[1] = 35 / 365.0f;
+		vertexes->x[1] = vertexes->x[2] = 169 / 428.0f;
+		vertexes->y[2] = vertexes->y[3] = 58 / 365.0f;
+	}
+	if (activeSprite == ATRAPADO1){
+		vertexes->x[0] = vertexes->x[3] = 173 / 428.0f;
+		vertexes->y[0] = vertexes->y[1] = 18 / 365.0f;
+		vertexes->x[1] = vertexes->x[2] = 195 / 428.0f;
+		vertexes->y[2] = vertexes->y[3] = 34.5 / 365.0f;
+	}
+	if (activeSprite == ATRAPADO2){
+		vertexes->x[0] = vertexes->x[3] = 195 / 428.0f;
+		vertexes->y[0] = vertexes->y[1] = 18 / 365.0f;
+		vertexes->x[1] = vertexes->x[2] = 217 / 428.0f;
+		vertexes->y[2] = vertexes->y[3] = 34.5 / 365.0f;
+	}
+	if (activeSprite == CONGELADO){
+		vertexes->x[0] = vertexes->x[3] = 177 / 428.0f;
+		vertexes->y[0] = vertexes->y[1] = 323.5 / 365.0f;
+		vertexes->x[1] = vertexes->x[2] = 197 / 428.0f;
+		vertexes->y[2] = vertexes->y[3] = 343.5 / 365.0f;
+	}
+
+	return vertexes;
+}
+
 // Dibuja un PJ.
 void ItemRenderer::renderPJ(Personaje * item, float escala){
 
@@ -477,7 +573,40 @@ void ItemRenderer::renderENES(EnemigoEstandar * item, float escala) {
 	delete vert;
 }
 
-void ItemRenderer::renderPoder(poder * item,float escala){
+void ItemRenderer::renderENTIFUE(EnemigoTiraFuego * item, float escala) {
+	// Convierte los parametros de B2D en los necesarios para renderear el sprite.
+	// Obtiene la seccion de la pantalla a renderear.
+	GLfloat vx[4];
+	GLfloat vy[4];
+
+	// Flippea la imagen si es necesario.
+	if (item->orientation == Personaje::LEFT){
+		vx[0] = vx[3] = (item->posicion.x - item->baseMayor / 2) * escala;
+		vy[0] = vy[1] = (item->posicion.y - item->altura / 2) * escala;
+		vx[1] = vx[2] = vx[0] + item->baseMayor * escala;
+		vy[2] = vy[3] = vy[0] + item->altura * escala;
+	} else {
+		vx[1] = vx[2] = (item->posicion.x - item->baseMayor / 2) * escala;
+		vy[0] = vy[1] = (item->posicion.y - item->altura / 2) * escala;
+		vx[0] = vx[3] = vx[1] + item->baseMayor * escala;
+		vy[2] = vy[3] = vy[0] + item->altura * escala;
+	}
+
+	// Obtiene los vertices del sprite.
+	Vertexes * vert = obtenerVerticesEnemigo2(item->activeSprite);
+
+	// Obtiene la textura y su correspondiente rect para renderear.
+	TexAndVertexes * TaV = textureMap[ENES];
+
+	// Renderea.
+	TaV->tex->dibujar(vx, vy, vert->x, vert->y, 4);
+	delete vert;
+	vert = obtenerVerticesBola(item->spriteStun);
+	TaV->tex->dibujar(vx, vy, vert->x, vert->y, 4);
+	delete vert;
+}
+
+void ItemRenderer::renderPoderNieve(poder * item,float escala){
 
 		GLfloat vx[4];
 		GLfloat vy[4];
@@ -501,11 +630,39 @@ void ItemRenderer::renderPoder(poder * item,float escala){
 		// Obtiene la textura y su correspondiente rect para renderear.
 		TexAndVertexes * TaV = textureMap[PODER1];
 
-		// Si esta no esta conectado, se cambia el color a gris.
 		// Renderea.
 		TaV->tex->dibujar(vx, vy, vert->x, vert->y, 4);
 
 		delete vert;
+}
+
+void ItemRenderer::renderPoderFuego(Fireball *item,float escala) {
+	GLfloat vx[4];
+	GLfloat vy[4];
+
+	// Flippea la imagen si es necesario.
+	if (item->orientation == Personaje::LEFT){
+		vx[0] = vx[3] = (item->posicion.x - item->baseMayor / 2) * escala;
+		vy[0] = vy[1] = (item->posicion.y - item->altura / 2) * escala;
+		vx[1] = vx[2] = vx[0] + item->baseMayor * escala;
+		vy[2] = vy[3] = vy[0] + item->altura * escala;
+	} else {
+		vx[1] = vx[2] = (item->posicion.x - item->baseMayor / 2) * escala;
+		vy[0] = vy[1] = (item->posicion.y - item->altura / 2) * escala;
+		vx[0] = vx[3] = vx[1] + item->baseMayor * escala;
+		vy[2] = vy[3] = vy[0] + item->altura * escala;
+	}
+
+	// Obtiene los vertices del sprite.
+	Vertexes * vert = obtenerVerticesPoder(item->activeSprite);
+
+	// Obtiene la textura y su correspondiente rect para renderear.
+	TexAndVertexes * TaV = textureMap[PODER2];
+
+	// Renderea.
+	TaV->tex->dibujar(vx, vy, vert->x, vert->y, 4);
+
+	delete vert;
 }
 
 void ItemRenderer::renderSorpresa(Sorpresa * item,float escala){
@@ -713,8 +870,11 @@ void ItemRenderer::render(WorldItem * item, float escala){
 //	std::cout << "el tipo es: " << item->tipo << std::endl;
 
 	switch(item->tipo){
-	case PODERES:
-		renderPoder((poder*)item,escala);
+	case NIEVE:
+		renderPoderNieve((poder*)item,escala);
+		break;
+	case FUEGO:
+		renderPoderFuego((Fireball*)item, escala);
 		break;
 	case CIRCULO:
 		renderCirculo((Circulo*)item, escala);
@@ -730,6 +890,9 @@ void ItemRenderer::render(WorldItem * item, float escala){
 		break;
 	case ENEMIGOESTANDAR:
 		renderENES((EnemigoEstandar*)item, escala);
+		break;
+	case ENEMIGOTIRAFUEGO:
+		renderENTIFUE((EnemigoTiraFuego*)item, escala);
 		break;
 	case METADATAFONDO:
 		tamanioMundo.x = ((Metadata*)item)->tamanioXMundo;

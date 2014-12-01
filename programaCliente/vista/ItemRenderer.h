@@ -10,8 +10,9 @@
 
 #include "../modelo/WorldItem.h"
 #include "../modelo/Personaje.h"
-#include "../modelo/poder.h"
+#include "../modelo/Fireball.h"
 #include "../modelo/EnemigoEstandar.h"
+#include "../modelo/EnemigoTiraFuego.h"
 #include "../modelo/BolaEnemigo.h"
 #include "../modelo/Metadata.h"
 #include "../modelo/formas/Circulo.h"
@@ -44,7 +45,9 @@ private:
 	static void renderPoligono(PoligonoRegular * item, float escala);
 	static void renderPJ(Personaje * item, float escala);
 	static void renderENES(EnemigoEstandar * item, float escala);
-	static void renderPoder(poder *item,float escala);
+	static void renderENTIFUE(EnemigoTiraFuego * item, float escala);
+	static void renderPoderNieve(poder *item,float escala);
+	static void renderPoderFuego(Fireball *item,float escala);
 	static void renderMetadataFondo(Metadata * item);
 	static void renderMetadataHUD(Metadata * item);
 	static void renderBola(BolaEnemigo * item, float escala);

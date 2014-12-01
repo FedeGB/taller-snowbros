@@ -60,10 +60,12 @@ private:
 	bool loadMetadataTex();
 	bool loadPJTex();
 	bool loadENESTex();
+	bool loadENTIFUETex();
 	bool loadCircleTex();
 	bool loadCuadTex();
 	bool inicializado;
 	bool loadSnowBallTex();
+	bool loadFireBallTex();
 	bool loadSorpresasTex();
 	bool loadLagunaTex();
 };
