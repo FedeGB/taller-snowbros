@@ -30,6 +30,8 @@ public:
 	virtual void Noempujar();
 	virtual bool isMovingLeft();
 	virtual bool isMovingRight();
+	virtual void setAsKicked();
+
 	void setDelete(){
 			toDelete = true;
 		}
@@ -50,6 +52,7 @@ protected:
 	bool isTrapped;
 	bool isPushable;
 	orientation_t pushOrientation;
+	bool wasKicked;
 
 	int stunCounter;
 

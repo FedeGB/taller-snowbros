@@ -35,6 +35,7 @@ EnemigoEstandar::EnemigoEstandar() {
 	isTrapped = false;
 	stunCounter=0;
 	isPushable=false;
+	wasKicked = false;
 }
 
 EnemigoEstandar::EnemigoEstandar(int number){
@@ -64,6 +65,7 @@ EnemigoEstandar::EnemigoEstandar(int number){
 	isTrapped = false;
 	stunCounter=0;
 	isPushable=false;
+	wasKicked = false;
 }
 
 EnemigoEstandar::~EnemigoEstandar() {
@@ -91,7 +93,7 @@ void EnemigoEstandar::update(){
 	else if(vida<10) spriteStun=STUN1;
 	else if(vida>=10) spriteStun=STUN0;
 
-	if(isPushable&&isSpacePressed){
+	if(isPushable&&wasKicked){
 		setDelete();
 	}
 
@@ -116,8 +118,9 @@ void EnemigoEstandar::update(){
 			activeSprite=ATRAPADO1;
 		else if (animationCounter<200)
 			activeSprite=ATRAPADO2;
-		else {animationCounter=0;
-				stunCounter++;
+		else {
+			animationCounter=0;
+			stunCounter++;
 		}
 		if(stunCounter>=10){
 			vida++;
@@ -263,7 +266,6 @@ void EnemigoEstandar::update(){
 }
 
 void EnemigoEstandar::eventoSpace() {
-	std::cout<<"space";
 	isSpacePressed = true;
 }
 
@@ -356,3 +358,6 @@ bool EnemigoEstandar::isMovingRight() {
 	return isRightPressed;
 }
 
+void EnemigoEstandar::setAsKicked() {
+	wasKicked = true;
+}

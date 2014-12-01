@@ -10,6 +10,7 @@
 
 #include <Box2D/Box2D.h>
 #include "../modelo/EnemigoEstandar.h"
+#include "../modelo/Fireball.h"
 #include "../modelo/Sorpresa.h"
 
 class ContactListener : public b2ContactListener
@@ -22,17 +23,17 @@ class ContactListener : public b2ContactListener
 		if ( *((int*)(&fixtureAUserData)) == EMPUJE ){
 			if ( *((int*)(&fixtureBUserData)) == ENEMIGOBOLA ){
 				orientation_t ori=(orientation_t)( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->GetOrientation();
-					( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->Patear();
-					( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() )->empujar(ori);
-					( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->enemigoParaEmpujar=( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() );
+				( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->Patear();
+				( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() )->empujar(ori);
+				( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->enemigoParaEmpujar=( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() );
 			}
 		}
 		if ( *((int*)(&fixtureAUserData)) == ENEMIGOBOLA ){
 			if ( *((int*)(&fixtureBUserData)) == EMPUJE ){
 				orientation_t ori=(orientation_t)( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->GetOrientation();
-					( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->Patear();
-					( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() )->empujar(ori);
-					( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->enemigoParaEmpujar=( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() );
+				( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->Patear();
+				( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() )->empujar(ori);
+				( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->enemigoParaEmpujar=( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() );
 			}
 		}
 
@@ -62,7 +63,7 @@ class ContactListener : public b2ContactListener
 			}
 		}
 
-		// Collision between Snowballs and Static Objects
+		// Collision between Snowballs and Objects
 		if( *((int*)(&fixtureBUserData)) == PODERHIELO ){
 			if ( *((int*)(&fixtureAUserData)) == ESTATICO || *((int*)(&fixtureAUserData)) == ATRAVESABLE || *((int*)(&fixtureAUserData)) == DINAMICO ){
 				((snowball*) contact->GetFixtureB()->GetBody()->GetUserData())->setDelete();
@@ -79,6 +80,26 @@ class ContactListener : public b2ContactListener
 			if ( *((int*)(&fixtureBUserData)) == ENEMIGO || *((int*)(&fixtureBUserData)) == ENEMIGOCONGELADO|| *((int*)(&fixtureBUserData)) == PIESEN ) {
 				((snowball*) contact->GetFixtureA()->GetBody()->GetUserData())->setDelete();
 				((EnemigoEstandar*) contact->GetFixtureB()->GetBody()->GetUserData())->applyDamage(((snowball*) contact->GetFixtureB()->GetBody()->GetUserData())->getDamage());
+			}
+		}
+
+		// Collision between Fireballs and Objects
+		if( *((int*)(&fixtureBUserData)) == PODERFUEGO ){
+			if ( *((int*)(&fixtureAUserData)) == ESTATICO || *((int*)(&fixtureAUserData)) == ATRAVESABLE || *((int*)(&fixtureAUserData)) == DINAMICO ){
+				((Fireball*) contact->GetFixtureB()->GetBody()->GetUserData())->setDelete();
+			}
+			if ( *((int*)(&fixtureAUserData)) == PERSONAJE|| *((int*)(&fixtureAUserData)) == PIESPJ ) {
+				((Fireball*) contact->GetFixtureB()->GetBody()->GetUserData())->setDelete();
+				((EnemigoEstandar*) contact->GetFixtureA()->GetBody()->GetUserData())->applyDamage(((Fireball*) contact->GetFixtureA()->GetBody()->GetUserData())->getDamage());
+			}
+		}
+		if( *((int*)(&fixtureAUserData)) == PODERFUEGO ){
+			if ( *((int*)(&fixtureBUserData)) == ESTATICO  || *((int*)(&fixtureBUserData)) == ATRAVESABLE || *((int*)(&fixtureBUserData)) == DINAMICO ) {
+				((Fireball*) contact->GetFixtureA()->GetBody()->GetUserData())->setDelete();
+			}
+			if ( *((int*)(&fixtureBUserData)) == PERSONAJE || *((int*)(&fixtureBUserData)) == PIESPJ ) {
+				((Fireball*) contact->GetFixtureA()->GetBody()->GetUserData())->setDelete();
+				((EnemigoEstandar*) contact->GetFixtureB()->GetBody()->GetUserData())->applyDamage(((Fireball*) contact->GetFixtureB()->GetBody()->GetUserData())->getDamage());
 			}
 		}
 
@@ -228,7 +249,7 @@ class ContactListener : public b2ContactListener
 		  	  }
 
 
-		  	  if(PosB - 0.25 < PosA && PJB->getFalling()) {
+		  	  if(PosB - 0.20 < PosA && PJB->getFalling()) {
 		  		  contact->SetEnabled(false);
 		  	  }
     	  }

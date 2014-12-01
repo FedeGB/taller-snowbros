@@ -16,7 +16,11 @@ public:
 	virtual ~EnemigoTiraFuego();
 	virtual std::string serializar();
 	virtual void update();
+	virtual void restarTimerThrow();
+	virtual int getTimerThrow();
 
+protected:
+	int timerThrow;
 };
 
 

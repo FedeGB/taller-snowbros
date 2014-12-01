@@ -7,8 +7,9 @@
 
 #include "EnemigoTiraFuego.h"
 #include "BolaEnemigo.h"
+#include "Fireball.h"
 
-
+#define TTHROW 200;
 
 EnemigoTiraFuego::EnemigoTiraFuego(int number) {
 	bodyB2D = NULL;
@@ -37,6 +38,9 @@ EnemigoTiraFuego::EnemigoTiraFuego(int number) {
 	isTrapped = false;
 	stunCounter=0;
 	isPushable=false;
+	maxpower = 0;
+	timerThrow = TTHROW;
+	wasKicked = false;
 }
 
 EnemigoTiraFuego::~EnemigoTiraFuego() {
@@ -61,9 +65,17 @@ void EnemigoTiraFuego::update(){
 		else if(vida<10) spriteStun=STUN1;
 		else if(vida>=10) spriteStun=STUN0;
 
-		// TODO: TIRAR FUEGO
+		if(isSpacePressed && !isFrozzen){
+			isThrowing=true;
+			Fireball *fb= new Fireball(bodyB2D->GetPosition().x,bodyB2D->GetPosition().y,(int)orientation,bodyB2D->GetWorld(), 0.5f, 0.0f, 1.0f, bodyB2D->GetLinearVelocity());
 
-		if(isPushable&&isSpacePressed){
+//				if( potenciaNieveSorpresa == 0.5 && impulsoNieveSorpresa == 1.0 )
+//					sonido->sonido = DISPARO;
+//				else
+//					sonido->sonido = DISPARO_SORPRESA;
+		}
+
+		if(isPushable && wasKicked){
 			setDelete();
 		}
 
@@ -231,4 +243,16 @@ void EnemigoTiraFuego::update(){
 		if(bodyB2D->GetLinearVelocity().y>1 && numFootContacts < 1 ){
 			 activeSprite = SALTANDOIZQUIERDA5;
 		}
+}
+
+void EnemigoTiraFuego::restarTimerThrow() {
+	if(timerThrow) {
+		timerThrow--;
+	} else {
+		timerThrow = TTHROW - 1;
+	}
+}
+
+int EnemigoTiraFuego::getTimerThrow() {
+	return timerThrow;
 }

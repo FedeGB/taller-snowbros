@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "../utiles/Timer.h"
+#include "../modelo/Fireball.h"
 
 
 WorldHandler::WorldHandler(ControladorUsuarios & c, ControladorEnemigos & en, std::string config):
@@ -108,6 +109,13 @@ void WorldHandler::cleanPowers() {
 				delete ((snowball*) body->GetUserData());
 			}
 		}
+
+		if( *((int*)(&fixData)) == PODERFUEGO) {
+			if( ( (Fireball*) body->GetUserData() )->forDelete() ){
+				delete ((Fireball*) body->GetUserData());
+			}
+		}
+
 
 		if( *((int*)(&fixData)) == sensorSORPRESA) {
 			if( ( (Sorpresa*) body->GetUserData() )->forDelete() ){

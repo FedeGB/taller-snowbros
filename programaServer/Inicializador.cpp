@@ -542,7 +542,7 @@ EnemigoEstandar * createEnemy(std::string data, b2World ** wB2D, int num) {
 	    en = new EnemigoEstandar(num);
 	} else if(tipo == "tfue") {
 		type = ENEMIGOTIRAFUEGO;
-		en = (EnemigoEstandar*) new EnemigoTiraFuego(num);
+		en = new EnemigoTiraFuego(num);
 	} else {
 		std::cout << "No es un tipo reconocible" << std::endl;
 		//No deberia entrar, pero hay que contemplarlo

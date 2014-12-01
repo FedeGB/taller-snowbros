@@ -24,13 +24,12 @@ protected:
 	};
 
 	sprite_t activeSprite;
-private:
 	float dmg;
 
 public:
 	virtual ~snowball();
 	snowball();
-	snowball(float32 posx,float32 posy,int orientation,b2World * world, float potenciaNieve, float impulsoNieve, b2Vec2 vel_pj);
+	snowball(float32 posx,float32 posy,int orientation,b2World * world, float damage, float impulsoNieve, b2Vec2 vel_pj);
 	std::string serializar();
 	void setDelete();
 	bool forDelete();

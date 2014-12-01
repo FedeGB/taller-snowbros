@@ -31,7 +31,7 @@ Personaje::Personaje(){
 	canKick = false;
 	camera = NULL;
 	online = true;
-	vida = 5;
+	vida = 0.5f;
 	maxpower = 0;
 	for( int i = 0; i < 3; i++)
 		sorpresasContador[i] = 0.0f;
@@ -76,7 +76,7 @@ void Personaje::eventoSoltoIzquierda(){
 void Personaje::eventoSpace() {
 	isSpacePressed = true;
 	if(enemigoParaEmpujar!=NULL){
-		((EnemigoEstandar*)enemigoParaEmpujar)->isSpacePressed=true;
+		((EnemigoEstandar*)enemigoParaEmpujar)->setAsKicked();
 	}
 }
 
@@ -407,10 +407,13 @@ bool Personaje::getFalling() {
 	return isFalling;
 }
 
+bool Personaje::getThrowing() {
+	return isThrowing;
+}
+
 void Personaje::respawn(){
 	this->bodyB2D->SetTransform(initPos,0);
 	this->bodyB2D->SetLinearVelocity(b2Vec2(0,0));
 	isRespawnable=false;
 	inmunity=true;
 }
-

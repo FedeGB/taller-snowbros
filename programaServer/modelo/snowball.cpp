@@ -55,7 +55,7 @@ snowball::snowball(float32 posx,float32 posy,int orientation,b2World * world, fl
 std::string snowball::serializar(){
 
 	std::string buffer;
-	buffer = SSTR(PODERES << " " << posicion.x << " " << posicion.y << " "
+	buffer = SSTR(NIEVE << " " << posicion.x << " " << posicion.y << " "
 			<< angulo << "  " << baseMayor << " " << altura << " "
 			<< activeSprite );
 	return buffer;

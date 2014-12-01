@@ -6,6 +6,7 @@
  */
 
 #include "BolaEnemigo.h"
+#include "EnemigoEstandar.h"
 
 BolaEnemigo::BolaEnemigo(b2Body * body){
 	b2BodyDef b2dObjDef;
@@ -21,15 +22,15 @@ BolaEnemigo::BolaEnemigo(b2Body * body){
 	b2dObjDef.position.x = body->GetPosition().x;
 	b2dObjDef.position.y = body->GetPosition().y;
 
-	circle.m_radius = 1.3f; //defino el tamaño
+	circle.m_radius = ((EnemigoEstandar*)(body->GetUserData()))->baseMayor/1.5f; //defino el tamaño
 	myFixtureDef.shape = &circle; //defino que es un circulo
 
-				// Determina el tipo de figura para poder dibujarla.
+	// Determina el tipo de figura para poder dibujarla.
 	this->radio = circle.m_radius;
 	//lo vinculo al mundo
 	bodyB2D = body->GetWorld()->CreateBody(&b2dObjDef);
-	myFixtureDef.density =1.0f; //le doy masa
-	myFixtureDef.restitution = 0.8f;
+	myFixtureDef.density =100.0f; //le doy masa
+	myFixtureDef.restitution = 0.1f;
 
 	myFixtureDef.friction = 0.3f;
 

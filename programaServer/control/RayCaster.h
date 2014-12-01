@@ -22,9 +22,6 @@ public:
         m_point = point;
         m_normal = normal;
         m_fraction = fraction;
-        if( *((int*)(&fixData)) != ATRAVESABLE) {
-        	return 1;
-        }
         return fraction;
 	}
 

@@ -23,6 +23,7 @@ public:
 	void setB2DBody(b2Body * pjB2D);
 	void modifyFootContacts(int i);
 	void setNewAngle(float32 a);
+
 	virtual bool isAlive();
 	virtual void applyDamage(float);
 	virtual bool GetAirborne();
@@ -54,6 +55,7 @@ public:
 	virtual void eventoSoltoSpace();
 	virtual void setFalling(bool);
 	virtual bool getFalling();
+	virtual bool getThrowing();
 
 	//virtual void eventoa();
 
@@ -105,6 +107,7 @@ protected:
 
 private:
 	bool canKick;
+	b2Vec2 posIni;
 };
 
 #endif /* PERSONAJE_H_ */
