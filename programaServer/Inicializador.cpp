@@ -267,6 +267,7 @@ Personaje * Inicializador::pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*
     pj->desplazamiento = 0;
     pj->posicion.x = pj_x;
     pj->posicion.y = pj_y;
+    pj->initPos=b2Vec2(pj_x,pj_y);
     pjB2D->SetUserData(pj);
 
     // Crea la camara para este personaje.

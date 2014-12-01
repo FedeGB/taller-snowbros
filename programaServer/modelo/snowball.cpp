@@ -9,6 +9,7 @@
 
 snowball::~snowball() {
 	this->poder->GetWorld()->DestroyBody(this->poder);
+	this->poder=NULL;
 }
 
 snowball::snowball() {

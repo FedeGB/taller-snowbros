@@ -81,7 +81,7 @@ BolaEnemigo::~BolaEnemigo() {
 
 void BolaEnemigo::aumentarTiempo(){
 	tiempoDeVida++;
-	if(tiempoDeVida>=100000)
+	if(tiempoDeVida>=50000)
 		setDelete();
 	return;
 }

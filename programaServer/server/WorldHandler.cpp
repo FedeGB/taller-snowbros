@@ -121,6 +121,12 @@ void WorldHandler::cleanPowers() {
 			else
 				((BolaEnemigo*) body->GetUserData())->aumentarTiempo();
 		}
+		if( *((int*)(&fixData)) == PERSONAJE|| *((int*)(&fixData)) == PIESPJ||(*((int*)(&fixData)) == EMPUJE)) {
+					if( ( (Personaje*) body->GetUserData() )->isRespawnable ==true)
+						((Personaje*) body->GetUserData())->respawn();
+				}
+
+
 		body = body->GetNext();
 	}
 }

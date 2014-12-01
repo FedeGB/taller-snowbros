@@ -235,6 +235,10 @@ void Camera::updateRenderList(){
 			continue;
 		if ( *((int*)(&fixtureAUserData)) == PIESEN || *((int*)(&fixtureBUserData)) == PIESEN )
 			continue;
+		if ( *((int*)(&fixtureAUserData)) == PIESENBOLA || *((int*)(&fixtureBUserData)) == PIESENBOLA )
+			continue;
+		if ( *((int*)(&fixtureAUserData)) == PIESENCONGELADO || *((int*)(&fixtureBUserData)) == PIESENCONGELADO )
+			continue;
 
 		// Saltea las demas camaras.
 		if ( *((int*)(&fixtureAUserData)) == CAMARA && *((int*)(&fixtureBUserData)) == CAMARA )

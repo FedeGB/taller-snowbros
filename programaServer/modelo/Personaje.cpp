@@ -35,6 +35,7 @@ Personaje::Personaje(){
 	maxpower = 0;
 	for( int i = 0; i < 3; i++)
 		sorpresasContador[i] = 0.0f;
+	inmunityCounter=0.0f;
 	sorpresaPaso = 0.2;
 	velocidadPJSorpresa = 1.0f;
 	potenciaNieveSorpresa = 0.5f;
@@ -42,6 +43,8 @@ Personaje::Personaje(){
 	enemigoParaEmpujar = NULL;
 	sumergido = false;
 	velocidadSumergido = 1.0f;
+	isRespawnable=false;
+	inmunity=true;
 }
 
 Personaje::~Personaje() {}
@@ -298,8 +301,11 @@ bool Personaje::GetAirborne(){
 }
 
 void Personaje::applyDamage(float dmg) {
+	if(inmunity)
+		return;
 	vida -= dmg;
 	printf("vida restante: %f\n", vida);
+	isRespawnable=true;
 }
 
 b2World* Personaje::getMundo(){
@@ -330,6 +336,14 @@ void Personaje::nieveMasPotente(){
 }
 
 void Personaje::actualizarEfectos(){
+	if(inmunity){
+		inmunityCounter+= sorpresaPaso;
+		if( inmunityCounter > 500.0f  ){
+			inmunity = false;
+			inmunityCounter = 0.0f;
+			printf("FIN INMUNIDADs\n");
+		}
+	}
 
 	// actualiza contador de sopresa velocidad del pj
 	if( velocidadPJSorpresa != 1.0f ){
@@ -391,5 +405,12 @@ void Personaje::setFalling(bool fall) {
 
 bool Personaje::getFalling() {
 	return isFalling;
+}
+
+void Personaje::respawn(){
+	this->bodyB2D->SetTransform(initPos,0);
+	this->bodyB2D->SetLinearVelocity(b2Vec2(0,0));
+	isRespawnable=false;
+	inmunity=true;
 }
 

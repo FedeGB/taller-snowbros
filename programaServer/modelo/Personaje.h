@@ -34,6 +34,7 @@ public:
 	virtual void nieveMasPotente();
 	virtual void Patear();
 	virtual void NoPatear();
+ void respawn();
 
 	virtual void actualizarEfectos();
 
@@ -64,9 +65,13 @@ public:
 	orientation_t orientation;
 	bool isSpacePressed;
 	void * enemigoParaEmpujar;
+	b2Vec2 initPos;
+	bool isRespawnable;
+	bool inmunity;
 
 protected:
 	b2Body * bodyB2D;
+	float inmunityCounter;
 
 	int maxpower;
 	int numFootContacts;
