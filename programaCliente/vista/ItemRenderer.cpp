@@ -531,11 +531,13 @@ void ItemRenderer::renderPJ(Personaje * item, float escala){
 	TexAndVertexes * TaV = textureMap[PJ1];
 
 	// Si esta no esta conectado, se cambia el color a gris.
-	if(!item->online)
+	if(!item->online||item->inmunity){
 		TaV->tex->dibujarOscuro(vx, vy, vert->x, vert->y, 4);// cambio el color
-	else
+	}
+	else{
 	// Renderea.
 	TaV->tex->dibujar(vx, vy, vert->x, vert->y, 4);
+	}
 
 	delete vert;
 }

@@ -167,4 +167,5 @@ enum sensor_t{
 	PODERHIELO,
 };
 
+
 #endif /* TIPOS_H_ */

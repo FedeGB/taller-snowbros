@@ -28,7 +28,7 @@ public:
 	orientation_t orientation;
 
 	sprite_t activeSprite;
-
+	bool inmunity;
 	bool online;
 };
 

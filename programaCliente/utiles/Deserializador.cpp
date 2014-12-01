@@ -98,6 +98,7 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 		pj->activeSprite = (sprite_t) strtol(buff[6].c_str(),NULL,10);
 		pj->orientation = (Personaje::orientation_t) strtol(buff[7].c_str(),NULL,10);
 		pj->online= (bool)strtol(buff[8].c_str(),NULL,10);
+		pj->inmunity=(bool)strtol(buff[9].c_str(),NULL,10);
 		item = pj;
 		break;
 	}
