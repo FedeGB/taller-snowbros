@@ -734,17 +734,17 @@ void ItemRenderer::renderMetadataHUD(Metadata * item){
 	// Obtiene la textura y su correspondiente rect para renderear las vidas.
 	TexAndVertexes * TaV = textureMap[VIDAS1];
 
-	for (int i = 0; i < item->vidas; i++){
+	//for (int i = 0; i < item->vidas; i++){
 
 		// Calcula la posicion de los corazones de vida.
-		vx[0] = vx[3] = 20 + i * 54;
+		vx[0] = vx[3] = 20 ;
 		vy[0] = vy[1] = 20;
-		vx[1] = vx[2] = 68 + i * 54;
+		vx[1] = vx[2] = 68 ;
 		vy[2] = vy[3] = 68;
 
 		// Renderea vidas.
 		TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
-	}
+	//}
 
 	std::string puntaje = SSTR("Puntaje: " << item->puntaje);
 
@@ -760,6 +760,18 @@ void ItemRenderer::renderMetadataHUD(Metadata * item){
 	TaV->tex->generarTexto("fuentes/Ubuntu-B.ttf", 30, puntaje, c);
 
 	// Renderea puntaje.
+	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
+
+	//posicion xvidas
+	vx[0] = vx[3] = 20 + 1 * 54;
+	vy[0] = vy[1] = 20;
+	vx[1] = vx[2] = 68 + 1 * 54;
+	vy[2] = vy[3] = 68;
+
+	std::string xvidas = SSTR("X" << item->vidas);
+	TaV->tex->generarTexto("fuentes/Ubuntu-B.ttf", 30, xvidas, c);
+
+		// Renderea vidas numero
 	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
 
 	// Analiza el mensaje.
