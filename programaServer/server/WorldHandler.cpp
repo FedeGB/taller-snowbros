@@ -64,11 +64,11 @@ bool WorldHandler::loopPrincipal() {
 
 		for(int i=0;i<10;i++) {
 			worldB2D->Step(1.0f/freq, 8, 5);
-			this->cleanPowers();
+			//this->cleanPowers();
 		};
 
 		// Clean powers (bodies) from world
-		//this->cleanPowers();
+		this->cleanPowers();
 
 		// Updatea enemigos
 		if(count > 0) {
@@ -106,58 +106,61 @@ bool WorldHandler::loopPrincipal() {
 void WorldHandler::cleanPowers() {
 	b2Body* body = worldB2D->GetBodyList();
 	while (body) {
-		void* fixData = body->GetFixtureList()->GetUserData();
-		if( *((int*)(&fixData)) == PODERHIELO) {
-			if( ( (snowball*) body->GetUserData() )->cayoPorAgujero() )
-				((snowball*) body->GetUserData())->moverArriba();
+		b2Fixture* fix = body->GetFixtureList();
+		if(fix) {
+			void* fixData = fix->GetUserData();
+			if( *((int*)(&fixData)) == PODERHIELO) {
+				if( ( (snowball*) body->GetUserData() )->cayoPorAgujero() )
+					((snowball*) body->GetUserData())->moverArriba();
 
-			if( ( (snowball*) body->GetUserData() )->forDelete() ){
-				delete ((snowball*) body->GetUserData());
+				if( ( (snowball*) body->GetUserData() )->forDelete() ){
+					delete ((snowball*) body->GetUserData());
+				}
+			}
+
+			if( *((int*)(&fixData)) == PODERFUEGO) {
+				if( ( (Fireball*) body->GetUserData() )->cayoPorAgujero() )
+					((Fireball*) body->GetUserData())->moverArriba();
+
+
+				if( ( (Fireball*) body->GetUserData() )->forDelete() ){
+					delete ((Fireball*) body->GetUserData());
+				}
+			}
+
+
+			if( *((int*)(&fixData)) == sensorSORPRESA) {
+				if( ( (Sorpresa*) body->GetUserData() )->forDelete() ){
+					delete ((Sorpresa*) body->GetUserData());
+				}
+			}
+			if( *((int*)(&fixData)) == BOLASNOW) {
+				if( ( (BolaEnemigo*) body->GetUserData() )->cayoPorAgujero() )
+					((BolaEnemigo*) body->GetUserData())->moverArriba();
+
+
+				if( ( (BolaEnemigo*) body->GetUserData() )->forDelete() ){
+					delete ((BolaEnemigo*) body->GetUserData());
+				}
+				else
+					((BolaEnemigo*) body->GetUserData())->aumentarTiempo();
+			}
+			if( *((int*)(&fixData)) == PERSONAJE|| *((int*)(&fixData)) == PIESPJ||(*((int*)(&fixData)) == EMPUJE)) {
+						if( ( (Personaje*) body->GetUserData() )->isRespawnable ==true)
+							((Personaje*) body->GetUserData())->respawn();
+						if( ( (Personaje*) body->GetUserData() )->cayoPorAgujero())
+							((Personaje*) body->GetUserData())->moverArriba();
+						if( ( (Personaje*) body->GetUserData() )->forDelete()) {
+							delete ( (Personaje*) body->GetUserData() );
+						}
+			}
+
+			if( *((int*)(&fixData)) == ENEMIGO|| *((int*)(&fixData)) == ENEMIGOCONGELADO || *((int*)(&fixData)) == PIESEN || *((int*)(&fixData)) == PIESENCONGELADO  || *((int*)(&fixData)) == ENEMIGOBOLA ) {
+						if( ( (EnemigoEstandar*) body->GetUserData() )->cayoPorAgujero()){
+							((EnemigoEstandar*) body->GetUserData())->moverArriba();
+						}
 			}
 		}
-
-		if( *((int*)(&fixData)) == PODERFUEGO) {
-			if( ( (Fireball*) body->GetUserData() )->cayoPorAgujero() )
-				((Fireball*) body->GetUserData())->moverArriba();
-
-
-			if( ( (Fireball*) body->GetUserData() )->forDelete() ){
-				delete ((Fireball*) body->GetUserData());
-			}
-		}
-
-
-		if( *((int*)(&fixData)) == sensorSORPRESA) {
-			if( ( (Sorpresa*) body->GetUserData() )->forDelete() ){
-				delete ((Sorpresa*) body->GetUserData());
-			}
-		}
-		if( *((int*)(&fixData)) == BOLASNOW) {
-			if( ( (BolaEnemigo*) body->GetUserData() )->cayoPorAgujero() )
-				((BolaEnemigo*) body->GetUserData())->moverArriba();
-
-
-			if( ( (BolaEnemigo*) body->GetUserData() )->forDelete() ){
-				delete ((BolaEnemigo*) body->GetUserData());
-			}
-			else
-				((BolaEnemigo*) body->GetUserData())->aumentarTiempo();
-		}
-		if( *((int*)(&fixData)) == PERSONAJE|| *((int*)(&fixData)) == PIESPJ||(*((int*)(&fixData)) == EMPUJE)) {
-					if( ( (Personaje*) body->GetUserData() )->isRespawnable ==true)
-						((Personaje*) body->GetUserData())->respawn();
-					if( ( (Personaje*) body->GetUserData() )->cayoPorAgujero())
-						((Personaje*) body->GetUserData())->moverArriba();
-					if( ( (Personaje*) body->GetUserData() )->forDelete())
-						delete ( (Personaje*) body->GetUserData() );
-		}
-
-		if( *((int*)(&fixData)) == ENEMIGO|| *((int*)(&fixData)) == ENEMIGOCONGELADO || *((int*)(&fixData)) == PIESEN || *((int*)(&fixData)) == PIESENCONGELADO  || *((int*)(&fixData)) == ENEMIGOBOLA ) {
-					if( ( (EnemigoEstandar*) body->GetUserData() )->cayoPorAgujero()){
-						((EnemigoEstandar*) body->GetUserData())->moverArriba();
-					}
-		}
-
 		body = body->GetNext();
 	}
 }
