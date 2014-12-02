@@ -71,8 +71,8 @@ bool snowball::forDelete() {
 
 float snowball::getDamage() {
 	if(!hasAtacked){
-		return this->dmg;
 		hasAtacked=true;
+		return this->dmg;
 	}
 	return 0;
 }

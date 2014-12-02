@@ -11,8 +11,6 @@
 #define SNOWBALL_H_
 
 class snowball: public Cuadrilatero {
-
-
 protected:
 	b2Body * poder;
 	bool toDelete;
@@ -33,9 +31,9 @@ public:
 	snowball();
 	snowball(float32 posx,float32 posy,int orientation,b2World * world, float damage, float impulsoNieve, b2Vec2 vel_pj);
 	std::string serializar();
-	void setDelete();
-	bool forDelete();
-	float getDamage();
+	virtual void setDelete();
+	virtual bool forDelete();
+	virtual float getDamage();
 
 	void setCayoPorAgujero(bool);
 	bool cayoPorAgujero();

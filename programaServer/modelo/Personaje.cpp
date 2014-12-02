@@ -79,6 +79,7 @@ void Personaje::eventoSpace() {
 	isSpacePressed = true;
 	if(enemigoParaEmpujar!=NULL){
 		((EnemigoEstandar*)enemigoParaEmpujar)->setAsKicked();
+		enemigoParaEmpujar = NULL;
 	}
 }
 

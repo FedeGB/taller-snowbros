@@ -7,6 +7,11 @@
 
 #include "Fireball.h"
 
+Fireball::~Fireball() {
+	this->poder->GetWorld()->DestroyBody(this->poder);
+	this->poder=NULL;
+}
+
 Fireball::Fireball(){
 }
 
@@ -43,11 +48,6 @@ Fireball::Fireball(float32 posx,float32 posy,int orientation,b2World * world, fl
 	poder->SetUserData(this);
 	hasAtacked=false;
 }
-
-Fireball::~Fireball() {
-	this->poder->GetWorld()->DestroyBody(this->poder);
-}
-
 
 
 std::string Fireball::serializar(){

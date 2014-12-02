@@ -58,7 +58,7 @@ class ContactListener : public b2ContactListener
 		}
 		if( *((int*)(&fixtureBUserData)) == ENEMIGO || *((int*)(&fixtureBUserData)) == PIESEN ){
 			if ( *((int*)(&fixtureAUserData)) == PERSONAJE || *((int*)(&fixtureAUserData)) == PIESPJ ) {
-				if(( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->isAlive() && !( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() )) {
+				if(( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->isAlive() && !( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() )->trapped()) {
 					( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->applyDamage(0.5);
 				}
 			}
@@ -89,18 +89,20 @@ class ContactListener : public b2ContactListener
 			if ( *((int*)(&fixtureAUserData)) == ESTATICO || *((int*)(&fixtureAUserData)) == ATRAVESABLE || *((int*)(&fixtureAUserData)) == DINAMICO ){
 				((Fireball*) contact->GetFixtureB()->GetBody()->GetUserData())->setDelete();
 			}
-			if ( *((int*)(&fixtureAUserData)) == PERSONAJE|| *((int*)(&fixtureAUserData)) == PIESPJ ) {
+			if ((*((int*)(&fixtureAUserData)) == PERSONAJE || *((int*)(&fixtureAUserData)) == PIESPJ)) {
 				((Fireball*) contact->GetFixtureB()->GetBody()->GetUserData())->setDelete();
-				((Personaje*) contact->GetFixtureA()->GetBody()->GetUserData())->applyDamage(((Fireball*) contact->GetFixtureA()->GetBody()->GetUserData())->getDamage());
+				if(((Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->isAlive())
+					((Personaje*) contact->GetFixtureA()->GetBody()->GetUserData())->applyDamage(((Fireball*) contact->GetFixtureA()->GetBody()->GetUserData())->getDamage());
 			}
 		}
 		if( *((int*)(&fixtureAUserData)) == PODERFUEGO ){
 			if ( *((int*)(&fixtureBUserData)) == ESTATICO  || *((int*)(&fixtureBUserData)) == ATRAVESABLE || *((int*)(&fixtureBUserData)) == DINAMICO ) {
 				((Fireball*) contact->GetFixtureA()->GetBody()->GetUserData())->setDelete();
 			}
-			if ( *((int*)(&fixtureBUserData)) == PERSONAJE || *((int*)(&fixtureBUserData)) == PIESPJ ) {
+			if ((*((int*)(&fixtureBUserData)) == PERSONAJE || *((int*)(&fixtureBUserData)) == PIESPJ)) {
 				((Fireball*) contact->GetFixtureA()->GetBody()->GetUserData())->setDelete();
-				((Personaje*) contact->GetFixtureB()->GetBody()->GetUserData())->applyDamage(((Fireball*) contact->GetFixtureB()->GetBody()->GetUserData())->getDamage());
+				if(((Personaje*) contact->GetFixtureB()->GetBody()->GetUserData())->isAlive())
+					((Personaje*) contact->GetFixtureB()->GetBody()->GetUserData())->applyDamage(((Fireball*) contact->GetFixtureB()->GetBody()->GetUserData())->getDamage());
 			}
 		}
 
