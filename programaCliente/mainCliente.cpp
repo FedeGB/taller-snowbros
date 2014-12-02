@@ -256,6 +256,16 @@ int main(int argc, char * argv[]){
 			item = Deserializador::deserializar((*it));
 			if (!item) continue;
 			itemList.push_back(item);
+			if(item->tipo==METADATAHUD){
+				for(int i=0;i<4;i++){
+					if(((Metadata*)item)->users[i].compare(username)==0){
+						if(((Metadata*)item)->vidas[i]==0){
+							quit=true;
+							std::cout<<"Game Over"<<std::endl;
+						}
+					}
+				}
+			}
 		}
 
 		window->updateWindow(itemList, escala);
