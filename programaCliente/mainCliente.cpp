@@ -139,7 +139,51 @@ int main(int argc, char * argv[]){
 	bool quit = false;
 	std::string outMessage;
 
+	// Espera a que el server arranque la simulacion, mostrando una pantalla de espera.
+	while(inMessage != "SERVER-LISTO" && !quit) {
+		len = stream->receive(inMessage);
+		if (len <= 0) {
+			quit = true;
+			std::cout << "conexion perdida con el servidor" << std::endl;
+			break;
+		}
+
+		while( SDL_PollEvent( &event ) != 0 ) {
+			switch(event.type){
+			case SDL_QUIT:
+				quit = true;
+				break;
+			case SDL_KEYDOWN:
+				if (event.key.keysym.sym == SDLK_ESCAPE) quit = true;
+			}
+		}
+
+		Metadata * pantallaIntroFondo = new Metadata();;
+		Metadata * pantallaIntroHUD = new Metadata();;
+		pantallaIntroFondo->posXCamara = 0;
+		pantallaIntroFondo->posYCamara = 0;
+		pantallaIntroFondo->anchoCamara = 1;
+		pantallaIntroFondo->altoCamara = 1;
+		pantallaIntroFondo->tamanioXMundo = 720;
+		pantallaIntroFondo->tamanioYMundo = 640;
+		pantallaIntroFondo->tipo = METADATAFONDO;
+		pantallaIntroHUD->vidas[0] = pantallaIntroHUD->vidas[1] =
+				pantallaIntroHUD->vidas[2] = pantallaIntroHUD->vidas[3] = 0;
+		pantallaIntroHUD->users[0] = username;
+		pantallaIntroHUD->users[1] = pantallaIntroHUD->users[2] = pantallaIntroHUD->users[3] = "offline";
+		pantallaIntroHUD->puntaje = 0;
+		pantallaIntroHUD->mensaje.clear();
+		pantallaIntroHUD->mensaje = "NOMESSAGE-Esperando-mas-conexiones...";
+
+		itemList.push_back(pantallaIntroFondo);
+		itemList.push_back(pantallaIntroHUD);
+
+		window->updateWindow(itemList,1.0f);
+	}
+
 	while( !quit ){
+
+		std::cout << "entre al main loop" << std::endl;
 
 		// Analiza los eventos que sean relevantes para enviarlos al servidor.
 		while( SDL_PollEvent( &event ) != 0 ) {
@@ -166,13 +210,20 @@ int main(int argc, char * argv[]){
 				else if (event.key.keysym.sym == SDLK_SPACE) outMessage = SSTR(SOLTOSPACE);
 				break;
 			}
+			std::cout << "estoy polleando eventos: " << outMessage << std::endl;
 
 			if (!outMessage.empty()) stream->send(outMessage);
 		}
 
+		std::cout << "termine de pollear eventos. " << std::endl;
+
+
 		// Informa que no hay mas eventos para esta iteracion.
 		outMessage = "DONE";
 		stream->send(outMessage);
+
+		std::cout << "envie el fin de poll de eventos" << std::endl;
+
 
 		// Obtiene la pantalla serializada, con cada elemento separado por %.
 		inMessage.clear();
@@ -183,7 +234,7 @@ int main(int argc, char * argv[]){
 			continue;
 		}
 
-		//std::cout << "se recibio el siguiente escenario: " << inMessage << std::endl;
+		std::cout << "se recibio el siguiente escenario: " << inMessage << std::endl;
 
 		// Saltea si se recibe un mensaje vacio, ya que indica que todavia
 		// no se cargo el PJ en el servidor.
