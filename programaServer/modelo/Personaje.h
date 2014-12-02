@@ -38,6 +38,7 @@ public:
 
 	void respawn();
 
+
 	virtual void actualizarEfectos();
 
 	virtual b2World * getMundo();

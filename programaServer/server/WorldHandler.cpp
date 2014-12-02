@@ -24,21 +24,34 @@ void* WorldHandler::run(){
 
 bool WorldHandler::loopPrincipal() {
 
+	// Espera a que se llene el escenario.
+	while (!controlador.escenarioLleno()) {
+		std::cout << "esperando mas conexiones para simular." << std::endl;
+		usleep(200000);
+	}
+
+	std::cout << "se lleno el mapa, iniciando simulacion." << std::endl;
+
 	//Loop infinito en busca de mensajes para procesar
 	bool quit = false;
 	while(!quit){
+
 		int count = 0;
 		float freq =600.0f;
+
+		// Cuenta cuantos usuarios estan online.
 		for (ControladorUsuarios::iterator it=controlador.begin(); it!=controlador.end(); ++it){
-			if ((*it).second && (*it).second->online) {
+			if ((*it).second && (*it).second->online && (*it).second->inicializado) {
 				count++;
 			}
 		}
+
 		if(count > 0) {
 			army.strategy(worldB2D, controlador);
 		} else {
 			army.strategy(NULL, controlador);
 		}
+
 		if(count == 1)
 			freq = 20000.0f;
 		if(count == 2)
@@ -48,6 +61,7 @@ bool WorldHandler::loopPrincipal() {
 		if(count == 4)
 				freq = 6000.0f;
 		//std::cout << "freq: " << freq << '\n';		// Simula.
+
 		for(int i=0;i<10;i++) {
 			worldB2D->Step(1.0f/freq, 8, 5);
 			this->cleanPowers();
@@ -56,14 +70,12 @@ bool WorldHandler::loopPrincipal() {
 		// Clean powers (bodies) from world
 		//this->cleanPowers();
 
-
 		// Updatea enemigos
 		if(count > 0) {
 			army.update(true);
 		} else {
 			army.update(false);
 		}
-
 
 		// Procesa uno por uno todos los usuarios, inicializandolos, moviendo sus
 		// PJs o camaras, o ignorandolos si estan desconectados.
@@ -72,13 +84,16 @@ bool WorldHandler::loopPrincipal() {
 			// Saltea al usuario si este no esta conectado.
 			if (!(*it).second->online) continue;
 
-
 			// Inicializa al PJ del usuario si este todavia no lo fue.
-			if (!(*it).second->inicializado) (*it).second->inicializarPJ(worldB2D, configFile);
+			if (!(*it).second->inicializado) {
+				std::cout << "inicializando PJ" << std::endl;
+				(*it).second->inicializarPJ(worldB2D, configFile);
+			}
 			if( (*it).second->isPJAlive()) {
 				(*it).second->procesarNotificaciones();
 				(*it).second->actualizarPJ();
 			}
+
 			//(*it).second->esperarSenial();
 			//usleep(20000);
 		}

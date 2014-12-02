@@ -31,7 +31,7 @@ int ConnectionHandler::logIn(std::string username){
 		if (controlador.escenarioLleno()) return SERVERFULL;
 		controlador.registrarUsuario(username);
 	}
-	return OK;
+	return OK; //controlador.numeroUsuario(username);
 }
 
 void* ConnectionHandler::run() {
@@ -52,8 +52,8 @@ void* ConnectionHandler::run() {
 		std::string outMsg = "RECHAZADA-FULL";
 		size_t len = m_stream->send(outMsg);
 		if(len<=0){
-					quit=true;
-				}
+			quit=true;
+		}
 		printf ("Conexion rechazada, conexiones llenas. %s:%d \n", m_stream->getPeerIP().c_str(), m_stream->getPeerPort());
 		delete m_stream;
 		return NULL;
@@ -61,8 +61,8 @@ void* ConnectionHandler::run() {
 		std::string outMsg = "RECHAZADA-USR";
 		size_t len = m_stream->send(outMsg);
 		if(len<=0){
-					quit=true;
-				}
+			quit=true;
+		}
 		printf ("Conexion rechazada, user esta online. %s:%d \n", m_stream->getPeerIP().c_str(), m_stream->getPeerPort());
 		delete m_stream;
 		return NULL;
@@ -80,12 +80,29 @@ void* ConnectionHandler::run() {
 
 	std::string inMessage, outMessage;
 
+	// Espera a que esten conectados todos los jugadores necesarios.
+	while(!controlador.escenarioLleno()) {
+		len = m_stream->send("SERVER-ESPERANDO");
+		if(len<=0){
+			quit=true;
+		}
+		std::cout << "el server esta esperando mas conexiones" << std::endl;
+		usleep(20000);
+	}
+
+	if (!quit){
+		len = m_stream->send("SERVER-LISTO");
+		if(len<=0){
+			quit=true;
+		}
+		std::cout << username << ": iniciando simulacion" << std::endl;
+	}
+
 	while (!quit ){
 
 		// Recibe todos los eventos sucedidos en el cliente.
 		inMessage = "NOTDONE";
 		while (inMessage != "DONE"){
-//			cout<<"aa";
 			len = m_stream->receive(inMessage);
 			if (len <= 0) {
 				quit = true;
@@ -98,11 +115,12 @@ void* ConnectionHandler::run() {
 		}
 		if (quit) break;
 
-		// Obtiene la representacion serializada de la pantalla, y la envia.
-		outMessage =
-				controlador.obtenerPantallaSerializada(username);
 
-		if (outMessage.empty()) outMessage = "EMPTY";
+		// Obtiene la representacion serializada de la pantalla, y la envia.
+		if (controlador.obtenerUsuario(username)->inicializado)
+			outMessage = controlador.obtenerPantallaSerializada(username);
+		else outMessage= "EMPTY";
+
 		len = m_stream->send(outMessage);
 		if (len <= 0) {
 			quit = true;

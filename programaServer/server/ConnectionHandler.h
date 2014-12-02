@@ -30,7 +30,9 @@ private:
     // Intenta conectar un usuario al servidor, ya sea alguien que
     // ya estaba en la partida y se habia desconectado, o alguien nuevo.
     // username: el usuario a intentar conectarse.
-    // return: true si la conexion fue exitosa, false en caso contrario.
+    // return: numero de conexion si esta fue exitosa,
+    // SERVERFULL si no hay mas lugar en el servidor,
+    // USERONLINE si el usuario ya se encuentra conectado.
     int logIn(std::string username);
 
 public:

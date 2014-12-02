@@ -13,6 +13,7 @@ Usuario::Usuario() {
 	inicializado = false;
 	PJ = NULL;
 	sonidoPJ = NULL;
+	numeroUsuario = 0;
 }
 
 Usuario::~Usuario() {
@@ -137,7 +138,7 @@ void Usuario::esperarSenial(){
 // Inicializa el PJ asociado a este usuario, con su correspondiente camara.
 void Usuario::inicializarPJ(b2World * worldB2D, std::string configFile){
 	Inicializador inicializador;
-	PJ = inicializador.pjInit(&worldB2D, listaVisibles, configFile);
+	PJ = inicializador.pjInit(&worldB2D, listaVisibles, numeroUsuario, configFile);
 	if (!PJ){
 		std::cout << "hubo un error al crear el PJ" << std::endl;
 	}

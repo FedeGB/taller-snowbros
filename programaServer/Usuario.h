@@ -31,6 +31,7 @@ public:
 	bool online;
 	bool inicializado;
 	std::string username;
+	int numeroUsuario;
 
 
 	// Agrega una nueva notificacion por parte del handler de conexion para

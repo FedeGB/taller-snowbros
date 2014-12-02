@@ -152,7 +152,7 @@ void Inicializador::enemysInit(b2World ** worldB2D,
 }
 
 Personaje * Inicializador::pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*> & rList,
-	std::string configFile){
+		int numeroUsuario, std::string configFile){
 	Logger& log = *Logger::Instancia();
 	std::string data;
 	bool statusOK = true;
@@ -165,8 +165,14 @@ Personaje * Inicializador::pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*
 
 	// Parametros iniciales.
 	b2dObjDef.type = b2_dynamicBody;
-	float32 pj_x = get_node("x", "personaje", data, 5.0f);
-	float32 pj_y = get_node("y", "personaje", data, 10.0f);
+	std::string campoPJ = SSTR("personaje" << numeroUsuario);
+
+	std::cout << "el campo es: " << campoPJ << std::endl;
+
+	float32 pj_x = get_node("x", campoPJ, data, 5.0f);
+	float32 pj_y = get_node("y", campoPJ, data, 10.0f);
+
+	std::cout << "el valor de (x,y) es: (" << pj_x << ", " << pj_y << ")" << std::endl;
 
 	float32 anchoMaximo = get_node("ancho-un", "escenario", data, 10.0f);
 	float32 altoMaximo = get_node("alto-un", "escenario", data, 10.0f);
@@ -191,12 +197,12 @@ Personaje * Inicializador::pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*
 	b2Body *pjB2D = (*worldB2D)->CreateBody(&b2dObjDef);
 
 	//le doy forma
-	float32 halfHeight = get_node("alto", "personaje", data, 1.4f);
-	float32 halfWidth = get_node("ancho", "personaje", data, 1.2f);
+	float32 halfHeight = get_node("alto", campoPJ, data, 1.4f);
+	float32 halfWidth = get_node("ancho", campoPJ, data, 1.2f);
 	b2Vec2 v(0,(halfHeight*-0.1));
 	polygon.SetAsBox(halfWidth*0.7, halfHeight*0.7,v,0); //le doy dimensiones
 	myFixtureDef.shape = &polygon; //defino que es un poligono
-	myFixtureDef.density =  get_node("masa", "personaje", data, 20.0f); //le doy masa
+	myFixtureDef.density =  get_node("masa", campoPJ, data, 20.0f); //le doy masa
 	myFixtureDef.restitution = 0.0f;
 	myFixtureDef.friction=0.2;
 	b2Fixture * bodyFixture = pjB2D->CreateFixture(&myFixtureDef); //le asigno la forma

@@ -30,7 +30,17 @@ bool ControladorUsuarios::registrarUsuario(std::string username){
 	// En caso contrario, se lo agrega.
 	(*this)[username] = new Usuario();
 	(*this)[username]->username = username;
+	static int num = 0;
+	num++;
+	(*this)[username]->numeroUsuario = num;
 	return true;
+}
+
+// Devuelve el numero de conexion correspondiente al usuario solicitado,
+// asignado por orden de su primera conexion.
+int ControladorUsuarios::numeroUsuario(std::string username){
+	if (!usuarioExiste(username)) return -1;
+	return (*this)[username]->numeroUsuario;
 }
 
 // Verifica si el usuario requerido ya se encuentra registrado.
@@ -51,7 +61,7 @@ Usuario * ControladorUsuarios::obtenerUsuario(std::string username){
 // Determina si queda lugar en el escenario para que ingresen nuevos usuarios.
 // return: true si no pueden ingresar mas usuarios, false si aun hay lugar.
 bool ControladorUsuarios::escenarioLleno(){
-	return this->size() < tamanioMaximo ? false :true;
+	return this->size() < tamanioMaximo ? false:true;
 }
 
 // Obtiene una version serializada de lo que se ve en pantalla del usuario

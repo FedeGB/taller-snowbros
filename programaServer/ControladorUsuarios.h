@@ -21,6 +21,10 @@ public:
 	// retorno: true si tuvo exito el registro, false si hubo algun error.
 	bool registrarUsuario(std::string username);
 
+	// Devuelve el numero de conexion correspondiente al usuario solicitado,
+	// asignado por orden de su primera conexion.
+	int numeroUsuario(std::string username);
+
 	// Verifica si el usuario requerido ya se encuentra registrado.
 	// username: el nombre de usuario a verificar.
 	// retorno: true si el usuario ya se encuentra registrado, false en caso contrario.
