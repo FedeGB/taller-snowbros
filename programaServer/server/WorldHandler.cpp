@@ -148,6 +148,8 @@ void WorldHandler::cleanPowers() {
 						((Personaje*) body->GetUserData())->respawn();
 					if( ( (Personaje*) body->GetUserData() )->cayoPorAgujero())
 						((Personaje*) body->GetUserData())->moverArriba();
+					if( ( (Personaje*) body->GetUserData() )->forDelete())
+						delete ( (Personaje*) body->GetUserData() );
 		}
 
 		if( *((int*)(&fixData)) == ENEMIGO|| *((int*)(&fixData)) == ENEMIGOCONGELADO || *((int*)(&fixData)) == PIESEN || *((int*)(&fixData)) == PIESENCONGELADO  || *((int*)(&fixData)) == ENEMIGOBOLA ) {

@@ -20,6 +20,7 @@
 #define OK 0
 #define SERVERFULL 1
 #define USERONLINE 2
+#define USERDEAD 3
 
 class ConnectionHandler : public Thread{
 private:

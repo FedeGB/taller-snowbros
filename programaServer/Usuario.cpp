@@ -153,7 +153,8 @@ void Usuario::actualizarPJ(){
 
 void Usuario::setOnline(bool estado){
 	this->online= estado;
-	this->PJ->online= estado;
+	if(PJ!=NULL)
+		this->PJ->online= estado;
 }
 
 b2Vec2 Usuario::getPosition() {
@@ -161,7 +162,9 @@ b2Vec2 Usuario::getPosition() {
 }
 
 bool Usuario::isPJAlive() {
-	return this->PJ->isAlive();
+	if(PJ!=NULL)
+		return this->PJ->isAlive();
+	else return false;
 }
 
 void Usuario::eventoa(){
@@ -183,4 +186,9 @@ void Usuario::eventoa(){
 
 float Usuario::getLives(){
 	return this->PJ->vida;
+}
+
+void Usuario::DeletePj(){
+	this->PJ->setDelete();
+	this->PJ=NULL;
 }

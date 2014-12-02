@@ -63,6 +63,13 @@ public:
 	virtual bool getFalling();
 	virtual bool getThrowing();
 
+	void setDelete(){
+				toDelete = true;
+			}
+		bool forDelete(){
+				return toDelete;
+			}
+
 	//virtual void eventoa();
 
 	virtual void update(Sonido*);
@@ -79,6 +86,7 @@ public:
 	float vida;
 
 protected:
+	bool toDelete;
 	b2Body * bodyB2D;
 	float inmunityCounter;
 

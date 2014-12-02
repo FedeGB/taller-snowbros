@@ -21,6 +21,8 @@ int ConnectionHandler::logIn(std::string username){
 		Usuario* user = controlador.obtenerUsuario(username);
 		if(user->online) {
 			return USERONLINE;
+		}else if (!user->isPJAlive()){
+				return USERDEAD;
 		} else {
 			user->setOnline(true);
 		}
@@ -66,8 +68,16 @@ void* ConnectionHandler::run() {
 		printf ("Conexion rechazada, user esta online. %s:%d \n", m_stream->getPeerIP().c_str(), m_stream->getPeerPort());
 		delete m_stream;
 		return NULL;
-	}
-	else{
+	}else if( result == USERDEAD){
+		std::string outMsg = "RECHAZADA-USR";
+		size_t len = m_stream->send(outMsg);
+		if(len<=0){
+					quit=true;
+				}
+		printf ("Conexion rechazada, user esta muerto. %s:%d \n", m_stream->getPeerIP().c_str(), m_stream->getPeerPort());
+		delete m_stream;
+		return NULL;
+	}else{
 		std::string outMsg = "OK";
 		size_t len = m_stream->send(outMsg);
 		if(len<=0){
@@ -106,6 +116,8 @@ void* ConnectionHandler::run() {
 			len = m_stream->receive(inMessage);
 			if (len <= 0) {
 				quit = true;
+				if(!controlador.obtenerUsuario(username)->isPJAlive())
+					controlador.obtenerUsuario(username)->DeletePj();
 				break;
 			}
 			if (inMessage != "DONE") {

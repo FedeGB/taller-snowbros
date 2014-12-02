@@ -52,14 +52,14 @@ class ContactListener : public b2ContactListener
 		if( *((int*)(&fixtureAUserData)) == ENEMIGO || *((int*)(&fixtureAUserData)) == PIESEN ){
 			if ( *((int*)(&fixtureBUserData)) == PERSONAJE || *((int*)(&fixtureBUserData)) == PIESPJ ) {
 				if(( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->isAlive() && !( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() )->trapped()) {
-					( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->applyDamage(0.5);
+					( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->applyDamage(1);
 				}
 			}
 		}
 		if( *((int*)(&fixtureBUserData)) == ENEMIGO || *((int*)(&fixtureBUserData)) == PIESEN ){
 			if ( *((int*)(&fixtureAUserData)) == PERSONAJE || *((int*)(&fixtureAUserData)) == PIESPJ ) {
 				if(( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->isAlive() && !( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() )->trapped()) {
-					( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->applyDamage(0.5);
+					( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->applyDamage(1);
 				}
 			}
 		}

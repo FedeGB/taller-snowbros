@@ -31,7 +31,7 @@ Personaje::Personaje(){
 	canKick = false;
 	camera = NULL;
 	online = true;
-	vida = 5;
+	vida = 2;
 	maxpower = 0;
 	for( int i = 0; i < 3; i++)
 		sorpresasContador[i] = 0.0f;
@@ -43,13 +43,16 @@ Personaje::Personaje(){
 	enemigoParaEmpujar = NULL;
 	sumergido = false;
 	velocidadSumergido = 1.0f;
-
 	cayo = false;
 	isRespawnable=false;
 	inmunity=true;
+	toDelete=false;
 }
 
-Personaje::~Personaje() {}
+Personaje::~Personaje() {
+	this->bodyB2D->GetWorld()->DestroyBody(this->bodyB2D);
+	this->bodyB2D=NULL;
+}
 
 void Personaje::eventoArriba(){	isUpPressed = true;}
 
@@ -439,3 +442,4 @@ void Personaje::moverArriba(){
 	this->bodyB2D->SetTransform( p, 0);
 	cayo = false;
 }
+

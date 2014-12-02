@@ -78,6 +78,8 @@ public:
 
 	float getLives();
 
+	void DeletePj();
+
 private:
 	ColaTrabajo<WorkItem*>  colaNotificaciones;
 	ConditionVariable c;
