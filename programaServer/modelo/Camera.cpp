@@ -29,6 +29,11 @@ Camera::~Camera() {
 	// TODO Auto-generated destructor stub
 }
 
+void Camera::reposition(b2Vec2 pos) {
+	cameraB2D->SetTransform(pos, 0);
+	this->calcularPosRelativaPJ();
+}
+
 void Camera::calcularPosRelativaPJ(){
 	// Determino la posicion del PJ relativo al origen de coordenadas de la camara.
 	posPJCamera = PJ->GetPosition() - cameraB2D->GetPosition();

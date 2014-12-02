@@ -432,6 +432,7 @@ bool Personaje::getThrowing() {
 void Personaje::respawn(){
 	this->bodyB2D->SetTransform(initPos,0);
 	this->bodyB2D->SetLinearVelocity(b2Vec2(0,0));
+	this->camera->reposition(initPos);
 	isRespawnable=false;
 	inmunity=true;
 }

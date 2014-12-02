@@ -24,6 +24,7 @@ public:
 	void setPJ(b2Body * pjB2D);
 	void setWINDOWTOWORLDSCALE(float32 windowToWorld);
 	void update();
+	void reposition(b2Vec2);
 
 	virtual void eventoZoomIn();
 	virtual void eventoZoomOut();
