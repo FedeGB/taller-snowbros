@@ -282,7 +282,11 @@ void Personaje::update(Sonido* sonido){
 		break;
 	default:
 		if (isAirborne) activeSprite = SALTANDOIZQUIERDA5;
-		if(isThrowing) activeSprite = TIRANDOIZQUIERDA2;
+		if(isThrowing){
+			activeSprite = TIRANDOIZQUIERDA2;
+			if(animationCounter>500)
+				animationCounter=0;
+		}
 		else animationCounter = 0;
 		isThrowing= false;
 

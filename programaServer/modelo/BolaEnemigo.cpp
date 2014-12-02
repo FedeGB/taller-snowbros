@@ -67,6 +67,7 @@ std::string BolaEnemigo::serializar(){
 
 BolaEnemigo::~BolaEnemigo() {
 	Sorpresa * sorpresa;
+	srand (time(NULL));
 	int tipo_sorpresa = rand() % 4;
 	switch( tipo_sorpresa ){
 

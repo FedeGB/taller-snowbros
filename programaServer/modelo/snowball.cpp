@@ -8,6 +8,8 @@
 #include "snowball.h"
 
 snowball::~snowball() {
+	if(this->poder==NULL)
+		return;
 	this->poder->GetWorld()->DestroyBody(this->poder);
 	this->poder=NULL;
 }
