@@ -27,6 +27,7 @@
 
 #include "../modelo/Sorpresa.h"
 #include "../modelo/Laguna.h"
+#include "../modelo/Agujero.h"
 
 class ItemRenderer {
 public:
@@ -52,6 +53,7 @@ private:
 	static void renderMetadataHUD(Metadata * item);
 	static void renderBola(BolaEnemigo * item, float escala);
 	static void renderLaguna(Laguna * item, float escala);
+	static void renderAgujero(Agujero* item, float escala);
 
 	static SonidosMap sonidosMap;
 	static void renderSonido(Sonido * item);

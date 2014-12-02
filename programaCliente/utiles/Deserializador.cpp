@@ -116,7 +116,7 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 		s->sonido = (sonidos_t) strtol(buff[1].c_str(),NULL,10);
 		if( s->sonido == VACIO ) return NULL;
 		s->velocidad = (float)atof(buff[2].c_str());
-		std::cout << "sonido recibido: " << s->sonido << " velocidad: " << s->velocidad << '\n';
+		//std::cout << "sonido recibido: " << s->sonido << " velocidad: " << s->velocidad << '\n';
 		return s;
 	}
 
@@ -181,6 +181,17 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 		laguna->activeSprite = spriteLAGUNA;
 		//en->orientation = (Personaje::orientation_t) strtol(buff[7].c_str(),NULL,10);
 		item = laguna;
+		break;
+	}
+
+	case AGUJERO:{
+		Agujero * agujero = new Agujero();
+		agujero->baseMayor =  (float)atof(buff[4].c_str());
+		agujero->altura =  (float)atof(buff[5].c_str());
+
+		agujero->activeSprite = spriteLAGUNA;
+		//en->orientation = (Personaje::orientation_t) strtol(buff[7].c_str(),NULL,10);
+		item = agujero;
 		break;
 	}
 

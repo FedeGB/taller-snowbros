@@ -851,19 +851,28 @@ void ItemRenderer::renderLaguna(Laguna* item, float escala){
 	vx[0] = vx[3] = vx[1] + item->baseMayor * escala;
 	vy[2] = vy[3] = vy[0] + item->altura * escala;
 
-	// Obtiene los vertices del sprite.
-	//Vertexes * vert = obtenerVerticesSorpresa(item->activeSprite);
-	//Vertexes * vert = obtenerVerticesPoder(PODER1);
+	// Obtiene la textura y su correspondiente rect para renderear.
+	TexAndVertexes * TaV = textureMap[spriteLAGUNA];
+
+	// Renderea.
+	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
+}
+
+void ItemRenderer::renderAgujero(Agujero* item, float escala){
+
+	GLfloat vx[4];
+	GLfloat vy[4];
+
+	vx[1] = vx[2] = (item->posicion.x - item->baseMayor / 2) * escala;
+	vy[0] = vy[1] = (item->posicion.y - item->altura / 2) * escala;
+	vx[0] = vx[3] = vx[1] + item->baseMayor * escala;
+	vy[2] = vy[3] = vy[0] + item->altura * escala;
 
 	// Obtiene la textura y su correspondiente rect para renderear.
 	TexAndVertexes * TaV = textureMap[spriteLAGUNA];
 
-	// Si esta no esta conectado, se cambia el color a gris.
 	// Renderea.
 	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
-
-	//delete vert;
-
 }
 
 void ItemRenderer::renderSonido(Sonido * item){
@@ -941,6 +950,9 @@ void ItemRenderer::render(WorldItem * item, float escala){
 		break;
 	case LAGUNA:
 		renderLaguna((Laguna*) item, escala);
+		break;
+	case AGUJERO:
+		renderAgujero((Agujero*) item, escala);
 		break;
 	}
 }

@@ -107,6 +107,7 @@ enum worlditem_t{
 	BOLASNOW,
 	LAGUNA,
 	ENEMIGOTIRAFUEGO,
+	AGUJERO,
 };
 
 enum sprite_t{
