@@ -96,6 +96,7 @@ enum worlditem_t{
 	BOLASNOW,
 	LAGUNA,
 	ENEMIGOTIRAFUEGO,
+	AGUJERO,
 };
 
 enum sprite_t{
@@ -170,6 +171,7 @@ enum sensor_t{
 	PIESENBOLA,
 	EMPUJE,
 	sensorLAGUNA,
+	sensorAGUJERO,
 };
 
 #endif /* TIPOS_H_ */

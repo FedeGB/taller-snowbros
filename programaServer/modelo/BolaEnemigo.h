@@ -28,11 +28,17 @@ public:
 		return toDelete;
 	}
 
+	void setCayoPorAgujero(bool);
+	bool cayoPorAgujero();
+	void moverArriba();
+
 protected:
 	b2Body * bodyB2D;
 	sprite_t activeSprite;
 	int tiempoDeVida;
 	bool toDelete;
+
+	bool cayo;
 };
 
 #endif /* BOLAENEMIGO_H_ */

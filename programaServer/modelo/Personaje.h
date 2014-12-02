@@ -35,6 +35,7 @@ public:
 	virtual void nieveMasPotente();
 	virtual void Patear();
 	virtual void NoPatear();
+
 	void respawn();
 
 	virtual void actualizarEfectos();
@@ -43,6 +44,10 @@ public:
 
 	virtual bool estaSumergido();
 	virtual void setSumergido(bool);
+
+	/* virtual */ void setCayoPorAgujero(bool);
+	/* virtual */ bool cayoPorAgujero();
+	void moverArriba();
 
 	// metodos de INotificable
 	virtual void eventoArriba();
@@ -101,6 +106,8 @@ protected:
 	float impulsoNieveSorpresa;
 
 	float velocidadSumergido;
+
+	bool cayo; //cayo por agujero
 
 
 

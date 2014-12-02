@@ -23,6 +23,14 @@
 			"masa": 20.0,
 			"ancho": 1.2,
 			"alto": 1.5
+    },
+    {
+    		"tipo": "tfue",
+    		"x": 10.0,
+			"y": 10.0,
+			"masa": 20.0,
+			"ancho": 1.2,
+			"alto": 1.5
     }
     ],
     "objetos": [

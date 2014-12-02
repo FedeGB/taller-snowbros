@@ -12,6 +12,7 @@
 #include "../modelo/EnemigoEstandar.h"
 #include "../modelo/Fireball.h"
 #include "../modelo/Sorpresa.h"
+#include "../modelo/BolaEnemigo.h"
 
 class ContactListener : public b2ContactListener
   {
@@ -132,6 +133,12 @@ class ContactListener : public b2ContactListener
 					( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->setSumergido(true);
 				}
 			}
+			if ( *((int*)(&fixtureAUserData)) == ENEMIGO || *((int*)(&fixtureAUserData)) == ENEMIGOCONGELADO || *((int*)(&fixtureAUserData)) == ENEMIGOBOLA) {
+				if(( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() )->isAlive() &&
+						!((EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() )->estaSumergido()) {
+					( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() )->setSumergido(true);
+				}
+			}
 		}
 
 		if( *((int*)(&fixtureAUserData)) == sensorLAGUNA ){
@@ -141,6 +148,56 @@ class ContactListener : public b2ContactListener
 					( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->setSumergido(true);
 				}
 			}
+			if ( *((int*)(&fixtureBUserData)) == ENEMIGO || *((int*)(&fixtureBUserData)) == ENEMIGOCONGELADO || *((int*)(&fixtureBUserData)) == ENEMIGOBOLA) {
+				if(( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() )->isAlive() &&
+						!((EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() )->estaSumergido()) {
+					( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() )->setSumergido(true);
+				}
+			}
+		}
+
+		// colision entre los agujero y el pj
+		if( *((int*)(&fixtureBUserData)) == sensorAGUJERO ){
+			if ( *((int*)(&fixtureAUserData)) == PERSONAJE || *((int*)(&fixtureAUserData)) == PIESPJ ) {
+				if(( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->isAlive() ){
+					((Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->setCayoPorAgujero(true);
+				}
+			}
+			if ( *((int*)(&fixtureAUserData)) == ENEMIGO|| *((int*)(&fixtureAUserData)) == ENEMIGOCONGELADO|| *((int*)(&fixtureAUserData)) == PIESEN || *((int*)(&fixtureAUserData)) == PIESENCONGELADO || *((int*)(&fixtureAUserData)) == ENEMIGOBOLA) {
+				((EnemigoEstandar*) contact->GetFixtureA()->GetBody()->GetUserData())->setCayoPorAgujero(true);
+			}
+			if ( *((int*)(&fixtureAUserData)) == PODERHIELO ){
+				((snowball*) contact->GetFixtureA()->GetBody()->GetUserData())->setCayoPorAgujero(true);
+			}
+			if ( *((int*)(&fixtureAUserData)) == PODERFUEGO ){
+				((Fireball*) contact->GetFixtureA()->GetBody()->GetUserData())->setCayoPorAgujero(true);
+			}
+			if ( *((int*)(&fixtureAUserData)) == BOLASNOW ){
+				((BolaEnemigo*) contact->GetFixtureA()->GetBody()->GetUserData())->setCayoPorAgujero(true);
+			}
+		}
+
+		if( *((int*)(&fixtureAUserData)) == sensorAGUJERO ){
+			if ( *((int*)(&fixtureBUserData)) == PERSONAJE || *((int*)(&fixtureBUserData)) == PIESPJ ) {
+				if(( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->isAlive() ){
+					((Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->setCayoPorAgujero(true);
+				}
+			}
+			if ( *((int*)(&fixtureBUserData)) == ENEMIGO|| *((int*)(&fixtureBUserData)) == ENEMIGOCONGELADO|| *((int*)(&fixtureBUserData)) == PIESEN || *((int*)(&fixtureBUserData)) == PIESENCONGELADO || *((int*)(&fixtureBUserData)) == ENEMIGOBOLA) {
+				((EnemigoEstandar*) contact->GetFixtureB()->GetBody()->GetUserData())->setCayoPorAgujero(true);
+			}
+			if ( *((int*)(&fixtureBUserData)) == PODERHIELO ){
+				((snowball*) contact->GetFixtureB()->GetBody()->GetUserData())->setCayoPorAgujero(true);
+			}
+			if ( *((int*)(&fixtureBUserData)) == PODERFUEGO ){
+				((Fireball*) contact->GetFixtureB()->GetBody()->GetUserData())->setCayoPorAgujero(true);
+			}
+			if ( *((int*)(&fixtureBUserData)) == BOLASNOW ){
+				((BolaEnemigo*) contact->GetFixtureB()->GetBody()->GetUserData())->setCayoPorAgujero(true);
+			}
+//			if ( *((int*)(&fixtureBUserData)) == DINAMICO ){
+//				((EnemigoEstandar*) contact->GetFixtureB()->GetBody()->GetUserData())->setCayoPorAgujero(true);
+//			}
 		}
 	}
 
@@ -183,6 +240,12 @@ class ContactListener : public b2ContactListener
 						( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->setSumergido(false);
 					}
 				}
+				if ( *((int*)(&fixtureAUserData)) == ENEMIGO || *((int*)(&fixtureAUserData)) == ENEMIGOCONGELADO || *((int*)(&fixtureAUserData)) == ENEMIGOBOLA ) {
+					if(( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() )->isAlive() &&
+							((EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() )->estaSumergido()) {
+						( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() )->setSumergido(false);
+					}
+				}
 			}
 
 			if( *((int*)(&fixtureAUserData)) == sensorLAGUNA ){
@@ -190,6 +253,30 @@ class ContactListener : public b2ContactListener
 					if(( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->isAlive() &&
 							((Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->estaSumergido()) {
 						( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->setSumergido(false);
+					}
+				}
+				if ( *((int*)(&fixtureBUserData)) == ENEMIGO || *((int*)(&fixtureBUserData)) == ENEMIGOCONGELADO || *((int*)(&fixtureBUserData)) == ENEMIGOBOLA ) {
+					if(( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() )->isAlive() &&
+							((EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() )->estaSumergido()) {
+						( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() )->setSumergido(false);
+					}
+				}
+			}
+
+			// detecta que no haya mas contacto del pj con el agujero
+			// colision entre los agujeros y el pj
+			if( *((int*)(&fixtureBUserData)) == sensorAGUJERO ){
+				if ( *((int*)(&fixtureAUserData)) == PERSONAJE  ) {
+					if(( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->isAlive() ){
+						((Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->setCayoPorAgujero(false);
+					}
+				}
+			}
+
+			if( *((int*)(&fixtureAUserData)) == sensorAGUJERO ){
+				if ( *((int*)(&fixtureBUserData)) == PERSONAJE ) {
+					if(( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->isAlive() ){
+						((Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->setCayoPorAgujero(false);
 					}
 				}
 			}

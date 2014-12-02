@@ -19,6 +19,7 @@ public:
 	virtual void restarTimerThrow();
 	virtual int getTimerThrow();
 
+
 protected:
 	int timerThrow;
 };

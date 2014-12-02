@@ -15,6 +15,7 @@ BolaEnemigo::BolaEnemigo(b2Body * body){
 	WorldItem * figura;
 	this->tiempoDeVida=0;
 	this->toDelete=false;
+	this->cayo = false;
 
 	b2dObjDef.type = b2_dynamicBody;
 	b2dObjDef.bullet = true;
@@ -85,4 +86,19 @@ void BolaEnemigo::aumentarTiempo(){
 	if(tiempoDeVida>=50000)
 		setDelete();
 	return;
+}
+
+void BolaEnemigo::setCayoPorAgujero(bool b) {
+	cayo = b;
+}
+
+bool BolaEnemigo::cayoPorAgujero(){
+	return cayo;
+}
+
+void BolaEnemigo::moverArriba(){
+	b2Vec2 p = this->bodyB2D->GetPosition();
+	p.y = 1;
+	this->bodyB2D->SetTransform( p, 0);
+	cayo = false;
 }

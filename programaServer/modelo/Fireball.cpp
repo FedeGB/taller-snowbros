@@ -36,12 +36,12 @@ Fireball::Fireball(float32 posx,float32 posy,int orientation,b2World * world, fl
 		poder->SetLinearVelocity(b2Vec2(-15.0f*impulsoFuego + vel_unit.x,-2.0f*impulsoFuego));
 	else
 		poder->SetLinearVelocity(b2Vec2(15.0f*impulsoFuego + vel_unit.x,-2.0f*impulsoFuego));
+
 	toDelete = false;
 	dmg = damage;
 	std::cout<< "fireball constructor:" << damage << '\n';
 	poder->SetUserData(this);
 	hasAtacked=false;
-
 }
 
 Fireball::~Fireball() {

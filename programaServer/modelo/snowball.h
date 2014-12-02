@@ -26,6 +26,8 @@ protected:
 	sprite_t activeSprite;
 	float dmg;
 
+	bool cayo;
+
 public:
 	virtual ~snowball();
 	snowball();
@@ -34,6 +36,10 @@ public:
 	void setDelete();
 	bool forDelete();
 	float getDamage();
+
+	void setCayoPorAgujero(bool);
+	bool cayoPorAgujero();
+	void moverArriba();
 };
 
 #endif /* SNOWBALL_H_ */

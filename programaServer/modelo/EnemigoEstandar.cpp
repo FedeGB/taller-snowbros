@@ -36,6 +36,9 @@ EnemigoEstandar::EnemigoEstandar() {
 	stunCounter=0;
 	isPushable=false;
 	wasKicked = false;
+
+	sumergido = false;
+	velocidadSumergido = 1.0f;
 }
 
 EnemigoEstandar::EnemigoEstandar(int number){
@@ -66,6 +69,9 @@ EnemigoEstandar::EnemigoEstandar(int number){
 	stunCounter=0;
 	isPushable=false;
 	wasKicked = false;
+
+	sumergido = false;
+	velocidadSumergido = 1.0f;
 }
 
 EnemigoEstandar::~EnemigoEstandar() {
@@ -85,6 +91,16 @@ std::string EnemigoEstandar::serializar(){
 }
 
 void EnemigoEstandar::update(){
+
+	if( sumergido ){
+		bodyB2D->SetGravityScale(0.5f);
+		velocidadSumergido = 0.5f;
+	}
+	else{
+		bodyB2D->SetGravityScale(1.0f);
+		velocidadSumergido = 1.0f;
+	}
+
 	// Determina si esta en el aire.
 	isAirborne = numFootContacts <= 0 ? true : false;
 	if(vida<=0) spriteStun=STUN0;
@@ -161,7 +177,7 @@ void EnemigoEstandar::update(){
 	// Se mueve a la izquierda.
 	if (isLeftPressed && wasLeftPressed1st){
 		orientation = LEFT;
-		desiredVel = -7;                         //// VERIFICAR QUE CUANDO ESTE SALTANDO NO CAMBIE LA VELOCIDAD EN Y!! ! ! ! ! ! !  11 1 1 1 1 one one one
+		desiredVel = -7 * velocidadSumergido;                         //// VERIFICAR QUE CUANDO ESTE SALTANDO NO CAMBIE LA VELOCIDAD EN Y!! ! ! ! ! ! !  11 1 1 1 1 one one one
 		if (angulo <= 180 * DEGTORAD) scale = 0.33;
 		else scale = 3;
 		isMoving = true;
@@ -170,7 +186,7 @@ void EnemigoEstandar::update(){
 	// Se mueve a la derecha.
 	if (isRightPressed && !wasLeftPressed1st){
 		orientation = RIGHT;
-		desiredVel = 7;
+		desiredVel = 7 * velocidadSumergido;
 		scale = 4;
 		if (angulo <= 180 * DEGTORAD) scale = 3;
 		else scale = 0.33;
@@ -199,9 +215,9 @@ void EnemigoEstandar::update(){
 
 
 	// Si se recibio UP y el personaje esta en el piso, salta.
-	if (isUpPressed && (!isAirborne)){
+	if ((isUpPressed && (!isAirborne)) || (sumergido && isUpPressed) ){
 		b2Vec2 vel = bodyB2D->GetLinearVelocity();
-		float desiredVel = -19;
+		float desiredVel = -19 * velocidadSumergido;
 		float velChange = desiredVel - vel.y;
 		float impulse = bodyB2D->GetMass() * velChange;
 		bodyB2D->ApplyLinearImpulse( b2Vec2(0,impulse), bodyB2D->GetWorldCenter(), true);
@@ -360,4 +376,20 @@ bool EnemigoEstandar::isMovingRight() {
 
 void EnemigoEstandar::setAsKicked() {
 	wasKicked = true;
+}
+
+
+void EnemigoEstandar::setCayoPorAgujero(bool b) {
+	cayo = b;
+}
+
+bool EnemigoEstandar::cayoPorAgujero(){
+	return cayo;
+}
+
+void EnemigoEstandar::moverArriba(){
+	b2Vec2 p = this->bodyB2D->GetPosition();
+	p.y = 1;
+	this->bodyB2D->SetTransform( p, 0);
+	cayo = false;
 }

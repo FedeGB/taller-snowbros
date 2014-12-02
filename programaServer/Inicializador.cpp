@@ -365,7 +365,19 @@ b2Body * createObject(std::string data, b2World ** wB2D, int num) {
 			laguna->desplazamiento =  0;
 			figura = laguna;
 			break;
-		}else
+		}
+		if( get_node("esAgujero", "objetos", data, num, false) ){
+			_shape->SetBullet(false);
+			myFixtureDef.isSensor = true;
+			Agujero * agujero = new Agujero();
+			agujero->baseMayor =  halfWidth * 2;
+			agujero->baseMenor =  halfWidth * 2;
+			agujero->altura =  halfHeight * 2;
+			agujero->desplazamiento =  0;
+			figura = agujero;
+			break;
+		}
+
 			figura = rect;
 
 		b2FixtureDef borderSensFix;
@@ -448,6 +460,9 @@ b2Body * createObject(std::string data, b2World ** wB2D, int num) {
 
 	// me fijo si es laguna
 	if (get_node("esLaguna", "objetos", data, num, false)) shapeFixture->SetUserData((void*) sensorLAGUNA);
+
+	// me fijo si es agujero
+	if (get_node("esAgujero", "objetos", data, num, false)) shapeFixture->SetUserData((void*) sensorAGUJERO);
 
 	// Setea los ultimos parametros de la figura y vincula al bodyB2D.
 	figura->posicion.x = b2dObjDef.position.x;

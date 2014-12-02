@@ -27,6 +27,7 @@ snowball::snowball(float32 posx,float32 posy,int orientation,b2World * world, fl
 		b2dObjDef.angle = 0;
 		b2dObjDef.fixedRotation = true;
 	//	b2dObjDef.bullet=true;
+		cayo = false;
 
 		poder = world->CreateBody(&b2dObjDef);
 
@@ -76,3 +77,17 @@ float snowball::getDamage() {
 	return 0;
 }
 
+void snowball::setCayoPorAgujero(bool b) {
+	cayo = b;
+}
+
+bool snowball::cayoPorAgujero(){
+	return cayo;
+}
+
+void snowball::moverArriba(){
+	b2Vec2 p = this->poder->GetPosition();
+	p.y = 1;
+	this->poder->SetTransform( p, 0);
+	cayo = false;
+}

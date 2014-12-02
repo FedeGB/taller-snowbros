@@ -32,6 +32,11 @@ public:
 	virtual bool isMovingRight();
 	virtual void setAsKicked();
 
+
+	void setCayoPorAgujero(bool);
+	bool cayoPorAgujero();
+	void moverArriba();
+
 	void setDelete(){
 			toDelete = true;
 		}

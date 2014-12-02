@@ -56,18 +56,6 @@ bool WorldHandler::loopPrincipal() {
 		// Clean powers (bodies) from world
 		//this->cleanPowers();
 
-//		int j = 0;
-//		for(b2Body* cuerpo = worldB2D->GetBodyList(); cuerpo; cuerpo = cuerpo->GetNext() ){
-//			WorldItem* item = (WorldItem*) cuerpo->GetUserData();
-//			worlditem_t tipo = *(worlditem_t*) &item->tipo;
-//			//int tipo = (int) t;
-//			if( item->eliminado )
-//				printf("j: %i eliminado tipo: %i\n", j, tipo);
-//			else
-//				printf("j: %i noooo eliminado tipo: %i tipoPJ: %i\n", j, tipo, PJ);
-//			j++;
-//		}
-
 
 		// Updatea enemigos
 		if(count > 0) {
@@ -105,12 +93,19 @@ void WorldHandler::cleanPowers() {
 	while (body) {
 		void* fixData = body->GetFixtureList()->GetUserData();
 		if( *((int*)(&fixData)) == PODERHIELO) {
+			if( ( (snowball*) body->GetUserData() )->cayoPorAgujero() )
+				((snowball*) body->GetUserData())->moverArriba();
+
 			if( ( (snowball*) body->GetUserData() )->forDelete() ){
 				delete ((snowball*) body->GetUserData());
 			}
 		}
 
 		if( *((int*)(&fixData)) == PODERFUEGO) {
+			if( ( (Fireball*) body->GetUserData() )->cayoPorAgujero() )
+				((Fireball*) body->GetUserData())->moverArriba();
+
+
 			if( ( (Fireball*) body->GetUserData() )->forDelete() ){
 				delete ((Fireball*) body->GetUserData());
 			}
@@ -123,6 +118,10 @@ void WorldHandler::cleanPowers() {
 			}
 		}
 		if( *((int*)(&fixData)) == BOLASNOW) {
+			if( ( (BolaEnemigo*) body->GetUserData() )->cayoPorAgujero() )
+				((BolaEnemigo*) body->GetUserData())->moverArriba();
+
+
 			if( ( (BolaEnemigo*) body->GetUserData() )->forDelete() ){
 				delete ((BolaEnemigo*) body->GetUserData());
 			}
@@ -132,8 +131,15 @@ void WorldHandler::cleanPowers() {
 		if( *((int*)(&fixData)) == PERSONAJE|| *((int*)(&fixData)) == PIESPJ||(*((int*)(&fixData)) == EMPUJE)) {
 					if( ( (Personaje*) body->GetUserData() )->isRespawnable ==true)
 						((Personaje*) body->GetUserData())->respawn();
-				}
+					if( ( (Personaje*) body->GetUserData() )->cayoPorAgujero())
+						((Personaje*) body->GetUserData())->moverArriba();
+		}
 
+		if( *((int*)(&fixData)) == ENEMIGO|| *((int*)(&fixData)) == ENEMIGOCONGELADO || *((int*)(&fixData)) == PIESEN || *((int*)(&fixData)) == PIESENCONGELADO  || *((int*)(&fixData)) == ENEMIGOBOLA ) {
+					if( ( (EnemigoEstandar*) body->GetUserData() )->cayoPorAgujero()){
+						((EnemigoEstandar*) body->GetUserData())->moverArriba();
+					}
+		}
 
 		body = body->GetNext();
 	}

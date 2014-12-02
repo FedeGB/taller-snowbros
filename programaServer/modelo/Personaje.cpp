@@ -43,6 +43,8 @@ Personaje::Personaje(){
 	enemigoParaEmpujar = NULL;
 	sumergido = false;
 	velocidadSumergido = 1.0f;
+
+	cayo = false;
 	isRespawnable=false;
 	inmunity=true;
 }
@@ -152,8 +154,8 @@ void Personaje::update(Sonido* sonido){
 	if (!isAirborne) isJumping = false;
 
 	if( sumergido ){
-		bodyB2D->SetGravityScale(0.2f);
-		velocidadSumergido = 0.2f;
+		bodyB2D->SetGravityScale(0.5f);
+		velocidadSumergido = 0.5f;
 	}
 	else{
 		bodyB2D->SetGravityScale(1.0f);
@@ -407,6 +409,14 @@ bool Personaje::getFalling() {
 	return isFalling;
 }
 
+void Personaje::setCayoPorAgujero(bool b) {
+	cayo = b;
+}
+
+bool Personaje::cayoPorAgujero(){
+	return cayo;
+}
+
 bool Personaje::getThrowing() {
 	return isThrowing;
 }
@@ -416,4 +426,11 @@ void Personaje::respawn(){
 	this->bodyB2D->SetLinearVelocity(b2Vec2(0,0));
 	isRespawnable=false;
 	inmunity=true;
+}
+
+void Personaje::moverArriba(){
+	b2Vec2 p = this->bodyB2D->GetPosition();
+	p.y = 1;
+	this->bodyB2D->SetTransform( p, 0);
+	cayo = false;
 }

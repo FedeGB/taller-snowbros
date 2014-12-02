@@ -51,6 +51,7 @@ public:
 		fixtDef.density =  1.5f;
 		fixtDef.restitution = 0.5f;
 		fixtDef.friction=5.2;
+		fixtDef.isSensor = true;
 
 		b2Fixture * fixt = cuerpoB2D->CreateFixture(&fixtDef);
 		fixt->SetUserData( (void*) sensorSORPRESA );
