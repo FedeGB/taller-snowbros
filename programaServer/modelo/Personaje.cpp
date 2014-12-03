@@ -7,6 +7,7 @@
 
 #include "Personaje.h"
 #include "EnemigoEstandar.h"
+#include "EnemigoTiraFuego.h"
 #include "../modelo/snowball.h"
 
 float danio =0.5;

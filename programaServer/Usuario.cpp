@@ -109,6 +109,7 @@ std::string Usuario::obtenerPantallaSerializada(){
 		pantallaSerializada += "%";
 		pantallaSerializada += item->serializar();
 		if (item->tipo == METADATAFONDO) delete item;
+		else if (item->tipo == METADATAHUD) delete item;
 	}
 
 /*	for(ThreadSafeList<WorldItem*>::iterator it=listaVisibles.begin(); it != listaVisibles.end(); ++it){

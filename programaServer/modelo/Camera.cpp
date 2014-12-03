@@ -250,24 +250,31 @@ void Camera::cleanPowers() {
 					((BolaEnemigo*) body->GetUserData())->aumentarTiempo();
 			}
 			if( *((int*)(&fixData)) == PERSONAJE|| *((int*)(&fixData)) == PIESPJ||(*((int*)(&fixData)) == EMPUJE)) {
-						if( ( (Personaje*) body->GetUserData() )->isRespawnable ==true)
-							((Personaje*) body->GetUserData())->respawn();
-						if( ( (Personaje*) body->GetUserData() )->cayoPorAgujero())
-							((Personaje*) body->GetUserData())->moverArriba();
-						if( ( (Personaje*) body->GetUserData() )->forDelete()) {
-							delete ( (Personaje*) body->GetUserData() );
-							body->SetUserData(NULL);
-						}
+				if( ( (Personaje*) body->GetUserData() )->isRespawnable ==true)
+					((Personaje*) body->GetUserData())->respawn();
+				if( ( (Personaje*) body->GetUserData() )->cayoPorAgujero())
+					((Personaje*) body->GetUserData())->moverArriba();
+				if( ( (Personaje*) body->GetUserData() )->forDelete()) {
+					delete ( (Personaje*) body->GetUserData() );
+					body->SetUserData(NULL);
+				}
 						if( ( (Personaje*) body->GetUserData() )->bindball){
 							( (Personaje*) body->GetUserData() )->bindball=false;
 							( (Personaje*) body->GetUserData() )->fusionBola();
 						}
 			}
 
-			if( *((int*)(&fixData)) == ENEMIGO|| *((int*)(&fixData)) == ENEMIGOCONGELADO || *((int*)(&fixData)) == PIESEN || *((int*)(&fixData)) == PIESENCONGELADO  || *((int*)(&fixData)) == ENEMIGOBOLA ) {
-						if( ( (EnemigoEstandar*) body->GetUserData() )->cayoPorAgujero()){
-							((EnemigoEstandar*) body->GetUserData())->moverArriba();
-						}
+			if( *((int*)(&fixData)) == ENEMIGO || *((int*)(&fixData)) == ENEMIGOCONGELADO || *((int*)(&fixData)) == PIESEN || *((int*)(&fixData)) == PIESENCONGELADO  || *((int*)(&fixData)) == ENEMIGOBOLA ) {
+				if( ( (EnemigoEstandar*) body->GetUserData() )->cayoPorAgujero()){
+					((EnemigoEstandar*) body->GetUserData())->moverArriba();
+				}
+				//std::cout << "enemigo detectado" << std::endl;
+				//std::cout << "el enemigo debe borrarse? " << (((EnemigoEstandar*) body->GetUserData())->forDelete() ? "true":"false") << std::endl;
+
+				/*if( ((EnemigoEstandar*) body->GetUserData())->forDelete()) {
+					delete ((EnemigoEstandar*) body->GetUserData());
+					body->SetUserData(NULL);
+				}*/
 			}
 		}
 		body = body->GetNext();

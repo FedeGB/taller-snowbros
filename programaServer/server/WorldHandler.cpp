@@ -84,17 +84,6 @@ void* WorldHandler::run(){
 		resultado_t resultado = simularPartida();
 
 		controlador.notificarFinDePartida(resultado);
-
-/*		switch (resultado){
-		// Si hubo un error, caos y desolacion.
-		case ERROR_RESULTADO:
-			return NULL;
-		case GANARON:
-			break;
-		case PERDIERON:
-			break;
-		}
-*/
 	}
 
 	return NULL;

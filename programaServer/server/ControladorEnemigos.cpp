@@ -245,11 +245,11 @@ void ControladorEnemigos::update(bool online,ControladorUsuarios PJs) {
 					if((*it).second->tipo == ENEMIGOTIRAFUEGO){
 						PJs.sumarPuntaje(19);
 					}
+					//std::cout << "detecte enemigo destruido, sumando puntaje." << std::endl;
 					delete (*it).second;
 					(*it).second=NULL;
 				}
-				else
-				(*it).second->update();
+				else (*it).second->update();
 			}
 		}
 	}

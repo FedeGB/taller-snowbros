@@ -12,6 +12,7 @@
 #define TTHROW 200
 
 EnemigoTiraFuego::EnemigoTiraFuego(int number) {
+	tipo = ENEMIGOTIRAFUEGO;
 	bodyB2D = NULL;
 	numFootContacts = 0;
 	toDelete=false;

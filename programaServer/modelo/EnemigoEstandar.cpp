@@ -9,6 +9,7 @@
 #include "BolaEnemigo.h"
 
 EnemigoEstandar::EnemigoEstandar() {
+	tipo = ENEMIGOESTANDAR;
 	bodyB2D = NULL;
 	numFootContacts = 0;
 	toDelete=false;
@@ -77,6 +78,7 @@ EnemigoEstandar::EnemigoEstandar(int number){
 }
 
 EnemigoEstandar::~EnemigoEstandar() {
+	std::cout << "enemigo destruido" << std::endl;
 	orientation_t temp=this->pushOrientation;
 	BolaEnemigo * bola= new BolaEnemigo(bodyB2D);
 	bola->Impulso(temp);
