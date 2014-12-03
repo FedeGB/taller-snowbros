@@ -38,6 +38,7 @@ Camera::~Camera() {
 void Camera::reposition(b2Vec2 pos) {
 	cameraB2D->SetTransform(pos, 0);
 	this->calcularPosRelativaPJ();
+	this->calculateBorderConstraints();
 }
 
 void Camera::calcularPosRelativaPJ(){
@@ -256,6 +257,10 @@ void Camera::cleanPowers() {
 						if( ( (Personaje*) body->GetUserData() )->forDelete()) {
 							delete ( (Personaje*) body->GetUserData() );
 							body->SetUserData(NULL);
+						}
+						if( ( (Personaje*) body->GetUserData() )->bindball){
+							( (Personaje*) body->GetUserData() )->bindball=false;
+							( (Personaje*) body->GetUserData() )->fusionBola();
 						}
 			}
 

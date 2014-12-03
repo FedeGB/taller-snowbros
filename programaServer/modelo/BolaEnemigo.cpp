@@ -31,7 +31,7 @@ BolaEnemigo::BolaEnemigo(b2Body * body){
 	//lo vinculo al mundo
 	bodyB2D = body->GetWorld()->CreateBody(&b2dObjDef);
 	myFixtureDef.density =100.0f; //le doy masa
-	myFixtureDef.restitution = 1.0f;
+	myFixtureDef.restitution = 0.1f;
 
 	myFixtureDef.friction = 0.3f;
 
@@ -84,7 +84,7 @@ BolaEnemigo::~BolaEnemigo() {
 
 void BolaEnemigo::aumentarTiempo(){
 	tiempoDeVida++;
-	if(tiempoDeVida>=50000)
+	if(tiempoDeVida>=10000)
 		setDelete();
 	return;
 }
@@ -105,5 +105,5 @@ void BolaEnemigo::moverArriba(){
 }
 
 void BolaEnemigo::notBounce(){
-	this->bodyB2D->SetLinearVelocity(b2Vec2(bodyB2D->GetLinearVelocity().x,0));
+	//this->bodyB2D->SetLinearVelocity(b2Vec2(bodyB2D->GetLinearVelocity().x,0));
 }

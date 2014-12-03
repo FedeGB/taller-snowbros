@@ -49,6 +49,7 @@ Personaje::Personaje(){
 	inmunity=true;
 	toDelete=false;
 	puntaje = 0;
+	bindball=false;
 }
 
 Personaje::~Personaje() {
@@ -83,6 +84,7 @@ void Personaje::eventoSoltoIzquierda(){
 void Personaje::eventoSpace() {
 	isSpacePressed = true;
 	if(enemigoParaEmpujar!=NULL){
+		puntaje += 50;
 		((EnemigoEstandar*)enemigoParaEmpujar)->setAsKicked();
 		((EnemigoEstandar*)enemigoParaEmpujar)->pushOrientation=orientation;
 		enemigoParaEmpujar = NULL;
@@ -118,6 +120,8 @@ void Personaje::update(Sonido* sonido){
 
 
 	camera->update();
+	if(bindball)
+		return;
 
 	// si la velocidad del pj es mayor a la normal, y el sonido todavia no esta con una velocidad mayor, lo cambio
 	if( velocidadPJSorpresa == 2.0f && sonido->velocidad != 2.0f ){
@@ -457,5 +461,15 @@ long int Personaje::getPuntaje() {
 
 void Personaje::sumarPuntaje(int points) {
 	puntaje += points;
+}
+
+void Personaje::inBall(b2Vec2 pos){
+	bindball=true;
+	posbind=pos;
+}
+
+void Personaje::fusionBola(){
+	this->bodyB2D->SetTransform(posbind,0);
+	this->camera->reposition(b2Vec2(posbind.x,0));
 }
 

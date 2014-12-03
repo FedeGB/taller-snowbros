@@ -64,6 +64,8 @@ public:
 	virtual void setFalling(bool);
 	virtual bool getFalling();
 	virtual bool getThrowing();
+	virtual void inBall(b2Vec2);
+	virtual void fusionBola();
 
 	void setDelete(){
 				toDelete = true;
@@ -86,6 +88,7 @@ public:
 	bool isRespawnable;
 	bool inmunity;
 	float vida;
+	bool bindball;
 
 protected:
 	bool toDelete;
@@ -120,6 +123,7 @@ protected:
 
 	bool cayo; //cayo por agujero
 
+	b2Vec2 posbind;
 
 
 	sprite_t activeSprite;

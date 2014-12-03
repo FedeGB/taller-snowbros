@@ -22,6 +22,17 @@ class ContactListener : public b2ContactListener
 		void* fixtureBUserData = contact->GetFixtureB()->GetUserData();
 
 		if ( *((int*)(&fixtureBUserData)) == BOLASNOW ){
+			if ( *((int*)(&fixtureAUserData)) == PERSONAJE ||*((int*)(&fixtureAUserData)) == PIESPJ  ){
+				 ((Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->inBall(contact->GetFixtureB()->GetBody()->GetPosition());
+			}
+		}
+		if ( *((int*)(&fixtureAUserData)) == BOLASNOW ){
+			if ( *((int*)(&fixtureBUserData)) == PERSONAJE ||*((int*)(&fixtureBUserData)) == PIESPJ  ){
+				 ((Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->inBall(contact->GetFixtureA()->GetBody()->GetPosition());
+			}
+		}
+
+		if ( *((int*)(&fixtureBUserData)) == BOLASNOW ){
 			if ( *((int*)(&fixtureAUserData)) == ENEMIGO ||*((int*)(&fixtureAUserData)) == ENEMIGOCONGELADO  ){
 				((EnemigoEstandar*)contact->GetFixtureA()->GetBody()->GetUserData())->setDelete();
 			}
@@ -52,11 +63,11 @@ class ContactListener : public b2ContactListener
 
 		// Foot sensor collision for jump
 		if ( *((int*)(&fixtureAUserData)) == PIESPJ || *((int*)(&fixtureAUserData)) == PIESEN ){
-			if ( (*((int*)(&fixtureBUserData)) != CAMARA)&&(*((int*)(&fixtureBUserData)) != PODERHIELO) && (*((int*)(&fixtureBUserData)) != sensorLAGUNA))
+			if ( (*((int*)(&fixtureBUserData)) != CAMARA)&&(*((int*)(&fixtureBUserData)) != PODERHIELO) && (*((int*)(&fixtureBUserData)) != sensorLAGUNA)&& (*((int*)(&fixtureBUserData)) != BOLASNOW))
 				( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->modifyFootContacts(1);
 		}
 		if ( *((int*)(&fixtureBUserData)) == PIESPJ || *((int*)(&fixtureBUserData)) == PIESEN ){
-			if ( (*((int*)(&fixtureAUserData)) != CAMARA)&& (*((int*)(&fixtureAUserData)) != PODERHIELO) && (*((int*)(&fixtureAUserData)) != sensorLAGUNA))
+			if ( (*((int*)(&fixtureAUserData)) != CAMARA)&& (*((int*)(&fixtureAUserData)) != PODERHIELO) && (*((int*)(&fixtureAUserData)) != sensorLAGUNA)&& (*((int*)(&fixtureAUserData)) != BOLASNOW))
 				( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->modifyFootContacts(1);
 		}
 
@@ -237,11 +248,11 @@ class ContactListener : public b2ContactListener
 
   		// Foot sensor collision for jump
     	  if ( *((int*)(&fixtureAUserData)) == PIESPJ || *((int*)(&fixtureAUserData)) == PIESEN ){
-        	  if ((*((int*)(&fixtureBUserData)) != CAMARA)&&(*((int*)(&fixtureBUserData)) != PODERHIELO) && (*((int*)(&fixtureBUserData)) != sensorLAGUNA))
+        	  if ((*((int*)(&fixtureBUserData)) != CAMARA)&&(*((int*)(&fixtureBUserData)) != PODERHIELO) && (*((int*)(&fixtureBUserData)) != sensorLAGUNA)&& (*((int*)(&fixtureBUserData)) != BOLASNOW))
         		  ( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->modifyFootContacts(-1);
           }
     	  if ( *((int*)(&fixtureBUserData)) == PIESPJ || *((int*)(&fixtureBUserData)) == PIESEN ){
-        	  if ( (*((int*)(&fixtureAUserData)) != CAMARA)&&(*((int*)(&fixtureAUserData)) != PODERHIELO) && (*((int*)(&fixtureAUserData)) != sensorLAGUNA))
+        	  if ( (*((int*)(&fixtureAUserData)) != CAMARA)&&(*((int*)(&fixtureAUserData)) != PODERHIELO) && (*((int*)(&fixtureAUserData)) != sensorLAGUNA)&& (*((int*)(&fixtureAUserData)) != BOLASNOW))
         		  ( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->modifyFootContacts(-1);
           }
 
