@@ -6,7 +6,7 @@
         "alto-un": 26,
         "ancho-un": 100,
         "imagen-fondo": "imagenes/fondo2.png",
-        "maxplayer": 2
+        "maxplayer": 4
     },
     "personaje1":{
 		"x": 22.0,

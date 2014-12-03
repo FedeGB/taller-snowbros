@@ -47,6 +47,7 @@ public:
 	int enemyNumber;
 	sprite_t spriteStun;
 	bool isFrozzen;
+	orientation_t pushOrientation;
 
 protected:
 	bool toDelete;
@@ -56,7 +57,7 @@ protected:
 	bool isOnBorder;
 	bool isTrapped;
 	bool isPushable;
-	orientation_t pushOrientation;
+
 	bool wasKicked;
 
 	int stunCounter;

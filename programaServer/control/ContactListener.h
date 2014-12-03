@@ -21,6 +21,18 @@ class ContactListener : public b2ContactListener
 		void* fixtureAUserData = contact->GetFixtureA()->GetUserData();
 		void* fixtureBUserData = contact->GetFixtureB()->GetUserData();
 
+		if ( *((int*)(&fixtureBUserData)) == BOLASNOW ){
+			if ( *((int*)(&fixtureAUserData)) == ENEMIGO ||*((int*)(&fixtureAUserData)) == ENEMIGOCONGELADO  ){
+				((EnemigoEstandar*)contact->GetFixtureA()->GetBody()->GetUserData())->setDelete();
+			}
+		}
+
+		if ( *((int*)(&fixtureAUserData)) == BOLASNOW){
+				if ( *((int*)(&fixtureBUserData)) == ENEMIGO ||*((int*)(&fixtureBUserData)) == ENEMIGOCONGELADO  ){
+					((EnemigoEstandar*)contact->GetFixtureB()->GetBody()->GetUserData())->setDelete();
+				}
+		}
+
 		if ( *((int*)(&fixtureAUserData)) == EMPUJE ){
 			if ( *((int*)(&fixtureBUserData)) == ENEMIGOBOLA ){
 				orientation_t ori=(orientation_t)( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->GetOrientation();

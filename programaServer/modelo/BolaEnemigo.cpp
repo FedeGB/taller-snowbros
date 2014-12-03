@@ -31,7 +31,7 @@ BolaEnemigo::BolaEnemigo(b2Body * body){
 	//lo vinculo al mundo
 	bodyB2D = body->GetWorld()->CreateBody(&b2dObjDef);
 	myFixtureDef.density =100.0f; //le doy masa
-	myFixtureDef.restitution = 0.1f;
+	myFixtureDef.restitution = 1.0f;
 
 	myFixtureDef.friction = 0.3f;
 
@@ -52,9 +52,9 @@ BolaEnemigo::BolaEnemigo(b2Body * body){
 
 void BolaEnemigo::Impulso(orientation_t ori){
 	if(ori==LEFT)
-		bodyB2D->ApplyLinearImpulse(b2Vec2(-3000.0f,0), bodyB2D->GetWorldCenter(),true);
+		bodyB2D->ApplyLinearImpulse(b2Vec2(-150000.0f,0), bodyB2D->GetWorldCenter(),true);
 	else
-		bodyB2D->ApplyLinearImpulse(b2Vec2(3000.0f,0), bodyB2D->GetWorldCenter(),true);
+		bodyB2D->ApplyLinearImpulse(b2Vec2(150000.0f,0), bodyB2D->GetWorldCenter(),true);
 }
 
 std::string BolaEnemigo::serializar(){
@@ -102,4 +102,8 @@ void BolaEnemigo::moverArriba(){
 	p.y = 1;
 	this->bodyB2D->SetTransform( p, 0);
 	cayo = false;
+}
+
+void BolaEnemigo::notBounce(){
+	this->bodyB2D->SetLinearVelocity(b2Vec2(bodyB2D->GetLinearVelocity().x,0));
 }

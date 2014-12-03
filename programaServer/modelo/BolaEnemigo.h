@@ -31,6 +31,7 @@ public:
 	void setCayoPorAgujero(bool);
 	bool cayoPorAgujero();
 	void moverArriba();
+	void notBounce();
 
 protected:
 	b2Body * bodyB2D;
