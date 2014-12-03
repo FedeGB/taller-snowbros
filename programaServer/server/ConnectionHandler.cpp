@@ -225,10 +225,10 @@ void* ConnectionHandler::run() {
 		// Termino la partida, debo informar el resultado al jugador y preguntar si quiere seguir jugando.
 		quit = !protocoloFinDePartida();
 	}
-
-	controlador.obtenerUsuario(username)->setOnline(false);
-	controlador.obtenerUsuario(username)->enviarSenial();
-
+	if(controlador.obtenerUsuario(username)!=NULL){
+		controlador.obtenerUsuario(username)->setOnline(false);
+		controlador.obtenerUsuario(username)->enviarSenial();
+	}
 	printf("Conexion con: %s:%d terminada.\n", m_stream->getPeerIP().c_str() , m_stream->getPeerPort());
 
 	delete m_stream;

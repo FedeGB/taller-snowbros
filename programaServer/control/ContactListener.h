@@ -104,7 +104,7 @@ class ContactListener : public b2ContactListener
 			if ((*((int*)(&fixtureAUserData)) == PERSONAJE || *((int*)(&fixtureAUserData)) == PIESPJ)) {
 				((Fireball*) contact->GetFixtureB()->GetBody()->GetUserData())->setDelete();
 				if(((Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->isAlive())
-					((Personaje*) contact->GetFixtureA()->GetBody()->GetUserData())->applyDamage(((Fireball*) contact->GetFixtureA()->GetBody()->GetUserData())->getDamage());
+					((Personaje*) contact->GetFixtureA()->GetBody()->GetUserData())->applyDamage(((Fireball*) contact->GetFixtureB()->GetBody()->GetUserData())->getDamage());
 			}
 		}
 		if( *((int*)(&fixtureAUserData)) == PODERFUEGO ){
@@ -114,7 +114,7 @@ class ContactListener : public b2ContactListener
 			if ((*((int*)(&fixtureBUserData)) == PERSONAJE || *((int*)(&fixtureBUserData)) == PIESPJ)) {
 				((Fireball*) contact->GetFixtureA()->GetBody()->GetUserData())->setDelete();
 				if(((Personaje*) contact->GetFixtureB()->GetBody()->GetUserData())->isAlive())
-					((Personaje*) contact->GetFixtureB()->GetBody()->GetUserData())->applyDamage(((Fireball*) contact->GetFixtureB()->GetBody()->GetUserData())->getDamage());
+					((Personaje*) contact->GetFixtureB()->GetBody()->GetUserData())->applyDamage(((Fireball*) contact->GetFixtureA()->GetBody()->GetUserData())->getDamage());
 			}
 		}
 

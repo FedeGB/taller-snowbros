@@ -209,7 +209,8 @@ void Usuario::notificarFinDePartida(resultado_t resultado){
 }
 
 void Usuario::DeletePj(){
-	this->PJ->setDelete();
+	if(PJ!=NULL)
+		this->PJ->setDelete();
 	this->PJ=NULL;
 }
 

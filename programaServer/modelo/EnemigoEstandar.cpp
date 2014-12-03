@@ -105,7 +105,8 @@ void EnemigoEstandar::update(){
 
 	// Determina si esta en el aire.
 	isAirborne = numFootContacts <= 0 ? true : false;
-	if(vida<=0) spriteStun=STUN0;
+
+	if(vida<0) spriteStun=STUN0;
 	else if(vida<=3) spriteStun=STUN3;
 	else if(vida<=6) spriteStun=STUN2;
 	else if(vida<10) spriteStun=STUN1;
