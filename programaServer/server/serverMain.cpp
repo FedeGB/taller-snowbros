@@ -127,7 +127,7 @@ int main(int argc, char** argv){
     ControladorEnemigos enemigos;
     controlador.setConnectionLimit(maxplayer);
     //Creo el handler de simulacion.
-    WorldHandler* world = new WorldHandler(controlador, enemigos, newStr);
+    WorldHandler* world = new WorldHandler(controlador, enemigos, path);
     if (!world){
     	printf("No se pudo crear el connection handler.\n");
     	exit(1);

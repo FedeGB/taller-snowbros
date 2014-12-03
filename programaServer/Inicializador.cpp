@@ -630,57 +630,17 @@ void checkBoundsAndOverlap(b2World ** worldB2D, float32 widthWorld, float32 heig
 		if (!skip) b = b->GetNext();
 	}
 }
-/*
-void addWorldBorders(b2World ** worldB2D, float32 widthWorld, float32 heightWorld){
-
-	b2BodyDef b2dObjDef;
-	b2FixtureDef myFixtureDef;
-	b2PolygonShape polygon;
-
-	b2dObjDef.type = b2_staticBody;
-	b2dObjDef.position.Set(widthWorld / 2, -0.5f);
-	b2dObjDef.angle = 0;
-	b2dObjDef.fixedRotation = true;
-
-	//lo vinculo al mundo
-	b2Body * upperBorderB2D = (*worldB2D)->CreateBody(&b2dObjDef);
-
-	// Agrega el borde superior.
-	polygon.SetAsBox(widthWorld / 2, 0.5f, b2Vec2(0.0f,0.0f), 0);
-	myFixtureDef.shape = &polygon;
-	myFixtureDef.isSensor = true;
-	b2Fixture* fixture = upperBorderB2D->CreateFixture(&myFixtureDef);
-	fixture->SetUserData( (void*)7 );
-
-	// Agrega el borde inferior.
-	b2dObjDef.position.Set(widthWorld / 2, heightWorld + 0.5f);
-	b2Body * bottomBorderB2D = (*worldB2D)->CreateBody(&b2dObjDef);
-	fixture = bottomBorderB2D->CreateFixture(&myFixtureDef);
-	fixture->SetUserData( (void*)8 );
-
-	// Agrega el borde izquierdo.
-	b2dObjDef.position.Set(-0.5f, heightWorld / 2);
-	b2Body * leftBorderB2D = (*worldB2D)->CreateBody(&b2dObjDef);
-	polygon.SetAsBox(0.5f, heightWorld / 2, b2Vec2(0.0f,0.0f), 0);
-	myFixtureDef.shape = &polygon;
-	fixture = leftBorderB2D->CreateFixture(&myFixtureDef);
-	fixture->SetUserData( (void*)5 );
-
-	// Agrega el borde derecho.
-	b2dObjDef.position.Set(widthWorld + 0.5f, heightWorld / 2);
-	b2Body * rightBorderB2D = (*worldB2D)->CreateBody(&b2dObjDef);
-	fixture = rightBorderB2D->CreateFixture(&myFixtureDef);
-	fixture->SetUserData( (void*)6 );
-}*/
 
 bool Inicializador::init(std::string configFile, b2World ** worldB2D,
-	ContactListener * contactListener, ControladorEnemigos & army) {
+	ContactListener * contactListener, ControladorEnemigos & army, std::string & nextLevel) {
 	Logger& log = *Logger::Instancia();
 	std::string sConfig;
 	bool statusOK = true;
 	statusOK = loadInitialValues(configFile, sConfig);
 	if (!statusOK)
 		return false;
+
+	nextLevel = get_node("prox-nivel", "escenario", sConfig, "defaultConfig.json");
 
 	int heightScreen = get_node("alto-px", "escenario", sConfig, 480);
 	int widthScreen = get_node("ancho-px", "escenario", sConfig, 640);

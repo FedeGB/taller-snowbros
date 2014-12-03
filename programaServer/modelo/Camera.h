@@ -23,6 +23,7 @@ public:
 	void setB2DBody(b2Body * cB2D);
 	void setPJ(b2Body * pjB2D);
 	void setWINDOWTOWORLDSCALE(float32 windowToWorld);
+	void cleanPowers();
 	void update();
 	void reposition(b2Vec2);
 

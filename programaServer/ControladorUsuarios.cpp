@@ -80,6 +80,7 @@ std::string ControladorUsuarios::obtenerPantallaSerializada(std::string username
 	metadata->puntaje = i;
 	int j=0;
 	for (ControladorUsuarios::iterator it=(*this).begin(); it!=(*this).end(); ++it){
+		if (!(*it).second || !(*it).second->inicializado) continue;
 		if (!(*it).second->online) {
 			metadata->mensaje += (*it).second->username;
 			metadata->mensaje += "-ha-perdido-conexion-al-juego.&";

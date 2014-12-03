@@ -1,6 +1,6 @@
 {
     "escenario": {
-	"prox-nivel": "nivel2.json",
+	"prox-nivel": "LASTLEVEL",
         "alto-px": 640,
         "ancho-px": 720,
         "alto-un": 26,

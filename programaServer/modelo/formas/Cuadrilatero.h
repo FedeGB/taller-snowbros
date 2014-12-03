@@ -22,6 +22,7 @@ public:
 	float32 altura;
 	float32 desplazamiento;
 	Cuadrilatero() {
+		tipo = CUADRILATERO;
 		baseMayor = 1;
 		baseMenor = 1;
 		altura = 1;

@@ -19,6 +19,7 @@ public:
 	float32 radio;
 
 	PoligonoRegular() {
+		tipo = POLIGONOREGULAR;
 		nLados = 4;
 		radio = 1;
 	}

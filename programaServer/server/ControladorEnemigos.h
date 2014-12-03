@@ -20,6 +20,7 @@ public:
 	~ControladorEnemigos();
 	void controlUnit(EnemigoEstandar*);
 	void strategy(b2World*, ControladorUsuarios PJs);
+	bool isMapCleared();
 
 	void update(bool);
 

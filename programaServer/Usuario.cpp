@@ -102,12 +102,21 @@ std::string Usuario::obtenerPantallaSerializada(){
 	listaVisibles.lock();
 
 	// Envia los elementos que deben ser renderizados.
-	for(ThreadSafeList<WorldItem*>::iterator it=listaVisibles.begin(); it != listaVisibles.end(); ++it){
+	while (!listaVisibles.empty()){
+		WorldItem * item = listaVisibles.front();
+		listaVisibles.pop_front();
+//		if(!item) continue;
+		pantallaSerializada += "%";
+		pantallaSerializada += item->serializar();
+		if (item->tipo == METADATAFONDO) delete item;
+	}
+
+/*	for(ThreadSafeList<WorldItem*>::iterator it=listaVisibles.begin(); it != listaVisibles.end(); ++it){
 		// TODO: sacar el % hardcodeado.
 		pantallaSerializada += "%";
 		pantallaSerializada += (*it)->serializar();
 	}
-
+*/
 	listaVisibles.unlock();
 
 	if( sonidoPJ->sonido != VACIO ){
@@ -118,8 +127,8 @@ std::string Usuario::obtenerPantallaSerializada(){
 		sonidoPJ->sonido = VACIO;
 	}
 
-	pantallaSerializada += "%USERNAME ";
-	pantallaSerializada += username;
+	//pantallaSerializada += "%USERNAME ";
+	//pantallaSerializada += username;
 	return pantallaSerializada;
 }
 

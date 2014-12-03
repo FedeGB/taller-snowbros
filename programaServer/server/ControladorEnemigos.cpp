@@ -18,6 +18,14 @@ void ControladorEnemigos::controlUnit(EnemigoEstandar* unit) {
 	(*this)[unit->enemyNumber] = unit;
 }
 
+bool ControladorEnemigos::isMapCleared(){
+
+	for(ControladorEnemigos::iterator it = (*this).begin(); it != (*this).end(); ++it)
+		if((*it).second) return false;
+
+	return true;
+}
+
 void ControladorEnemigos::strategy(b2World* world, ControladorUsuarios PJs) {
 	if(world) {
 		for(ControladorEnemigos::iterator it = (*this).begin(); it != (*this).end(); ++it) {
@@ -85,7 +93,7 @@ b2Vec2 ControladorEnemigos::closerPJ(b2World* world, b2Vec2 unit, ControladorUsu
 	b2Vec2 closer = b2Vec2(0, 0);
 	float32 closer_mod = INFINITY;
 	for(ControladorUsuarios::iterator it=PJs.begin(); it!=PJs.end(); ++it) {
-		if(!((*it).second)->isPJAlive()) {
+		if( !(*it).second->inicializado || !((*it).second)->isPJAlive()) {
 			continue;
 		}
 		b2Vec2 posPJ = ((*it).second)->getPosition();

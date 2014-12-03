@@ -34,7 +34,7 @@ class Inicializador {
 
 public:
 
-	bool init(std::string configFile, b2World ** worldB2D, ContactListener * contactListener, ControladorEnemigos & army);
+	bool init(std::string configFile, b2World ** worldB2D, ContactListener * contactListener, ControladorEnemigos & army, std::string & nextLevel);
 	Personaje * pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*> & rList, int numeroUsuario, std::string configFile);
 	void enemysInit(b2World ** worldB2D, std::string configFile, ControladorEnemigos & army);
 

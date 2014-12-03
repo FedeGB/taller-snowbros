@@ -17,13 +17,6 @@ WorldHandler::WorldHandler(ControladorUsuarios & c, ControladorEnemigos & en, st
 
 void* WorldHandler::run(){
 
-	if (inicializador.init(configFile, &worldB2D, &contactListener, army)) loopPrincipal();
-
-	return NULL;
-}
-
-bool WorldHandler::loopPrincipal() {
-
 	// Espera a que se llene el escenario.
 	while (!controlador.escenarioLleno()) {
 		std::cout << "esperando mas conexiones para simular." << std::endl;
@@ -32,9 +25,45 @@ bool WorldHandler::loopPrincipal() {
 
 	std::cout << "se lleno el mapa, iniciando simulacion." << std::endl;
 
+	std::string nextLevel;
+
+	// Itera sobre todos los niveles.
+	while (nextLevel != "LASTLEVEL"){
+
+		// Simula el nivel.
+		if (inicializador.init(configFile, &worldB2D, &contactListener, army, nextLevel)) loopPrincipal();
+
+		// Destruye el nivel.
+		/*b2Body * node = worldB2D->GetBodyList();
+		while (node) {
+		b2Body * b = node;
+		node = node->GetNext();
+		worldB2D->DestroyBody(b);
+		b = NULL;
+		}*/
+		delete worldB2D;
+		worldB2D = NULL;
+
+		for (ControladorUsuarios::iterator it=controlador.begin(); it!=controlador.end(); ++it){
+			(*it).second->inicializado = false;
+		}
+
+		// Asigna para cargar el proximo nivel.
+		configFile = nextLevel;
+
+		std::cout << "cargando siguiente nivel.." << std::endl;
+	}
+
+	return NULL;
+}
+
+bool WorldHandler::loopPrincipal() {
+
 	//Loop infinito en busca de mensajes para procesar
 	bool quit = false;
 	while(!quit){
+
+		std::cout << "simulando... " << std::endl;
 
 		int count = 0;
 		float freq =600.0f;
@@ -46,11 +75,15 @@ bool WorldHandler::loopPrincipal() {
 			}
 		}
 
+		std::cout << "simulando... eligiendo estrategia enemigos." << std::endl;
+
 		if(count > 0) {
 			army.strategy(worldB2D, controlador);
 		} else {
 			army.strategy(NULL, controlador);
 		}
+
+		std::cout << "simulando... setteando frecuencia." << std::endl;
 
 		if(count == 1)
 			freq = 20000.0f;
@@ -62,20 +95,26 @@ bool WorldHandler::loopPrincipal() {
 				freq = 6000.0f;
 		//std::cout << "freq: " << freq << '\n';		// Simula.
 
+		std::cout << "simulando... calculando steps" << std::endl;
+
 		for(int i=0;i<10;i++) {
 			worldB2D->Step(1.0f/freq, 8, 5);
-			//this->cleanPowers();
 		};
 
 		// Clean powers (bodies) from world
-		this->cleanPowers();
+		//this->cleanPowers();
 
 		// Updatea enemigos
+
+		std::cout << "simulando... updateando enemigos." << std::endl;
+
 		if(count > 0) {
 			army.update(true);
 		} else {
 			army.update(false);
 		}
+
+		std::cout << "simulando... updateando PJs." << std::endl;
 
 		// Procesa uno por uno todos los usuarios, inicializandolos, moviendo sus
 		// PJs o camaras, o ignorandolos si estan desconectados.
@@ -98,6 +137,7 @@ bool WorldHandler::loopPrincipal() {
 			//usleep(20000);
 		}
 
+		if (army.isMapCleared()) quit = true;
 	}
 
 	return true;
@@ -115,6 +155,7 @@ void WorldHandler::cleanPowers() {
 
 				if( ( (snowball*) body->GetUserData() )->forDelete() ){
 					delete ((snowball*) body->GetUserData());
+					body->SetUserData(NULL);
 				}
 			}
 
@@ -125,6 +166,7 @@ void WorldHandler::cleanPowers() {
 
 				if( ( (Fireball*) body->GetUserData() )->forDelete() ){
 					delete ((Fireball*) body->GetUserData());
+					body->SetUserData(NULL);
 				}
 			}
 
@@ -132,6 +174,7 @@ void WorldHandler::cleanPowers() {
 			if( *((int*)(&fixData)) == sensorSORPRESA) {
 				if( ( (Sorpresa*) body->GetUserData() )->forDelete() ){
 					delete ((Sorpresa*) body->GetUserData());
+					body->SetUserData(NULL);
 				}
 			}
 			if( *((int*)(&fixData)) == BOLASNOW) {
@@ -141,6 +184,7 @@ void WorldHandler::cleanPowers() {
 
 				if( ( (BolaEnemigo*) body->GetUserData() )->forDelete() ){
 					delete ((BolaEnemigo*) body->GetUserData());
+					body->SetUserData(NULL);
 				}
 				else
 					((BolaEnemigo*) body->GetUserData())->aumentarTiempo();
@@ -152,6 +196,7 @@ void WorldHandler::cleanPowers() {
 							((Personaje*) body->GetUserData())->moverArriba();
 						if( ( (Personaje*) body->GetUserData() )->forDelete()) {
 							delete ( (Personaje*) body->GetUserData() );
+							body->SetUserData(NULL);
 						}
 			}
 

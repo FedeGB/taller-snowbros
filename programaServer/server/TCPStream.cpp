@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include "TCPStream.h"
 #include <cstdio>
+#include <cstring>
 #include <iostream>
 
 
@@ -29,6 +30,7 @@ TCPStream::~TCPStream()
 ssize_t TCPStream::send(const std::string & sent){
 
 	char buff[4];
+	memset(buff,0,4);
 	sprintf(buff, "%d", (int)sent.length());
 	ssize_t s = write(m_sd, buff, 4);
 	if (s <= 0) {

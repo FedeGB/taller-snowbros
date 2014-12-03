@@ -12,6 +12,7 @@
 float danio =0.5;
 
 Personaje::Personaje(){
+	tipo = PJ;
 	bodyB2D = NULL;
 	numFootContacts = 0;
 	isUpPressed = false;

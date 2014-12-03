@@ -19,6 +19,7 @@ public:
 	float32 radio;
 
 	Circulo() {
+		tipo = CIRCULO;
 		radio = 1.0;
 	}
 

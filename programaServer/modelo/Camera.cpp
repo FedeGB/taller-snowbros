@@ -8,6 +8,12 @@
 #include "Camera.h"
 #include <iostream>
 
+#include "../modelo/BolaEnemigo.h"
+#include "../modelo/snowball.h"
+#include "../modelo/Fireball.h"
+#include "../modelo/EnemigoEstandar.h"
+
+
 //float Camera::WINDOWTOWORLDSCALE, Camera::WORLDTOWINDOWSCALE;
 
 Camera::Camera(ThreadSafeList<WorldItem*> & rList, int windowWidth, int windowHeight,
@@ -197,12 +203,81 @@ void Camera::updatePosition(){
 
 }
 
+void Camera::cleanPowers() {
+	b2Body* body = cameraB2D->GetWorld()->GetBodyList();
+	while (body) {
+		b2Fixture* fix = body->GetFixtureList();
+		if(fix) {
+			void* fixData = fix->GetUserData();
+			if( *((int*)(&fixData)) == PODERHIELO) {
+				if( ( (snowball*) body->GetUserData() )->cayoPorAgujero() )
+					((snowball*) body->GetUserData())->moverArriba();
+
+				if( ( (snowball*) body->GetUserData() )->forDelete() ){
+					delete ((snowball*) body->GetUserData());
+					body->SetUserData(NULL);
+				}
+			}
+
+			if( *((int*)(&fixData)) == PODERFUEGO) {
+				if( ( (Fireball*) body->GetUserData() )->cayoPorAgujero() )
+					((Fireball*) body->GetUserData())->moverArriba();
+
+
+				if( ( (Fireball*) body->GetUserData() )->forDelete() ){
+					delete ((Fireball*) body->GetUserData());
+					body->SetUserData(NULL);
+				}
+			}
+
+
+			if( *((int*)(&fixData)) == sensorSORPRESA) {
+				if( ( (Sorpresa*) body->GetUserData() )->forDelete() ){
+					delete ((Sorpresa*) body->GetUserData());
+					body->SetUserData(NULL);
+				}
+			}
+			if( *((int*)(&fixData)) == BOLASNOW) {
+				if( ( (BolaEnemigo*) body->GetUserData() )->cayoPorAgujero() )
+					((BolaEnemigo*) body->GetUserData())->moverArriba();
+
+
+				if( ( (BolaEnemigo*) body->GetUserData() )->forDelete() ){
+					delete ((BolaEnemigo*) body->GetUserData());
+					body->SetUserData(NULL);
+				}
+				else
+					((BolaEnemigo*) body->GetUserData())->aumentarTiempo();
+			}
+			if( *((int*)(&fixData)) == PERSONAJE|| *((int*)(&fixData)) == PIESPJ||(*((int*)(&fixData)) == EMPUJE)) {
+						if( ( (Personaje*) body->GetUserData() )->isRespawnable ==true)
+							((Personaje*) body->GetUserData())->respawn();
+						if( ( (Personaje*) body->GetUserData() )->cayoPorAgujero())
+							((Personaje*) body->GetUserData())->moverArriba();
+						if( ( (Personaje*) body->GetUserData() )->forDelete()) {
+							delete ( (Personaje*) body->GetUserData() );
+							body->SetUserData(NULL);
+						}
+			}
+
+			if( *((int*)(&fixData)) == ENEMIGO|| *((int*)(&fixData)) == ENEMIGOCONGELADO || *((int*)(&fixData)) == PIESEN || *((int*)(&fixData)) == PIESENCONGELADO  || *((int*)(&fixData)) == ENEMIGOBOLA ) {
+						if( ( (EnemigoEstandar*) body->GetUserData() )->cayoPorAgujero()){
+							((EnemigoEstandar*) body->GetUserData())->moverArriba();
+						}
+			}
+		}
+		body = body->GetNext();
+	}
+}
+
 void Camera::updateRenderList(){
 
 //	std::cout << "updateando render list" << std::endl;
 
 	// Bloquea renderList, para evitar que se modifique mientras se la esta cargando.
 	renderList.lock();
+
+	cleanPowers();
 
 	// Vacia la lista.
 	renderList.clear();
