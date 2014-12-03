@@ -92,6 +92,12 @@ enum teclas_t{
 	a,
 };
 
+enum resultado_t{
+	GANARON,
+	PERDIERON,
+	ERROR_RESULTADO,
+};
+
 enum worlditem_t{
 	METADATAFONDO,
 	METADATAHUD,
