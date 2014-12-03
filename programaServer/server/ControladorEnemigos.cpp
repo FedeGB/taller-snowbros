@@ -147,7 +147,7 @@ teclas_t ControladorEnemigos::getAction(EnemigoEstandar* unit, b2Vec2 enemy, b2W
 	b2Vec2 posUnit = unit->posicion;
 	if(enemy.x != 0 && enemy.y != 0) {
 		if(unit->tipo == ENEMIGOTIRAFUEGO) {
-			if((isObjectInDirectionRange(world, unit, PERSONAJE, 90, unit->baseMayor*4.0, 2) && unit->orientation == RIGHT) || (isObjectInDirectionRange(world, unit, PERSONAJE, 270, unit->baseMayor*4, 2) && unit->orientation == LEFT)) {
+			if((isObjectInDirectionRange(world, unit, PERSONAJE, 90, unit->baseMayor*4.0, 3.0f) && unit->orientation == RIGHT) || (isObjectInDirectionRange(world, unit, PERSONAJE, 270, unit->baseMayor*4, 3.0f) && unit->orientation == LEFT)) {
 				return SPACE;
 			}
 		}

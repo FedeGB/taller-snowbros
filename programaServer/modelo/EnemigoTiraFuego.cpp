@@ -9,7 +9,7 @@
 #include "BolaEnemigo.h"
 #include "Fireball.h"
 
-#define TTHROW 500
+#define TTHROW 200
 
 EnemigoTiraFuego::EnemigoTiraFuego(int number) {
 	bodyB2D = NULL;
@@ -204,7 +204,7 @@ void EnemigoTiraFuego::update(){
 
 		// DETERMINA EL SPRITE QUE CORRESPONDE AL ESTADO DEL PJ.
 		animationCounter++;
-		switch ((animationCounter/128)){
+		switch ((animationCounter/100)){
 		case 0:
 			if (isAirborne){  // Si esta en el aire:
 				if (isJumping) activeSprite = SALTANDOIZQUIERDA1; // Salta.
@@ -214,6 +214,8 @@ void EnemigoTiraFuego::update(){
 				if (isMoving) activeSprite = MOVIENDOIZQUIERDA1;
 				else activeSprite = PARADOIZQUIERDA;
 			}
+			if(isThrowing)
+						activeSprite = TIRANDOIZQUIERDA1;
 			break;
 		case 1:
 			if (isAirborne){
@@ -224,6 +226,8 @@ void EnemigoTiraFuego::update(){
 				if (isMoving) activeSprite = MOVIENDOIZQUIERDA2;
 				else activeSprite = PARADOIZQUIERDA;
 			}
+			if(isThrowing)
+						activeSprite = TIRANDOIZQUIERDA2;
 			break;
 		case 2:
 			if (isAirborne){
@@ -234,7 +238,10 @@ void EnemigoTiraFuego::update(){
 				if (isMoving) activeSprite = MOVIENDOIZQUIERDA3;
 				else activeSprite = PARADOIZQUIERDA;
 			}
+			if(isThrowing)
+						activeSprite = TIRANDOIZQUIERDA3;
 			break;
+
 		case 3:
 			if (isAirborne){
 				if (isJumping) activeSprite = SALTANDOIZQUIERDA4;
@@ -244,11 +251,21 @@ void EnemigoTiraFuego::update(){
 				if (isMoving) activeSprite = MOVIENDOIZQUIERDA4;
 				else activeSprite = PARADOIZQUIERDA;
 				animationCounter = 0;
+				isThrowing= false;
 			}
+			if(isThrowing)
+						activeSprite = TIRANDOIZQUIERDA1;
 			break;
 		default:
 			if (isAirborne) activeSprite = SALTANDOIZQUIERDA5;
+			if(isThrowing){
+				activeSprite = TIRANDOIZQUIERDA2;
+				if(animationCounter>500)
+					animationCounter=0;
+			}
 			else animationCounter = 0;
+			isThrowing= false;
+
 		}
 
 
