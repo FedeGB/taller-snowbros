@@ -64,7 +64,7 @@ public:
 	virtual void setFalling(bool);
 	virtual bool getFalling();
 	virtual bool getThrowing();
-	virtual void inBall(b2Vec2);
+	virtual void inBall(b2Body *);
 	virtual void fusionBola();
 
 	void setDelete(){
@@ -123,7 +123,7 @@ protected:
 
 	bool cayo; //cayo por agujero
 
-	b2Vec2 posbind;
+	b2Body *posbind;
 
 
 	sprite_t activeSprite;

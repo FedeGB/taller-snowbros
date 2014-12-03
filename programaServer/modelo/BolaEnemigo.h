@@ -32,6 +32,8 @@ public:
 	bool cayoPorAgujero();
 	void moverArriba();
 	void notBounce();
+	int contactcounter;
+	Personaje* pj=NULL;
 
 protected:
 	b2Body * bodyB2D;

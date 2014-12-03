@@ -31,7 +31,7 @@ BolaEnemigo::BolaEnemigo(b2Body * body){
 	//lo vinculo al mundo
 	bodyB2D = body->GetWorld()->CreateBody(&b2dObjDef);
 	myFixtureDef.density =100.0f; //le doy masa
-	myFixtureDef.restitution = 0.1f;
+	myFixtureDef.restitution = 1.0f;
 
 	myFixtureDef.friction = 0.3f;
 
@@ -48,6 +48,7 @@ BolaEnemigo::BolaEnemigo(b2Body * body){
 	bodyB2D->SetUserData(this);
 	activeSprite=CONGELADO;
 	tipo=BOLASNOW;
+	contactcounter=0;
 }
 
 void BolaEnemigo::Impulso(orientation_t ori){
@@ -78,7 +79,7 @@ BolaEnemigo::~BolaEnemigo() {
 	}
 
 	sorpresa->agregarAMundo(bodyB2D->GetPosition().x, bodyB2D->GetPosition().y, bodyB2D->GetWorld());
-
+	pj->bindball=false;
 	this->bodyB2D->GetWorld()->DestroyBody(this->bodyB2D);
 }
 
@@ -105,5 +106,5 @@ void BolaEnemigo::moverArriba(){
 }
 
 void BolaEnemigo::notBounce(){
-	//this->bodyB2D->SetLinearVelocity(b2Vec2(bodyB2D->GetLinearVelocity().x,0));
+	this->bodyB2D->SetLinearVelocity(b2Vec2(bodyB2D->GetLinearVelocity().x,0));
 }

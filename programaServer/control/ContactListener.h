@@ -23,22 +23,33 @@ class ContactListener : public b2ContactListener
 
 		if ( *((int*)(&fixtureBUserData)) == BOLASNOW ){
 			if ( *((int*)(&fixtureAUserData)) == PERSONAJE ||*((int*)(&fixtureAUserData)) == PIESPJ  ){
-				 ((Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->inBall(contact->GetFixtureB()->GetBody()->GetPosition());
+				((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->pj=((Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() );
+				if(((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->contactcounter==1)
+				 ((Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->inBall(contact->GetFixtureB()->GetBody());
+
+				((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->contactcounter++;
+				std::cout<<((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->contactcounter;
 			}
 		}
 		if ( *((int*)(&fixtureAUserData)) == BOLASNOW ){
 			if ( *((int*)(&fixtureBUserData)) == PERSONAJE ||*((int*)(&fixtureBUserData)) == PIESPJ  ){
-				 ((Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->inBall(contact->GetFixtureA()->GetBody()->GetPosition());
+				((BolaEnemigo*)contact->GetFixtureA()->GetBody()->GetUserData())->pj=((Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() );
+				if(((BolaEnemigo*)contact->GetFixtureA()->GetBody()->GetUserData())->contactcounter==1)
+				 ((Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->inBall(contact->GetFixtureA()->GetBody());
+				((BolaEnemigo*)contact->GetFixtureA()->GetBody()->GetUserData())->contactcounter++;
+				std::cout<<((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->contactcounter;
 			}
 		}
 
 		if ( *((int*)(&fixtureBUserData)) == BOLASNOW ){
+			((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->notBounce();
 			if ( *((int*)(&fixtureAUserData)) == ENEMIGO ||*((int*)(&fixtureAUserData)) == ENEMIGOCONGELADO  ){
 				((EnemigoEstandar*)contact->GetFixtureA()->GetBody()->GetUserData())->setDelete();
 			}
 		}
 
 		if ( *((int*)(&fixtureAUserData)) == BOLASNOW){
+			((BolaEnemigo*)contact->GetFixtureA()->GetBody()->GetUserData())->notBounce();
 				if ( *((int*)(&fixtureBUserData)) == ENEMIGO ||*((int*)(&fixtureBUserData)) == ENEMIGOCONGELADO  ){
 					((EnemigoEstandar*)contact->GetFixtureB()->GetBody()->GetUserData())->setDelete();
 				}
@@ -312,6 +323,17 @@ class ContactListener : public b2ContactListener
     	  void* fixtureBUserData = contact->GetFixtureB()->GetUserData();
     	  Cuadrilatero* ITA = NULL;
     	  Personaje* PJB = NULL;
+
+    	  if ( *((int*)(&fixtureAUserData)) == BOLASNOW){
+    		  if (*((int*)(&fixtureBUserData)) == PERSONAJE || *((int*)(&fixtureBUserData)) == PIESPJ){
+    			  contact->SetEnabled(false);
+    		  }
+    	  }
+    	  if ( *((int*)(&fixtureBUserData)) == BOLASNOW){
+    		  if (*((int*)(&fixtureAUserData)) == PERSONAJE || *((int*)(&fixtureAUserData)) == PIESPJ){
+    			  contact->SetEnabled(false);
+    		  }
+    	  }
 
     	  if ( *((int*)(&fixtureAUserData)) == ATRAVESABLE){
     		  if (*((int*)(&fixtureBUserData)) == PERSONAJE || *((int*)(&fixtureBUserData)) == PIESPJ){

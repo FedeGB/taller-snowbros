@@ -121,8 +121,6 @@ void Personaje::update(Sonido* sonido){
 
 
 	camera->update();
-	if(bindball)
-		return;
 
 	// si la velocidad del pj es mayor a la normal, y el sonido todavia no esta con una velocidad mayor, lo cambio
 	if( velocidadPJSorpresa == 2.0f && sonido->velocidad != 2.0f ){
@@ -464,13 +462,13 @@ void Personaje::sumarPuntaje(int points) {
 	puntaje += points;
 }
 
-void Personaje::inBall(b2Vec2 pos){
+void Personaje::inBall(b2Body* pos){
 	bindball=true;
 	posbind=pos;
 }
 
 void Personaje::fusionBola(){
-	this->bodyB2D->SetTransform(posbind,0);
-	this->camera->reposition(b2Vec2(posbind.x,0));
+	this->bodyB2D->SetTransform(posbind->GetPosition(),0);
+	this->camera->reposition(b2Vec2(posbind->GetPosition().x,0));
 }
 

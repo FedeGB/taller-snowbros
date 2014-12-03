@@ -241,6 +241,10 @@ void Camera::cleanPowers() {
 				if( ( (BolaEnemigo*) body->GetUserData() )->cayoPorAgujero() )
 					((BolaEnemigo*) body->GetUserData())->moverArriba();
 
+				if( body->GetLinearVelocity().y<0){
+					((BolaEnemigo*) body->GetUserData())->notBounce();
+				}
+
 
 				if( ( (BolaEnemigo*) body->GetUserData() )->forDelete() ){
 					delete ((BolaEnemigo*) body->GetUserData());
@@ -259,7 +263,7 @@ void Camera::cleanPowers() {
 					body->SetUserData(NULL);
 				}
 						if( ( (Personaje*) body->GetUserData() )->bindball){
-							( (Personaje*) body->GetUserData() )->bindball=false;
+							//( (Personaje*) body->GetUserData() )->bindball=false;
 							( (Personaje*) body->GetUserData() )->fusionBola();
 						}
 			}
