@@ -37,6 +37,7 @@ EnemigoTiraFuego::EnemigoTiraFuego(int number) {
 	vida = 10;
 	isTrapped = false;
 	stunCounter=0;
+	dropCounter = 0;
 	isPushable=false;
 	maxpower = 0;
 	timerThrow = 0;
@@ -193,13 +194,21 @@ void EnemigoTiraFuego::update(){
 
 
 		// Si se recibio UP y el personaje esta en el piso, salta.
-		if ( (isUpPressed && (!isAirborne)) || (sumergido && isUpPressed) ){
+		if ( (isUpPressed && (!isAirborne)) || (sumergido && isUpPressed)){
 			b2Vec2 vel = bodyB2D->GetLinearVelocity();
 			float desiredVel = -19 * velocidadSumergido;
 			float velChange = desiredVel - vel.y;
 			float impulse = bodyB2D->GetMass() * velChange;
 			bodyB2D->ApplyLinearImpulse( b2Vec2(0,impulse), bodyB2D->GetWorldCenter(), true);
 			isJumping = true;
+		}
+
+		if(isDownPressed && !isFalling ) {
+			b2Vec2 vel = bodyB2D->GetLinearVelocity();
+			float desiredVel = -200;
+			float velChange = desiredVel - vel.y;
+			float impulse = bodyB2D->GetMass() * velChange;
+			bodyB2D->ApplyLinearImpulse( b2Vec2(0,impulse), bodyB2D->GetWorldCenter(), true);
 		}
 
 		// DETERMINA EL SPRITE QUE CORRESPONDE AL ESTADO DEL PJ.

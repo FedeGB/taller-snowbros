@@ -215,10 +215,10 @@ class ContactListener : public b2ContactListener
 		}
 	}
 
-      void EndContact(b2Contact* contact) {
-    	  // Get Collision fixtures
-    	  void* fixtureAUserData = contact->GetFixtureA()->GetUserData();
-    	  void* fixtureBUserData = contact->GetFixtureB()->GetUserData();
+     void EndContact(b2Contact* contact) {
+   	  // Get Collision fixtures
+    	void* fixtureAUserData = contact->GetFixtureA()->GetUserData();
+    	void* fixtureBUserData = contact->GetFixtureB()->GetUserData();
 
     	  if ( *((int*)(&fixtureAUserData)) == PERSONAJE ){
     	  					if ( *((int*)(&fixtureBUserData)) == ENEMIGOBOLA ){
@@ -343,16 +343,19 @@ class ContactListener : public b2ContactListener
     		  float PosA = ITA->posicion.y - (ITA->altura / 2.0);
     	  	  float PosB = PJB->posicion.y + (PJB->altura / 2.0);
 
+    	  	float PosC = ITA->posicion.y + (ITA->altura / 2.0);
+   	  		float PosD = PJB->posicion.y - (PJB->altura / 2.0);
+
     	  	  // printf("Pos PJ: %f", PosB);
     	  	  // printf("Pos Plat: %f", PosA);
 		  	  if ( PosB > PosA + 0.2 && PJB->GetAirborne() ){
 			  	  contact->SetEnabled(false);
 		  	  }
 
+		  	if ( PosD < PosC + 4.0 && PJB->getFalling() ){
+			  	  contact->SetEnabled(false);
+		  	}
 
-		  	  if(PosB - 0.20 < PosA && PJB->getFalling()) {
-		  		  contact->SetEnabled(false);
-		  	  }
     	  }
 
       }

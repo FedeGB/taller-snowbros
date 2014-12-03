@@ -34,6 +34,7 @@ EnemigoEstandar::EnemigoEstandar() {
 	vida = 10;
 	isTrapped = false;
 	stunCounter=0;
+	dropCounter = 0;
 	isPushable=false;
 	wasKicked = false;
 
@@ -67,6 +68,7 @@ EnemigoEstandar::EnemigoEstandar(int number){
 	vida = 10;
 	isTrapped = false;
 	stunCounter=0;
+	dropCounter = 0;
 	isPushable=false;
 	wasKicked = false;
 
@@ -160,10 +162,10 @@ void EnemigoEstandar::update(){
 	// Determina, si esta saltando, si ya termino el salto.
 	if (!isAirborne) {
 		isJumping = false;
-		if(isDownPressed) {
-			isFalling = true;
-		} else {
+		if(!isDownPressed) {
 			isFalling = false;
+		} else {
+			isFalling = true;
 		}
 	} else {
 		b2Vec2 vel = bodyB2D->GetLinearVelocity();
@@ -290,7 +292,18 @@ void EnemigoEstandar::eventoSoltoSpace() {
 }
 
 void EnemigoEstandar::eventoAbajo() {
-	isDownPressed = true;
+	if(dropCounter < 100 ) {
+		b2Vec2 vel = bodyB2D->GetLinearVelocity();
+		float desiredVel = -10;
+		float velChange = desiredVel - vel.y;
+		float impulse = bodyB2D->GetMass() * velChange;
+		bodyB2D->ApplyLinearImpulse( b2Vec2(0,impulse), bodyB2D->GetWorldCenter(), true);
+		dropCounter++;
+	} else if(!isDownPressed) {
+		dropCounter = 0;
+	}
+	if(!isDownPressed)
+		isDownPressed = true;
 }
 
 void EnemigoEstandar::eventoSoltoAbajo() {

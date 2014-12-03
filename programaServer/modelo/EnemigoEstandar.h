@@ -61,6 +61,7 @@ protected:
 	bool wasKicked;
 
 	int stunCounter;
+	int dropCounter;
 
 };
 
