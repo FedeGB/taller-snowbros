@@ -6,7 +6,7 @@
         "alto-un": 26,
         "ancho-un": 100,
         "imagen-fondo": "imagenes/fondo2.png",
-        "maxplayer": 4
+        "maxplayer": 2
     },
     "personaje1":{
 		"x": 22.0,
@@ -34,7 +34,7 @@
 		"alto": 1.5
     },
     {
-    		"tipo": "tfue",
+    		"tipo": "est",
     		"x": 10.0,
 			"y": 10.0,
 			"masa": 20.0,
