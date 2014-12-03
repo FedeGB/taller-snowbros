@@ -165,6 +165,7 @@ void Textura::dibujar(GLfloat* vx, GLfloat* vy, float* s, float* t, int n) {
 
 	// Bind the texture to which subsequent calls refer to
 	glBindTexture( GL_TEXTURE_2D, id_tex);
+	glFinish();
 
 	glBegin( GL_POLYGON);
 

@@ -120,6 +120,7 @@ void ItemRenderer::renderPoligono(PoligonoRegular * item, float escala){
 
 	// Renderea.
 	TaV->tex->dibujar(vx, vy, vxTex, vyTex, item->nLados);
+	TaV->tex->eliminar();
 
 }
 
@@ -775,12 +776,12 @@ void ItemRenderer::renderMetadataHUD(Metadata * item){
 	vy[2] = vy[3] = 628;
 
 	TaV = textureMap[PUNTAJE1];
-	TaV->tex->eliminar();
 	SDL_Color c = {0, 0, 0, 255};
 	TaV->tex->generarTexto("fuentes/Ubuntu-B.ttf", 30, puntaje, c);
 
 	// Renderea puntaje.
 	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
+	TaV->tex->eliminar();
 	for (int i = 0; i < 4; i++){
 		//posicion xvidas
 		vx[0] = vx[3] = 20 + 1 * 54 + 3*i*54;
@@ -792,6 +793,7 @@ void ItemRenderer::renderMetadataHUD(Metadata * item){
 		TaV->tex->generarTexto("fuentes/Ubuntu-B.ttf", 30, xvidas, c);
 		// Renderea vidas numero
 	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
+	TaV->tex->eliminar();
 	}
 	for (int i = 0; i < 4; i++){
 	//posicion nombre 1
@@ -805,6 +807,7 @@ void ItemRenderer::renderMetadataHUD(Metadata * item){
 
 	// Renderea nombre
 		TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
+		TaV->tex->eliminar();
 	}
 	// Analiza el mensaje.
 	if (item->mensaje == "NOMESSAGE") return;
@@ -825,11 +828,11 @@ void ItemRenderer::renderMetadataHUD(Metadata * item){
 		vy[2] = vy[3] = 540 + i * 30;
 
 		TaV = textureMap[PUNTAJE1];
-		TaV->tex->eliminar();
 		TaV->tex->generarTexto("fuentes/Ubuntu-B.ttf", 30, buff[i], c);
 
 		// Renderea mensaje.
 		TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
+		TaV->tex->eliminar();
 	}
 
 }

@@ -86,7 +86,6 @@ bool TextureMap::loadMetadataTex(){
 	temp->vertexes->y[2] = temp->vertexes->y[3] = 1.0f;
 	temp->tex = tex;
 	(*this)[FONDO1] = temp;
-
 	return true;
 }
 
