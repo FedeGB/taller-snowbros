@@ -223,7 +223,6 @@ void Camera::cleanPowers() {
 				if( ( (Fireball*) body->GetUserData() )->cayoPorAgujero() )
 					((Fireball*) body->GetUserData())->moverArriba();
 
-
 				if( ( (Fireball*) body->GetUserData() )->forDelete() ){
 					delete ((Fireball*) body->GetUserData());
 					body->SetUserData(NULL);

@@ -76,9 +76,22 @@ enum teclas_t{
 };
 
 enum orientation_t{
-			LEFT,
-			RIGHT,
-		};
+	LEFT,
+	RIGHT,
+};
+
+enum resultado_t{
+	GANARON,
+	PERDIERON,
+	ERROR_RESULTADO,
+};
+
+enum estado_user_t{
+	NO_REGISTRADO,
+	REGISTRADO,
+	ESPERANDO_ESTADO,
+	NO_NOTIFICADO,
+};
 
 enum worlditem_t{
 	METADATAFONDO,

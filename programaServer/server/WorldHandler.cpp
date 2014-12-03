@@ -15,58 +15,103 @@
 WorldHandler::WorldHandler(ControladorUsuarios & c, ControladorEnemigos & en, std::string config):
 	controlador(c), worldB2D(NULL), army(en), configFile(config){}
 
-void* WorldHandler::run(){
-
+// El programa espera a que haya una cantidad suficiente de jugadores.
+void WorldHandler::esperarConexiones(){
 	// Espera a que se llene el escenario.
 	while (!controlador.escenarioLleno()) {
-		std::cout << "esperando mas conexiones para simular." << std::endl;
+		std::cout << "esperando mas conexiones para iniciar la partida." << std::endl;
 		usleep(200000);
 	}
 
-	std::cout << "se lleno el mapa, iniciando simulacion." << std::endl;
+	std::cout << "se lleno el mapa, iniciando partida." << std::endl;
+}
+
+void WorldHandler::limpiarNivel(){
+	// Destruye el nivel.
+	delete worldB2D;
+	worldB2D = NULL;
+
+	// Resettea los PJs.
+	for (ControladorUsuarios::iterator it=controlador.begin(); it!=controlador.end(); ++it){
+		(*it).second->inicializado = false;
+	}
+}
+
+// Cuando se llena el mapa, comienza la partida.
+resultado_t WorldHandler::simularPartida(){
 
 	std::string nextLevel;
 
+	resultado_t resultado = GANARON;
+
 	// Itera sobre todos los niveles.
-	while (nextLevel != "LASTLEVEL"){
+	while (nextLevel != "LASTLEVEL" && resultado == GANARON){
+
+		std::cout << "cargando siguiente nivel: " << nextLevel << "..." << std::endl;
 
 		// Simula el nivel.
-		if (inicializador.init(configFile, &worldB2D, &contactListener, army, nextLevel)) loopPrincipal();
+		if (inicializador.init(configFile, &worldB2D, &contactListener, army, nextLevel)){
 
-		// Destruye el nivel.
-		/*b2Body * node = worldB2D->GetBodyList();
-		while (node) {
-		b2Body * b = node;
-		node = node->GetNext();
-		worldB2D->DestroyBody(b);
-		b = NULL;
-		}*/
-		delete worldB2D;
-		worldB2D = NULL;
+			// Juega el nivel.
+			resultado = loopPrincipal();
 
-		for (ControladorUsuarios::iterator it=controlador.begin(); it!=controlador.end(); ++it){
-			(*it).second->inicializado = false;
+			// Limpia el world y aquello que sea necesario.
+			limpiarNivel();
+
+			// Asigna el archivo de configuracion necesario para cargar el proximo nivel.
+			configFile = nextLevel;
+
+		} else {
+			limpiarNivel();
+			return ERROR_RESULTADO;
 		}
 
-		// Asigna para cargar el proximo nivel.
-		configFile = nextLevel;
+	}
 
-		std::cout << "cargando siguiente nivel.." << std::endl;
+	return resultado;
+}
+
+void* WorldHandler::run(){
+
+	// Loop infinito de partidas. Cada partida comienza cuando hay suficientes jugadores para comenzar,
+	// segun se indique en el archivo de partida cargado al levantar el servidor.
+	while (true){
+
+		// El programa espera a que haya una cantidad suficiente de jugadores.
+		esperarConexiones();
+
+		// Cuando se llena el mapa, comienza la partida.
+		resultado_t resultado = simularPartida();
+
+		controlador.notificarFinDePartida(resultado);
+
+/*		switch (resultado){
+		// Si hubo un error, caos y desolacion.
+		case ERROR_RESULTADO:
+			return NULL;
+		case GANARON:
+			break;
+		case PERDIERON:
+			break;
+		}
+*/
 	}
 
 	return NULL;
 }
 
-bool WorldHandler::loopPrincipal() {
+resultado_t WorldHandler::loopPrincipal() {
 
 	//Loop infinito en busca de mensajes para procesar
 	bool quit = false;
+	resultado_t resultado;
+
 	while(!quit){
 
-		std::cout << "simulando... " << std::endl;
+		//std::cout << "simulando... " << std::endl;
 
 		int count = 0;
-		float freq =600.0f;
+		float freq = 600.0f;
 
 		// Cuenta cuantos usuarios estan online.
 		for (ControladorUsuarios::iterator it=controlador.begin(); it!=controlador.end(); ++it){
@@ -75,7 +120,7 @@ bool WorldHandler::loopPrincipal() {
 			}
 		}
 
-		std::cout << "simulando... eligiendo estrategia enemigos." << std::endl;
+		//std::cout << "simulando... eligiendo estrategia enemigos." << std::endl;
 
 		if(count > 0) {
 			army.strategy(worldB2D, controlador);
@@ -83,7 +128,7 @@ bool WorldHandler::loopPrincipal() {
 			army.strategy(NULL, controlador);
 		}
 
-		std::cout << "simulando... setteando frecuencia." << std::endl;
+		//std::cout << "simulando... setteando frecuencia." << std::endl;
 
 		if(count == 1)
 			freq = 20000.0f;
@@ -95,7 +140,7 @@ bool WorldHandler::loopPrincipal() {
 				freq = 6000.0f;
 		//std::cout << "freq: " << freq << '\n';		// Simula.
 
-		std::cout << "simulando... calculando steps" << std::endl;
+		//std::cout << "simulando... calculando steps" << std::endl;
 
 		for(int i=0;i<10;i++) {
 			worldB2D->Step(1.0f/freq, 8, 5);
@@ -106,7 +151,7 @@ bool WorldHandler::loopPrincipal() {
 
 		// Updatea enemigos
 
-		std::cout << "simulando... updateando enemigos." << std::endl;
+		//std::cout << "simulando... updateando enemigos." << std::endl;
 
 		if(count > 0) {
 			army.update(true, controlador);
@@ -114,7 +159,9 @@ bool WorldHandler::loopPrincipal() {
 			army.update(false, controlador);
 		}
 
-		std::cout << "simulando... updateando PJs." << std::endl;
+		//std::cout << "simulando... updateando PJs." << std::endl;
+
+		bool quedaPJvivo = false;
 
 		// Procesa uno por uno todos los usuarios, inicializandolos, moviendo sus
 		// PJs o camaras, o ignorandolos si estan desconectados.
@@ -129,6 +176,7 @@ bool WorldHandler::loopPrincipal() {
 				(*it).second->inicializarPJ(worldB2D, configFile);
 			}
 			if( (*it).second->isPJAlive()) {
+				quedaPJvivo = true;
 				(*it).second->procesarNotificaciones();
 				(*it).second->actualizarPJ();
 			}
@@ -137,75 +185,17 @@ bool WorldHandler::loopPrincipal() {
 			//usleep(20000);
 		}
 
-		if (army.isMapCleared()) quit = true;
-	}
-
-	return true;
-}
-
-void WorldHandler::cleanPowers() {
-	b2Body* body = worldB2D->GetBodyList();
-	while (body) {
-		b2Fixture* fix = body->GetFixtureList();
-		if(fix) {
-			void* fixData = fix->GetUserData();
-			if( *((int*)(&fixData)) == PODERHIELO) {
-				if( ( (snowball*) body->GetUserData() )->cayoPorAgujero() )
-					((snowball*) body->GetUserData())->moverArriba();
-
-				if( ( (snowball*) body->GetUserData() )->forDelete() ){
-					delete ((snowball*) body->GetUserData());
-					body->SetUserData(NULL);
-				}
-			}
-
-			if( *((int*)(&fixData)) == PODERFUEGO) {
-				if( ( (Fireball*) body->GetUserData() )->cayoPorAgujero() )
-					((Fireball*) body->GetUserData())->moverArriba();
-
-
-				if( ( (Fireball*) body->GetUserData() )->forDelete() ){
-					delete ((Fireball*) body->GetUserData());
-					body->SetUserData(NULL);
-				}
-			}
-
-
-			if( *((int*)(&fixData)) == sensorSORPRESA) {
-				if( ( (Sorpresa*) body->GetUserData() )->forDelete() ){
-					delete ((Sorpresa*) body->GetUserData());
-					body->SetUserData(NULL);
-				}
-			}
-			if( *((int*)(&fixData)) == BOLASNOW) {
-				if( ( (BolaEnemigo*) body->GetUserData() )->cayoPorAgujero() )
-					((BolaEnemigo*) body->GetUserData())->moverArriba();
-
-
-				if( ( (BolaEnemigo*) body->GetUserData() )->forDelete() ){
-					delete ((BolaEnemigo*) body->GetUserData());
-					body->SetUserData(NULL);
-				}
-				else
-					((BolaEnemigo*) body->GetUserData())->aumentarTiempo();
-			}
-			if( *((int*)(&fixData)) == PERSONAJE|| *((int*)(&fixData)) == PIESPJ||(*((int*)(&fixData)) == EMPUJE)) {
-						if( ( (Personaje*) body->GetUserData() )->isRespawnable ==true)
-							((Personaje*) body->GetUserData())->respawn();
-						if( ( (Personaje*) body->GetUserData() )->cayoPorAgujero())
-							((Personaje*) body->GetUserData())->moverArriba();
-						if( ( (Personaje*) body->GetUserData() )->forDelete()) {
-							delete ( (Personaje*) body->GetUserData() );
-							body->SetUserData(NULL);
-						}
-			}
-
-			if( *((int*)(&fixData)) == ENEMIGO|| *((int*)(&fixData)) == ENEMIGOCONGELADO || *((int*)(&fixData)) == PIESEN || *((int*)(&fixData)) == PIESENCONGELADO  || *((int*)(&fixData)) == ENEMIGOBOLA ) {
-						if( ( (EnemigoEstandar*) body->GetUserData() )->cayoPorAgujero()){
-							((EnemigoEstandar*) body->GetUserData())->moverArriba();
-						}
-			}
+		if (army.isMapCleared()) {
+			quit = true;
+			resultado = GANARON;
 		}
-		body = body->GetNext();
+
+		if (!quedaPJvivo){
+			quit = true;
+			resultado = PERDIERON;
+		}
 	}
+
+	return resultado;
 }
+

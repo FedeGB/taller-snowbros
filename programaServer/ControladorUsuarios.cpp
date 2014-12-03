@@ -9,6 +9,9 @@
 
 ControladorUsuarios::ControladorUsuarios() {
 	tamanioMaximo = 4;
+	finDePartida = false;
+	resultadoPartida = GANARON;
+	for (int i = 0; i < 4; i++)	usuariosRegistrados[i] = NO_REGISTRADO;
 	puntajeKills = 0;
 }
 
@@ -18,6 +21,18 @@ void ControladorUsuarios::setConnectionLimit(int max) {
 
 ControladorUsuarios::~ControladorUsuarios() {
 	// TODO Auto-generated destructor stub
+}
+
+// Asigna un numero de usuario.
+int ControladorUsuarios::asignarNumeroUsuario(){
+	for (int i = 0; i < 4; i++){
+		if (usuariosRegistrados[i] == NO_REGISTRADO){
+			usuariosRegistrados[i] = REGISTRADO;
+			return i;
+		}
+	}
+
+	return -1;
 }
 
 // Agrega un nuevo usuario a los usuarios registrados en el servidor.
@@ -31,10 +46,17 @@ bool ControladorUsuarios::registrarUsuario(std::string username){
 	// En caso contrario, se lo agrega.
 	(*this)[username] = new Usuario();
 	(*this)[username]->username = username;
-	static int num = 0;
-	num++;
-	(*this)[username]->numeroUsuario = num;
+
+	(*this)[username]->numeroUsuario = asignarNumeroUsuario();
 	return true;
+}
+
+// Elimina el usuario solicitado.
+// username: el usuario al cual se quiere eliminar.
+void ControladorUsuarios::eliminarUsuario(std::string username){
+	//if (!usuarioExiste(username)) return;
+	usuariosRegistrados[ (*this)[username]->numeroUsuario ] = NO_REGISTRADO;
+	this->erase(username);
 }
 
 // Devuelve el numero de conexion correspondiente al usuario solicitado,
@@ -62,7 +84,32 @@ Usuario * ControladorUsuarios::obtenerUsuario(std::string username){
 // Determina si queda lugar en el escenario para que ingresen nuevos usuarios.
 // return: true si no pueden ingresar mas usuarios, false si aun hay lugar.
 bool ControladorUsuarios::escenarioLleno(){
-	return this->size() < tamanioMaximo ? false:true;
+
+	uint numUsuarios = 0;
+	for(int i = 0; i < 4; i++){
+		if (usuariosRegistrados[i] == NO_NOTIFICADO) return false;
+		if (usuariosRegistrados[i] == ESPERANDO_ESTADO) return false;
+		if (usuariosRegistrados[i] == REGISTRADO) numUsuarios += 1;
+	}
+
+	finDePartida = false;
+
+	return numUsuarios < tamanioMaximo ? false:true;
+}
+
+// Confirma que el usuario en cuestion va a jugar la siguiente partida.
+void ControladorUsuarios::confirmarUsuario(std::string username, estado_user_t estado){
+	usuariosRegistrados[ (*this)[username]->numeroUsuario ] = estado;
+}
+
+// Notifica a todos los jugadores conectados que el juego finalizo, informando el resultado
+// de la partida. Ademas, inicia el protocolo para mantenerlos conectados a una nueva partida,
+// o desconectarlos en caso que no quieran jugar nuevamente.
+void ControladorUsuarios::notificarFinDePartida(resultado_t resultado){
+
+	finDePartida = true;
+	resultadoPartida = resultado;
+	for(int i = 0; i < 4; i++) if (usuariosRegistrados[i] == REGISTRADO) usuariosRegistrados[i] = NO_NOTIFICADO;
 }
 
 // Obtiene una version serializada de lo que se ve en pantalla del usuario

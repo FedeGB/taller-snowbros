@@ -68,6 +68,10 @@ public:
 	// Actualiza el estado del PJ y su camara asociada.
 	void actualizarPJ();
 
+	// Informa el resultado de la partida actual. Ademas, inicia el protocolo para mantenerlos
+	// conectados a una nueva partida, o desconectarlos en caso que no quieran jugar nuevamente.
+	void notificarFinDePartida(resultado_t resultado);
+
 	void setOnline(bool estado);
 
 	b2Vec2 getPosition();

@@ -19,7 +19,7 @@
 #include "../Inicializador.h"
 //#include "ControladorEnemigos.h"
 //#include <Box2D/Box2D.h>
-
+#include "../utiles/tipos.h"
 
 class WorldHandler: public Thread {
 
@@ -30,8 +30,11 @@ class WorldHandler: public Thread {
 	ControladorEnemigos & army;
 	std::string configFile;
 
-	bool loopPrincipal();
-	void cleanPowers();
+	resultado_t loopPrincipal();
+	//void cleanPowers();
+	void esperarConexiones();
+	void limpiarNivel();
+	resultado_t simularPartida();
 
 public:
 	WorldHandler(ControladorUsuarios & c, ControladorEnemigos & en, std::string);

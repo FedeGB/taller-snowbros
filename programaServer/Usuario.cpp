@@ -197,6 +197,12 @@ float Usuario::getLives(){
 	return this->PJ->vida;
 }
 
+// Informa el resultado de la partida actual. Ademas, inicia el protocolo para mantenerlos
+// conectados a una nueva partida, o desconectarlos en caso que no quieran jugar nuevamente.
+void Usuario::notificarFinDePartida(resultado_t resultado){
+
+}
+
 void Usuario::DeletePj(){
 	this->PJ->setDelete();
 	this->PJ=NULL;
