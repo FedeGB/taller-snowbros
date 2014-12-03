@@ -36,7 +36,7 @@ private:
 	SDL_GLContext initGL(SDL_Window* w);
 
 public:
-
+	void setGameOver();
 	static float wRatio, hRatio;
 
 	// Constructor de la clase

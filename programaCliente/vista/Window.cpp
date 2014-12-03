@@ -173,3 +173,9 @@ SDL_GLContext Window::initGL(SDL_Window* w) {
 
 	return c;
 }
+
+void Window::setGameOver(){
+	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+	ItemRenderer::renderGameOver();
+	SDL_GL_SwapWindow(window);
+}

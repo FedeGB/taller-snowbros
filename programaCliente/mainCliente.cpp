@@ -137,6 +137,7 @@ int main(int argc, char * argv[]){
     // Loop de recoleccion de eventos y envio de mensajes.
 	SDL_Event event;
 	bool quit = false;
+	bool gameOver =false;
 	std::string outMessage;
 
 	// Espera a que el server arranque la simulacion, mostrando una pantalla de espera.
@@ -261,6 +262,7 @@ int main(int argc, char * argv[]){
 					if(((Metadata*)item)->users[i].compare(username)==0){
 						if(((Metadata*)item)->vidas[i]==0){
 							quit=true;
+							gameOver=true;
 							std::cout<<"Game Over"<<std::endl;
 						}
 					}
@@ -279,6 +281,13 @@ int main(int argc, char * argv[]){
 		//std::cout << avgFPS << " FPS avg" << std::endl;
 		++countedFrames;
 
+	}
+	while(gameOver){
+		window->setGameOver();
+		while( SDL_PollEvent( &event ) != 0 ) {
+		if(event.type== SDL_KEYDOWN)
+			if (event.key.keysym.sym == SDLK_ESCAPE) gameOver = false;
+		}
 	}
 
 	delete window;

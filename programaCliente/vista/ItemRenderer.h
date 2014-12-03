@@ -35,6 +35,7 @@ public:
 	virtual ~ItemRenderer();
 	static void render(WorldItem * item, float escala);
 	static float escalaPorDefecto;
+	static void renderGameOver();
 
 private:
 
@@ -54,6 +55,7 @@ private:
 	static void renderBola(BolaEnemigo * item, float escala);
 	static void renderLaguna(Laguna * item, float escala);
 	static void renderAgujero(Agujero* item, float escala);
+
 
 	static SonidosMap sonidosMap;
 	static void renderSonido(Sonido * item);

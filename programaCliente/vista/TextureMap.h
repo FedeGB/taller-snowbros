@@ -63,6 +63,7 @@ private:
 	bool loadENTIFUETex();
 	bool loadCircleTex();
 	bool loadCuadTex();
+	bool loadGameOverTex();
 	bool inicializado;
 	bool loadSnowBallTex();
 	bool loadFireBallTex();

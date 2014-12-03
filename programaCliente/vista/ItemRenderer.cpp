@@ -895,6 +895,32 @@ void ItemRenderer::renderAgujero(Agujero* item, float escala){
 	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
 }
 
+void ItemRenderer::renderGameOver(){
+
+		GLfloat vx[4]; GLfloat vy[4];
+
+		// Calcula la posicion del fondo
+		// TODO: HARDCODEO!!!
+		vx[0] = vx[3] = 0;
+		vy[0] = vy[1] = 0;
+		vx[1] = vx[2] = 720;
+		vy[2] = vy[3] = 640;
+
+		float vxTex[4]; float vyTex[4];
+
+		// Calculo los vertices de la textura.
+		vxTex[0] = vxTex[3] = 0;
+		vyTex[0] = vyTex[1] = 0;
+		vxTex[1] = vxTex[2] = 1;
+		vyTex[2] = vyTex[3] = 1;
+
+		TexAndVertexes * TaV = textureMap[GAMEOVER];
+
+		// Renderea fondo.
+		TaV->tex->dibujar(vx, vy, vxTex, vyTex, 4);
+
+}
+
 void ItemRenderer::renderSonido(Sonido * item){
 
 	sonidosMap[item->sonido]->actualizarEstado();

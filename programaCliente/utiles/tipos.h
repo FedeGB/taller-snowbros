@@ -24,6 +24,7 @@
 #define FONT_TTF "fuentes/Ubuntu-B.ttf"
 #define IMAGEN_FONDO "imagenes/fondo2.png"
 #define TEXTURA_LAGUNA "imagenes/laguna.png"
+#define IMAGEN_GAMEOVER "imagenes/gameover.png"
 
 #define MUSICA_FONDO "sonidos/musica_fondo.wav"
 #define SONIDO_SALTO "sonidos/salto.wav"
@@ -147,6 +148,7 @@ enum sprite_t{
 	STUN3,
 	spriteLAGUNA,
 	ENTIFUE,
+	GAMEOVER,
 };
 
 
