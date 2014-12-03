@@ -201,3 +201,7 @@ void Usuario::DeletePj(){
 	this->PJ->setDelete();
 	this->PJ=NULL;
 }
+
+long int Usuario::getPuntaje() {
+	return PJ->getPuntaje();
+}

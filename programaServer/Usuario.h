@@ -78,6 +78,8 @@ public:
 
 	float getLives();
 
+	long int getPuntaje();
+
 	void DeletePj();
 
 private:

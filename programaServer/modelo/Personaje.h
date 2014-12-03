@@ -49,6 +49,8 @@ public:
 	/* virtual */ void setCayoPorAgujero(bool);
 	/* virtual */ bool cayoPorAgujero();
 	void moverArriba();
+	long int getPuntaje();
+	void sumarPuntaje(int points);
 
 	// metodos de INotificable
 	virtual void eventoArriba();
@@ -125,6 +127,7 @@ protected:
 private:
 	bool canKick;
 	b2Vec2 posIni;
+	long int puntaje;
 };
 
 #endif /* PERSONAJE_H_ */

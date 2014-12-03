@@ -233,12 +233,18 @@ teclas_t ControladorEnemigos::getAction(EnemigoEstandar* unit, b2Vec2 enemy, b2W
 
 
 
-void ControladorEnemigos::update(bool online) {
+void ControladorEnemigos::update(bool online,ControladorUsuarios PJs) {
 	if(online) {
 		for(ControladorEnemigos::iterator it = (*this).begin(); it != (*this).end(); ++it) {
 			if((*it).second) {
 
 				if((*it).second->forDelete()){
+					if((*it).second->tipo == ENEMIGOESTANDAR) {
+						PJs.sumarPuntaje(33);
+					}
+					if((*it).second->tipo == ENEMIGOTIRAFUEGO){
+						PJs.sumarPuntaje(19);
+					}
 					delete (*it).second;
 					(*it).second=NULL;
 				}

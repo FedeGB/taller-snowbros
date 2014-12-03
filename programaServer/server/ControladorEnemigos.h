@@ -22,7 +22,7 @@ public:
 	void strategy(b2World*, ControladorUsuarios PJs);
 	bool isMapCleared();
 
-	void update(bool);
+	void update(bool,ControladorUsuarios);
 
 private:
 	void standarStrategy(EnemigoEstandar* unit, b2World* world, ControladorUsuarios PJs);

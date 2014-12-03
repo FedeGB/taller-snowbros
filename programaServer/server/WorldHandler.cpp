@@ -109,9 +109,9 @@ bool WorldHandler::loopPrincipal() {
 		std::cout << "simulando... updateando enemigos." << std::endl;
 
 		if(count > 0) {
-			army.update(true);
+			army.update(true, controlador);
 		} else {
-			army.update(false);
+			army.update(false, controlador);
 		}
 
 		std::cout << "simulando... updateando PJs." << std::endl;

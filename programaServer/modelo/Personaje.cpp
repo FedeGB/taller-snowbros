@@ -48,6 +48,7 @@ Personaje::Personaje(){
 	isRespawnable=false;
 	inmunity=true;
 	toDelete=false;
+	puntaje = 0;
 }
 
 Personaje::~Personaje() {
@@ -325,23 +326,27 @@ b2World* Personaje::getMundo(){
 
 void Personaje::agregarVida(){
 	printf("AGREGAR VIDA\n");
+	puntaje += 23;
 	vida += 1.0f;
 }
 
 void Personaje::correrMasRapido(){
 	printf("CORRER MAS RAPIDO\n");
+	puntaje += 15;
 	if( velocidadPJSorpresa == 1.0f )
 		velocidadPJSorpresa = 2.0f;
 }
 
 void Personaje::nieveMasLejos(){
 	printf("NIEVE MAS LEJOS\n");
+	puntaje += 10;
 	if( impulsoNieveSorpresa == 1.0f )
 		impulsoNieveSorpresa = 2.0f;
 }
 
 void Personaje::nieveMasPotente(){
 	printf("NIEVE MAS POTENTE\n");
+	puntaje += 13;
 	if( potenciaNieveSorpresa == 0.5f )
 		potenciaNieveSorpresa = 2.0f;
 }
@@ -443,5 +448,13 @@ void Personaje::moverArriba(){
 	p.y = 1;
 	this->bodyB2D->SetTransform( p, 0);
 	cayo = false;
+}
+
+long int Personaje::getPuntaje() {
+	return this->puntaje;
+}
+
+void Personaje::sumarPuntaje(int points) {
+	puntaje += points;
 }
 

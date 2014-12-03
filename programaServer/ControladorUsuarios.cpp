@@ -9,6 +9,7 @@
 
 ControladorUsuarios::ControladorUsuarios() {
 	tamanioMaximo = 4;
+	puntajeKills = 0;
 }
 
 void ControladorUsuarios::setConnectionLimit(int max) {
@@ -76,8 +77,7 @@ std::string ControladorUsuarios::obtenerPantallaSerializada(std::string username
 	Metadata * metadata = new Metadata();
 	metadata->tipo = METADATAHUD;
 
-	static int i= 0; i++;
-	metadata->puntaje = i;
+	metadata->puntaje = this->puntajeKills;
 	int j=0;
 	for (ControladorUsuarios::iterator it=(*this).begin(); it!=(*this).end(); ++it){
 		if (!(*it).second || !(*it).second->inicializado) continue;
@@ -91,6 +91,7 @@ std::string ControladorUsuarios::obtenerPantallaSerializada(std::string username
 			metadata->users[j] = (*it).second->username;
 			metadata->vidas[j] = (*it).second->getLives();
 		}
+		metadata->puntaje += ((*it).second)->getPuntaje();
 		j++;
 	}
 
@@ -100,4 +101,8 @@ std::string ControladorUsuarios::obtenerPantallaSerializada(std::string username
 	delete metadata;
 
 	return buffer;
+}
+
+void ControladorUsuarios::sumarPuntaje(int points) {
+	puntajeKills += points;
 }

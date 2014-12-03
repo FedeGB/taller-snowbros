@@ -18,7 +18,7 @@ public:
 
 	float escala;
 	int vidas[4];
-	int puntaje;
+	long int puntaje;
 	float posXCamara;
 	float posYCamara;
 	float tamanioXMundo;

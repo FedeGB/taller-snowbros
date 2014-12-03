@@ -49,8 +49,11 @@ public:
 	// return: la pantalla serializada para username.
 	std::string obtenerPantallaSerializada(std::string username);
 
+	void sumarPuntaje(int);
+
 private:
 	unsigned int tamanioMaximo;
+	long int puntajeKills;
 };
 
 #endif /* CONTROLADORUSUARIOS_H_ */
