@@ -343,6 +343,7 @@ int main(int argc, char * argv[]){
 
 		// El primer elemento es metadata.
 		WorldItem * item = Deserializador::deserializar(buff[0]);
+		if (item->tipo != METADATAFONDO) continue;
 		// Escala de coordenadas mundo->ventana.
 		float escala = ((Metadata*)item)->escala;
 		delete item;
