@@ -157,7 +157,8 @@ void Usuario::inicializarPJ(b2World * worldB2D, std::string configFile){
 
 // Actualiza el estado del PJ y su camara asociada.
 void Usuario::actualizarPJ(){
-	PJ->update(sonidoPJ);
+	if(PJ!=NULL)
+		PJ->update(sonidoPJ);
 }
 
 void Usuario::setOnline(bool estado){
@@ -167,7 +168,9 @@ void Usuario::setOnline(bool estado){
 }
 
 b2Vec2 Usuario::getPosition() {
-	return this->PJ->posicion;
+	if(PJ!=NULL)
+		return this->PJ->posicion;
+	return b2Vec2(0,0);
 }
 
 bool Usuario::isPJAlive() {
@@ -194,7 +197,9 @@ void Usuario::eventoa(){
 }
 
 float Usuario::getLives(){
-	return this->PJ->vida;
+	if(PJ!=NULL)
+		return this->PJ->vida;
+	return 2;
 }
 
 // Informa el resultado de la partida actual. Ademas, inicia el protocolo para mantenerlos
@@ -209,5 +214,7 @@ void Usuario::DeletePj(){
 }
 
 long int Usuario::getPuntaje() {
-	return PJ->getPuntaje();
+	if(PJ!=NULL)
+		return PJ->getPuntaje();
+	return 0;
 }
