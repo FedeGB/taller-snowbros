@@ -431,7 +431,7 @@ Vertexes * obtenerVerticesEnemigo2(sprite_t activeSprite){
 		vertexes->x[0] = vertexes->x[3] = 151/428.0f;
 		vertexes->y[0] = vertexes->y[1] = 0;
 		vertexes->x[1] = vertexes->x[2] = 172 / 428.0f;
-		vertexes->y[2] = vertexes->y[3] = 16 / 365.0f;
+		vertexes->y[2] = vertexes->y[3] = 16.5 / 365.0f;
 	}
 	if (activeSprite == MOVIENDOIZQUIERDA2){
 		vertexes->x[0] = vertexes->x[3] = 173.5 / 428.0f;
@@ -443,7 +443,7 @@ Vertexes * obtenerVerticesEnemigo2(sprite_t activeSprite){
 		vertexes->x[0] = vertexes->x[3] = 151/428.0f;
 		vertexes->y[0] = vertexes->y[1] = 0;
 		vertexes->x[1] = vertexes->x[2] = 172 / 428.0f;
-		vertexes->y[2] = vertexes->y[3] = 16 / 365.0f;
+		vertexes->y[2] = vertexes->y[3] = 16.5 / 365.0f;
 	}
 	if (activeSprite == MOVIENDOIZQUIERDA4){
 		vertexes->x[0] = vertexes->x[3] = 173.5 / 428.0f;
@@ -498,6 +498,26 @@ Vertexes * obtenerVerticesEnemigo2(sprite_t activeSprite){
 		vertexes->y[0] = vertexes->y[1] = 323.5 / 365.0f;
 		vertexes->x[1] = vertexes->x[2] = 197 / 428.0f;
 		vertexes->y[2] = vertexes->y[3] = 343.5 / 365.0f;
+	}
+	if (activeSprite == TIRANDOIZQUIERDA1){
+		vertexes->x[0] = vertexes->x[3] = 168 / 428.0f;
+		vertexes->y[0] = vertexes->y[1] = 35 / 365.0f;
+		vertexes->x[1] = vertexes->x[2] = 191 / 428.0f;
+		vertexes->y[2] = vertexes->y[3] = 56 / 365.0f;
+	}
+
+	if (activeSprite == TIRANDOIZQUIERDA2){
+		vertexes->x[0] = vertexes->x[3] = 191 / 428.0f;
+		vertexes->y[0] = vertexes->y[1] = 35 / 365.0f;
+		vertexes->x[1] = vertexes->x[2] = 216 / 428.0f;
+		vertexes->y[2] = vertexes->y[3] = 54 / 365.0f;
+	}
+
+	if (activeSprite == TIRANDOIZQUIERDA3){
+		vertexes->x[0] = vertexes->x[3] = 168 / 428.0f;
+		vertexes->y[0] = vertexes->y[1] = 35 / 365.0f;
+		vertexes->x[1] = vertexes->x[2] = 191 / 428.0f;
+		vertexes->y[2] = vertexes->y[3] = 56 / 365.0f;
 	}
 
 	return vertexes;
