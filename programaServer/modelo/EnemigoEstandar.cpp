@@ -32,7 +32,7 @@ EnemigoEstandar::EnemigoEstandar() {
 	camera = NULL;
 	online = true;
 	enemyNumber = 1;
-	vida = 10;
+	vida = 5;
 	isTrapped = false;
 	stunCounter=0;
 	dropCounter = 0;
@@ -66,7 +66,7 @@ EnemigoEstandar::EnemigoEstandar(int number){
 	camera = NULL;
 	online = true;
 	enemyNumber = number;
-	vida = 10;
+	vida = 5;
 	isTrapped = false;
 	stunCounter=0;
 	dropCounter = 0;
@@ -109,9 +109,9 @@ void EnemigoEstandar::update(){
 	isAirborne = numFootContacts <= 0 ? true : false;
 
 	if(vida<0) spriteStun=STUN0;
-	else if(vida<=3) spriteStun=STUN3;
-	else if(vida<=6) spriteStun=STUN2;
-	else if(vida<10) spriteStun=STUN1;
+	else if(vida<=2) spriteStun=STUN3;
+	else if(vida<=3) spriteStun=STUN2;
+	else if(vida<5) spriteStun=STUN1;
 	else if(vida>=10) spriteStun=STUN0;
 
 	if(isPushable&&wasKicked){
