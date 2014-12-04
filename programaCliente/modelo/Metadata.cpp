@@ -18,6 +18,14 @@ Metadata::Metadata() {
 	tamanioXMundo = tamanioYMundo = 1;
 	tipo = METADATAHUD;
 	mensaje = "NOMESSAGE";
+	users[0]="";
+	users[1]="";
+	users[2]="";
+	users[3]="";
+	vidas[0]=0;
+	vidas[1]=0;
+	vidas[2]=0;
+	vidas[3]=0;
 }
 
 Metadata::~Metadata() {

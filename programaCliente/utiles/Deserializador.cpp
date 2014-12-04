@@ -37,10 +37,10 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 		metadata->vidas[3] = strtol(buff[13].c_str(),NULL,10);
 		metadata->puntaje = strtol(buff[7].c_str(),NULL,10);
 		metadata->mensaje = buff[10];
-		metadata->users[0]+= buff[14];
-		metadata->users[1]+= buff[15];
-		metadata->users[2]+= buff[16];
-		metadata->users[3]+= buff[17];
+		metadata->users[0]= buff[14];
+		metadata->users[1]= buff[15];
+		metadata->users[2]= buff[16];
+		metadata->users[3]= buff[17];
 		return metadata;
 	}
 

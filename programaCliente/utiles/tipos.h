@@ -58,6 +58,7 @@ Container& split( Container& result, const typename Container::value_type& s,
   size_t next = -1;
   do
   {
+	  printf("aaa");
     if (empties == no_empties)
     {
       next = s.find_first_not_of( delimiters, next + 1 );

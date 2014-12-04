@@ -78,7 +78,7 @@ bool protocoloFinDePartida(resultado_t resultado){
 	bool quit = false;
 	bool continuePlaying = false;
 	std::string outMessage;
-
+	int tick=0;
 	// Espera a que el jugador de una respuesta.
 	while(!quit) {
 
@@ -95,22 +95,37 @@ bool protocoloFinDePartida(resultado_t resultado){
 					stream->send(outMessage);
 					quit = true;
 				}
-				if (event.key.keysym.sym == SDLK_y) {
+				if (event.key.keysym.sym == SDLK_y&&tick>500) {
 					outMessage = "CONTINUEPLAYING";
 					stream->send(outMessage);
 					continuePlaying = true;
 					quit = true;
 				}
-				if (event.key.keysym.sym == SDLK_n) {
+				if (event.key.keysym.sym == SDLK_n&&tick>500) {
 					outMessage = "STOPPLAYING";
 					stream->send(outMessage);
 					quit = true;
 				}
 			}
 		}
-
 		stream->send("DONE");
+		if(tick<500 && resultado == ERROR_RESULTADO){
+			std::string inMessage;
+			window->setGameOver();
+			std::vector<std::string> buff;
+			stream->receive(inMessage);
 
+			split(buff, inMessage, "%", no_empties);
+
+			// Si recibe "GAMEENDED" indica que se tiene que iniciar el protocolo de fin de partida.
+			if(buff[0] == "GAMEENDED"){
+				tick=1000;
+				resultado = (resultado_t) strtol(buff[1].c_str(),NULL,10);
+			}
+
+		}
+		else{
+			tick=1000;
 		Metadata * pantallaIntroFondo = new Metadata();;
 		Metadata * pantallaIntroHUD = new Metadata();;
 		pantallaIntroFondo->posXCamara = 0;
@@ -133,6 +148,7 @@ bool protocoloFinDePartida(resultado_t resultado){
 		itemList.push_back(pantallaIntroHUD);
 
 		window->updateWindow(itemList,1.0f);
+		}
 	}
 
 	if(continuePlaying == true) {
@@ -335,6 +351,7 @@ int main(int argc, char * argv[]){
 
 		// Si recibe "GAMEENDED" indica que se tiene que iniciar el protocolo de fin de partida.
 		if(buff[0] == "GAMEENDED"){
+			std::cout<<"bfjksdalbg";
 			quit = !protocoloFinDePartida((resultado_t) strtol(buff[1].c_str(),NULL,10));
 			continue;
 		}
@@ -353,20 +370,25 @@ int main(int argc, char * argv[]){
 
 		// Itera sobre todos los elementos restantes.
 		for (std::vector<std::string>::iterator it = buff.begin(); it != buff.end(); it++){
+			std::cout<<(*it);
 			item = Deserializador::deserializar((*it));
 			if (!item) continue;
 			itemList.push_back(item);
-			/*if(item->tipo==METADATAHUD){
+			if(item->tipo==METADATAHUD){
 				for(int i=0;i<4;i++){
+					std::cout<<i;
+					std::cout<<((Metadata*)item)->users[i];
+					std::cout<<username;
 					if(((Metadata*)item)->users[i].compare(username)==0){
 						if(((Metadata*)item)->vidas[i]==0){
-							quit=true;
-							gameOver=true;
 							std::cout<<"Game Over"<<std::endl;
+							protocoloFinDePartida(ERROR_RESULTADO);
+							std::cout<<"Game Over"<<std::endl;
+							break;
 						}
 					}
 				}
-			}*/
+			}
 		}
 
 		window->updateWindow(itemList, escala);

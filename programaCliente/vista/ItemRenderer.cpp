@@ -120,7 +120,7 @@ void ItemRenderer::renderPoligono(PoligonoRegular * item, float escala){
 
 	// Renderea.
 	TaV->tex->dibujar(vx, vy, vxTex, vyTex, item->nLados);
-	TaV->tex->eliminar();
+	//TaV->tex->eliminar();
 
 }
 
