@@ -258,14 +258,14 @@ void Camera::cleanPowers() {
 					((Personaje*) body->GetUserData())->respawn();
 				if( ( (Personaje*) body->GetUserData() )->cayoPorAgujero())
 					((Personaje*) body->GetUserData())->moverArriba();
+				if( ( (Personaje*) body->GetUserData() )->bindball){
+					//( (Personaje*) body->GetUserData() )->bindball=false;
+					( (Personaje*) body->GetUserData() )->fusionBola();
+				}
 				if( ( (Personaje*) body->GetUserData() )->forDelete()) {
 					delete ( (Personaje*) body->GetUserData() );
 					body->SetUserData(NULL);
 				}
-						if( ( (Personaje*) body->GetUserData() )->bindball){
-							//( (Personaje*) body->GetUserData() )->bindball=false;
-							( (Personaje*) body->GetUserData() )->fusionBola();
-						}
 			}
 
 			if( *((int*)(&fixData)) == ENEMIGO || *((int*)(&fixData)) == ENEMIGOCONGELADO || *((int*)(&fixData)) == PIESEN || *((int*)(&fixData)) == PIESENCONGELADO  || *((int*)(&fixData)) == ENEMIGOBOLA ) {
