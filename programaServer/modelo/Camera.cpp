@@ -293,19 +293,21 @@ void Camera::updateRenderList(){
 	// Bloquea renderList, para evitar que se modifique mientras se la esta cargando.
 	renderList.lock();
 
-	cleanPowers();
-
 	// Vacia la lista.
 	while(!renderList.empty()) {
 		WorldItem* item = renderList.front();
 		renderList.pop_front();
-		Metadata* v = dynamic_cast<Metadata*>(item); // Se fija si es instancia de Metadata que es lo unico que queremos liberar memoria
-		if(item && v != 0) {
-			delete item;
-			item = NULL;
+		if(item != NULL) {
+			Metadata* v = dynamic_cast<Metadata*>(item); // Se fija si es instancia de Metadata que es lo unico que queremos liberar memoria
+			if(v != 0) {
+				delete item;
+				item = NULL;
+			}
 		}
 	}
 	renderList.clear();
+
+	cleanPowers();
 
 	Metadata * metadata = new Metadata();
 	metadata->tipo = METADATAFONDO;
