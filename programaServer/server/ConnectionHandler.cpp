@@ -153,6 +153,7 @@ bool ConnectionHandler::recibirEventos(){
 		len = m_stream->receive(inMessage);
 		if (len <= 0) {
 			if(!controlador.obtenerUsuario(username)->isPJAlive())
+				controlador.obtenerUsuario(username)->vida=0;
 				controlador.obtenerUsuario(username)->DeletePj();
 			return false;
 		}
@@ -226,6 +227,7 @@ void* ConnectionHandler::run() {
 		quit = !protocoloFinDePartida();
 	}
 	if(controlador.obtenerUsuario(username)!=NULL){
+		controlador.obtenerUsuario(username)->vida=0;
 		controlador.obtenerUsuario(username)->setOnline(false);
 		controlador.obtenerUsuario(username)->enviarSenial();
 	}

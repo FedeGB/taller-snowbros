@@ -14,6 +14,7 @@ Usuario::Usuario() {
 	PJ = NULL;
 	sonidoPJ = NULL;
 	numeroUsuario = 0;
+	vida= 2;
 }
 
 Usuario::~Usuario() {
@@ -92,7 +93,7 @@ void Usuario::procesarNotificaciones(){
 // Devuelve una representacion serializada de lo que ve el usuario en su camara,
 // para poder ser rendereada en el cliente.
 std::string Usuario::obtenerPantallaSerializada(){
-
+	this->vida=this->PJ->vida;
 	std::string pantallaSerializada;
 	pantallaSerializada.clear();
 
@@ -154,6 +155,7 @@ void Usuario::inicializarPJ(b2World * worldB2D, std::string configFile){
 	}
 	sonidoPJ = new Sonido();
 	inicializado = true;
+	PJ->vida=this->vida;
 }
 
 // Actualiza el estado del PJ y su camara asociada.

@@ -136,10 +136,10 @@ void Personaje::update(Sonido* sonido){
 
 	actualizarEfectos();
 
-	if(isSpacePressed /* && !isAirborne */){
+	if(isSpacePressed  && !bindball ){
 		//TODO : ataque
 		isThrowing=true;
-		if(maxpower>500){
+		if(maxpower>250){
 			snowball *sw= new snowball(bodyB2D->GetPosition().x,bodyB2D->GetPosition().y,(int)orientation,bodyB2D->GetWorld(), potenciaNieveSorpresa, impulsoNieveSorpresa, bodyB2D->GetLinearVelocity());
 			maxpower=0;
 			if( potenciaNieveSorpresa == 0.5 && impulsoNieveSorpresa == 1.0 )

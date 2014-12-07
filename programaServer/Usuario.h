@@ -32,6 +32,7 @@ public:
 	bool inicializado;
 	std::string username;
 	int numeroUsuario;
+	int vida;
 
 
 	// Agrega una nueva notificacion por parte del handler de conexion para

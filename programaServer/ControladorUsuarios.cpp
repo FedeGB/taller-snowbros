@@ -112,7 +112,9 @@ void ControladorUsuarios::notificarFinDePartida(resultado_t resultado){
 
 	for (ControladorUsuarios::iterator it=(*this).begin(); it!=(*this).end(); ++it){
 		if (!(*it).second->online) eliminarUsuario((*it).second->username);
-		else usuariosRegistrados[(*it).second->numeroUsuario] = NO_NOTIFICADO;
+		else {usuariosRegistrados[(*it).second->numeroUsuario] = NO_NOTIFICADO;
+		(*it).second->vida=2;
+		}
 	}
 
 
