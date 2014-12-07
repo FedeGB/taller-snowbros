@@ -161,6 +161,10 @@ SDL_GLContext Window::initGL(SDL_Window* w) {
 // Set the OpenGL state after creating the context with SDL_SetVideoMode
 	glClearColor(0, 0, 0, 1);
 
+	glEnable(GL_DEPTH_TEST);
+	glAlphaFunc(GL_GREATER, 0.1);
+	glEnable(GL_ALPHA_TEST);
+
 	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	glMatrixMode( GL_PROJECTION);

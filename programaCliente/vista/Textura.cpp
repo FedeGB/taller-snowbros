@@ -183,11 +183,43 @@ void Textura::dibujar(GLfloat* vx, GLfloat* vy, float* s, float* t, int n) {
 	glPopMatrix();
 }
 
+void Textura::dibujar(GLfloat* vx, GLfloat* vy, float* s, float* t, int n, float z) {
+	glPushMatrix();
+	glEnable(GL_TEXTURE_2D);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable( GL_BLEND );
+
+	// Bind the texture to which subsequent calls refer to
+	glBindTexture( GL_TEXTURE_2D, id_tex);
+	glFinish();
+
+	glBegin( GL_POLYGON);
+
+	for( int i = 0; i < n; i++ ){
+		glTexCoord2f(s[i], t[i]);
+		glVertex3f(vx[i], vy[i], z);
+	}
+
+	glEnd();
+	glFlush();
+
+	glDisable( GL_BLEND );
+	glDisable(GL_TEXTURE_2D);
+
+	glPopMatrix();
+}
+
 void Textura::dibujarOscuro(GLfloat* vx, GLfloat* vy, float* s, float* t, int n) {
 	glPushMatrix();
 	glEnable(GL_TEXTURE_2D);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR);
+//	glBlendColor(190, 20, 100, 1.0);
+	//glBlendFunc(GL_CONSTANT_COLOR, GL_ONE_MINUS_CONSTANT_COLOR);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable( GL_BLEND );
+
+	glColor4f(1.0f, 0.5, 0.2, 1.0);
+
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_SUBTRACT);
 
 	// Bind the texture to which subsequent calls refer to
 	glBindTexture( GL_TEXTURE_2D, id_tex);
@@ -199,6 +231,7 @@ void Textura::dibujarOscuro(GLfloat* vx, GLfloat* vy, float* s, float* t, int n)
 		glVertex3f(vx[i], vy[i], 0);
 	}
 
+	glColor4f(1.0f, 1.0, 1.0, 1.0);
 	glEnd();
 	glFlush();
 

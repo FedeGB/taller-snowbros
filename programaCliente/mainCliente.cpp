@@ -29,7 +29,7 @@ bool esperarPorMasJugadores(){
 	// Espera a que el server arranque la simulacion, mostrando una pantalla de espera.
 	while(inMessage != "SERVER-LISTO") {
 
-		std::cout << "estoy esperando... recibi: " << inMessage << std::endl;
+		//std::cout << "estoy esperando... recibi: " << inMessage << std::endl;
 
 		len = stream->receive(inMessage);
 		if (len <= 0) {
@@ -313,7 +313,7 @@ int main(int argc, char * argv[]){
 				else if (event.key.keysym.sym == SDLK_SPACE) outMessage = SSTR(SOLTOSPACE);
 				break;
 			}
-			std::cout << "estoy polleando eventos: " << outMessage << std::endl;
+			//std::cout << "estoy polleando eventos: " << outMessage << std::endl;
 
 			if (!outMessage.empty()) stream->send(outMessage);
 		}
@@ -337,7 +337,7 @@ int main(int argc, char * argv[]){
 			continue;
 		}
 
-		std::cout << "se recibio el siguiente escenario: " << inMessage << std::endl;
+		//std::cout << "se recibio el siguiente escenario: " << inMessage << std::endl;
 
 		// Saltea si se recibe un mensaje vacio, ya que indica que todavia
 		// no se cargo el PJ en el servidor.
@@ -370,15 +370,19 @@ int main(int argc, char * argv[]){
 
 		// Itera sobre todos los elementos restantes.
 		for (std::vector<std::string>::iterator it = buff.begin(); it != buff.end(); it++){
-			std::cout<<(*it);
+			//std::cout<<(*it);
 			item = Deserializador::deserializar((*it));
 			if (!item) continue;
-			itemList.push_back(item);
+			if( item->tipo == PJ || item->tipo == ENEMIGOESTANDAR || item->tipo == ENEMIGOTIRAFUEGO)
+				itemList.push_front(item);
+			else
+				itemList.push_back(item);
+
 			if(item->tipo==METADATAHUD){
 				for(int i=0;i<4;i++){
 					std::cout<<i;
-					std::cout<<((Metadata*)item)->users[i];
-					std::cout<<username;
+					//std::cout<<((Metadata*)item)->users[i];
+					//std::cout<<username;
 					if(((Metadata*)item)->users[i].compare(username)==0){
 						if(((Metadata*)item)->vidas[i]==0){
 							std::cout<<"Game Over"<<std::endl;

@@ -592,7 +592,7 @@ void ItemRenderer::renderENES(EnemigoEstandar * item, float escala) {
 	TaV->tex->dibujar(vx, vy, vert->x, vert->y, 4);
 	delete vert;
 	vert = obtenerVerticesBola(item->spriteStun);
-	TaV->tex->dibujar(vx, vy, vert->x, vert->y, 4);
+	TaV->tex->dibujar(vx, vy, vert->x, vert->y, 4, 0.1);
 	delete vert;
 }
 
@@ -625,7 +625,7 @@ void ItemRenderer::renderENTIFUE(EnemigoTiraFuego * item, float escala) {
 	TaV->tex->dibujar(vx, vy, vert->x, vert->y, 4);
 	delete vert;
 	vert = obtenerVerticesBola(item->spriteStun);
-	TaV->tex->dibujar(vx, vy, vert->x, vert->y, 4);
+	TaV->tex->dibujar(vx, vy, vert->x, vert->y, 4, 0.1);
 	delete vert;
 }
 
@@ -743,7 +743,7 @@ void ItemRenderer::renderMetadataFondo(Metadata * item){
 	TexAndVertexes * TaV = textureMap[FONDO1];
 
 	// Renderea fondo.
-	TaV->tex->dibujar(vx, vy, vxTex, vyTex, 4);
+	TaV->tex->dibujar(vx, vy, vxTex, vyTex, 4, -0.1f);
 
 }
 
@@ -764,7 +764,7 @@ void ItemRenderer::renderMetadataHUD(Metadata * item){
 		vy[2] = vy[3] = 68;
 
 		// Renderea vidas.
-		TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
+		TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4, 0.9);
 	}
 
 	std::string puntaje = SSTR("Puntaje: " << item->puntaje);
@@ -780,7 +780,7 @@ void ItemRenderer::renderMetadataHUD(Metadata * item){
 	TaV->tex->generarTexto("fuentes/Ubuntu-B.ttf", 30, puntaje, c);
 
 	// Renderea puntaje.
-	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
+	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4, 0.9);
 	TaV->tex->eliminar();
 	for (int i = 0; i < 4; i++){
 		//posicion xvidas
@@ -792,7 +792,7 @@ void ItemRenderer::renderMetadataHUD(Metadata * item){
 		std::string xvidas = SSTR("X" << item->vidas[i]);
 		TaV->tex->generarTexto("fuentes/Ubuntu-B.ttf", 30, xvidas, c);
 		// Renderea vidas numero
-	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
+	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4, 0.9);
 	TaV->tex->eliminar();
 	}
 	for (int i = 0; i < 4; i++){
@@ -806,7 +806,7 @@ void ItemRenderer::renderMetadataHUD(Metadata * item){
 		TaV->tex->generarTexto("fuentes/Ubuntu-B.ttf", 30, user, c);
 
 	// Renderea nombre
-		TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
+		TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4, 0.9);
 		TaV->tex->eliminar();
 	}
 	// Analiza el mensaje.
@@ -831,7 +831,7 @@ void ItemRenderer::renderMetadataHUD(Metadata * item){
 		TaV->tex->generarTexto("fuentes/Ubuntu-B.ttf", 30, buff[i], c);
 
 		// Renderea mensaje.
-		TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
+		TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4, 0.9);
 		TaV->tex->eliminar();
 	}
 
@@ -858,7 +858,7 @@ void ItemRenderer::renderBola(BolaEnemigo * item, float escala){
 
 	// Si esta no esta conectado, se cambia el color a gris.
 	// Renderea.
-	TaV->tex->dibujar(vx, vy, vert->x, vert->y, 20);
+	TaV->tex->dibujar(vx, vy, vert->x, vert->y, 20, 0.1);
 
 	delete vert;
 
@@ -878,7 +878,7 @@ void ItemRenderer::renderLaguna(Laguna* item, float escala){
 	TexAndVertexes * TaV = textureMap[spriteLAGUNA];
 
 	// Renderea.
-	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);
+	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4, 0.3);
 }
 
 void ItemRenderer::renderAgujero(Agujero* item, float escala){

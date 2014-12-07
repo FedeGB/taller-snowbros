@@ -33,6 +33,7 @@ public:
 	bool generarTexto(std::string path, int tamanio, std::string txt, SDL_Color color);
 
 	void dibujar(GLfloat* vx, GLfloat* vy, float* s, float* t, int n);
+	void dibujar(GLfloat* vx, GLfloat* vy, float* s, float* t, int n, float z);
 	void dibujarOscuro(GLfloat* vx, GLfloat* vy, float* s, float* t, int n);
 
 };
