@@ -297,7 +297,7 @@ void Camera::updateRenderList(){
 	while(!renderList.empty()) {
 		WorldItem* item = renderList.front();
 		renderList.pop_front();
-		if(item->tipo == METADATAFONDO || item->tipo == METADATAHUD) {
+		if(item && (item->tipo == METADATAFONDO || item->tipo == METADATAHUD)) {
 			delete item;
 			item = NULL;
 		}
