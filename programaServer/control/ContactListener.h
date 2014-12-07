@@ -203,7 +203,7 @@ class ContactListener : public b2ContactListener
 					((Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->setCayoPorAgujero(true);
 				}
 			}
-			if ( *((int*)(&fixtureAUserData)) == ENEMIGO|| *((int*)(&fixtureAUserData)) == ENEMIGOCONGELADO|| *((int*)(&fixtureAUserData)) == PIESEN || *((int*)(&fixtureAUserData)) == PIESENCONGELADO || *((int*)(&fixtureAUserData)) == ENEMIGOBOLA) {
+			if ( *((int*)(&fixtureAUserData)) == ENEMIGO|| *((int*)(&fixtureAUserData)) == ENEMIGOCONGELADO|| *((int*)(&fixtureAUserData)) == PIESEN || *((int*)(&fixtureAUserData)) == PIESENCONGELADO || *((int*)(&fixtureAUserData)) == ENEMIGOBOLA || *((int*)(&fixtureAUserData)) == PIESENBOLA) {
 				((EnemigoEstandar*) contact->GetFixtureA()->GetBody()->GetUserData())->setCayoPorAgujero(true);
 			}
 			if ( *((int*)(&fixtureAUserData)) == PODERHIELO ){
@@ -223,7 +223,7 @@ class ContactListener : public b2ContactListener
 					((Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->setCayoPorAgujero(true);
 				}
 			}
-			if ( *((int*)(&fixtureBUserData)) == ENEMIGO|| *((int*)(&fixtureBUserData)) == ENEMIGOCONGELADO|| *((int*)(&fixtureBUserData)) == PIESEN || *((int*)(&fixtureBUserData)) == PIESENCONGELADO || *((int*)(&fixtureBUserData)) == ENEMIGOBOLA) {
+			if ( *((int*)(&fixtureBUserData)) == ENEMIGO|| *((int*)(&fixtureBUserData)) == ENEMIGOCONGELADO|| *((int*)(&fixtureBUserData)) == PIESEN || *((int*)(&fixtureBUserData)) == PIESENCONGELADO || *((int*)(&fixtureBUserData)) == ENEMIGOBOLA || *((int*)(&fixtureBUserData)) == ENEMIGOBOLA) {
 				((EnemigoEstandar*) contact->GetFixtureB()->GetBody()->GetUserData())->setCayoPorAgujero(true);
 			}
 			if ( *((int*)(&fixtureBUserData)) == PODERHIELO ){
