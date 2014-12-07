@@ -447,6 +447,14 @@ void Personaje::respawn(){
 	inmunity=true;
 }
 
+void Personaje::respawnOut(){
+	this->bodyB2D->SetTransform(b2Vec2(100000,100000),0);
+	this->bodyB2D->SetLinearVelocity(b2Vec2(0,0));
+	//this->camera->reposition(initPos);
+	isRespawnable=false;
+	inmunity=true;
+}
+
 void Personaje::moverArriba(){
 	b2Vec2 p = this->bodyB2D->GetPosition();
 	p.y = 1;

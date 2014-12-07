@@ -254,6 +254,8 @@ void Camera::cleanPowers() {
 					((BolaEnemigo*) body->GetUserData())->aumentarTiempo();
 			}
 			if( *((int*)(&fixData)) == PERSONAJE|| *((int*)(&fixData)) == PIESPJ||(*((int*)(&fixData)) == EMPUJE)) {
+				if(! ( (Personaje*) body->GetUserData() )->isAlive())
+									((Personaje*) body->GetUserData())->respawnOut();
 				if( ( (Personaje*) body->GetUserData() )->isRespawnable ==true)
 					((Personaje*) body->GetUserData())->respawn();
 				if( ( (Personaje*) body->GetUserData() )->cayoPorAgujero())

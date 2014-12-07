@@ -35,6 +35,7 @@ public:
 	virtual void nieveMasPotente();
 	virtual void Patear();
 	virtual void NoPatear();
+	virtual void respawnOut();
 
 	void respawn();
 
