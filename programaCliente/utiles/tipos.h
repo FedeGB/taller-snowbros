@@ -25,6 +25,7 @@
 #define IMAGEN_FONDO "imagenes/fondo2.png"
 #define TEXTURA_LAGUNA "imagenes/laguna.png"
 #define IMAGEN_GAMEOVER "imagenes/gameover.png"
+#define TEXTURA_AGUJERO "imagenes/agujero.png"
 
 #define MUSICA_FONDO "sonidos/musica_fondo.wav"
 #define SONIDO_SALTO "sonidos/salto.wav"
@@ -156,6 +157,7 @@ enum sprite_t{
 	spriteLAGUNA,
 	ENTIFUE,
 	GAMEOVER,
+	spriteAGUJERO,
 };
 
 

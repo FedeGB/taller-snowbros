@@ -29,8 +29,31 @@ bool TextureMap::init(){
 	if (!loadSnowBallTex()) return false;
 	if (!loadSorpresasTex()) return false;
 	if (!loadLagunaTex()) return false;
+	if (!loadAgujeroTex()) return false;
 	if (!loadGameOverTex()) return false;
 	inicializado = true;
+	return true;
+}
+
+
+bool TextureMap::loadAgujeroTex(){
+	// TODO: sacar hardcodeo del path de imagen.
+	Textura * tex = new Textura();
+	if (!tex) {
+		std::cout << "no se cargo la imagen" << std::endl;
+		return false;
+	}
+	tex->generar(TEXTURA_AGUJERO);
+
+	TexAndVertexes * temp = new TexAndVertexes;
+	temp->vertexes = new Vertexes(4);
+	temp->vertexes->x[0] = temp->vertexes->x[3] = 0.0f;
+	temp->vertexes->y[0] = temp->vertexes->y[1] = 0.0f;
+	temp->vertexes->x[1] = temp->vertexes->x[2] = 1.0f;
+	temp->vertexes->y[2] = temp->vertexes->y[3] = 1.0f;
+	temp->tex = tex;
+	(*this)[spriteAGUJERO] = temp;
+
 	return true;
 }
 

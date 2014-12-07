@@ -892,7 +892,7 @@ void ItemRenderer::renderAgujero(Agujero* item, float escala){
 	vy[2] = vy[3] = vy[0] + item->altura * escala;
 
 	// Obtiene la textura y su correspondiente rect para renderear.
-	TexAndVertexes * TaV = textureMap[spriteLAGUNA];
+	TexAndVertexes * TaV = textureMap[spriteAGUJERO];
 
 	// Renderea.
 	TaV->tex->dibujar(vx, vy, TaV->vertexes->x, TaV->vertexes->y, 4);

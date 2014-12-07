@@ -69,6 +69,7 @@ private:
 	bool loadFireBallTex();
 	bool loadSorpresasTex();
 	bool loadLagunaTex();
+	bool loadAgujeroTex();
 };
 
 #endif /* TEXTUREMAP_H_ */

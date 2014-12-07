@@ -189,7 +189,7 @@ WorldItem * Deserializador::deserializar(std::string serializado){
 		agujero->baseMayor =  (float)atof(buff[4].c_str());
 		agujero->altura =  (float)atof(buff[5].c_str());
 
-		agujero->activeSprite = spriteLAGUNA;
+		agujero->activeSprite = spriteAGUJERO;
 		//en->orientation = (Personaje::orientation_t) strtol(buff[7].c_str(),NULL,10);
 		item = agujero;
 		break;
