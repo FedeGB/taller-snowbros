@@ -80,7 +80,8 @@ BolaEnemigo::~BolaEnemigo() {
 	}
 
 	sorpresa->agregarAMundo(bodyB2D->GetPosition().x, bodyB2D->GetPosition().y, bodyB2D->GetWorld());
-	pj->bindball=false;
+	if(pj!=NULL)
+		pj->bindball=false;
 	this->bodyB2D->GetWorld()->DestroyBody(this->bodyB2D);
 }
 

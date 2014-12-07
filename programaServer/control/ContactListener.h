@@ -23,10 +23,11 @@ class ContactListener : public b2ContactListener
 
 		if ( *((int*)(&fixtureBUserData)) == BOLASNOW ){
 			if ( *((int*)(&fixtureAUserData)) == PERSONAJE ||*((int*)(&fixtureAUserData)) == PIESPJ  ){
-				if(((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->pj==NULL)
-					((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->pj=((Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() );
-				if(((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->contactcounter==1)
-				 ((Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->inBall(contact->GetFixtureB()->GetBody());
+				if(((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->contactcounter==1){
+					if(((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->pj==NULL)
+						((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->pj=((Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() );
+					((Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->inBall(contact->GetFixtureB()->GetBody());
+				}
 
 				((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->contactcounter++;
 				std::cout<<((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->contactcounter;
@@ -34,10 +35,11 @@ class ContactListener : public b2ContactListener
 		}
 		if ( *((int*)(&fixtureAUserData)) == BOLASNOW ){
 			if ( *((int*)(&fixtureBUserData)) == PERSONAJE ||*((int*)(&fixtureBUserData)) == PIESPJ  ){
-				if(((BolaEnemigo*)contact->GetFixtureA()->GetBody()->GetUserData())->pj==NULL)
-				((BolaEnemigo*)contact->GetFixtureA()->GetBody()->GetUserData())->pj=((Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() );
-				if(((BolaEnemigo*)contact->GetFixtureA()->GetBody()->GetUserData())->contactcounter==1)
-				 ((Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->inBall(contact->GetFixtureA()->GetBody());
+				if(((BolaEnemigo*)contact->GetFixtureA()->GetBody()->GetUserData())->contactcounter==1){
+					if(((BolaEnemigo*)contact->GetFixtureA()->GetBody()->GetUserData())->pj==NULL)
+						((BolaEnemigo*)contact->GetFixtureA()->GetBody()->GetUserData())->pj=((Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() );
+					((Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->inBall(contact->GetFixtureA()->GetBody());
+				}
 				((BolaEnemigo*)contact->GetFixtureA()->GetBody()->GetUserData())->contactcounter++;
 				std::cout<<((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->contactcounter;
 			}
@@ -85,15 +87,15 @@ class ContactListener : public b2ContactListener
 		}
 
 		// Collision between PJ and Enemy, apply damage
-		if( *((int*)(&fixtureAUserData)) == ENEMIGO || *((int*)(&fixtureAUserData)) == PIESEN ){
-			if ( *((int*)(&fixtureBUserData)) == PERSONAJE || *((int*)(&fixtureBUserData)) == PIESPJ ) {
+		if( *((int*)(&fixtureAUserData)) == ENEMIGO /*|| *((int*)(&fixtureAUserData)) == PIESEN */){
+			if ( *((int*)(&fixtureBUserData)) == PERSONAJE/* || *((int*)(&fixtureBUserData)) == PIESPJ*/ ) {
 				if(( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->isAlive() && !( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() )->trapped()) {
 					( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->applyDamage(1);
 				}
 			}
 		}
-		if( *((int*)(&fixtureBUserData)) == ENEMIGO || *((int*)(&fixtureBUserData)) == PIESEN ){
-			if ( *((int*)(&fixtureAUserData)) == PERSONAJE || *((int*)(&fixtureAUserData)) == PIESPJ ) {
+		if( *((int*)(&fixtureBUserData)) == ENEMIGO /*||* ((int*)(&fixtureBUserData)) == PIESEN */){
+			if ( *((int*)(&fixtureAUserData)) == PERSONAJE /*|| *((int*)(&fixtureAUserData)) == PIESPJ*/ ) {
 				if(( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->isAlive() && !( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() )->trapped()) {
 					( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->applyDamage(1);
 				}
