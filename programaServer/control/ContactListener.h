@@ -78,24 +78,24 @@ class ContactListener : public b2ContactListener
 
 		// Foot sensor collision for jump
 		if ( *((int*)(&fixtureAUserData)) == PIESPJ || *((int*)(&fixtureAUserData)) == PIESEN ){
-			if ( (*((int*)(&fixtureBUserData)) != CAMARA)&&(*((int*)(&fixtureBUserData)) != PODERHIELO) && (*((int*)(&fixtureBUserData)) != sensorLAGUNA)&& (*((int*)(&fixtureBUserData)) != BOLASNOW))
+			if ( (*((int*)(&fixtureBUserData)) != CAMARA)&&(*((int*)(&fixtureBUserData)) != PODERHIELO) && (*((int*)(&fixtureBUserData)) != sensorLAGUNA)&& (*((int*)(&fixtureBUserData)) != BOLASNOW)&&(*((int*)(&fixtureBUserData)) != PERSONAJE)&&(*((int*)(&fixtureBUserData)) != PIESPJ))
 				( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->modifyFootContacts(1);
 		}
 		if ( *((int*)(&fixtureBUserData)) == PIESPJ || *((int*)(&fixtureBUserData)) == PIESEN ){
-			if ( (*((int*)(&fixtureAUserData)) != CAMARA)&& (*((int*)(&fixtureAUserData)) != PODERHIELO) && (*((int*)(&fixtureAUserData)) != sensorLAGUNA)&& (*((int*)(&fixtureAUserData)) != BOLASNOW))
+			if ( (*((int*)(&fixtureAUserData)) != CAMARA)&& (*((int*)(&fixtureAUserData)) != PODERHIELO) && (*((int*)(&fixtureAUserData)) != sensorLAGUNA)&& (*((int*)(&fixtureAUserData)) != BOLASNOW)&&(*((int*)(&fixtureAUserData)) != PERSONAJE)&&(*((int*)(&fixtureAUserData)) != PIESPJ))
 				( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->modifyFootContacts(1);
 		}
 
 		// Collision between PJ and Enemy, apply damage
-		if( *((int*)(&fixtureAUserData)) == ENEMIGO /*|| *((int*)(&fixtureAUserData)) == PIESEN */){
-			if ( *((int*)(&fixtureBUserData)) == PERSONAJE/* || *((int*)(&fixtureBUserData)) == PIESPJ*/ ) {
+		if( *((int*)(&fixtureAUserData)) == ENEMIGO || *((int*)(&fixtureAUserData)) == PIESEN ){
+			if ( *((int*)(&fixtureBUserData)) == PERSONAJE || *((int*)(&fixtureBUserData)) == PIESPJ ) {
 				if(( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->isAlive() && !( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() )->trapped()) {
 					( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->applyDamage(1);
 				}
 			}
 		}
-		if( *((int*)(&fixtureBUserData)) == ENEMIGO /*||* ((int*)(&fixtureBUserData)) == PIESEN */){
-			if ( *((int*)(&fixtureAUserData)) == PERSONAJE /*|| *((int*)(&fixtureAUserData)) == PIESPJ*/ ) {
+		if( *((int*)(&fixtureBUserData)) == ENEMIGO ||* ((int*)(&fixtureBUserData)) == PIESEN ){
+			if ( *((int*)(&fixtureAUserData)) == PERSONAJE || *((int*)(&fixtureAUserData)) == PIESPJ ) {
 				if(( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->isAlive() && !( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() )->trapped()) {
 					( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->applyDamage(1);
 				}
@@ -263,11 +263,11 @@ class ContactListener : public b2ContactListener
 
   		// Foot sensor collision for jump
     	  if ( *((int*)(&fixtureAUserData)) == PIESPJ || *((int*)(&fixtureAUserData)) == PIESEN ){
-        	  if ((*((int*)(&fixtureBUserData)) != CAMARA)&&(*((int*)(&fixtureBUserData)) != PODERHIELO) && (*((int*)(&fixtureBUserData)) != sensorLAGUNA)&& (*((int*)(&fixtureBUserData)) != BOLASNOW))
+        	  if ((*((int*)(&fixtureBUserData)) != CAMARA)&&(*((int*)(&fixtureBUserData)) != PODERHIELO) && (*((int*)(&fixtureBUserData)) != sensorLAGUNA)&& (*((int*)(&fixtureBUserData)) != BOLASNOW)&&(*((int*)(&fixtureBUserData)) != PERSONAJE)&&(*((int*)(&fixtureBUserData)) != PIESPJ))
         		  ( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->modifyFootContacts(-1);
           }
     	  if ( *((int*)(&fixtureBUserData)) == PIESPJ || *((int*)(&fixtureBUserData)) == PIESEN ){
-        	  if ( (*((int*)(&fixtureAUserData)) != CAMARA)&&(*((int*)(&fixtureAUserData)) != PODERHIELO) && (*((int*)(&fixtureAUserData)) != sensorLAGUNA)&& (*((int*)(&fixtureAUserData)) != BOLASNOW))
+        	  if ( (*((int*)(&fixtureAUserData)) != CAMARA)&&(*((int*)(&fixtureAUserData)) != PODERHIELO) && (*((int*)(&fixtureAUserData)) != sensorLAGUNA)&& (*((int*)(&fixtureAUserData)) != BOLASNOW)&&(*((int*)(&fixtureAUserData)) != PERSONAJE)&&(*((int*)(&fixtureAUserData)) != PIESPJ))
         		  ( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->modifyFootContacts(-1);
           }
 

@@ -32,7 +32,7 @@ EnemigoEstandar::EnemigoEstandar() {
 	camera = NULL;
 	online = true;
 	enemyNumber = 1;
-	vida = 5;
+	vida = 3;
 	isTrapped = false;
 	stunCounter=0;
 	dropCounter = 0;
@@ -66,7 +66,7 @@ EnemigoEstandar::EnemigoEstandar(int number){
 	camera = NULL;
 	online = true;
 	enemyNumber = number;
-	vida = 5;
+	vida = 3;
 	isTrapped = false;
 	stunCounter=0;
 	dropCounter = 0;
@@ -109,10 +109,10 @@ void EnemigoEstandar::update(){
 	isAirborne = numFootContacts <= 0 ? true : false;
 
 	if(vida<0) spriteStun=STUN0;
-	else if(vida<=2) spriteStun=STUN3;
-	else if(vida<=3) spriteStun=STUN2;
-	else if(vida<5) spriteStun=STUN1;
-	else if(vida>=10) spriteStun=STUN0;
+	else if(vida<=1) spriteStun=STUN3;
+	else if(vida<=2) spriteStun=STUN2;
+	else if(vida<3) spriteStun=STUN1;
+	else if(vida>=3) spriteStun=STUN0;
 
 	if(isPushable&&wasKicked){
 		setDelete();
@@ -147,7 +147,7 @@ void EnemigoEstandar::update(){
 			vida++;
 			stunCounter=0;
 		}
-		if(vida>=10){
+		if(vida>=3){
 			isTrapped=false;
 			for(b2Fixture * fix= bodyB2D->GetFixtureList();fix!=NULL;fix=fix->GetNext()){
 				void* userData =fix->GetUserData();

@@ -35,7 +35,7 @@ EnemigoTiraFuego::EnemigoTiraFuego(int number) {
 	camera = NULL;
 	online = true;
 	enemyNumber = number;
-	vida = 5;
+	vida = 3;
 	isTrapped = false;
 	stunCounter=0;
 	dropCounter = 0;
@@ -75,10 +75,10 @@ void EnemigoTiraFuego::update(){
 	// Determina si esta en el aire.
 		isAirborne = numFootContacts <= 0 ? true : false;
 		if(vida<0) spriteStun=STUN0;
-		else if(vida<=2) spriteStun=STUN3;
-		else if(vida<=3) spriteStun=STUN2;
-		else if(vida<5) spriteStun=STUN1;
-		else if(vida>=5) spriteStun=STUN0;
+		else if(vida<=1) spriteStun=STUN3;
+		else if(vida<=2) spriteStun=STUN2;
+		else if(vida<3) spriteStun=STUN1;
+		else if(vida>=3) spriteStun=STUN0;
 
 		if(isSpacePressed && !isFrozzen){
 			isThrowing=true;
@@ -122,7 +122,7 @@ void EnemigoTiraFuego::update(){
 				vida++;
 				stunCounter=0;
 			}
-			if(vida>=10){
+			if(vida>=3){
 				isTrapped=false;
 				for(b2Fixture * fix= bodyB2D->GetFixtureList();fix!=NULL;fix=fix->GetNext()){
 					void* userData =fix->GetUserData();

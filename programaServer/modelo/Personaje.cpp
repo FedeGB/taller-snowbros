@@ -321,6 +321,7 @@ void Personaje::applyDamage(float dmg) {
 		return;
 	vida -= dmg;
 	printf("vida restante: %f\n", vida);
+	inmunity=true;
 	isRespawnable=true;
 }
 
