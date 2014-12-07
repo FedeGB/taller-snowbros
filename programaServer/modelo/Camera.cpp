@@ -296,6 +296,15 @@ void Camera::updateRenderList(){
 	cleanPowers();
 
 	// Vacia la lista.
+	while(!renderList.empty()) {
+		WorldItem* item = renderList.front();
+		renderList.pop_front();
+		Metadata* v = dynamic_cast<Metadata*>(item); // Se fija si es instancia de Metadata que es lo unico que queremos liberar memoria
+		if(item && v != 0) {
+			delete item;
+			item = NULL;
+		}
+	}
 	renderList.clear();
 
 	Metadata * metadata = new Metadata();
