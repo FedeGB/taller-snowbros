@@ -23,7 +23,8 @@ class ContactListener : public b2ContactListener
 
 		if ( *((int*)(&fixtureBUserData)) == BOLASNOW ){
 			if ( *((int*)(&fixtureAUserData)) == PERSONAJE ||*((int*)(&fixtureAUserData)) == PIESPJ  ){
-				((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->pj=((Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() );
+				if(((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->pj==NULL)
+					((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->pj=((Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() );
 				if(((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->contactcounter==1)
 				 ((Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->inBall(contact->GetFixtureB()->GetBody());
 
@@ -33,6 +34,7 @@ class ContactListener : public b2ContactListener
 		}
 		if ( *((int*)(&fixtureAUserData)) == BOLASNOW ){
 			if ( *((int*)(&fixtureBUserData)) == PERSONAJE ||*((int*)(&fixtureBUserData)) == PIESPJ  ){
+				if(((BolaEnemigo*)contact->GetFixtureA()->GetBody()->GetUserData())->pj==NULL)
 				((BolaEnemigo*)contact->GetFixtureA()->GetBody()->GetUserData())->pj=((Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() );
 				if(((BolaEnemigo*)contact->GetFixtureA()->GetBody()->GetUserData())->contactcounter==1)
 				 ((Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->inBall(contact->GetFixtureA()->GetBody());
@@ -334,6 +336,17 @@ class ContactListener : public b2ContactListener
     			  contact->SetEnabled(false);
     		  }
     	  }
+
+    	  if ( *((int*)(&fixtureAUserData)) == PERSONAJE|| *((int*)(&fixtureAUserData)) == PIESPJ){
+    	      		  if (*((int*)(&fixtureBUserData)) == PERSONAJE || *((int*)(&fixtureBUserData)) == PIESPJ){
+    	      			  contact->SetEnabled(false);
+    	      		  }
+    	      	  }
+    	      	  if ( *((int*)(&fixtureBUserData)) == PERSONAJE || *((int*)(&fixtureBUserData)) == PIESPJ){
+    	      		  if (*((int*)(&fixtureAUserData)) == PERSONAJE || *((int*)(&fixtureAUserData)) == PIESPJ){
+    	      			  contact->SetEnabled(false);
+    	      		  }
+    	      	  }
 
     	  if ( *((int*)(&fixtureAUserData)) == ATRAVESABLE){
     		  if (*((int*)(&fixtureBUserData)) == PERSONAJE || *((int*)(&fixtureBUserData)) == PIESPJ){

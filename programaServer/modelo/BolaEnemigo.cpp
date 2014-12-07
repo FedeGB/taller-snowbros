@@ -49,6 +49,7 @@ BolaEnemigo::BolaEnemigo(b2Body * body){
 	activeSprite=CONGELADO;
 	tipo=BOLASNOW;
 	contactcounter=0;
+	this->pj=NULL;
 }
 
 void BolaEnemigo::Impulso(orientation_t ori){
