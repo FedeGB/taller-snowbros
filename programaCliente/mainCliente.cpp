@@ -28,7 +28,6 @@ bool esperarPorMasJugadores(){
 
 	// Espera a que el server arranque la simulacion, mostrando una pantalla de espera.
 	while(inMessage != "SERVER-LISTO") {
-
 		//std::cout << "estoy esperando... recibi: " << inMessage << std::endl;
 
 		len = stream->receive(inMessage);
@@ -152,11 +151,9 @@ bool protocoloFinDePartida(resultado_t resultado){
 	}
 
 	if(continuePlaying == true) {
-		std::cout << "voy a esperar al resto" << std::endl;
 		return esperarPorMasJugadores();
 	}
 
-	std::cout << "me cago en todo." << std::endl;
 	return false;
 }
 
@@ -286,8 +283,6 @@ int main(int argc, char * argv[]){
 
 	while( !quit ){
 
-		std::cout << "entre al main loop" << std::endl;
-
 		// Analiza los eventos que sean relevantes para enviarlos al servidor.
 		while( SDL_PollEvent( &event ) != 0 ) {
 			//continue;
@@ -318,14 +313,14 @@ int main(int argc, char * argv[]){
 			if (!outMessage.empty()) stream->send(outMessage);
 		}
 
-		std::cout << "termine de pollear eventos. " << std::endl;
+		//std::cout << "termine de pollear eventos. " << std::endl;
 
 
 		// Informa que no hay mas eventos para esta iteracion.
 		outMessage = "DONE";
 		stream->send(outMessage);
 
-		std::cout << "envie el fin de poll de eventos" << std::endl;
+		//std::cout << "envie el fin de poll de eventos" << std::endl;
 
 
 		// Obtiene la pantalla serializada, con cada elemento separado por %.
@@ -343,7 +338,7 @@ int main(int argc, char * argv[]){
 		// no se cargo el PJ en el servidor.
 		if (inMessage == "EMPTY") continue;
 
-		std::cout << "voy a separar los elementos recibidos." << std::endl;
+		//std::cout << "voy a separar los elementos recibidos." << std::endl;
 
 		// Separa todos los elementos para deserializarlos uno por uno.
 		std::vector<std::string> buff;
@@ -351,12 +346,12 @@ int main(int argc, char * argv[]){
 
 		// Si recibe "GAMEENDED" indica que se tiene que iniciar el protocolo de fin de partida.
 		if(buff[0] == "GAMEENDED"){
-			std::cout<<"bfjksdalbg";
+			//std::cout<<"bfjksdalbg";
 			quit = !protocoloFinDePartida((resultado_t) strtol(buff[1].c_str(),NULL,10));
 			continue;
 		}
 
-		std::cout << "deserializando la escala del mundo." << std::endl;
+		//std::cout << "deserializando la escala del mundo." << std::endl;
 
 		// El primer elemento es metadata.
 		WorldItem * item = Deserializador::deserializar(buff[0]);
@@ -366,7 +361,7 @@ int main(int argc, char * argv[]){
 		delete item;
 		item = NULL;
 
-		std::cout << "iterando sobre todas las cosas del mundo a deserializar." << std::endl;
+		//std::cout << "iterando sobre todas las cosas del mundo a deserializar." << std::endl;
 
 		// Itera sobre todos los elementos restantes.
 		for (std::vector<std::string>::iterator it = buff.begin(); it != buff.end(); it++){
@@ -380,9 +375,10 @@ int main(int argc, char * argv[]){
 
 			if(item->tipo==METADATAHUD){
 				for(int i=0;i<4;i++){
-					std::cout<<i;
+					//std::cout<<i;
 					//std::cout<<((Metadata*)item)->users[i];
 					//std::cout<<username;
+
 					if(((Metadata*)item)->users[i].compare(username)==0){
 						if(((Metadata*)item)->vidas[i]==0){
 							std::cout<<"Game Over"<<std::endl;
