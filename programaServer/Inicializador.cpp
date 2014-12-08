@@ -595,6 +595,12 @@ void checkBoundsAndOverlap(b2World ** worldB2D, float32 widthWorld, float32 heig
 	while (b){
 		if(b->GetPosition().x > widthWorld || b->GetPosition().y > heightWorld
 				|| b->GetPosition().x < 0.0 || b->GetPosition().y < 0.0){
+			void* fixData = b->GetFixtureList()->GetUserData();
+			if(*(int*)&fixData == sensorAGUJERO) { // Si es un agujero, puede estar por fuera
+				std::cout << "HOLA" << std::endl;
+				b = b->GetNext();
+				continue;
+			}
 
 			ostringstream message;   // stream used for the conversion
 			message << "El objeto en la posicion " << b->GetPosition().x << "," <<
@@ -603,7 +609,7 @@ void checkBoundsAndOverlap(b2World ** worldB2D, float32 widthWorld, float32 heig
 			log.log(WINDOWLOG,WARNING,message.str());
 
 			(*worldB2D)->DestroyBody(b);
-			b = (*worldB2D)->GetBodyList();
+			b = b->GetNext();
 			continue;
 		}
 

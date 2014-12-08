@@ -89,7 +89,7 @@ bool snowball::cayoPorAgujero(){
 
 void snowball::moverArriba(){
 	b2Vec2 p = this->poder->GetPosition();
-	p.y = 1;
+	p.y = -1;
 	this->poder->SetTransform( p, 0);
 	cayo = false;
 }
