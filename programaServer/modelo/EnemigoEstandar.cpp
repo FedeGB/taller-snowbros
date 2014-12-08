@@ -300,7 +300,7 @@ void EnemigoEstandar::eventoSoltoSpace() {
 void EnemigoEstandar::eventoAbajo() {
 	if(dropCounter < 100 ) {
 		b2Vec2 vel = bodyB2D->GetLinearVelocity();
-		float desiredVel = -10;
+		float desiredVel = -2;
 		float velChange = desiredVel - vel.y;
 		float impulse = bodyB2D->GetMass() * velChange;
 		bodyB2D->ApplyLinearImpulse( b2Vec2(0,impulse), bodyB2D->GetWorldCenter(), true);

@@ -597,7 +597,6 @@ void checkBoundsAndOverlap(b2World ** worldB2D, float32 widthWorld, float32 heig
 				|| b->GetPosition().x < 0.0 || b->GetPosition().y < 0.0){
 			void* fixData = b->GetFixtureList()->GetUserData();
 			if(*(int*)&fixData == sensorAGUJERO) { // Si es un agujero, puede estar por fuera
-				std::cout << "HOLA" << std::endl;
 				b = b->GetNext();
 				continue;
 			}
