@@ -324,23 +324,6 @@ bool EnemigoEstandar::itsOnBorder() {
 	return isOnBorder;
 }
 
-bool EnemigoEstandar::isRestricted(teclas_t action) {
-	if(action == ARRIBA) {
-		if(isDownPressed || isAirborne) {
-			return true;
-		}
-		return false;
-	}
-	if(action == ABAJO) {
-		if(isUpPressed || isAirborne) {
-			return true;
-		}
-		return false;
-	}
-	// TODO: More restrictions
-	return false;
-}
-
 bool EnemigoEstandar::trapped() {
 	return isTrapped;
 }

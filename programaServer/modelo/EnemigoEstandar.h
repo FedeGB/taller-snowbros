@@ -21,7 +21,6 @@ public:
 	virtual void eventoSoltoAbajo();
 	virtual void eventoSpace();
 	virtual void eventoSoltoSpace();
-	virtual bool isRestricted(teclas_t);
 	virtual void setOnBorder(bool);
 	virtual bool itsOnBorder();
 	virtual void applyDamage(float);

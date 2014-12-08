@@ -460,6 +460,7 @@ void Personaje::moverArriba(){
 	b2Vec2 p = this->bodyB2D->GetPosition();
 	p.y = -1;
 	this->bodyB2D->SetTransform( p, 0);
+	this->camera->reposition(p);
 	cayo = false;
 }
 

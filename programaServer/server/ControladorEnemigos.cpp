@@ -65,10 +65,10 @@ void ControladorEnemigos::standarStrategy(EnemigoEstandar* unit, b2World* world,
 		unit->eventoDerecha();
 		break;
 	case ABAJO:
-		unit->eventoSoltoArriba();
-		unit->eventoSoltoIzquierda();
-		unit->eventoSoltoDerecha();
-		unit->eventoAbajo();
+//		unit->eventoSoltoArriba();
+//		unit->eventoSoltoIzquierda();
+//		unit->eventoSoltoDerecha();
+//		unit->eventoAbajo();
 		break;
 	case SPACE:
 		if(unit->tipo == ENEMIGOTIRAFUEGO) {

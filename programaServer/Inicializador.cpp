@@ -249,14 +249,14 @@ Personaje * Inicializador::pjInit(b2World ** worldB2D, ThreadSafeList<WorldItem*
     footSensorFixture->SetUserData( (void*)PIESPJ );
 
     // Agrego el sensor para empujar
-    polygon.SetAsBox(0.1, 0.1f, b2Vec2(halfWidth*1.2,0), 0);
+    polygon.SetAsBox(0.1, 0.1f, b2Vec2(halfWidth*1.2,halfHeight*-0.1), 0);
     myFixtureDef.shape = &polygon; //defino que es un poligono
     myFixtureDef.isSensor = true;
     myFixtureDef.density = 1.0f; //le doy masa
     b2Fixture* pushSensor1 = pjB2D->CreateFixture(&myFixtureDef);
     pushSensor1->SetUserData( (void*)EMPUJE );
 
-    polygon.SetAsBox(0.1, 0.1f, b2Vec2(-halfWidth*1.2,0), 0);
+    polygon.SetAsBox(0.1, 0.1f, b2Vec2(-halfWidth*1.2,halfHeight*-0.1), 0);
     myFixtureDef.shape = &polygon; //defino que es un poligono
     myFixtureDef.isSensor = true;
     myFixtureDef.density = 1.0f; //le doy masa
