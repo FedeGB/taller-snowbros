@@ -49,6 +49,7 @@ EnemigoEstandar::EnemigoEstandar(int number){
 	toDelete=false;
 	isUpPressed = false;
 	isDownPressed = false;
+	alreadyBall = false;
 	isLeftPressed = false;
 	isRightPressed = false;
 	isSpacePressed=false;
@@ -72,6 +73,7 @@ EnemigoEstandar::EnemigoEstandar(int number){
 	dropCounter = 0;
 	isPushable=false;
 	wasKicked = false;
+	isBolaGirar = false;
 
 	sumergido = false;
 	velocidadSumergido = 1.0f;
@@ -122,11 +124,12 @@ void EnemigoEstandar::update(){
 		stunCounter++;
 		if(stunCounter==10000){
 			isFrozzen=false;
-			for(b2Fixture * fix= bodyB2D->GetFixtureList();fix!=NULL;fix=fix->GetNext()){
-				void* userData =fix->GetUserData();
-				if(*((int*)(&userData))==ENEMIGOBOLA) fix->SetUserData((void*)ENEMIGOCONGELADO);
-				if(*((int*)(&userData))==PIESENBOLA) fix->SetUserData((void*)PIESENCONGELADO);
-			}
+//			for(b2Fixture * fix= bodyB2D->GetFixtureList();fix!=NULL;fix=fix->GetNext()){
+//				void* userData =fix->GetUserData();
+//				if(*((int*)(&userData))==ENEMIGOBOLA) fix->SetUserData((void*)ENEMIGOCONGELADO);
+//				if(*((int*)(&userData))==PIESENBOLA) fix->SetUserData((void*)PIESENCONGELADO);
+//			}
+			isBolaGirar = false;
 		}
 		activeSprite=CONGELADO;
 		return;
@@ -353,23 +356,24 @@ void EnemigoEstandar::applyDamage(float dmg) {
 				fix->SetUserData((void*)ENEMIGOCONGELADO);
 			}
 			if(*((int*)(&userData))==PIESEN)
-							fix->SetUserData((void*)PIESENCONGELADO);
+				fix->SetUserData((void*)PIESENCONGELADO);
 		}
-
+	}
+	if(vida >= 0 && vida <= 1) {
+		isBolaGirar = true;
 	}
 	vida -= 1;//TODO: dmg no se por que tiene basura por eso harcodie este 1
 	if (vida<0){
 		isFrozzen=true;
 		vida=0;
-		for(b2Fixture * fix= bodyB2D->GetFixtureList();fix!=NULL;fix=fix->GetNext()){
-						void* userData =fix->GetUserData();
-								if(*((int*)(&userData))==ENEMIGOCONGELADO)
-									fix->SetUserData((void*)ENEMIGOBOLA);
-								if(*((int*)(&userData))==PIESENCONGELADO)
-												fix->SetUserData((void*)PIESENBOLA);
-							}
+//		for(b2Fixture * fix= bodyB2D->GetFixtureList();fix!=NULL;fix=fix->GetNext()){
+//			void* userData =fix->GetUserData();
+//			if(*((int*)(&userData))==ENEMIGOCONGELADO)
+//				fix->SetUserData((void*)ENEMIGOBOLA);
+//			if(*((int*)(&userData))==PIESENCONGELADO)
+//				fix->SetUserData((void*)PIESENBOLA);
+//		}
 	}
-//	std::cout<<dmg<<std::endl;
 }
 
 void EnemigoEstandar::empujar(orientation_t ori){
@@ -408,4 +412,41 @@ void EnemigoEstandar::moverArriba(){
 	p.y = 1;
 	this->bodyB2D->SetTransform( p, 0);
 	cayo = false;
+}
+
+void EnemigoEstandar::hacerBola() {
+	if(!alreadyBall) {
+		b2FixtureDef newFix;
+		b2CircleShape circulo;
+
+		circulo.m_radius = ((EnemigoEstandar*)(bodyB2D->GetUserData()))->baseMayor/1.5f; //defino el tamaño
+		newFix.shape = &circulo; //defino que es un circulo
+		newFix.restitution = 0.1;
+		newFix.friction = 2;
+		newFix.density = 100;
+
+		b2Fixture * shapeFixture = bodyB2D->CreateFixture(&newFix);
+		shapeFixture->SetUserData((void*)ENEMIGOBOLA);
+		bodyB2D->SetFixedRotation(false);
+		alreadyBall = true;
+	}
+}
+
+void EnemigoEstandar::deshacerBola() {
+	if(alreadyBall) {
+ 		for(b2Fixture* fix = bodyB2D->GetFixtureList(); fix != NULL; fix = fix->GetNext()) {
+			void* fixData = fix->GetUserData();
+			if(*(int*)&fixData == ENEMIGOBOLA) {
+				bodyB2D->DestroyFixture(fix);
+				break;
+			}
+		}
+ 		bodyB2D->SetTransform(bodyB2D->GetPosition(), 0);
+		bodyB2D->SetFixedRotation(true);
+		alreadyBall = false;
+	}
+}
+
+bool EnemigoEstandar::canRotate() {
+	return isBolaGirar;
 }

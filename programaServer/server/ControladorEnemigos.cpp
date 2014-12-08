@@ -249,7 +249,9 @@ void ControladorEnemigos::update(bool online,ControladorUsuarios PJs) {
 					delete (*it).second;
 					(*it).second=NULL;
 				}
-				else (*it).second->update();
+				else {
+					(*it).second->update();
+				}
 			}
 		}
 	}

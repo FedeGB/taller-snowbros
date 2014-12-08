@@ -271,6 +271,11 @@ void Camera::cleanPowers() {
 			}
 
 			if( *((int*)(&fixData)) == ENEMIGO || *((int*)(&fixData)) == ENEMIGOCONGELADO || *((int*)(&fixData)) == PIESEN || *((int*)(&fixData)) == PIESENCONGELADO  || *((int*)(&fixData)) == ENEMIGOBOLA ) {
+				if( ((EnemigoEstandar*) body->GetUserData())->canRotate()) {
+					((EnemigoEstandar*) body->GetUserData())->hacerBola();
+				} else {
+					((EnemigoEstandar*) body->GetUserData())->deshacerBola();
+				}
 				if( ( (EnemigoEstandar*) body->GetUserData() )->cayoPorAgujero()){
 					((EnemigoEstandar*) body->GetUserData())->moverArriba();
 				}

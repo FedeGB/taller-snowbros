@@ -48,6 +48,9 @@ public:
 	sprite_t spriteStun;
 	bool isFrozzen;
 	orientation_t pushOrientation;
+	void hacerBola();
+	void deshacerBola();
+	bool canRotate();
 
 protected:
 	bool toDelete;
@@ -57,6 +60,8 @@ protected:
 	bool isOnBorder;
 	bool isTrapped;
 	bool isPushable;
+	bool isBolaGirar;
+	bool alreadyBall;
 
 	bool wasKicked;
 

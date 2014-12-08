@@ -62,7 +62,6 @@ std::string EnemigoTiraFuego::serializar() {
 }
 
 void EnemigoTiraFuego::update(){
-
 	if( sumergido ){
 		bodyB2D->SetGravityScale(0.5f);
 		velocidadSumergido = 0.5f;
@@ -98,11 +97,12 @@ void EnemigoTiraFuego::update(){
 			stunCounter++;
 			if(stunCounter==10000){
 				isFrozzen=false;
-				for(b2Fixture * fix= bodyB2D->GetFixtureList();fix!=NULL;fix=fix->GetNext()){
-					void* userData =fix->GetUserData();
-					if(*((int*)(&userData))==ENEMIGOBOLA) fix->SetUserData((void*)ENEMIGOCONGELADO);
-					if(*((int*)(&userData))==PIESENBOLA) fix->SetUserData((void*)PIESENCONGELADO);
-				}
+//				for(b2Fixture * fix= bodyB2D->GetFixtureList();fix!=NULL;fix=fix->GetNext()){
+//					void* userData =fix->GetUserData();
+//					if(*((int*)(&userData))==ENEMIGOBOLA) fix->SetUserData((void*)ENEMIGOCONGELADO);
+//					if(*((int*)(&userData))==PIESENBOLA) fix->SetUserData((void*)PIESENCONGELADO);
+//				}
+				isBolaGirar = false;
 			}
 			activeSprite=CONGELADO;
 			return;
