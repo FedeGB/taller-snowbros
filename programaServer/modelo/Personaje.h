@@ -67,6 +67,7 @@ public:
 	virtual bool getThrowing();
 	virtual void inBall(b2Body *);
 	virtual void fusionBola();
+	virtual void setSobreHielo(bool);
 
 	void setDelete(){
 				toDelete = true;
@@ -109,6 +110,7 @@ protected:
 	bool isThrowing;
 	bool isFalling;
 	bool sumergido;
+	bool sobreHielo;
 
 
 

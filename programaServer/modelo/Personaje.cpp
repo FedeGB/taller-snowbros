@@ -51,6 +51,7 @@ Personaje::Personaje(){
 	toDelete=false;
 	puntaje = 0;
 	bindball=false;
+	sobreHielo = false;
 }
 
 Personaje::~Personaje() {
@@ -208,11 +209,27 @@ void Personaje::update(Sonido* sonido){
 
 
 	// Si ninguna tecla de direccion esta presionada, el PJ se debe quedar quieto.
-	if (!isRightPressed && !isLeftPressed ){
+	if ((!isRightPressed && !isLeftPressed) && !sobreHielo){
 		velXChange = -vel.x; // I want the PJ to stop moving in the X axis.
 		if (isAirborne ) velYChange = 0; // I want the PJ to keep moving normally in the Y axis if it is falling.
 		else velYChange = -vel.y; // I want the PJ to stop it's motion if it's in a slope.
 		isMoving = false;
+	} else if(sobreHielo && !(isRightPressed || isLeftPressed)) {
+		if(vel.x > 0) {
+			orientation = RIGHT;
+			desiredVel = 10 * velocidadPJSorpresa * velocidadSumergido;
+			scale = 4;
+			if (angulo <= 180 * DEGTORAD) scale = 3;
+			else scale = 0.33;
+			isMoving = false;
+		} else if (vel.x < 0) {
+			orientation = LEFT;
+			desiredVel = -10 * velocidadPJSorpresa * velocidadSumergido;                         //// VERIFICAR QUE CUANDO ESTE SALTANDO NO CAMBIE LA VELOCIDAD EN Y!! ! ! ! ! ! !  11 1 1 1 1 one one one
+			if (angulo <= 180 * DEGTORAD) scale = 0.33;
+			else scale = 3;
+			isMoving = false;
+		}
+		velXChange = desiredVel * cos(angulo) - vel.x;
 	}
 
 	// Calcula los impulsos a aplicar segun en que direccion se esta moviendo el PJ.
@@ -480,5 +497,9 @@ void Personaje::inBall(b2Body* pos){
 void Personaje::fusionBola(){
 	this->bodyB2D->SetTransform(posbind->GetPosition(),0);
 	this->camera->reposition(b2Vec2(posbind->GetPosition().x,0));
+}
+
+void Personaje::setSobreHielo(bool set) {
+	sobreHielo = set;
 }
 

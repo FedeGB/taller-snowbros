@@ -41,6 +41,7 @@ EnemigoEstandar::EnemigoEstandar() {
 
 	sumergido = false;
 	velocidadSumergido = 1.0f;
+	sobreHielo = false;
 }
 
 EnemigoEstandar::EnemigoEstandar(int number){

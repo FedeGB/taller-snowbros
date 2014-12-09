@@ -46,6 +46,7 @@ EnemigoTiraFuego::EnemigoTiraFuego(int number) {
 
 	sumergido = false;
 	velocidadSumergido = 1.0f;
+	sobreHielo = false;
 }
 
 EnemigoTiraFuego::~EnemigoTiraFuego() {
