@@ -246,15 +246,17 @@ class ContactListener : public b2ContactListener
     	void* fixtureAUserData = contact->GetFixtureA()->GetUserData();
     	void* fixtureBUserData = contact->GetFixtureB()->GetUserData();
 
-    	  if ( *((int*)(&fixtureAUserData)) == PERSONAJE ){
+//    	  if ( *((int*)(&fixtureAUserData)) == PERSONAJE ){
+    			if ( *((int*)(&fixtureAUserData)) == EMPUJE ){
     	  					if ( *((int*)(&fixtureBUserData)) == ENEMIGOBOLA ){
     	  						( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->NoPatear();
     	  						( (EnemigoEstandar *) contact->GetFixtureB()->GetBody()->GetUserData() )->Noempujar();
     	  						( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->enemigoParaEmpujar= NULL;
     	  					}
     	  		}
-    	  		if ( *((int*)(&fixtureAUserData)) == ENEMIGOBOLA ){
-    	  							if ( *((int*)(&fixtureBUserData)) == PERSONAJE ){
+    			if ( *((int*)(&fixtureAUserData)) == ENEMIGOBOLA ){
+//    	  							if ( *((int*)(&fixtureBUserData)) == PERSONAJE ){
+									if ( *((int*)(&fixtureBUserData)) == EMPUJE ){
     	  								( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->NoPatear();
     	  								( (EnemigoEstandar *) contact->GetFixtureA()->GetBody()->GetUserData() )->Noempujar();
     	  								( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->enemigoParaEmpujar= NULL;

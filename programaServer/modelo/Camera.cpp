@@ -270,7 +270,7 @@ void Camera::cleanPowers() {
 				}
 			}
 
-			if( *((int*)(&fixData)) == ENEMIGO || *((int*)(&fixData)) == ENEMIGOCONGELADO || *((int*)(&fixData)) == PIESEN || *((int*)(&fixData)) == PIESENCONGELADO  || *((int*)(&fixData)) == ENEMIGOBOLA ) {
+			if( *((int*)(&fixData)) == ENEMIGO || *((int*)(&fixData)) == ENEMIGOCONGELADO || *((int*)(&fixData)) == PIESEN || *((int*)(&fixData)) == PIESENCONGELADO  || *((int*)(&fixData)) == ENEMIGOBOLA || *((int*)(&fixData)) == PIESENBOLA) {
 				if( ((EnemigoEstandar*) body->GetUserData())->canRotate()) {
 					((EnemigoEstandar*) body->GetUserData())->hacerBola();
 				} else {
@@ -283,7 +283,7 @@ void Camera::cleanPowers() {
 				//std::cout << "el enemigo debe borrarse? " << (((EnemigoEstandar*) body->GetUserData())->forDelete() ? "true":"false") << std::endl;
 
 				if( ((EnemigoEstandar*) body->GetUserData())->forDelete()) {
-					  body->SetTransform(b2Vec2(-10000,-10000),0);
+						body->SetTransform(b2Vec2(-10000,-10000),0);
 				}
 			}
 		}
