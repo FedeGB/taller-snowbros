@@ -287,7 +287,7 @@ void EnemigoTiraFuego::update(){
 }
 
 void EnemigoTiraFuego::restarTimerThrow() {
-	if(timerThrow != 0) {
+	if(timerThrow <= 0) {
 		timerThrow--;
 	} else {
 		timerThrow = TTHROW;

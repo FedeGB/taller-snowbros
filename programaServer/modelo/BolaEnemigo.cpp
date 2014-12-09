@@ -17,13 +17,13 @@ BolaEnemigo::BolaEnemigo(b2Body * body){
 	this->toDelete=false;
 	this->cayo = false;
 
-	for( b2Fixture* f = body->GetFixtureList(); f != NULL; f = f->GetNext() ){
-		void* fixData = f->GetUserData();
-		if( *(int*)&fixData == ENEMIGOBOLA ){
-			body->DestroyFixture(f);
-			break;
-		}
-	}
+//	for( b2Fixture* f = body->GetFixtureList(); f != NULL; f = f->GetNext() ){
+//		void* fixData = f->GetUserData();
+//		if( *(int*)&fixData == ENEMIGOBOLA ){
+//			body->DestroyFixture(f);
+//			break;
+//		}
+//	}
 
 	b2dObjDef.type = b2_dynamicBody;
 	b2dObjDef.bullet = true;

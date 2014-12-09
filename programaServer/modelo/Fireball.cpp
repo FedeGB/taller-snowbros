@@ -47,6 +47,7 @@ Fireball::Fireball(float32 posx,float32 posy,int orientation,b2World * world, fl
 	std::cout<< "fireball constructor:" << damage << '\n';
 	poder->SetUserData(this);
 	hasAtacked=false;
+	this->tipo = FUEGO;
 }
 
 

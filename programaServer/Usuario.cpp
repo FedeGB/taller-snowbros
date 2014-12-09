@@ -101,16 +101,20 @@ std::string Usuario::obtenerPantallaSerializada(){
 
 	// Bloquea la lista para evitar modificaciones mientras se serializa.
 	listaVisibles.lock();
+	int i = 0;
 
 	// Envia los elementos que deben ser renderizados.
 	while (!listaVisibles.empty()){
 		WorldItem * item = listaVisibles.front();
 		listaVisibles.pop_front();
 //		if(!item) continue;
+		// LINEA MAGICA
+		if( PJ->vida == 0 && item->tipo==8 ) continue;
 		pantallaSerializada += "%";
 		pantallaSerializada += item->serializar();
 		if (item->tipo == METADATAFONDO) delete item;
 		else if (item->tipo == METADATAHUD) delete item;
+		i++;
 	}
 
 /*	for(ThreadSafeList<WorldItem*>::iterator it=listaVisibles.begin(); it != listaVisibles.end(); ++it){
