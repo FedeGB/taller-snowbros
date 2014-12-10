@@ -83,6 +83,7 @@ void EnemigoTiraFuego::update(){
 		if(isSpacePressed && !isFrozzen){
 			isThrowing=true;
 			Fireball *fb= new Fireball(bodyB2D->GetPosition().x,bodyB2D->GetPosition().y,(int)orientation,bodyB2D->GetWorld(), 1.0f, 0.0f, 1.0f, bodyB2D->GetLinearVelocity());
+			this->timerThrow=TTHROW;
 
 //				if( potenciaNieveSorpresa == 0.5 && impulsoNieveSorpresa == 1.0 )
 //					sonido->sonido = DISPARO;
