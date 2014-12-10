@@ -11,12 +11,13 @@
 #include <arpa/inet.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <signal.h>
 #include "TCPConnector.h"
 
 TCPStream* TCPConnector::connect(const char* server, int port)
 {
     struct sockaddr_in address;
-
+    signal(SIGPIPE, SIG_IGN);
     memset (&address, 0, sizeof(address));
     address.sin_family = AF_INET;
     address.sin_port = htons(port);
