@@ -343,7 +343,7 @@ void EnemigoEstandar::applyDamage(float dmg) {
 				fix->SetUserData((void*)PIESENCONGELADO);
 		}
 	}
-	if(vida >= 0 && vida <= 1) {
+	if(vida >= 0 && vida < 1) {
 		isBolaGirar = true;
 	}
 	vida -= 1;//TODO: dmg no se por que tiene basura por eso harcodie este 1
