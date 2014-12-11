@@ -137,6 +137,7 @@ bool ConnectionHandler::loopPartida(){
 		if (len <= 0) return false;
 
 		controlador.obtenerUsuario(username)->enviarSenial();
+		usleep(10000);
 	}
 
 	return true;
@@ -152,9 +153,12 @@ bool ConnectionHandler::recibirEventos(){
 	while (inMessage != "DONE"){
 		len = m_stream->receive(inMessage);
 		if (len <= 0) {
-			if(!controlador.obtenerUsuario(username)->isPJAlive())
+			if(!controlador.obtenerUsuario(username)->isPJAlive()){
+				printf("COUT ARRIBA DE vida=0 linea 157 del ConnectionHandler.cpp");
 				controlador.obtenerUsuario(username)->vida=0;
 				controlador.obtenerUsuario(username)->DeletePj();
+			}
+			std::cout << "FALSE" << std::endl;
 			return false;
 		}
 		if (inMessage != "DONE") {

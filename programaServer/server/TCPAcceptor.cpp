@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <arpa/inet.h>
+#include <signal.h>
+#include <errno.h>
 
 TCPAcceptor::TCPAcceptor(int port, const char* address)
     : m_lsd(0), m_port(port), m_address(address), m_listening(false) {}

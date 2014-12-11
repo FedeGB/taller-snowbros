@@ -93,7 +93,7 @@ void Usuario::procesarNotificaciones(){
 // Devuelve una representacion serializada de lo que ve el usuario en su camara,
 // para poder ser rendereada en el cliente.
 std::string Usuario::obtenerPantallaSerializada(){
-	this->vida=this->PJ->vida;
+	//this->vida=this->PJ->vida;
 	std::string pantallaSerializada;
 	pantallaSerializada.clear();
 
@@ -101,21 +101,24 @@ std::string Usuario::obtenerPantallaSerializada(){
 
 	// Bloquea la lista para evitar modificaciones mientras se serializa.
 	listaVisibles.lock();
-	int i = 0;
 
 	// Envia los elementos que deben ser renderizados.
 	while (!listaVisibles.empty()){
+		std::cout << "INIT: " << this->inicializado << std::endl;
 		WorldItem * item = listaVisibles.front();
 		listaVisibles.pop_front();
 //		if(!item) continue;
 		// LINEA MAGICA
-		if( PJ->vida == 0 && item->tipo==8 ) continue;
+		if( PJ->vida == 0 && (item->tipo==8 || !item->tipo) ) continue;
+		cout << "tipo:" << item->tipo << std::endl;
+		if(!item) continue;
 		pantallaSerializada += "%";
 		pantallaSerializada += item->serializar();
+		std::cout << "SERIALIZO" << std::endl;
 		if (item->tipo == METADATAFONDO) delete item;
 		else if (item->tipo == METADATAHUD) delete item;
-		i++;
 	}
+	std::cout << "TERMINO SERIAL" << std::endl;
 
 /*	for(ThreadSafeList<WorldItem*>::iterator it=listaVisibles.begin(); it != listaVisibles.end(); ++it){
 		// TODO: sacar el % hardcodeado.

@@ -282,8 +282,9 @@ void Camera::cleanPowers() {
 				//std::cout << "enemigo detectado" << std::endl;
 				//std::cout << "el enemigo debe borrarse? " << (((EnemigoEstandar*) body->GetUserData())->forDelete() ? "true":"false") << std::endl;
 
-				if( ((EnemigoEstandar*) body->GetUserData())->forDelete()) {
+				if( ((EnemigoEstandar*) body->GetUserData())->forDelete() && ((EnemigoEstandar*) body->GetUserData())->safeFlag) {
 						//body->SetTransform(b2Vec2(-10000,-10000),0);
+						delete ((EnemigoEstandar*) body->GetUserData());
 				}
 			}
 		}

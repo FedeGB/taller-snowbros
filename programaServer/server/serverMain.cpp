@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
+#include <signal.h>
+#include <errno.h>
 #include "../threads/Thread.h"
 #include "../threads/ThreadSafeList.h"
 #include "../threads/ConditionVariable.h"

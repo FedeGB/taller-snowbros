@@ -144,7 +144,7 @@ teclas_t ControladorEnemigos::getAction(EnemigoEstandar* unit, b2Vec2 enemy, b2W
 	b2Vec2 posUnit = unit->posicion;
 	if(enemy.x != 0 && enemy.y != 0) {
 		if(unit->tipo == ENEMIGOTIRAFUEGO) {
-			if((isObjectInDirectionRange(world, unit, PERSONAJE, 90, unit->baseMayor*4.0, 3.0f) && unit->orientation == RIGHT) || (isObjectInDirectionRange(world, unit, PERSONAJE, 270, unit->baseMayor*4, 3.0f) && unit->orientation == LEFT)) {
+			if((isObjectInDirectionRange(world, unit, PERSONAJE, 90, unit->baseMayor*4.0, 2.0f) && unit->orientation == RIGHT) || (isObjectInDirectionRange(world, unit, PERSONAJE, 270, unit->baseMayor*4, 2.0f) && unit->orientation == LEFT)) {
 				return SPACE;
 			}
 		}
@@ -243,7 +243,8 @@ void ControladorEnemigos::update(bool online,ControladorUsuarios PJs) {
 						PJs.sumarPuntaje(19);
 					}
 					//std::cout << "detecte enemigo destruido, sumando puntaje." << std::endl;
-					delete (*it).second;
+					//delete (*it).second;
+					(*it).second->safeFlag = true;
 					(*it).second=NULL;
 				}
 				else {

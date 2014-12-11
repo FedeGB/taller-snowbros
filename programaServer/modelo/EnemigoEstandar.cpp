@@ -75,7 +75,7 @@ EnemigoEstandar::EnemigoEstandar(int number){
 	isPushable=false;
 	wasKicked = false;
 	isBolaGirar = false;
-
+	safeFlag = false;
 	sumergido = false;
 	velocidadSumergido = 1.0f;
 }

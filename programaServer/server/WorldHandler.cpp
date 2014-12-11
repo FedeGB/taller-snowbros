@@ -28,9 +28,10 @@ void WorldHandler::esperarConexiones(){
 
 void WorldHandler::limpiarNivel(){
 	// Destruye el nivel.
+	std::cout << "MUERE MUNDO" << std::endl;
 	delete worldB2D;
 	worldB2D = NULL;
-
+	std::cout << "MUERE MUNDO2" << std::endl;
 	// Resettea los PJs.
 	for (ControladorUsuarios::iterator it=controlador.begin(); it!=controlador.end(); ++it){
 		(*it).second->inicializado = false;
@@ -54,6 +55,12 @@ resultado_t WorldHandler::simularPartida(){
 
 			// Juega el nivel.
 			resultado = loopPrincipal();
+			for (ControladorUsuarios::iterator it=controlador.begin(); it!=controlador.end(); ++it){
+				if ((*it).second && (*it).second->online && (*it).second->inicializado) {
+					(*it).second->vida = (*it).second->getLives();
+				}
+			}
+
 
 			// Limpia el world y aquello que sea necesario.
 			limpiarNivel();
@@ -84,6 +91,7 @@ void* WorldHandler::run(){
 		resultado_t resultado = simularPartida();
 
 		controlador.notificarFinDePartida(resultado);
+
 	}
 
 	return NULL;
@@ -152,6 +160,13 @@ resultado_t WorldHandler::loopPrincipal() {
 
 		bool quedaPJvivo = false;
 
+		if (army.isMapCleared()) {
+			quit = true;
+			resultado = GANARON;
+			std::cout << "NO HAY MS BICHOS" << std::endl;
+			return resultado;
+		}
+
 		// Procesa uno por uno todos los usuarios, inicializandolos, moviendo sus
 		// PJs o camaras, o ignorandolos si estan desconectados.
 		for (ControladorUsuarios::iterator it=controlador.begin(); it!=controlador.end(); ++it){
@@ -166,6 +181,7 @@ resultado_t WorldHandler::loopPrincipal() {
 			}
 			if( (*it).second->isPJAlive()) {
 				quedaPJvivo = true;
+				std::cout<<"pjvivo"<<std::endl;
 				(*it).second->procesarNotificaciones();
 				(*it).second->actualizarPJ();
 			}
@@ -174,15 +190,12 @@ resultado_t WorldHandler::loopPrincipal() {
 			//usleep(20000);
 		}
 
-		if (army.isMapCleared()) {
-			quit = true;
-			resultado = GANARON;
-		}
-
 		if (!quedaPJvivo){
 			quit = true;
 			resultado = PERDIERON;
+			std::cout << "NO HAY MAS JUGADORES" << std::endl;
 		}
+
 	}
 
 	return resultado;

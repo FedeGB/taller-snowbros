@@ -47,6 +47,7 @@ public:
 	sprite_t spriteStun;
 	bool isFrozzen;
 	orientation_t pushOrientation;
+	bool safeFlag;
 	void hacerBola();
 	void deshacerBola();
 	bool canRotate();
