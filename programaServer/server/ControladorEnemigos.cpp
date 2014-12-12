@@ -69,7 +69,7 @@ void ControladorEnemigos::standarStrategy(EnemigoEstandar* unit, b2World* world,
 		break;
 	case SPACE:
 		if(unit->tipo == ENEMIGOTIRAFUEGO) {
-			if(((EnemigoTiraFuego*)unit)->getTimerThrow() == 0) {
+			if(((EnemigoTiraFuego*)unit)->getTimerThrow() <= 0) {
 				if(!unit->isSpacePressed) {
 					unit->eventoSpace();
 				}

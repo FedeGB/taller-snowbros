@@ -64,6 +64,7 @@ std::string EnemigoTiraFuego::serializar() {
 }
 
 void EnemigoTiraFuego::update(){
+
 	if( sumergido ){
 		bodyB2D->SetGravityScale(0.5f);
 		velocidadSumergido = 0.5f;
@@ -74,150 +75,154 @@ void EnemigoTiraFuego::update(){
 	}
 
 	// Determina si esta en el aire.
-		isAirborne = numFootContacts <= 0 ? true : false;
-		if(vida<0) spriteStun=STUN0;
-		else if(vida<=1) spriteStun=STUN3;
-		else if(vida<=2) spriteStun=STUN2;
-		else if(vida<3) spriteStun=STUN1;
-		else if(vida>=3) spriteStun=STUN0;
+	isAirborne = numFootContacts <= 0 ? true : false;
 
-		if(isSpacePressed && !isFrozzen){
+	if(vida<0) spriteStun=STUN0;
+	else if(vida<=1) spriteStun=STUN3;
+	else if(vida<=2) spriteStun=STUN2;
+	else if(vida<3) spriteStun=STUN1;
+	else if(vida>=3) spriteStun=STUN0;
+
+	if(isPushable&&wasKicked){
+		setDelete();
+	}
+
+	if(isFrozzen){
+		stunCounter++;
+		if(stunCounter==10000){
+			isFrozzen=false;
+//			for(b2Fixture * fix= bodyB2D->GetFixtureList();fix!=NULL;fix=fix->GetNext()){
+//				void* userData =fix->GetUserData();
+//				if(*((int*)(&userData))==ENEMIGOBOLA) fix->SetUserData((void*)ENEMIGOCONGELADO);
+//				if(*((int*)(&userData))==PIESENBOLA) fix->SetUserData((void*)PIESENCONGELADO);
+//			}
+			isBolaGirar = false;
+		}
+		activeSprite=CONGELADO;
+		return;
+	}
+
+	if(isTrapped) {
+		// TODO: Acciones a realizar si esta atrapado
+		animationCounter++;
+		if(animationCounter<100)
+			activeSprite=ATRAPADO1;
+		else if (animationCounter<200)
+			activeSprite=ATRAPADO2;
+		else {
+			animationCounter=0;
+			stunCounter++;
+		}
+		if(stunCounter>=10){
+			vida++;
+			stunCounter=0;
+		}
+		if(vida>=3){
+			isTrapped=false;
+			for(b2Fixture * fix= bodyB2D->GetFixtureList();fix!=NULL;fix=fix->GetNext()){
+				void* userData =fix->GetUserData();
+				if(*((int*)(&userData))==ENEMIGOCONGELADO)
+					fix->SetUserData((void*)ENEMIGO);
+				if(*((int*)(&userData))==PIESENCONGELADO)
+					fix->SetUserData((void*)PIESEN);
+			}
+		}
+		return;
+	}
+
+	// Determina, si esta saltando, si ya termino el salto.
+	if (!isAirborne) {
+		isJumping = false;
+//		if(isDownPressed) {
+//			isFalling = true;
+//		} else {
+//			isFalling = false;
+//		}
+		if(!isDownPressed) {
+			isFalling = false;
+		} else {
+			isFalling = true;
+		}
+	} else {
+		b2Vec2 vel = bodyB2D->GetLinearVelocity();
+		if(vel.y >= 0) {
+			isFalling = true;
+		}
+	}
+
+	if(isSpacePressed && !isFrozzen){
 			isThrowing=true;
 			Fireball *fb= new Fireball(bodyB2D->GetPosition().x,bodyB2D->GetPosition().y,(int)orientation,bodyB2D->GetWorld(), 1.0f, 0.0f, 1.0f, bodyB2D->GetLinearVelocity());
 			//this->timerThrow=TTHROW;
-
 //				if( potenciaNieveSorpresa == 0.5 && impulsoNieveSorpresa == 1.0 )
 //					sonido->sonido = DISPARO;
 //				else
 //					sonido->sonido = DISPARO_SORPRESA;
 		}
 
-		if(isPushable && wasKicked){
-			setDelete();
-		}
+	float32 desiredVel = 0, scale = 0;
 
-		if(isFrozzen){
-			stunCounter++;
-			if(stunCounter==10000){
-				isFrozzen=false;
-//				for(b2Fixture * fix= bodyB2D->GetFixtureList();fix!=NULL;fix=fix->GetNext()){
-//					void* userData =fix->GetUserData();
-//					if(*((int*)(&userData))==ENEMIGOBOLA) fix->SetUserData((void*)ENEMIGOCONGELADO);
-//					if(*((int*)(&userData))==PIESENBOLA) fix->SetUserData((void*)PIESENCONGELADO);
-//				}
-				isBolaGirar = false;
-			}
-			activeSprite=CONGELADO;
-			return;
-		}
+	// Se mueve a la izquierda.
+	if (isLeftPressed && wasLeftPressed1st){
+		orientation = LEFT;
+		desiredVel = -7 * velocidadSumergido;                         //// VERIFICAR QUE CUANDO ESTE SALTANDO NO CAMBIE LA VELOCIDAD EN Y!! ! ! ! ! ! !  11 1 1 1 1 one one one
+		if (angulo <= 180 * DEGTORAD) scale = 0.33;
+		else scale = 3;
+		isMoving = true;
+	}
 
-		if(isTrapped) {
-			// TODO: Acciones a realizar si esta atrapado
-			animationCounter++;
-			if(animationCounter<100)
-				activeSprite=ATRAPADO1;
-			else if (animationCounter<200)
-				activeSprite=ATRAPADO2;
-			else {animationCounter=0;
-					stunCounter++;
-			}
-			if(stunCounter>=10){
-				vida++;
-				stunCounter=0;
-			}
-			if(vida>=3){
-				isTrapped=false;
-				for(b2Fixture * fix= bodyB2D->GetFixtureList();fix!=NULL;fix=fix->GetNext()){
-					void* userData =fix->GetUserData();
-					if(*((int*)(&userData))==ENEMIGOCONGELADO)
-						fix->SetUserData((void*)ENEMIGO);
-					if(*((int*)(&userData))==PIESENCONGELADO)
-						fix->SetUserData((void*)PIESEN);
-				}
-			}
-			return;
-		}
+	// Se mueve a la derecha.
+	if (isRightPressed && !wasLeftPressed1st){
+		orientation = RIGHT;
+		desiredVel = 7 * velocidadSumergido;
+		scale = 4;
+		if (angulo <= 180 * DEGTORAD) scale = 3;
+		else scale = 0.33;
+		isMoving = true;
+	}
+
+	// Calcula las velocidades deseadas segun la direccion de movimiento.
+	b2Vec2 vel = bodyB2D->GetLinearVelocity();
+	float32 velXChange = desiredVel * cos(angulo) - vel.x;
+	float32 velYChange = 0;
+	if ( angulo != 0 ) velYChange =  scale * desiredVel * sin(angulo) - vel.y ;
 
 
+	// Sin ninguna direccion indicada, se debe quedar quieto.
+	if (!isRightPressed && !isLeftPressed ){
+		velXChange = -vel.x; // I want the PJ to stop moving in the X axis.
+		if (isAirborne) velYChange = 0; // I want the PJ to keep moving normally in the Y axis if it is falling.
+		else velYChange = -vel.y; // I want the PJ to stop it's motion if it's in a slope.
+		isMoving = false;
+	}
 
-		// Determina, si esta saltando, si ya termino el salto.
-		if (!isAirborne) {
-			isJumping = false;
-			if(isDownPressed) {
-				isFalling = true;
-			} else {
-				isFalling = false;
-			}
-		} else {
-			b2Vec2 vel = bodyB2D->GetLinearVelocity();
-			if(vel.y >= 0) {
-				isFalling = true;
-			}
-		}
+	// Calcula los impulsos a aplicar segun en que direccion se esta moviendo el PJ.
+	float impulseX = bodyB2D->GetMass() * velXChange;
+	float impulseY = bodyB2D->GetMass() * velYChange;
+	bodyB2D->ApplyLinearImpulse( b2Vec2(impulseX, impulseY), bodyB2D->GetWorldCenter(), true);
 
-		float32 desiredVel = 0, scale = 0;
 
-		// Se mueve a la izquierda.
-		if (isLeftPressed && wasLeftPressed1st){
-			orientation = LEFT;
-			desiredVel = -7 * velocidadSumergido;                         //// VERIFICAR QUE CUANDO ESTE SALTANDO NO CAMBIE LA VELOCIDAD EN Y!! ! ! ! ! ! !  11 1 1 1 1 one one one
-			if (angulo <= 180 * DEGTORAD) scale = 0.33;
-			else scale = 3;
-			isMoving = true;
-		}
-
-		// Se mueve a la derecha.
-		if (isRightPressed && !wasLeftPressed1st){
-			orientation = RIGHT;
-			desiredVel = 7 * velocidadSumergido;
-			scale = 4;
-			if (angulo <= 180 * DEGTORAD) scale = 3;
-			else scale = 0.33;
-			isMoving = true;
-		}
-
-		// Calcula las velocidades deseadas segun la direccion de movimiento.
+	// Si se recibio UP y el personaje esta en el piso, salta.
+	if ( (isUpPressed && (!isAirborne)) || (sumergido && isUpPressed)){
 		b2Vec2 vel = bodyB2D->GetLinearVelocity();
-		float32 velXChange = desiredVel * cos(angulo) - vel.x;
-		float32 velYChange = 0;
-		if ( angulo != 0 ) velYChange =  scale * desiredVel * sin(angulo) - vel.y ;
+		float desiredVel = -19 * velocidadSumergido;
+		float velChange = desiredVel - vel.y;
+		float impulse = bodyB2D->GetMass() * velChange;
+		bodyB2D->ApplyLinearImpulse( b2Vec2(0,impulse), bodyB2D->GetWorldCenter(), true);
+		isJumping = true;
+	}
 
+	if(isDownPressed && !isFalling ) {
+		b2Vec2 vel = bodyB2D->GetLinearVelocity();
+		float desiredVel = -200;
+		float velChange = desiredVel - vel.y;
+		float impulse = bodyB2D->GetMass() * velChange;
+		bodyB2D->ApplyLinearImpulse( b2Vec2(0,impulse), bodyB2D->GetWorldCenter(), true);
+	}
 
-		// Sin ninguna direccion indicada, se debe quedar quieto.
-		if (!isRightPressed && !isLeftPressed ){
-			velXChange = -vel.x; // I want the PJ to stop moving in the X axis.
-			if (isAirborne) velYChange = 0; // I want the PJ to keep moving normally in the Y axis if it is falling.
-			else velYChange = -vel.y; // I want the PJ to stop it's motion if it's in a slope.
-			isMoving = false;
-		}
-
-		// Calcula los impulsos a aplicar segun en que direccion se esta moviendo el PJ.
-		float impulseX = bodyB2D->GetMass() * velXChange;
-		float impulseY = bodyB2D->GetMass() * velYChange;
-		bodyB2D->ApplyLinearImpulse( b2Vec2(impulseX, impulseY), bodyB2D->GetWorldCenter(), true);
-
-
-		// Si se recibio UP y el personaje esta en el piso, salta.
-		if ( (isUpPressed && (!isAirborne)) || (sumergido && isUpPressed)){
-			b2Vec2 vel = bodyB2D->GetLinearVelocity();
-			float desiredVel = -19 * velocidadSumergido;
-			float velChange = desiredVel - vel.y;
-			float impulse = bodyB2D->GetMass() * velChange;
-			bodyB2D->ApplyLinearImpulse( b2Vec2(0,impulse), bodyB2D->GetWorldCenter(), true);
-			isJumping = true;
-		}
-
-		if(isDownPressed && !isFalling ) {
-			b2Vec2 vel = bodyB2D->GetLinearVelocity();
-			float desiredVel = -200;
-			float velChange = desiredVel - vel.y;
-			float impulse = bodyB2D->GetMass() * velChange;
-			bodyB2D->ApplyLinearImpulse( b2Vec2(0,impulse), bodyB2D->GetWorldCenter(), true);
-		}
-
-		// DETERMINA EL SPRITE QUE CORRESPONDE AL ESTADO DEL PJ.
-		animationCounter++;
-		switch ((animationCounter/100)){
+	// DETERMINA EL SPRITE QUE CORRESPONDE AL ESTADO DEL PJ.
+	animationCounter++;
+	switch ((animationCounter/100)){
 		case 0:
 			if (isAirborne){  // Si esta en el aire:
 				if (isJumping) activeSprite = SALTANDOIZQUIERDA1; // Salta.
@@ -289,7 +294,7 @@ void EnemigoTiraFuego::update(){
 }
 
 void EnemigoTiraFuego::restarTimerThrow() {
-	if(timerThrow <= 0) {
+	if(timerThrow >= 0) {
 		timerThrow--;
 	} else {
 		timerThrow = TTHROW;

@@ -104,17 +104,17 @@ std::string Usuario::obtenerPantallaSerializada(){
 
 	// Envia los elementos que deben ser renderizados.
 	while (!listaVisibles.empty()){
-		std::cout << "INIT: " << this->inicializado << std::endl;
+		//std::cout << "INIT: " << this->inicializado << std::endl;
 		WorldItem * item = listaVisibles.front();
 		listaVisibles.pop_front();
 //		if(!item) continue;
 		// LINEA MAGICA
 		if( PJ->vida == 0 && (item->tipo==8 || !item->tipo) ) continue;
-		cout << "tipo:" << item->tipo << std::endl;
+		//cout << "tipo:" << item->tipo << std::endl;
 		if(!item) continue;
 		pantallaSerializada += "%";
 		pantallaSerializada += item->serializar();
-		std::cout << "SERIALIZO" << std::endl;
+		//std::cout << "SERIALIZO" << std::endl;
 		if (item->tipo == METADATAFONDO) delete item;
 		else if (item->tipo == METADATAHUD) delete item;
 	}

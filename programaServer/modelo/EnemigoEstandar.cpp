@@ -164,8 +164,6 @@ void EnemigoEstandar::update(){
 		return;
 	}
 
-
-
 	// Determina, si esta saltando, si ya termino el salto.
 	if (!isAirborne) {
 		isJumping = false;
