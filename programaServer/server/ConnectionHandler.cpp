@@ -74,7 +74,10 @@ bool ConnectionHandler::esperarPorMasJugadores(){
 bool ConnectionHandler::protocoloLogIn(){
 
 	// Inicia la comunicacion recibiendo el nombre de usuario y validando sus datos de login.
-	m_stream->receive(username);
+	size_t len =m_stream->receive(username);
+	if(len<=0){
+				return false;
+			}
 	int result = logIn(username);
 
 	// Rechaza la conexion si el servidor esta lleno.
@@ -102,7 +105,7 @@ bool ConnectionHandler::protocoloLogIn(){
 	}else{
 		printf ("Conexion aceptada %s:%d \n", m_stream->getPeerIP().c_str(), m_stream->getPeerPort());
 		std::string outMsg = "OK";
-		size_t len = m_stream->send(outMsg);
+		len = m_stream->send(outMsg);
 		if(len<=0){
 			return false;
 		}
@@ -152,12 +155,10 @@ bool ConnectionHandler::recibirEventos(){
 	std::string inMessage = "NOTDONE";
 	while (inMessage != "DONE"){
 		len = m_stream->receive(inMessage);
-		if (len <= 0) {
-			if(!controlador.obtenerUsuario(username)->isPJAlive()){
+		if (len < 0) {
 				printf("COUT ARRIBA DE vida=0 linea 157 del ConnectionHandler.cpp");
 				controlador.obtenerUsuario(username)->vida=0;
 				controlador.obtenerUsuario(username)->DeletePj();
-			}
 			std::cout << "FALSE" << std::endl;
 			return false;
 		}
