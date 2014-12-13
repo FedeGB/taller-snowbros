@@ -26,7 +26,7 @@ TCPStream* TCPConnector::connect(const char* server, int port)
     int sd = socket(AF_INET, SOCK_STREAM, 0);
     // Timeout setting
     struct timeval timeout;
-	timeout.tv_sec = 1;
+	timeout.tv_sec = 5;
 	timeout.tv_usec = 0;
 
 	if (setsockopt (sd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout,
