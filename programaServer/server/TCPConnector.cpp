@@ -17,7 +17,7 @@
 TCPStream* TCPConnector::connect(const char* server, int port)
 {
     struct sockaddr_in address;
-    signal(SIGPIPE, SIG_IGN);
+    //signal(SIGPIPE, SIG_IGN);
     memset (&address, 0, sizeof(address));
     address.sin_family = AF_INET;
     address.sin_port = htons(port);
@@ -26,16 +26,19 @@ TCPStream* TCPConnector::connect(const char* server, int port)
     }
     int sd = socket(AF_INET, SOCK_STREAM, 0);
     struct timeval tv;
-        	tv.tv_sec = 5;
-        	tv.tv_usec = 0;
+	tv.tv_sec = 5;
+	tv.tv_usec = 0;
 
-        	if (setsockopt (sd, SOL_SOCKET, SO_RCVTIMEO, (char *)&tv,
-        				sizeof(tv)) < 0)
-        		printf("setsockopt failed\n");
+	if (setsockopt (sd, SOL_SOCKET, SO_RCVTIMEO, (char *)&tv,
+				sizeof(tv)) < 0)
+		printf("setsockopt failed\n");
 
-        	if (setsockopt (sd, SOL_SOCKET, SO_SNDTIMEO, (char *)&tv,
-        				sizeof(tv)) < 0)
-        		printf("setsockopt failed\n");
+	if (setsockopt (sd, SOL_SOCKET, SO_SNDTIMEO, (char *)&tv,
+				sizeof(tv)) < 0)
+		printf("setsockopt failed\n");
+	// Fix para evitar los sigpipe
+	int set = 1;
+	setsockopt(sd, SOL_SOCKET, MSG_NOSIGNAL, (void*)&set, sizeof(int));
     if (::connect(sd, (struct sockaddr*)&address, sizeof(address)) != 0) {
         perror("connect() failed");
         return NULL;
