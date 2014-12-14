@@ -181,7 +181,7 @@ resultado_t WorldHandler::loopPrincipal() {
 			}
 			if( (*it).second->isPJAlive()) {
 				quedaPJvivo = true;
-				std::cout<<"pjvivo"<<std::endl;
+				//std::cout<<"pjvivo"<<std::endl;
 				(*it).second->procesarNotificaciones();
 				(*it).second->actualizarPJ();
 			}

@@ -155,13 +155,15 @@ void EnemigoEstandar::update(){
 			isTrapped=false;
 			for(b2Fixture * fix= bodyB2D->GetFixtureList();fix!=NULL;fix=fix->GetNext()){
 				void* userData =fix->GetUserData();
-				if(*((int*)(&userData))==ENEMIGOCONGELADO)
+				if(*((int*)(&userData))==ENEMIGOCONGELADO) {
 					fix->SetUserData((void*)ENEMIGO);
-				if(*((int*)(&userData))==PIESENCONGELADO)
+				}
+				if(*((int*)(&userData))==PIESENCONGELADO) {
 					fix->SetUserData((void*)PIESEN);
+				}
 			}
 		}
-		return;
+		if(isTrapped) return;
 	}
 
 	// Determina, si esta saltando, si ya termino el salto.
@@ -208,7 +210,7 @@ void EnemigoEstandar::update(){
 
 
 	// Sin ninguna direccion indicada, se debe quedar quieto.
-	if (!isRightPressed && !isLeftPressed ){
+	if (!isRightPressed && !isLeftPressed){
 		velXChange = -vel.x; // I want the PJ to stop moving in the X axis.
 		if (isAirborne) velYChange = 0; // I want the PJ to keep moving normally in the Y axis if it is falling.
 		else velYChange = -vel.y; // I want the PJ to stop it's motion if it's in a slope.

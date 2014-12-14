@@ -77,14 +77,14 @@ class ContactListener : public b2ContactListener
 		}
 
 		// Foot sensor collision for jump
-		if ( *((int*)(&fixtureAUserData)) == PIESPJ || *((int*)(&fixtureAUserData)) == PIESEN ){
+		if ( *((int*)(&fixtureAUserData)) == PIESPJ || *((int*)(&fixtureAUserData)) == PIESEN || *((int*)(&fixtureAUserData)) == PIESENCONGELADO ){
 			if ( (*((int*)(&fixtureBUserData)) != CAMARA)&&(*((int*)(&fixtureBUserData)) != PODERHIELO) && (*((int*)(&fixtureBUserData)) != sensorLAGUNA)&& (*((int*)(&fixtureBUserData)) != BOLASNOW)&&(*((int*)(&fixtureBUserData)) != PERSONAJE)&&(*((int*)(&fixtureBUserData)) != PIESPJ))
 				( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->modifyFootContacts(1);
 			if ( (*((int*)(&fixtureBUserData)) == ATRAVESABLE && ( (Cuadrilatero*) contact->GetFixtureB()->GetBody()->GetUserData())->hielo ) ) {
 				( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->setSobreHielo(true);
 			}
 		}
-		if ( *((int*)(&fixtureBUserData)) == PIESPJ || *((int*)(&fixtureBUserData)) == PIESEN ){
+		if ( *((int*)(&fixtureBUserData)) == PIESPJ || *((int*)(&fixtureBUserData)) == PIESEN || *((int*)(&fixtureBUserData)) == PIESENCONGELADO ){
 			if ( (*((int*)(&fixtureAUserData)) != CAMARA)&& (*((int*)(&fixtureAUserData)) != PODERHIELO) && (*((int*)(&fixtureAUserData)) != sensorLAGUNA)&& (*((int*)(&fixtureAUserData)) != BOLASNOW)&&(*((int*)(&fixtureAUserData)) != PERSONAJE)&&(*((int*)(&fixtureAUserData)) != PIESPJ))
 				( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->modifyFootContacts(1);
 			if ( (*((int*)(&fixtureAUserData)) == ATRAVESABLE && ( (Cuadrilatero*) contact->GetFixtureA()->GetBody()->GetUserData())->hielo ) ) {
@@ -270,14 +270,14 @@ class ContactListener : public b2ContactListener
     	  		}
 
   		// Foot sensor collision for jump
-    	  if ( *((int*)(&fixtureAUserData)) == PIESPJ || *((int*)(&fixtureAUserData)) == PIESEN ){
+    	  if ( *((int*)(&fixtureAUserData)) == PIESPJ || *((int*)(&fixtureAUserData)) == PIESEN  || *((int*)(&fixtureAUserData)) == PIESENCONGELADO){
         	  if ((*((int*)(&fixtureBUserData)) != CAMARA)&&(*((int*)(&fixtureBUserData)) != PODERHIELO) && (*((int*)(&fixtureBUserData)) != sensorLAGUNA)&& (*((int*)(&fixtureBUserData)) != BOLASNOW)&&(*((int*)(&fixtureBUserData)) != PERSONAJE)&&(*((int*)(&fixtureBUserData)) != PIESPJ))
         		  ( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->modifyFootContacts(-1);
         	  if((*((int*)(&fixtureBUserData))) == ATRAVESABLE && ( (WorldItem*)contact->GetFixtureB()->GetBody()->GetUserData())->hielo ) {
         	  	   ( (Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->setSobreHielo(false);
         	  }
           }
-    	  if ( *((int*)(&fixtureBUserData)) == PIESPJ || *((int*)(&fixtureBUserData)) == PIESEN ){
+    	  if ( *((int*)(&fixtureBUserData)) == PIESPJ || *((int*)(&fixtureBUserData)) == PIESEN || *((int*)(&fixtureBUserData)) == PIESENCONGELADO){
         	  if ( (*((int*)(&fixtureAUserData)) != CAMARA)&&(*((int*)(&fixtureAUserData)) != PODERHIELO) && (*((int*)(&fixtureAUserData)) != sensorLAGUNA)&& (*((int*)(&fixtureAUserData)) != BOLASNOW)&&(*((int*)(&fixtureAUserData)) != PERSONAJE)&&(*((int*)(&fixtureAUserData)) != PIESPJ))
         		  ( (Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->modifyFootContacts(-1);
         	  if((*((int*)(&fixtureAUserData))) == ATRAVESABLE && ( ((Cuadrilatero*)contact->GetFixtureA()->GetBody()->GetUserData())->hielo) ) {
