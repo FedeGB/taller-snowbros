@@ -36,7 +36,9 @@ TCPStream* TCPConnector::connect(const char* server, int port)
 	if (setsockopt (sd, SOL_SOCKET, SO_SNDTIMEO, (char *)&timeout,
 				sizeof(timeout)) < 0)
 		printf("setsockopt failed\n");
-
+	// Fix para evitar los sigpipe
+	int set = 1;
+	setsockopt(sd, SOL_SOCKET, MSG_NOSIGNAL, (void*)&set, sizeof(int));
     if (::connect(sd, (struct sockaddr*)&address, sizeof(address)) != 0) {
         perror("connect() failed");
         return NULL;
