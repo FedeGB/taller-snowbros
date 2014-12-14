@@ -23,9 +23,9 @@ class ContactListener : public b2ContactListener
 
 		if ( *((int*)(&fixtureBUserData)) == BOLASNOW ){
 			if ( *((int*)(&fixtureAUserData)) == PERSONAJE ||*((int*)(&fixtureAUserData)) == PIESPJ  ){
-				if(((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->contactcounter==1){
-					if(((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->pj==NULL)
-						((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->pj=((Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() );
+				if(((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->contactcounter>=1){
+					//if(((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->pj==NULL)
+						((BolaEnemigo*)contact->GetFixtureB()->GetBody()->GetUserData())->bindPj(((Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() ));
 					((Personaje *) contact->GetFixtureA()->GetBody()->GetUserData() )->inBall(contact->GetFixtureB()->GetBody());
 				}
 
@@ -35,9 +35,9 @@ class ContactListener : public b2ContactListener
 		}
 		if ( *((int*)(&fixtureAUserData)) == BOLASNOW ){
 			if ( *((int*)(&fixtureBUserData)) == PERSONAJE ||*((int*)(&fixtureBUserData)) == PIESPJ  ){
-				if(((BolaEnemigo*)contact->GetFixtureA()->GetBody()->GetUserData())->contactcounter==1){
-					if(((BolaEnemigo*)contact->GetFixtureA()->GetBody()->GetUserData())->pj==NULL)
-						((BolaEnemigo*)contact->GetFixtureA()->GetBody()->GetUserData())->pj=((Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() );
+				if(((BolaEnemigo*)contact->GetFixtureA()->GetBody()->GetUserData())->contactcounter>=1){
+					//if(((BolaEnemigo*)contact->GetFixtureA()->GetBody()->GetUserData())->pj==NULL)
+						((BolaEnemigo*)contact->GetFixtureA()->GetBody()->GetUserData())->bindPj(((Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() ));
 					((Personaje *) contact->GetFixtureB()->GetBody()->GetUserData() )->inBall(contact->GetFixtureA()->GetBody());
 				}
 				((BolaEnemigo*)contact->GetFixtureA()->GetBody()->GetUserData())->contactcounter++;

@@ -13,6 +13,7 @@
 #include "../modelo/SorpresaCorrer.h"
 #include "../modelo/SorpresaNieveMasPotente.h"
 #include "../modelo/SorpresaNieveMasLejos.h"
+#include <list>
 
 class BolaEnemigo:public Circulo {
 public:
@@ -28,18 +29,22 @@ public:
 		return toDelete;
 	}
 
+	void bindPj(Personaje* pj) {
+		pjBinds.push_back(pj);
+	}
+
 	void setCayoPorAgujero(bool);
 	bool cayoPorAgujero();
 	void moverArriba();
 	void notBounce();
 	int contactcounter;
-	Personaje* pj=NULL;
 
 protected:
 	b2Body * bodyB2D;
 	sprite_t activeSprite;
 	int tiempoDeVida;
 	bool toDelete;
+	std::list<Personaje*> pjBinds;
 
 	bool cayo;
 };

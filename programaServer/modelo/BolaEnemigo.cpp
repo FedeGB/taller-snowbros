@@ -57,7 +57,7 @@ BolaEnemigo::BolaEnemigo(b2Body * body){
 	activeSprite=CONGELADO;
 	tipo=BOLASNOW;
 	contactcounter=0;
-	this->pj=NULL;
+	pjBinds.clear();
 }
 
 void BolaEnemigo::Impulso(orientation_t ori){
@@ -88,8 +88,12 @@ BolaEnemigo::~BolaEnemigo() {
 	}
 
 	sorpresa->agregarAMundo(bodyB2D->GetPosition().x, bodyB2D->GetPosition().y, bodyB2D->GetWorld());
-	if(pj!=NULL)
-		pj->bindball=false;
+	if(!pjBinds.empty()){
+		for(std::list<Personaje*>::iterator it = pjBinds.begin(); it != pjBinds.end(); it++) {
+			(*it)->bindball = false;
+		}
+	}
+	pjBinds.clear();
 	this->bodyB2D->GetWorld()->DestroyBody(this->bodyB2D);
 }
 
