@@ -15,6 +15,28 @@
 #include <vector>
 #include <sstream>
 
+#define PATH_TEXTURA_FONDO "imagenes/fondo.png"
+#define PATH_TEXTURA_BOTON1 "imagenes/boton1.png"
+#define PATH_TEXTURA_BOTON2 "imagenes/boton2.png"
+#define PATH_TEXTURA_CAJADETEXTO "imagenes/cajaDeTexto.png"
+#define PATH_TEXTURA_PJ "imagenes/player1Spritesheet.png"
+#define PATH_TEXTURA_ENEMIGOESTANDAR "imagenes/enemigoEstandarSpritesheet.png"
+#define PATH_TEXTURA_ENEMIGOFUEGO "imagenes/enemigoFuegoSpritesheet.png"
+#define PATH_TEXTURA_LADRILLO "imagenes/ladrillo.png"
+#define PATH_TEXTURA_LAGUNA "imagenes/laguna.png"
+#define PATH_TEXTURA_AGUJERO "imagenes/agujero.png"
+#define PATH_TEXTURA_INMUNIDAD "imagenes/inmunidadSpritesheet.png"
+#define PATH_TEXTURA_BOLADEFUEGO "imagenes/bolaDeFuego.png"
+#define PATH_TEXTURA_BOLADENIEVE "imagenes/pelotaDeNieve.png"
+#define PATH_TEXTURA_PELOTADENIEVE "imagenes/pelotaDeNieve.png"
+#define PATH_TEXTURA_BOLAENEMIGOPARCIAL "imagenes/bolaEnemigoParcial.png"
+#define PATH_TEXTURA_SORPRESACORRER "imagenes/sorpresaCorrer.png"
+#define PATH_TEXTURA_SORPRESALEJOS "imagenes/sorpresaNieveMasLejos.png"
+#define PATH_TEXTURA_SORPRESAPOTENTE "imagenes/sorpresaNieveMasPotente.png"
+
+
+
+
 #define TEXTURA_LADRILLO "imagenes/ladrillo.png"
 #define TEXTURA_PELOTA "imagenes/pelota.png"
 #define TEXTURA_HIELO "imagenes/hielo.PNG"
@@ -25,15 +47,16 @@
 #define IMAGEN_FONDO "imagenes/fondo2.png"
 #define TEXTURA_LAGUNA "imagenes/laguna.png"
 #define IMAGEN_GAMEOVER "imagenes/gameover.png"
-#define TEXTURA_AGUJERO "imagenes/agujero.png"
 
 #define MUSICA_FONDO "sonidos/musica_fondo.wav"
 #define SONIDO_SALTO "sonidos/salto.wav"
 #define SONIDO_DISPARO "sonidos/disparo.wav"
 #define SONIDO_DISPARO_SORPRESA "sonidos/disparo_sorpresa.wav"
+#define SONIDO_INMUNIDAD "sonidos/inmunidad.wav"
+#define SONIDO_MUERTE "sonidos/vidaPerdida.wav"
 #define SONIDO_SALTO_SUMERGIDO "sonidos/salto_sumergido.wav"
 
-#define PI 3.14159265
+//#define PI 3.14159265
 const float32 DEGTORAD = 0.0174532925199432957f;
 const float32 RADTODEG = 57.295779513082320876f;
 
@@ -59,7 +82,6 @@ Container& split( Container& result, const typename Container::value_type& s,
   size_t next = -1;
   do
   {
-	  //printf("aaa");
     if (empties == no_empties)
     {
       next = s.find_first_not_of( delimiters, next + 1 );
@@ -94,12 +116,18 @@ enum teclas_t{
 	a,
 };
 
+enum estado_juego_t{
+	ESPERANDOCONEXIONES = 0,
+	JUGANDO = 1,
+	JUEGOTERMINADO = 2,
+};
+
 enum resultado_t{
 	GANARON,
 	PERDIERON,
 	ERROR_RESULTADO,
 };
-
+/*
 enum worlditem_t{
 	METADATAFONDO,
 	METADATAHUD,
@@ -108,7 +136,7 @@ enum worlditem_t{
 	POLIGONOREGULAR,
 	PJ,
 	STRINGMSG,
-	NIEVE,
+	NIEVE,PJ
 	FUEGO,
 	SONIDO,
 	ENEMIGOESTANDAR,
@@ -117,7 +145,7 @@ enum worlditem_t{
 	LAGUNA,
 	ENEMIGOTIRAFUEGO,
 	AGUJERO,
-};
+};*/
 
 enum sprite_t{
 	PARADOIZQUIERDA,
@@ -157,7 +185,6 @@ enum sprite_t{
 	spriteLAGUNA,
 	ENTIFUE,
 	GAMEOVER,
-	spriteAGUJERO,
 };
 
 
@@ -169,6 +196,8 @@ enum sonidos_t{
 	EXPLOSION,
 	DISPARO,
 	DISPARO_SORPRESA,
+	SONIDOINMUNIDAD,
+	SONIDOMUERTE,
 	VIDA_EXTRA,
 };
 

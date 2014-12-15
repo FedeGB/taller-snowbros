@@ -10,9 +10,9 @@
 #include <string>
 #include <list>
 
-#include "../modelo/WorldItem.h"
+//#include "../modelo/WorldItem.h"
 //#include "modelo/Vidas.h"
-#include "Fondo.h"
+//#include "Fondo.h"
 
 class Window {
 
@@ -42,9 +42,9 @@ public:
 	// Constructor de la clase
 	Window();
 	// Cargar ventana
-	bool init(int width, int height, std::string BGpath);
+	bool init(int width, int height);
 	// Cargar el fondo
-	bool loadBackground(const char* pathToBG);
+	//bool loadBackground(const char* pathToBG);
 	// Inserta un personaje
 	//Personaje * insertarPersonaje(float32 height, float32 width);
 	// Inserta una figura
@@ -52,9 +52,14 @@ public:
 	// manejar evento
 	//void handleEvent(SDL_Event&);
 	// Update ventana
-	bool updateWindow(std::list<WorldItem*> & itemList, float escala);
+	//bool updateWindow(std::list<WorldItem*> & itemList, float escala);
 	// Destructor de la clase
 	virtual ~Window();
+
+	bool limpiarVentana();
+
+	bool actualizarVentana();
+
 };
 
 #endif

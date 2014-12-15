@@ -29,7 +29,7 @@ TCPStream::~TCPStream()
 ssize_t TCPStream::send(const std::string & sent){
 
 	char buff[4];
-	sprintf(buff, "%d", (int)sent.length());
+	sprintf(buff, "%04d", (int)sent.length());
 	int s = write(m_sd, buff, 4);
 	if (s <= 0) return connectionError;
 	uint totalSent = 0;

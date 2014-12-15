@@ -2,7 +2,7 @@
 #include <iostream>
 #include <SDL2/SDL2_rotozoom.h>
 #include <SDL2/SDL_image.h>
-#include "ItemRenderer.h"
+//#include "ItemRenderer.h"
 
 float Window::wRatio, Window::hRatio;
 
@@ -14,9 +14,10 @@ Window::Window() {
 	SCREEN_WIDTH = 480;
 	SCREEN_HEIGHT = 640;
 	wRatio = hRatio = 1;
+	ctx = NULL;
 }
 
-bool Window::init(int width, int height, std::string BGpath){
+bool Window::init(int width, int height){
 	if( !validarAnchoYAlto( width, height ) ){
 		return !error;
 	}
@@ -50,7 +51,7 @@ bool Window::init(int width, int height, std::string BGpath){
 
 	return !error;
 }
-
+/*
 bool Window::updateWindow(std::list<WorldItem*> & itemList, float escala){
 
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
@@ -68,30 +69,44 @@ bool Window::updateWindow(std::list<WorldItem*> & itemList, float escala){
 
 	return !error;
 }
+*/
+bool Window::limpiarVentana(){
+
+	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+
+	return !error;
+}
+
+bool Window::actualizarVentana(){
+
+	SDL_GL_SwapWindow(window);
+
+	return !error;
+}
 
 
 bool Window::validarAnchoYAlto(int width, int height)
 {
-	Logger& log = * Logger::Instancia();
+	//Logger& log = * Logger::Instancia();
 
 	if (height > 0 && width > 0){
 		SCREEN_WIDTH = width;
 		SCREEN_HEIGHT = height;
 	} else {
-		log.log(WINDOWLOG,ERROR, "Altura y/o ancho menor a 0");
+		//log.log(WINDOWLOG,ERROR, "Altura y/o ancho menor a 0");
 		error = true;
 	}
 	return !error;
 }
 
 bool Window::iniciarSDL() {
-	Logger& log = * Logger::Instancia();
+	//Logger& log = * Logger::Instancia();
 
 	// Inicio SDL.
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
 		std::string buff ("No se pudo inicializar SDL! ");
 		buff = buff + SDL_GetError();
-		log.log(WINDOWLOG,ERROR, buff);
+		//log.log(WINDOWLOG,ERROR, buff);
 		return false;
 	}
 
@@ -100,7 +115,7 @@ bool Window::iniciarSDL() {
 	if( !( IMG_Init( imgFlags ) & imgFlags ) ) {
 		std::string buff ("SDL_image no pudo iniciar! SDL_image Error: ");
 		buff = buff + IMG_GetError();
-		log.log(WINDOWLOG,ERROR, buff);
+		//log.log(WINDOWLOG,ERROR, buff);
 		return false;
 	}
 
@@ -109,11 +124,11 @@ bool Window::iniciarSDL() {
 
 SDL_Window* Window::crearVentana()
 {
-	Logger& log = * Logger::Instancia();
+	//Logger& log = * Logger::Instancia();
 	SDL_Window* w = SDL_CreateWindow("Snow Bros", SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT,
 			SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
-	if(!w) {
+	/*if(!w) {
 		if (!log.abrirLog(WINDOWLOG)) {
 			std::cout << "Error al abrir archivo de log " << WINDOWLOG << std::endl;
 			return w;
@@ -123,7 +138,7 @@ SDL_Window* Window::crearVentana()
 		log.escribirLog(ERROR, buf);
 		log.cerrarLog();
 		error = true;
-	}
+	}*/
 	return w;
 }
 
@@ -159,11 +174,7 @@ SDL_GLContext Window::initGL(SDL_Window* w) {
 	SDL_GL_SetSwapInterval(1);
 
 // Set the OpenGL state after creating the context with SDL_SetVideoMode
-	glClearColor(0, 0, 0, 1);
-
-	glEnable(GL_DEPTH_TEST);
-	glAlphaFunc(GL_GREATER, 0.1);
-	glEnable(GL_ALPHA_TEST);
+	glClearColor(0.3, 0.5, 1, 1);
 
 	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -180,6 +191,6 @@ SDL_GLContext Window::initGL(SDL_Window* w) {
 
 void Window::setGameOver(){
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-	ItemRenderer::renderGameOver();
+	//ItemRenderer::renderGameOver();
 	SDL_GL_SwapWindow(window);
 }

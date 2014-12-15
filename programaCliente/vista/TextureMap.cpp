@@ -7,20 +7,28 @@
 
 #include "TextureMap.h"
 
-
+// Crea un mapa de texturas.
 TextureMap::TextureMap() {
-	inicializado = false;
 }
 
-bool TextureMap::yaInicializado(){
-	return inicializado;
+// Destruye el mapa de texturas.
+TextureMap::~TextureMap() {
+
+	for (TextureMap::iterator it = this->begin(); it != this->end(); it++){
+		if ((*it).second) {
+			delete (*it).second;
+			(*it).second = NULL;
+		}
+	}
+
 }
 
-bool TextureMap::init(){
+// Carga todas las texturas que se utilizaran en el juego, junto con sus
+// areas de rendereo.
+bool TextureMap::inicializar(){
 
-	if (inicializado) return false;
-	if (!loadMetadataTex()) return false;
-	if (!loadPJTex()) return false;
+/*	if (!loadMetadataTex()) return false;
+
 	if (!loadENESTex()) return false;
 	if (!loadENTIFUETex()) return false;
 	if (!loadCircleTex()) return false;
@@ -29,34 +37,196 @@ bool TextureMap::init(){
 	if (!loadSnowBallTex()) return false;
 	if (!loadSorpresasTex()) return false;
 	if (!loadLagunaTex()) return false;
-	if (!loadAgujeroTex()) return false;
 	if (!loadGameOverTex()) return false;
-	inicializado = true;
+*/
+
+	if (!cargarTexturasBotones()) return false;
+	if (!cargarTexturasPJ()) return false;
+	if (!cargarTexturasEnemigos()) return false;
+	if (!cargarTexturasAuxiliares()) return false;
 	return true;
 }
 
+// Devuelve la textura correspondiente a tipoTextura.
+Textura * TextureMap::obtenerTextura(tipo_textura_t tipoTextura){
+	return (*this)[tipoTextura];
+}
 
-bool TextureMap::loadAgujeroTex(){
-	// TODO: sacar hardcodeo del path de imagen.
+// Devuelve una textura correspondiente al texto pedido.
+// A diferencia de las texturas de elementos de la UI, las texturas de
+// textos deben ser liberadas cuando se terminan de utilizar.
+Textura * TextureMap::generarTexturaTexto(std::string texto, estilo_texto_t estilo){
+
+	// TODO: sacar los parametros hardcodeados y cargarlos segun el estilo elegido.
+	std::string fuente;
+	if (estilo == PANTALLAINICIARSESION) fuente = "fuentes/UbuntuMono-B.ttf";
+	if (estilo == ESTADOJUGADOR) fuente = "fuentes/UbuntuMono-R.ttf";
+	int tamanio;
+	if (estilo == PANTALLAINICIARSESION) tamanio = 14;
+	if (estilo == ESTADOJUGADOR) tamanio = 9;
+	SDL_Color color;
+	color.r = 0; color.g = 0; color.b = 0; color.a = 255;
+
 	Textura * tex = new Textura();
-	if (!tex) {
-		std::cout << "no se cargo la imagen" << std::endl;
-		return false;
-	}
-	tex->generar(TEXTURA_AGUJERO);
+	if (!tex->generarTexto(fuente, tamanio, texto, color)) return NULL;
 
-	TexAndVertexes * temp = new TexAndVertexes;
-	temp->vertexes = new Vertexes(4);
-	temp->vertexes->x[0] = temp->vertexes->x[3] = 0.0f;
-	temp->vertexes->y[0] = temp->vertexes->y[1] = 0.0f;
-	temp->vertexes->x[1] = temp->vertexes->x[2] = 1.0f;
-	temp->vertexes->y[2] = temp->vertexes->y[3] = 1.0f;
-	temp->tex = tex;
-	(*this)[spriteAGUJERO] = temp;
+	return tex;
+}
+
+// Carga las texturas correspondientes a los botones del juego.
+bool TextureMap::cargarTexturasBotones(){
+
+	// Crea la textura y carga la imagen.
+	Textura * tex = new Textura();
+	if (!tex) return false;
+	if (!tex->generar(PATH_TEXTURA_BOTON1)) return false;
+
+	// Agrega la textura al mapa.
+	(*this)[BOTON1] = tex;
+
+	// Crea la textura y carga la imagen.
+	tex = new Textura();
+	if (!tex) return false;
+	if (!tex->generar(PATH_TEXTURA_BOTON2)) return false;
+
+	// Agrega la textura al mapa.
+	(*this)[BOTON2] = tex;
+
+	// Crea la textura y carga la imagen.
+	tex = new Textura();
+	if (!tex) return false;
+	if (!tex->generar(PATH_TEXTURA_CAJADETEXTO)) return false;
+
+	// Agrega la textura al mapa.
+	(*this)[CAJADETEXTO] = tex;
 
 	return true;
 }
 
+bool TextureMap::cargarTexturasPJ(){
+
+	// Crea la textura y carga la imagen.
+	Textura * tex = new Textura();
+	if (!tex) return false;
+	if (!tex->generar(PATH_TEXTURA_PJ)) return false;
+
+	// Agrega la textura al mapa.
+	(*this)[PJ] = tex;
+
+	return true;
+}
+
+bool TextureMap::cargarTexturasEnemigos(){
+
+	// Crea la textura y carga la imagen.
+	Textura * tex = new Textura();
+	if (!tex) return false;
+	if (!tex->generar(PATH_TEXTURA_ENEMIGOESTANDAR)) return false;
+
+	// Agrega la textura al mapa.
+	(*this)[ENEMIGOESTANDAR] = tex;
+
+	tex = new Textura();
+	if (!tex) return false;
+	if (!tex->generar(PATH_TEXTURA_ENEMIGOFUEGO)) return false;
+
+	// Agrega la textura al mapa.
+	(*this)[ENEMIGOFUEGO] = tex;
+
+	tex = new Textura();
+	if (!tex) return false;
+	if (!tex->generar(PATH_TEXTURA_BOLAENEMIGOPARCIAL)) return false;
+
+	// Agrega la textura al mapa.
+	(*this)[BOLAENEMIGOPARCIAL] = tex;
+
+	return true;
+}
+
+bool TextureMap::cargarTexturasAuxiliares(){
+
+	// Crea la textura y carga la imagen.
+	Textura * tex = new Textura();
+	if (!tex) return false;
+	if (!tex->generar(PATH_TEXTURA_BOLADEFUEGO)) return false;
+
+	// Agrega la textura al mapa.
+	(*this)[BOLADEFUEGO] = tex;
+
+	tex = new Textura();
+	if (!tex) return false;
+	if (!tex->generar(PATH_TEXTURA_BOLADENIEVE)) return false;
+
+	// Agrega la textura al mapa.
+	(*this)[BOLADENIEVE] = tex;
+
+	tex = new Textura();
+	if (!tex) return false;
+	if (!tex->generar(PATH_TEXTURA_PELOTADENIEVE)) return false;
+
+	// Agrega la textura al mapa.
+	(*this)[PELOTADENIEVE] = tex;
+
+	tex = new Textura();
+	if (!tex) return false;
+	if (!tex->generar(PATH_TEXTURA_LADRILLO)) return false;
+
+	// Agrega la textura al mapa.
+	(*this)[LADRILLO] = tex;
+
+	tex = new Textura();
+	if (!tex) return false;
+	if (!tex->generar(PATH_TEXTURA_LAGUNA)) return false;
+
+	// Agrega la textura al mapa.
+	(*this)[LAGUNA] = tex;
+
+	tex = new Textura();
+	if (!tex) return false;
+	if (!tex->generar(PATH_TEXTURA_AGUJERO)) return false;
+
+	// Agrega la textura al mapa.
+	(*this)[AGUJERO] = tex;
+
+	tex = new Textura();
+	if (!tex) return false;
+	if (!tex->generar(PATH_TEXTURA_INMUNIDAD)) return false;
+
+	// Agrega la textura al mapa.
+	(*this)[INMUNIDAD] = tex;
+
+	tex = new Textura();
+	if (!tex) return false;
+	if (!tex->generar(PATH_TEXTURA_SORPRESACORRER)) return false;
+
+	// Agrega la textura al mapa.
+	(*this)[SORPRESACORRER] = tex;
+
+	tex = new Textura();
+	if (!tex) return false;
+	if (!tex->generar(PATH_TEXTURA_SORPRESALEJOS)) return false;
+
+	// Agrega la textura al mapa.
+	(*this)[SORPRESALEJOS] = tex;
+
+	tex = new Textura();
+	if (!tex) return false;
+	if (!tex->generar(PATH_TEXTURA_SORPRESAPOTENTE)) return false;
+
+	// Agrega la textura al mapa.
+	(*this)[SORPRESAPOTENTE] = tex;
+
+	tex = new Textura();
+	if (!tex) return false;
+	if (!tex->generar(PATH_TEXTURA_FONDO)) return false;
+
+	// Agrega la textura al mapa.
+	(*this)[FONDO] = tex;
+
+	return true;
+}
+
+/*
 bool TextureMap::loadMetadataTex(){
 
 	// TODO: sacar hardcodeo del path de imagen.
@@ -112,27 +282,7 @@ bool TextureMap::loadMetadataTex(){
 	return true;
 }
 
-bool TextureMap::loadPJTex(){
 
-	// TODO: sacar hardcodeo del path de imagen.
-	Textura * tex = new Textura();
-	if (!tex) {
-		std::cout << "no se cargo la imagen" << std::endl;
-		return false;
-	}
-	tex->generar(SPRITE_SHEET);
-
-	TexAndVertexes * temp = new TexAndVertexes;
-	temp->vertexes = new Vertexes(4);
-	temp->vertexes->x[0] = temp->vertexes->x[3] = 7 / 432.0f;
-	temp->vertexes->y[0] = temp->vertexes->y[1] = 9 / 320.0f;
-	temp->vertexes->x[1] = temp->vertexes->x[2] = 30 / 432.0f;
-	temp->vertexes->y[2] = temp->vertexes->y[3] = 35 / 320.0f;
-	temp->tex = tex;
-	(*this)[PJ1] = temp;
-
-	return true;
-}
 
 bool TextureMap::loadENESTex(){
 
@@ -336,15 +486,6 @@ bool TextureMap::loadCuadTex(){
 
 	return true;
 }
+*/
 
-TextureMap::~TextureMap() {
-
-	 for (TextureMap::iterator it = this->begin(); it != this->end(); it++){
-		 if ((*it).second) {
-			 delete (*it).second;
-			 (*it).second = NULL;
-		 }
-	 }
-
-}
 

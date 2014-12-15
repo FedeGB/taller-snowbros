@@ -14,8 +14,7 @@
 #include <SDL2/SDL_image.h>
 #include "../utiles/tipos.h"
 #include "../utiles/Logger.h"
-
-//#include "../vista/Camera.h"
+#include "../matematica/FiguraGeometrica.h"
 
 class Textura {
 private:
@@ -32,9 +31,8 @@ public:
 
 	bool generarTexto(std::string path, int tamanio, std::string txt, SDL_Color color);
 
-	void dibujar(GLfloat* vx, GLfloat* vy, float* s, float* t, int n);
-	void dibujar(GLfloat* vx, GLfloat* vy, float* s, float* t, int n, float z);
-	void dibujarOscuro(GLfloat* vx, GLfloat* vy, float* s, float* t, int n);
+	void dibujar(FiguraGeometrica * forma, FiguraGeometrica * verticesTextura);
+	//void dibujarOscuro(FiguraGeometrica * forma);
 
 };
 
