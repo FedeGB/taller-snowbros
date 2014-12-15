@@ -9,24 +9,24 @@
 #define CONNECTIONHANDLER_H_
 
 #include "TCPStream.h"
-#include "../threads/ColaTrabajo.h"
-#include "WorkItem.h"
-#include "../modelo/WorldItem.h"
+//#include "../threads/ColaTrabajo.h"
 #include "../threads/Thread.h"
 #include "../threads/ThreadSafeList.h"
 #include "../threads/ConditionVariable.h"
-#include "../ControladorUsuarios.h"
+#include "../interfaces/EnviadorNotificaciones.h"
+#include "../parserMensajes/ParserMensajes.h"
+#include "../parserMensajes/protocoloServidorCliente.h"
+#include "../controladorJuego/ControladorJuego.h"
+#include "../controladorJuego/estadoJuego/Jugador.h"
 
 #define OK 0
 #define SERVERFULL 1
 #define USERONLINE 2
 #define USERDEAD 3
 
-class ConnectionHandler : public Thread{
+class ConnectionHandler : public EnviadorNotificaciones, public Thread{
 private:
-	ControladorUsuarios & controlador;
     TCPStream * m_stream;
-    std::string username;
 
     // Intenta conectar un usuario al servidor, ya sea alguien que
     // ya estaba en la partida y se habia desconectado, o alguien nuevo.
@@ -57,16 +57,20 @@ private:
     bool esperarPorMasJugadores();
 
     // Loop que representa la comunicacion entre cliente y servidor a lo largo de una partida:
-    // se reciben eventos y luego se envia la pantalla a renderear para representar el estado
-    // actual de juego. Se rompe cuando se pierde la conexion, o la partida finaliza.
-    // retorno: false si se pierde la conexion, true si la partida finalizo sin problemas.
+    // Se simula el nivel y, al finalizarlo, se espera a que el cliente decida pasar de nivel.
     bool loopPartida();
+
+    // Loop que representa la comunicacion entre cliente y servidor a lo largo de un nivel:
+    // se reciben eventos y luego se envia la pantalla a renderear para representar el estado
+    // actual de juego. Se rompe cuando se pierde la conexion, o el nivel finaliza.
+    // retorno: false si se pierde la conexion, true si el nivel finalizo sin problemas.
+    bool loopNivel();
 
     // Recibe todos los eventos sucedidos en el cliente desde la ultima vez que se llamo al metodo.
     // Los almacena en la cola de notificaciones para ser procesados por el thread de simulacion.
     // retorno: false si se corto la comunicacion, true en caso contrario.
     bool recibirEventos();
-
+/*
     // Informa al Jugador el resultado de la partida, y le pregunta si quiere seguir jugando.
     // En caso de que quiera seguir, se lo pone en espera para la siguiente partida.
     // En caso contrario, se lo quita de los usuarios del servidor y se desconecta.
@@ -74,9 +78,34 @@ private:
     // NOTA: Esta funcion bloquea hasta que se llene el servidor. Al momento del retorno,
     // la partida ya ha comenzado.
     bool protocoloFinDePartida();
+*/
+
+    // Metodo encargado de enviar las modificaciones en los objetos del modelo.
+    bool enviarObjetos();
+
+    // Metodo encargado de enviar las modificaciones en los personajes del modelo.
+    bool enviarPersonajes();
+
+    // Metodo encargado de enviar las modificaciones en los enemigos del modelo.
+    bool enviarEnemigos();
+
+    // Metodo encargado de enviar las modificaciones en el estado del juego.
+    bool enviarEstado();
+
+    // Espera a que los demas jugadores respondan.
+    bool esperar();
+
+    // Espera una respuesta por parte del jugador.
+    bool esperarRespuesta();
+
+    ControladorJuego * controlador;
+    ParserMensajes parser;
 
 public:
-    ConnectionHandler(ControladorUsuarios & c, TCPStream * stream);
+
+    std::string username;
+
+    ConnectionHandler(TCPStream * stream, ControladorJuego * controlador);
     void* run();
 };
 

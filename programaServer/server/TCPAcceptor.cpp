@@ -9,8 +9,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <arpa/inet.h>
-#include <signal.h>
-#include <errno.h>
+#include <csignal>
 
 TCPAcceptor::TCPAcceptor(int port, const char* address)
     : m_lsd(0), m_port(port), m_address(address), m_listening(false) {}
@@ -27,6 +26,10 @@ int TCPAcceptor::start()
     if (m_listening == true) {
         return 0;
     }
+
+    // We expect write failures to occur but we want to handle them where
+    // the error occurs rather than in a SIGPIPE handler.
+    signal(SIGPIPE, SIG_IGN);
 
     m_lsd = socket(PF_INET, SOCK_STREAM, 0);
     struct sockaddr_in address;
@@ -64,7 +67,7 @@ TCPStream* TCPAcceptor::accept()
     if (m_listening == false) {
         return NULL;
     }
-    signal(SIGPIPE, SIG_IGN);
+
     struct sockaddr_in address;
     socklen_t len = sizeof(address);
     memset(&address, 0, sizeof(address));
@@ -74,15 +77,15 @@ TCPStream* TCPAcceptor::accept()
         return NULL;
     }
     struct timeval tv;
-	tv.tv_sec = 5;
-	tv.tv_usec = 0;
+            	tv.tv_sec = 10;
+            	tv.tv_usec = 0;
 
-	if (setsockopt (sd, SOL_SOCKET, SO_RCVTIMEO, (char *)&tv,
-				sizeof(tv)) < 0)
-		printf("setsockopt failed\n");
+            	if (setsockopt (sd, SOL_SOCKET, SO_RCVTIMEO, (char *)&tv,
+            				sizeof(tv)) < 0)
+            		printf("setsockopt failed\n");
 
-	if (setsockopt (sd, SOL_SOCKET, SO_SNDTIMEO, (char *)&tv,
-				sizeof(tv)) < 0)
-		printf("setsockopt failed\n");
+            	if (setsockopt (sd, SOL_SOCKET, SO_SNDTIMEO, (char *)&tv,
+            				sizeof(tv)) < 0)
+            		printf("setsockopt failed\n");
     return new TCPStream(sd, &address);
 }

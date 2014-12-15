@@ -15,8 +15,38 @@
 #include <vector>
 #include <sstream>
 
+#define PATH_TEXTURA_BOTON1 "imagenes/boton1.png"
+#define PATH_TEXTURA_BOTON2 "imagenes/boton2.png"
+#define PATH_TEXTURA_CAJADETEXTO "imagenes/cajaDeTexto.png"
+#define PATH_TEXTURA_PJ "imagenes/player1Spritesheet.png"
+#define PATH_TEXTURA_ENEMIGOESTANDAR "imagenes/enemigoEstandarSpritesheet.png"
+#define PATH_TEXTURA_ENEMIGOFUEGO "imagenes/enemigoFuegoSpritesheet.png"
+#define PATH_TEXTURA_LADRILLO "imagenes/ladrillo.png"
+#define PATH_TEXTURA_BOLADEFUEGO "imagenes/bolaDeFuego.png"
+#define PATH_TEXTURA_BOLADENIEVE "imagenes/bolaEnemigo.png"
+#define PATH_TEXTURA_BOLAENEMIGO "imagenes/bolaEnemigo.png"
+#define PATH_TEXTURA_BOLAENEMIGOPARCIAL "imagenes/bolaEnemigoParcial.png"
 
-#define PI 3.14159265
+
+
+#define TEXTURA_LADRILLO "imagenes/ladrillo.png"
+#define TEXTURA_PELOTA "imagenes/pelota.png"
+#define TEXTURA_HIELO "imagenes/hielo.PNG"
+#define SPRITE_SHEET "imagenes/playerSpritesheet1.png"
+#define ENEMIES_SHEET "imagenes/SnowBros.png"
+#define TEXTURA_VIDA "imagenes/vida.png"
+#define FONT_TTF "fuentes/Ubuntu-B.ttf"
+#define IMAGEN_FONDO "imagenes/fondo2.png"
+#define TEXTURA_LAGUNA "imagenes/laguna.png"
+#define IMAGEN_GAMEOVER "imagenes/gameover.png"
+
+#define MUSICA_FONDO "sonidos/musica_fondo.wav"
+#define SONIDO_SALTO "sonidos/salto.wav"
+#define SONIDO_DISPARO "sonidos/disparo.wav"
+#define SONIDO_DISPARO_SORPRESA "sonidos/disparo_sorpresa.wav"
+#define SONIDO_SALTO_SUMERGIDO "sonidos/salto_sumergido.wav"
+
+//#define PI 3.14159265
 const float32 DEGTORAD = 0.0174532925199432957f;
 const float32 RADTODEG = 57.295779513082320876f;
 
@@ -56,6 +86,7 @@ Container& split( Container& result, const typename Container::value_type& s,
   return result;
 }
 
+
 enum teclas_t{
 	ARRIBA,
 	ABAJO,
@@ -75,9 +106,11 @@ enum teclas_t{
 	a,
 };
 
-enum orientation_t{
-	LEFT,
-	RIGHT,
+enum estado_juego_t{
+	ESPERANDOCONEXIONES = 0,
+	JUGANDO = 1,
+	JUEGOTERMINADO = 2,
+	NIVELTERMINADO = 3,
 };
 
 enum resultado_t{
@@ -85,14 +118,7 @@ enum resultado_t{
 	PERDIERON,
 	ERROR_RESULTADO,
 };
-
-enum estado_user_t{
-	NO_REGISTRADO,
-	REGISTRADO,
-	ESPERANDO_ESTADO,
-	NO_NOTIFICADO,
-};
-
+/*
 enum worlditem_t{
 	METADATAFONDO,
 	METADATAHUD,
@@ -101,7 +127,7 @@ enum worlditem_t{
 	POLIGONOREGULAR,
 	PJ,
 	STRINGMSG,
-	NIEVE,
+	NIEVE,PJ
 	FUEGO,
 	SONIDO,
 	ENEMIGOESTANDAR,
@@ -110,7 +136,7 @@ enum worlditem_t{
 	LAGUNA,
 	ENEMIGOTIRAFUEGO,
 	AGUJERO,
-};
+};*/
 
 enum sprite_t{
 	PARADOIZQUIERDA,
@@ -131,8 +157,8 @@ enum sprite_t{
 	FONDO1,
 	PUNTAJE1,
 	VIDAS1,
-	BOLANIEVE1,
-	BOLAFUEGO1,
+	PODER1,
+	PODER2,
 	TIRANDOIZQUIERDA1,
 	TIRANDOIZQUIERDA2,
 	TIRANDOIZQUIERDA3,
@@ -149,7 +175,9 @@ enum sprite_t{
 	STUN3,
 	spriteLAGUNA,
 	ENTIFUE,
+	GAMEOVER,
 };
+
 
 enum sonidos_t{
 	MUSICA_DE_FONDO,
@@ -163,17 +191,17 @@ enum sonidos_t{
 };
 
 enum sensor_t{
-	PLATAFORMA=0,
-	DINAMICO=1,
-	SOLIDO=2,
-	PIESPJ=3,
-	CAMARA=4,
-	ATRAVESABLE=5,
+	PLATAFORMA,
+	DINAMICO,
+	SOLIDO,
+	PIESPJ,
+	CAMARA,
+	ATRAVESABLE,
 	PODERHIELO,
 	PODERFUEGO,
-	ENEMIGO=16,
-	ESTATICO=17,
-	PERSONAJE=18,
+	ENEMIGO,
+	ESTATICO,
+	PERSONAJE,
 	PIESEN,
 	sensorSORPRESA,
 	BORDE,
@@ -183,6 +211,7 @@ enum sensor_t{
 	ENEMIGOBOLA,
 	PIESENBOLA,
 	EMPUJE,
+	BOLASNOW,
 	sensorLAGUNA,
 	sensorAGUJERO,
 };

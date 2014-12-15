@@ -8,36 +8,31 @@
 #ifndef WORLDHANDLER_H_
 #define WORLDHANDLER_H_
 
-
-#include "WorkItem.h"
-#include "../modelo/WorldItem.h"
-#include "../modelo/BolaEnemigo.h"
 #include "../threads/Thread.h"
-//#include "../threads/ThreadSafeList.h"
 #include "../threads/ConditionVariable.h"
-//#include "../control/ContactListener.h"
 #include "../Inicializador.h"
-//#include "ControladorEnemigos.h"
-//#include <Box2D/Box2D.h>
 #include "../utiles/tipos.h"
+#include "../control/ContactListener.h"
+#include "../controladorJuego/ControladorJuego.h"
 
 class WorldHandler: public Thread {
 
-	ControladorUsuarios & controlador;
-	b2World *worldB2D;
+	ControladorJuego * controlador;
+	b2World * worldB2D;
 	Inicializador inicializador;
 	ContactListener contactListener;
-	ControladorEnemigos & army;
-	std::string configFile;
 
+
+	void esperar();
 	resultado_t loopPrincipal();
-	//void cleanPowers();
-	void esperarConexiones();
-	void limpiarNivel();
 	resultado_t simularPartida();
+/*
+	//void cleanPowers();
+	void limpiarNivel();
+*/
 
 public:
-	WorldHandler(ControladorUsuarios & c, ControladorEnemigos & en, std::string);
+	WorldHandler(ControladorJuego * controlador);
 	void* run();
 };
 

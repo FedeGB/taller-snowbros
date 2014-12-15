@@ -6,7 +6,7 @@
         "alto-un": 26,
         "ancho-un": 100,
         "imagen-fondo": "imagenes/fondo2.png",
-        "maxplayer": 2
+        "maxplayer": 3
     },
     "personaje1":{
 		"x": 22.0,
@@ -43,6 +43,58 @@
     }
     ],
     "objetos": [
+
+	{
+            "tipo": "personaje",
+            "x": 22.0,
+            "y": 12.0,
+            "masa": 20.0,
+            "ancho": 2.4,
+            "alto": 3.0,
+            "sprite-sheet": "imagenes/playerSpritesheet.png"
+	},
+
+	{
+            "tipo": "personaje",
+            "x": 12.0,
+            "y": 12.0,
+            "masa": 20.0,
+            "ancho": 2.4,
+            "alto": 3.0,
+            "sprite-sheet": "imagenes/playerSpritesheet.png"
+	},
+
+	{
+            "tipo": "personaje",
+            "x": 17.0,
+            "y": 22.0,
+            "masa": 20.0,
+            "ancho": 2.4,
+            "alto": 3.0,
+            "sprite-sheet": "imagenes/playerSpritesheet.png"
+	},
+
+	{
+            "tipo": "enemigoEstandar",
+            "x": 62.0,
+            "y": 12.0,
+            "masa": 20.0,
+            "ancho": 2.4,
+            "alto": 3.0,
+            "sprite-sheet": "imagenes/playerSpritesheet.png"
+	},
+
+	{
+            "tipo": "enemigoEstandar",
+            "x": 45.0,
+            "y": 22.0,
+            "masa": 20.0,
+            "ancho": 2.4,
+            "alto": 3.0,
+            "sprite-sheet": "imagenes/playerSpritesheet.png"
+	},
+
+
 	{
             "estatico": true,
             "tipo": "rect",

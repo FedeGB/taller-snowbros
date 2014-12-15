@@ -6,7 +6,7 @@
         "alto-un": 26,
         "ancho-un": 100,
         "imagen-fondo": "imagenes/fondo2.png",
-        "maxplayer": 2
+        "maxplayer": 3
     },
     "personaje1":{
 		"x": 22.0,
@@ -36,16 +36,97 @@
     {
     		"tipo": "est",
     		"x": 10.0,
-			"y": 10.0,
-			"masa": 20.0,
-			"ancho": 1.2,
-			"alto": 1.5
+		"y": 10.0,
+		"masa": 20.0,
+		"ancho": 1.2,
+		"alto": 1.5
     }
     ],
     "objetos": [
+
+	{
+            "tipo": "personaje",
+            "x": 22.0,
+            "y": 12.0,
+            "masa": 20.0,
+            "ancho": 2.4,
+            "alto": 3.0,
+            "sprite-sheet": "imagenes/playerSpritesheet.png"
+	},
+
+	{
+            "tipo": "personaje",
+            "x": 12.0,
+            "y": 12.0,
+            "masa": 20.0,
+            "ancho": 2.4,
+            "alto": 3.0,
+            "sprite-sheet": "imagenes/playerSpritesheet.png"
+	},
+
+	{
+            "tipo": "personaje",
+            "x": 5.0,
+            "y": 22.0,
+            "masa": 20.0,
+            "ancho": 2.4,
+            "alto": 3.0,
+            "sprite-sheet": "imagenes/playerSpritesheet.png"
+	},
+
+	{
+            "tipo": "enemigoFuego",
+            "x": 82.0,
+            "y": 12.0,
+            "masa": 20.0,
+            "ancho": 2.4,
+            "alto": 3.0,
+            "sprite-sheet": "imagenes/playerSpritesheet.png"
+	},
+
+	{
+            "tipo": "enemigoEstandar",
+            "x": 85.0,
+            "y": 22.0,
+            "masa": 20.0,
+            "ancho": 2.4,
+            "alto": 3.0,
+            "sprite-sheet": "imagenes/playerSpritesheet.png"
+	},
+
+	{
+            "tipo": "enemigoEstandar",
+            "x": 88.0,
+            "y": 12.0,
+            "masa": 20.0,
+            "ancho": 2.4,
+            "alto": 3.0,
+            "sprite-sheet": "imagenes/playerSpritesheet.png"
+	},
+
+	{
+            "tipo": "enemigoEstandar",
+            "x": 82.0,
+            "y": 22.0,
+            "masa": 20.0,
+            "ancho": 2.4,
+            "alto": 3.0,
+            "sprite-sheet": "imagenes/playerSpritesheet.png"
+	},
+
+	{
+            "tipo": "enemigoEstandar",
+            "x": 45.0,
+            "y": 22.0,
+            "masa": 20.0,
+            "ancho": 2.4,
+            "alto": 3.0,
+            "sprite-sheet": "imagenes/playerSpritesheet.png"
+	},
+
 	{
             "estatico": true,
-            "tipo": "rect",
+            "tipo": "laguna",
             "x": 38,
             "y": 8,
             "esLaguna": true,
@@ -59,46 +140,26 @@
 
 	{
             "estatico": true,
-            "tipo": "rect",
-            "x": 25,
-            "y": 29.0,
-	    "esAgujero":true,
+            "tipo": "agujero",
+            "x": 38,
+            "y": 26,
+            "esAgujero": true,
             "rot": 0,
             "alto": 2,
-            "ancho": 9,
+            "ancho": 6,
             "masa": 1,
-	    "color": "#5DB380",
-            "friccion": 0.5,
-	    	"textura": "imagenes/ladrillo.png",
-		"tex_escalaX": 18.8,
-		"tex_escalaY": 0.5
+	    "color": "#A42050",
+            "friccion": 0.2
         },
 
 	{
             "estatico": true,
             "tipo": "rect",
-            "x": 75,
-            "y": 29.0,
-	    "esAgujero":true,
-            "rot": 0,
-            "alto": 2,
-            "ancho": 9,
-            "masa": 1,
-	    "color": "#5DB380",
-            "friccion": 0.5,
-	    	"textura": "imagenes/ladrillo.png",
-		"tex_escalaX": 18.8,
-		"tex_escalaY": 0.5
-        },
-
-	{
-            "estatico": true,
-            "tipo": "rect",
-            "x": 10,
+            "x": 17.5,
             "y": 26.0,
             "rot": 0,
             "alto": 2,
-            "ancho": 20,
+            "ancho": 35,
             "masa": 1,
 	    "color": "#5DB380",
             "friccion": 0.5,
@@ -110,11 +171,11 @@
 	{
             "estatico": true,
             "tipo": "rect",
-            "x": 90,
+            "x": 70.5,
             "y": 26.0,
             "rot": 0,
             "alto": 2,
-            "ancho": 20,
+            "ancho": 59,
             "masa": 1,
 	    "color": "#5DB380",
             "friccion": 0.5,
@@ -122,21 +183,19 @@
 		"tex_escalaX": 18.8,
 		"tex_escalaY": 0.5
         },
+
 
 	{
             "estatico": true,
             "tipo": "rect",
             "x": 50,
-            "y": 26.0,
+            "y": 0,
             "rot": 0,
-            "alto": 2,
-            "ancho": 40,
+            "alto": 0.1,
+            "ancho": 100,
             "masa": 1,
-	    "color": "#5DB380",
-            "friccion": 0.5,
-	    	"textura": "imagenes/ladrillo.png",
-		"tex_escalaX": 18.8,
-		"tex_escalaY": 0.5
+	    "color": "#FFFF00",
+            "friccion": 0.2
         },
 
 	{
@@ -198,7 +257,7 @@
             "estatico": true,
             "tipo": "rect",
             "x": 40,
-            "y": 19.5,
+            "y": 17,
             "atravesable": true,
             "rot": 0,
             "alto": 0.6,

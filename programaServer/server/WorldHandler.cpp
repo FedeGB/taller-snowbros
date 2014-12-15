@@ -9,74 +9,78 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "../utiles/Timer.h"
-#include "../modelo/Fireball.h"
 
 
-WorldHandler::WorldHandler(ControladorUsuarios & c, ControladorEnemigos & en, std::string config):
-	controlador(c), worldB2D(NULL), army(en), configFile(config){}
+WorldHandler::WorldHandler(ControladorJuego * c):
+	controlador(c), worldB2D(NULL){}
+
 
 // El programa espera a que haya una cantidad suficiente de jugadores.
-void WorldHandler::esperarConexiones(){
+void WorldHandler::esperar(){
 	// Espera a que se llene el escenario.
-	while (!controlador.escenarioLleno()) {
-		std::cout << "esperando mas conexiones para iniciar la partida." << std::endl;
+	while (!controlador->estado.puedeEmpezar()) {
 		usleep(200000);
 	}
-
-	std::cout << "se lleno el mapa, iniciando partida." << std::endl;
 }
 
-void WorldHandler::limpiarNivel(){
-	// Destruye el nivel.
-	std::cout << "MUERE MUNDO" << std::endl;
-	delete worldB2D;
-	worldB2D = NULL;
-	std::cout << "MUERE MUNDO2" << std::endl;
-	// Resettea los PJs.
-	for (ControladorUsuarios::iterator it=controlador.begin(); it!=controlador.end(); ++it){
-		(*it).second->inicializado = false;
-	}
-}
-
-// Cuando se llena el mapa, comienza la partida.
+// Cuando se llena el servidor, comienza la partida.
 resultado_t WorldHandler::simularPartida(){
 
 	std::string nextLevel;
+	std::string configFile = LocalizadorDeServicios::obtenerInformacionPublica()->archivoConfiguracion;
 
 	resultado_t resultado = GANARON;
 
 	// Itera sobre todos los niveles.
 	while (nextLevel != "LASTLEVEL" && resultado == GANARON){
 
-		std::cout << "cargando siguiente nivel: " << nextLevel << "..." << std::endl;
+		// Espera a que los jugadores restantes decidan empezar el nivel.
+		esperar();
 
-		// Simula el nivel.
-		if (inicializador.init(configFile, &worldB2D, &contactListener, army, nextLevel)){
+		// Carga el nivel.
+		if (inicializador.init(configFile, &worldB2D, controlador, &contactListener, nextLevel)){
+
+			// Informa que inicia el juego.
+			controlador->estado.cambiarEstado(JUGANDO);
 
 			// Juega el nivel.
 			resultado = loopPrincipal();
-			for (ControladorUsuarios::iterator it=controlador.begin(); it!=controlador.end(); ++it){
-				if ((*it).second && (*it).second->online && (*it).second->inicializado) {
-					(*it).second->vida = (*it).second->getLives();
-				}
-			}
+
+			// Si hubo un error en el resultado, caos y desolacion.
+			if (resultado == ERROR_RESULTADO) return ERROR_RESULTADO;
+
+			// Analiza el resultado, y actualiza el estado del juego en consecuencia.
+			controlador->bloquear();
+
+			// Destruye el modelo.
+			controlador->modelo.limpiar();
+			delete worldB2D;
+			worldB2D = NULL;
 
 
-			// Limpia el world y aquello que sea necesario.
-			limpiarNivel();
+			// Actualiza el estado.
+			if (resultado == PERDIERON){
+				controlador->estado.cambiarEstado(JUEGOTERMINADO);
+				controlador->desbloquear();
+				return PERDIERON;
+			} else if (resultado == GANARON && nextLevel != "LASTLEVEL"){
+				controlador->estado.cambiarEstado(NIVELTERMINADO);
+			} else controlador->estado.cambiarEstado(JUEGOTERMINADO);
+
+			controlador->desbloquear();
 
 			// Asigna el archivo de configuracion necesario para cargar el proximo nivel.
 			configFile = nextLevel;
 
 		} else {
-			limpiarNivel();
+			//limpiarNivel();
 			return ERROR_RESULTADO;
 		}
-
 	}
 
-	return resultado;
+	return GANARON;
 }
+
 
 void* WorldHandler::run(){
 
@@ -85,13 +89,11 @@ void* WorldHandler::run(){
 	while (true){
 
 		// El programa espera a que haya una cantidad suficiente de jugadores.
-		esperarConexiones();
+		esperar();
 
 		// Cuando se llena el mapa, comienza la partida.
-		resultado_t resultado = simularPartida();
-
-		controlador.notificarFinDePartida(resultado);
-
+		//resultado_t resultado =
+		simularPartida();
 	}
 
 	return NULL;
@@ -100,104 +102,45 @@ void* WorldHandler::run(){
 resultado_t WorldHandler::loopPrincipal() {
 
 	//Loop infinito en busca de mensajes para procesar
-	bool quit = false;
-	resultado_t resultado;
+	bool quit = false; int cuentaRegresiva = 100;
+	resultado_t resultado = ERROR_RESULTADO;
 
 	while(!quit){
 
-		//std::cout << "simulando... " << std::endl;
-
-		int count = 0;
 		float freq = 600.0f;
-
-		// Cuenta cuantos usuarios estan online.
-		for (ControladorUsuarios::iterator it=controlador.begin(); it!=controlador.end(); ++it){
-			if ((*it).second && (*it).second->online && (*it).second->inicializado) {
-				count++;
-			}
-		}
-
-		//std::cout << "simulando... eligiendo estrategia enemigos." << std::endl;
-
-		if(count > 0) {
-			army.strategy(worldB2D, controlador);
-		} else {
-			army.strategy(NULL, controlador);
-		}
-
-		//std::cout << "simulando... setteando frecuencia." << std::endl;
-
-		if(count == 1)
-			freq = 20000.0f;
-		if(count == 2)
-			freq = 12000.0f;
-		if(count == 3)
-				freq = 9000.0f;
-		if(count == 4)
-				freq = 6000.0f;
-		//std::cout << "freq: " << freq << '\n';		// Simula.
-
-		//std::cout << "simulando... calculando steps" << std::endl;
-
 		for(int i=0;i<10;i++) {
 			worldB2D->Step(1.0f/freq, 8, 5);
 		};
 
-		// Clean powers (bodies) from world
-		//this->cleanPowers();
+		// Bloquea el controlador para aplicar cambios al modelo.
+		controlador->bloquear();
+		controlador->actualizar();
+		controlador->desbloquear();
 
-		// Updatea enemigos
-
-		//std::cout << "simulando... updateando enemigos." << std::endl;
-
-		if(count > 0) {
-			army.update(true, controlador);
-		} else {
-			army.update(false, controlador);
+		// Verifica que haya jugadores conectados.
+		if (controlador->estado.cantidadOnline() == 0) {
+			cuentaRegresiva--;
+			if (cuentaRegresiva == 0) quit = true;
+			resultado = PERDIERON;
+		} if (!controlador->modelo.quedanEnemigos()){
+			cuentaRegresiva--;
+			if (cuentaRegresiva == 0) quit = true;
+			resultado = GANARON;
 		}
 
-		//std::cout << "simulando... updateando PJs." << std::endl;
+		usleep(20000);
 
-		bool quedaPJvivo = false;
-
-		if (army.isMapCleared()) {
+/*		if (army.isMapCleared()) {
 			quit = true;
 			resultado = GANARON;
-			std::cout << "NO HAY MS BICHOS" << std::endl;
-			return resultado;
-		}
-
-		// Procesa uno por uno todos los usuarios, inicializandolos, moviendo sus
-		// PJs o camaras, o ignorandolos si estan desconectados.
-		for (ControladorUsuarios::iterator it=controlador.begin(); it!=controlador.end(); ++it){
-
-			// Saltea al usuario si este no esta conectado.
-			if (!(*it).second->online) continue;
-
-			// Inicializa al PJ del usuario si este todavia no lo fue.
-			if (!(*it).second->inicializado) {
-				std::cout << "inicializando PJ" << std::endl;
-				(*it).second->inicializarPJ(worldB2D, configFile);
-			}
-			if( (*it).second->isPJAlive()) {
-				quedaPJvivo = true;
-				//std::cout<<"pjvivo"<<std::endl;
-				(*it).second->procesarNotificaciones();
-				(*it).second->actualizarPJ();
-			}
-
-			//(*it).second->esperarSenial();
-			//usleep(20000);
 		}
 
 		if (!quedaPJvivo){
 			quit = true;
 			resultado = PERDIERON;
-			std::cout << "NO HAY MAS JUGADORES" << std::endl;
 		}
-
+*/
 	}
 
 	return resultado;
 }
-
