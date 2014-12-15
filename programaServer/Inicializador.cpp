@@ -628,18 +628,24 @@ void checkBoundsAndOverlap(b2World ** worldB2D, float32 widthWorld, float32 heig
 
 	bool overlap;
 	b2Body *b = (*worldB2D)->GetBodyList();
+	b2Body *aux = NULL;
 	while (b){
 		if(b->GetPosition().x > widthWorld || b->GetPosition().y > heightWorld
 				|| b->GetPosition().x < 0.0 || b->GetPosition().y < 0.0){
 
+			void* fixData = b->GetFixtureList()->GetUserData();
+			if(*(int*)&fixData == sensorAGUJERO) { // Si es un agujero, puede estar por fuera
+				b = b->GetNext();
+				continue;
+			}
 			ostringstream message;   // stream used for the conversion
 			message << "El objeto en la posicion " << b->GetPosition().x << "," <<
 					b->GetPosition().y << " se encuentra fuera del mapa. Borrado.";
 
 			log.log(WINDOWLOG,WARNING,message.str());
-
-			(*worldB2D)->DestroyBody(b);
-			b = (*worldB2D)->GetBodyList();
+			aux = b;
+			b = b->GetNext();
+			(*worldB2D)->DestroyBody(aux);
 			continue;
 		}
 
