@@ -27,6 +27,13 @@ void PantallaInicioSesion::inicializar(){
 	boton->asignarTexto("Iniciar");
 	boton->inicializar();
 
+	mensaje = new BotonGUI();
+	mensaje->asignarPosicion(180,340);
+	mensaje->asignarDimensiones(360,40);
+	mensaje->asignarTexto("  Ingrese nombre de usuario:  ");
+	mensaje->inicializar();
+
+
 	cajaDeTexto = new CajaDeTextoGUI();
 	cajaDeTexto->asignarPosicion(180,400);
 	cajaDeTexto->asignarDimensiones(360,40);
@@ -63,6 +70,7 @@ bool PantallaInicioSesion::dibujarPantalla(Window * ventana){
 
 	ventana->limpiarVentana();
 	boton->dibujar();
+	mensaje->dibujar();
 	cajaDeTexto->dibujar();
 	ventana->actualizarVentana();
 	return true;
@@ -71,6 +79,7 @@ bool PantallaInicioSesion::dibujarPantalla(Window * ventana){
 // Destruye la GUI que utilizada durante la pantalla de inicio de sesion.
 void PantallaInicioSesion::limpiar(){
 	delete boton;
+	delete mensaje;
 	delete cajaDeTexto;
 
 	LocalizadorDeServicios::obtenerNotificador()->finalizarNotificaciones(this);

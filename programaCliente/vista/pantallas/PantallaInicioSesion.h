@@ -52,7 +52,7 @@ private:
 	// Destruye la GUI que utilizada durante la pantalla de inicio de sesion.
 	void limpiar();
 
-	BotonGUI * boton;
+	BotonGUI * boton, * mensaje;
 	CajaDeTextoGUI * cajaDeTexto;
 	bool salirDePantalla;
 	std::string nombreDeUsuario;

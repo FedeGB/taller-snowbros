@@ -13,6 +13,7 @@ PantallaOpciones::PantallaOpciones() {
 	IPServidor = NULL;
 	puertoServidor = NULL;
 	salirDePantalla = false;
+	mensajeIP = mensajePuerto = NULL;
 }
 
 PantallaOpciones::~PantallaOpciones() {
@@ -34,6 +35,18 @@ void PantallaOpciones::inicializar(){
 	botonAtras->asignarDimensiones(120,40);
 	botonAtras->asignarTexto("Atras");
 	botonAtras->inicializar();
+
+	mensajeIP = new BotonGUI();
+	mensajeIP->asignarPosicion(60,200);
+	mensajeIP->asignarDimensiones(60,40);
+	mensajeIP->asignarTexto(" IP: ");
+	mensajeIP->inicializar();
+
+	mensajePuerto = new BotonGUI();
+	mensajePuerto->asignarPosicion(30,280);
+	mensajePuerto->asignarDimensiones(120,40);
+	mensajePuerto->asignarTexto(" Puerto ");
+	mensajePuerto->inicializar();
 
 	IPServidor = new CajaDeTextoGUI();
 	IPServidor->asignarPosicion(180,200);
@@ -79,6 +92,8 @@ bool PantallaOpciones::dibujarPantalla(Window * ventana){
 	ventana->limpiarVentana();
 	botonGuardarCambios->dibujar();
 	botonAtras->dibujar();
+	mensajeIP->dibujar();
+	mensajePuerto->dibujar();
 	IPServidor->dibujar();
 	puertoServidor->dibujar();
 	ventana->actualizarVentana();
@@ -89,6 +104,8 @@ bool PantallaOpciones::dibujarPantalla(Window * ventana){
 void PantallaOpciones::limpiar(){
 	delete botonGuardarCambios;
 	delete botonAtras;
+	delete mensajePuerto;
+	delete mensajeIP;
 	delete IPServidor;
 	delete puertoServidor;
 

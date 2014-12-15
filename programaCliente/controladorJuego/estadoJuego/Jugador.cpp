@@ -111,7 +111,7 @@ void Jugador::limpiar(){
 void Jugador::actualizar(){
 	nombreGUI->reemplazarTexto(nombre);
 
-	std::string textoVidas = SSTR("x " << vidas);
+	std::string textoVidas = SSTR("   Vidas: " << vidas);
 	vidasGUI->reemplazarTexto(textoVidas);
 
 	std::string textoPuntaje = SSTR("Puntaje: " << puntaje);

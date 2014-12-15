@@ -50,6 +50,7 @@ private:
 
 	BotonGUI * botonGuardarCambios;
 	BotonGUI * botonAtras;
+	BotonGUI * mensajeIP, * mensajePuerto;
 	CajaDeTextoGUI * IPServidor;
 	CajaDeTextoGUI * puertoServidor;
 	bool salirDePantalla;
