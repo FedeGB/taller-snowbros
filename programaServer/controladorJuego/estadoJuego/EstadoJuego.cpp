@@ -47,7 +47,7 @@ void EstadoJuego::actualizar(){
 		if (jugadores[i]->estado == Jugador::CONECTADO) {
 			jugadores[i]->actualizar();
 		} else if (jugadores[i]->estado == Jugador::DESCONECTADO && jugadores[i]->vidas > 0) {
-			if(!jugadores[i]->personaje->inmune) jugadores[i]->personaje->inmune = true;
+			jugadores[i]->personaje->paraDestruir = true;
 		}
 	}
 
