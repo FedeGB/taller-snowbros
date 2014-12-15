@@ -63,6 +63,7 @@ private:
 	};
 
 	bool salirDePantalla;
+	bool esperar;
 	bool finDeNivel;
 	bool finDeJuego;
 	respuesta_t respuesta;
@@ -73,6 +74,7 @@ private:
 	BotonGUI * mensajeFinDeNivel, * mensajeFinDeJuego;
 	BotonGUI * botonVolverAJugar, * botonSalir, * botonSiguienteNivel;
 	BotonGUI * mensajeJugadorPerdio, * botonSeguirMirando;
+	BotonGUI * mensajeEsperar;
 	bool jugadorPerdio, seguirMirando;
 
 };

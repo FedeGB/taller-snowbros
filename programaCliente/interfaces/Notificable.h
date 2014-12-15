@@ -32,6 +32,8 @@ enum tipo_notificacion_t{
 	FINDEJUEGO,
 	RESPUESTAVOLVERAJUGAR,
 	RESPUESTASALIR,
+	ESPERAR,
+	FINESPERAR,
 };
 
 class Notificable {

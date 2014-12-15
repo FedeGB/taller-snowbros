@@ -118,6 +118,8 @@ void PantallaOpciones::notificar(tipo_notificacion_t notificacion){
 		//salirDePantalla = true;
 		std::cout << "guardando cambios..." << std::endl;
 		botonGuardarCambios->declickear();
+		LocalizadorDeServicios::obtenerInformacionPublica()->IP = IPServidor->obtenerContenido();
+		LocalizadorDeServicios::obtenerInformacionPublica()->puerto = atoi(puertoServidor->obtenerContenido().c_str());
 	}
 
 	if (notificacion == BOTONCLICKEADO && botonAtras->estaClickeado()) {

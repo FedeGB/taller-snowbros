@@ -127,6 +127,8 @@ void ControladorDeConexion::esperarPorMasJugadores(){
 	std::string mensajeEntrante;
 	bool finEspera = false;
 
+	LocalizadorDeServicios::obtenerNotificador()->enviarNotificaciones(ESPERAR);
+
 	while (!finEspera){
 
 		int len = stream->receive(mensajeEntrante);
@@ -155,6 +157,8 @@ void ControladorDeConexion::esperarPorMasJugadores(){
 			break;
 		}
 	}
+
+	LocalizadorDeServicios::obtenerNotificador()->enviarNotificaciones(FINESPERAR);
 }
 
 // Carga el proximo nivel.
@@ -330,10 +334,14 @@ void ControladorDeConexion::esperar(){
 	// Si el jugador decidio jugar y sigue conectado, espera el input de los demas jugadores.
 	if (salir) return;
 
+	LocalizadorDeServicios::obtenerNotificador()->enviarNotificaciones(ESPERAR);
+
 	while (mensajeEntrante != SSTR(LISTO) && !salir) {
 		len = stream->receive(mensajeEntrante);
 		if (len <= 0) salir = true;
 	}
+
+	LocalizadorDeServicios::obtenerNotificador()->enviarNotificaciones(FINESPERAR);
 
 	finJuego = finNivel = esperando = false;
 }
