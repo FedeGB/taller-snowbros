@@ -23,9 +23,8 @@ int ConnectionHandler::logIn(std::string username){
 			return USERONLINE;
 		}else if (jugador->vidas <= 0){
 			return USERDEAD;
-		} else {
-			jugador->estado = Jugador::CONECTADO;
-			return OK;
+		} else if (jugador->estado == Jugador::DESCONECTADO){
+			return USERDEAD;
 		}
 
 	// En caso contrario, si hay lugares vacantes en el escenario, lo agrega
