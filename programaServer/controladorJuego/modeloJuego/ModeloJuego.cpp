@@ -52,7 +52,7 @@ Personaje * ModeloJuego::obtenerPJAAtacar(Enemigo * enemigo){
 		// Analiza si debe saltear al PJ.
 		Personaje * PJActual = (*it).second;
 		if( PJActual == NULL) continue;
-		if( PJActual->salud <= 0) continue;
+		if( PJActual->salud <= 0 || PJActual->inmune) continue;
 
 		// Calcula el modulo de la distancia entre el PJ y el enemigo.
 		Vector2D posicionPJ = PJActual->espacioOcupado->calcularBaricentro();

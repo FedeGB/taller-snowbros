@@ -43,8 +43,14 @@ void EstadoJuego::inicializar(){
 void EstadoJuego::actualizar(){
 
 	// Actualiza los 4 jugadores.
-	for(int i = 0; i < 4; i++) if (jugadores[i]->estado == Jugador::CONECTADO)
-		jugadores[i]->actualizar();
+	for(int i = 0; i < 4; i++) {
+		if (jugadores[i]->estado == Jugador::CONECTADO) {
+			jugadores[i]->actualizar();
+		} else if (jugadores[i]->estado == Jugador::DESCONECTADO && jugadores[i]->vidas > 0) {
+			if(!jugadores[i]->personaje->inmune) jugadores[i]->personaje->inmune = true;
+		}
+	}
+
 }
 
 // Destruye el estado de juego para asegurar un correcto finalizado
