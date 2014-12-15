@@ -387,6 +387,17 @@ class ContactListener : public b2ContactListener{
 			  }
 		  }
 
+		  if ( *((int*)(&fixtureAUserData)) == PERSONAJE|| *((int*)(&fixtureAUserData)) == PIESPJ){
+			  if (*((int*)(&fixtureBUserData)) == PERSONAJE || *((int*)(&fixtureBUserData)) == PIESPJ){
+				  contact->SetEnabled(false);
+			  }
+		  }
+		  if ( *((int*)(&fixtureBUserData)) == PERSONAJE || *((int*)(&fixtureBUserData)) == PIESPJ){
+			  if (*((int*)(&fixtureAUserData)) == PERSONAJE || *((int*)(&fixtureAUserData)) == PIESPJ){
+				  contact->SetEnabled(false);
+			  }
+		  }
+
     	  if(PJB != NULL && ITA != NULL){
     		  float velocidadSerVivoY = PJB->cuerpoB2D->GetLinearVelocity().y;
     		  if(velocidadSerVivoY < 0) contact->SetEnabled(false);
