@@ -19,6 +19,8 @@ PantallaJuego::PantallaJuego() {
 	jugadorPerdio = seguirMirando = false;
 	esperar = false;
 	mensajeEsperar = NULL;
+	conexionRechazada = false;
+	mensajeRechazo = NULL;
 }
 
 PantallaJuego::~PantallaJuego() {
@@ -93,6 +95,12 @@ void PantallaJuego::inicializar(){
 	mensajeEsperar->asignarDimensiones(180,40);
 	mensajeEsperar->asignarTexto("Esperando...");
 	mensajeEsperar->inicializar();
+
+	mensajeRechazo = new BotonGUI();
+	mensajeRechazo->asignarPosicion(90,380);
+	mensajeRechazo->asignarDimensiones(540,60);
+	mensajeRechazo->asignarTexto("RECHAZADO");
+	mensajeRechazo->inicializar();
 
 }
 
@@ -178,6 +186,9 @@ bool PantallaJuego::dibujarPantalla(Window * ventana){
 
 	ventana->limpiarVentana();
 	juego->dibujar();
+	if (conexionRechazada){
+		mensajeRechazo->dibujar();
+	}
 	if (jugadorPerdio && !finDeJuego && !finDeNivel && !esperar){
 		mensajeJugadorPerdio->dibujar();
 		if (!seguirMirando) botonSeguirMirando->dibujar();
@@ -213,6 +224,7 @@ void PantallaJuego::limpiar(){
 	delete botonVolverAJugar;
 	delete botonSiguienteNivel;
 	delete mensajeEsperar;
+	delete mensajeRechazo;
 }
 
 // Muestra una pantalla de juego, donde se el jugador podra efectivamente jugar.
@@ -258,12 +270,26 @@ void PantallaJuego::notificar(tipo_notificacion_t notificacion){
 		else mensajeFinDeJuego->asignarTexto("PERDIERON... Intentar de nuevo?");
 	}
 	if (notificacion == ESPERAR) {
-		std::cout << "esperando" << std::endl;
 		esperar = true;
 	}
+
 	if (notificacion == FINESPERAR) {
-		std::cout << "termine esperar" << std::endl;
 		esperar = false;
+	}
+
+	if (notificacion == CONEXIONRECHAZADALLENO) {
+		conexionRechazada = true;
+		mensajeRechazo->asignarTexto("Conexion rechazada, el servidor se encuentra lleno.");
+	}
+
+	if (notificacion == CONEXIONRECHAZADACONECTADO) {
+		conexionRechazada = true;
+		mensajeRechazo->asignarTexto("Conexion rechazada, el usuario se encuentra conectado.");
+	}
+
+	if (notificacion == CONEXIONRECHAZADAMUERTO) {
+		conexionRechazada = true;
+		mensajeRechazo->asignarTexto("Conexion rechazada, el usuario se encuentra muerto.");
 	}
 
 	if (notificacion == BOTONCLICKEADO && botonSalir->estaClickeado()) {

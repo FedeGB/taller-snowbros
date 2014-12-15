@@ -64,14 +64,17 @@ void ControladorDeConexion::procesarRespuestaInicioDeSesion(std::string respuest
 	switch(codigoRespuesta){
 	case CONEXIONRECHAZADASERVIDORLLENO:
 		// TODO: mostrar un mensaje indicando el motivo.
+		LocalizadorDeServicios::obtenerNotificador()->enviarNotificaciones(CONEXIONRECHAZADALLENO);
 		salir = true;
 		break;
 	case CONEXIONRECHAZADAUSUARIOYACONECTADO:
 		// TODO: mostrar un mensaje indicando el motivo.
+		LocalizadorDeServicios::obtenerNotificador()->enviarNotificaciones(CONEXIONRECHAZADACONECTADO);
 		salir = true;
 		break;
 	case CONEXIONRECHAZADAUSUARIOMUERTO:
 		// TODO: mostrar un mensaje indicando el motivo.
+		LocalizadorDeServicios::obtenerNotificador()->enviarNotificaciones(CONEXIONRECHAZADAMUERTO);
 		salir = true;
 		break;
 	case CONEXIONACEPTADA:
