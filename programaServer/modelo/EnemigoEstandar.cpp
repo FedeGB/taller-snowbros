@@ -137,7 +137,6 @@ void EnemigoEstandar::update(){
 	}
 
 	if(isTrapped) {
-		// TODO: Acciones a realizar si esta atrapado
 		animationCounter++;
 		if(animationCounter<100)
 			activeSprite=ATRAPADO1;

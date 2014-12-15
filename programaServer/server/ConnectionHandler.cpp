@@ -75,9 +75,9 @@ bool ConnectionHandler::protocoloLogIn(){
 
 	// Inicia la comunicacion recibiendo el nombre de usuario y validando sus datos de login.
 	size_t len =m_stream->receive(username);
-	if(len<=0){
-				return false;
-			}
+	if(len<0){
+		return false;
+	}
 	int result = logIn(username);
 
 	// Rechaza la conexion si el servidor esta lleno.
@@ -156,9 +156,9 @@ bool ConnectionHandler::recibirEventos(){
 	while (inMessage != "DONE"){
 		len = m_stream->receive(inMessage);
 		if (len < 0) {
-				printf("COUT ARRIBA DE vida=0 linea 157 del ConnectionHandler.cpp");
-				controlador.obtenerUsuario(username)->vida=0;
-				controlador.obtenerUsuario(username)->DeletePj();
+			printf("COUT ARRIBA DE vida=0 linea 157 del ConnectionHandler.cpp");
+			controlador.obtenerUsuario(username)->vida=0;
+			controlador.obtenerUsuario(username)->DeletePj();
 			std::cout << "FALSE" << std::endl;
 			return false;
 		}
@@ -194,7 +194,7 @@ bool ConnectionHandler::protocoloFinDePartida(){
 	// Recibe la decision del jugador.
 	while(inMessage == "DONE"){
 		len = m_stream->receive(inMessage);
-		if (len <= 0) return false;
+		if (len < 0) return false;
 	}
 	std::cout << "recibi la siguiente respuesta del jugador: " << inMessage << std::endl;
 	// Si contesto CONTINUEPLAYING lo encola para la siguiente partida, en caso contrario lo

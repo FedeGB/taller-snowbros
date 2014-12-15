@@ -103,7 +103,6 @@ void EnemigoTiraFuego::update(){
 	}
 
 	if(isTrapped) {
-		// TODO: Acciones a realizar si esta atrapado
 		animationCounter++;
 		if(animationCounter<100)
 			activeSprite=ATRAPADO1;
@@ -133,11 +132,11 @@ void EnemigoTiraFuego::update(){
 	// Determina, si esta saltando, si ya termino el salto.
 	if (!isAirborne) {
 		isJumping = false;
-//		if(isDownPressed) {
-//			isFalling = true;
-//		} else {
-//			isFalling = false;
-//		}
+		if(isDownPressed) {
+			isFalling = true;
+		} else {
+			isFalling = false;
+		}
 		if(!isDownPressed) {
 			isFalling = false;
 		} else {

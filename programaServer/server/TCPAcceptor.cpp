@@ -64,7 +64,7 @@ TCPStream* TCPAcceptor::accept()
     if (m_listening == false) {
         return NULL;
     }
-
+    signal(SIGPIPE, SIG_IGN);
     struct sockaddr_in address;
     socklen_t len = sizeof(address);
     memset(&address, 0, sizeof(address));
@@ -74,15 +74,15 @@ TCPStream* TCPAcceptor::accept()
         return NULL;
     }
     struct timeval tv;
-            	tv.tv_sec = 1;
-            	tv.tv_usec = 0;
+	tv.tv_sec = 5;
+	tv.tv_usec = 0;
 
-            	if (setsockopt (sd, SOL_SOCKET, SO_RCVTIMEO, (char *)&tv,
-            				sizeof(tv)) < 0)
-            		printf("setsockopt failed\n");
+	if (setsockopt (sd, SOL_SOCKET, SO_RCVTIMEO, (char *)&tv,
+				sizeof(tv)) < 0)
+		printf("setsockopt failed\n");
 
-            	if (setsockopt (sd, SOL_SOCKET, SO_SNDTIMEO, (char *)&tv,
-            				sizeof(tv)) < 0)
-            		printf("setsockopt failed\n");
+	if (setsockopt (sd, SOL_SOCKET, SO_SNDTIMEO, (char *)&tv,
+				sizeof(tv)) < 0)
+		printf("setsockopt failed\n");
     return new TCPStream(sd, &address);
 }
